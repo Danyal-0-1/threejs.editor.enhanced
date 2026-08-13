@@ -36,7 +36,7 @@ import { findParts } from './intelligence/sceneIndex.js';
 import * as selectorEngine from './intelligence/selectorEngine.js';
 import { selectorCounts } from './intelligence/vocabInjection.js';
 import { buildConstrainedOpsSchema, buildReasonConstrainedOpsSchema, buildCandidateConstrainedOpsSchema } from './intelligence/editOps.js';
-import { rankSelectorCandidates, buildCandidateInjection, candidateIds, resolveEmittedSelector, tryHostResolve, ESCAPE_ID, makeDisambiguationMemory, buildSelectorIndex } from './intelligence/selectorIndex.js';
+import { rankSelectorCandidates, buildCandidateInjection, candidateIds, resolveEmittedSelector, tryHostResolve, ESCAPE_ID, makeDisambiguationMemory, buildSelectorIndex, segmentRequest } from './intelligence/selectorIndex.js';
 import { runEditMatrix, newMatrix, recordRun, formatMatrix } from './ai/editMatrix.js';
 import { colorBase as editColorBase } from './ai/editEval.js';
 import { listClientModels, getClientConfig, isClientModel, makeClientEngine, openClientAPIDialog } from './ai/clientAPI.js';
@@ -1123,6 +1123,10 @@ function Shell( editor ) {
 						monacoEditorInstance.layout( { width: editorDiv.offsetWidth, height: contentHeight } );
 					}
 					
+					// Expose so the post-DOM-insertion layout pass can recompute the
+					// height once the element actually has a width (word-wrap, and thus
+					// contentHeight, is only correct after the editor is on-DOM).
+					editorDiv.__updateHeight = updateEditorHeight;
 					monacoEditorInstance.onDidChangeModelContent( updateEditorHeight );
 					updateEditorHeight();
 					resolve();
@@ -1203,6 +1207,9 @@ function Shell( editor ) {
 			requestAnimationFrame( () => {
 				if ( editorDiv.__monacoInstance ) {
 					editorDiv.__monacoInstance.layout();
+					// Now that the editor has a real width, recompute the fit-to-content
+					// height (shrinks to the content, capped at 40vh as the max).
+					if ( editorDiv.__updateHeight ) editorDiv.__updateHeight();
 				}
 			} );
 
@@ -3029,6 +3036,63 @@ HOST-RESOLVED OUTPUT MODE — respond with ONLY a JSON object, no prose, no code
 			// free-text `reasoning` field before the ops.
 			if ( reasonConstrain ) systemPrompt += REASON_CONSTRAINED_JSON_INSTRUCTION;
 			else if ( constrainDecode ) systemPrompt += CONSTRAINED_JSON_INSTRUCTION;
+
+			// ── Host-resolved multi-op decomposition (segment → N single-target) ──
+			// Take op-COUNTING off the model: the host splits the request into N
+			// target-scoped clauses (segmentRequest), then resolves each selector
+			// INDEPENDENTLY through the same cheap-first path used for single ops. The
+			// model's per-segment job shrinks to op-type + args; the selector is
+			// host-supplied. N is the host's answer, never the model's. N=1 or an
+			// uncertain split falls through to the single-target path below.
+			if ( hostResolve ) {
+
+				const seg = segmentRequest( prompt, editor );
+				if ( seg.confident && seg.segments.length > 1 ) {
+
+					const ops = [];
+					const seen = new Set();
+					for ( const s of seg.segments ) {
+
+						_hostTotal ++;
+						const rank = rankSelectorCandidates( editor, s.targetPhrase );
+						const cands = rank.candidates;
+						const cheap = tryHostResolve( rank );
+						if ( ! cands.length || rank.ambiguous ) _hostAsk ++;
+						let ids;
+						if ( cheap.resolved ) { _hostSkip ++; ids = [ cheap.resolved.id ]; } // host-only resolve
+						else ids = candidateIds( cands );
+						const segSchema = buildCandidateConstrainedOpsSchema( ids );
+						let segSys = partsPreview ? getCachedSystemPrompt( editor ) : SYSTEM_PROMPT;
+						segSys += '\n\n' + buildCandidateInjection( cands ) + HOST_RESOLVED_JSON_INSTRUCTION;
+						const segMsgs = buildMessages( segSys, editor, s.opPhrase, retrieveForPrompt( s.opPhrase ), { injectParts: false } );
+						const segResp = await aiEngine.stream( segMsgs, { maxTokens: aiTokenBudget(), temperature: 0, schema: segSchema } );
+						const segRaw = typeof segResp === 'string' ? segResp : segResp?.text || '';
+						const segUsage = typeof segResp === 'object' ? segResp?.usage : null;
+						if ( segUsage && ( segUsage.prompt_tokens || segUsage.completion_tokens ) )
+							aiEngine._trackUsage( segUsage.prompt_tokens || 0, segUsage.completion_tokens || 0 );
+
+						let segObj = null;
+						try { segObj = JSON.parse( segRaw ); }
+						catch { const m = segRaw && segRaw.match( /\{[\s\S]*\}/ ); if ( m ) { try { segObj = JSON.parse( m[ 0 ] ); } catch { /* unparseable */ } } }
+						const segOps = segObj && Array.isArray( segObj.ops ) ? segObj.ops : ( segObj && segObj.op ? [ segObj ] : [] );
+						if ( ! segOps.length ) continue; // this segment failed independently — the other N-1 still apply
+
+						const first = segOps[ 0 ];
+						const r = resolveEmittedSelector( first.selector, cands, editor );
+						// Co-reference collapse: the SAME op over the SAME node set is one op
+						// ("the wheels and rims" → both recolor {4} → collapse to one). A
+						// DIFFERENT op on the same set is kept ("lift the cab and paint it").
+						const key = `${ first.op }|${ [ ...r.nodes ].sort().join( ',' ) }`;
+						if ( r.selector && r.nodes.size && seen.has( key ) ) continue;
+						if ( r.nodes.size ) seen.add( key );
+						ops.push( { op: first.op, selector: r.selector, args: first.args || {} } );
+
+					}
+					return { code: JSON.stringify( { ops } ) };
+
+				}
+
+			}
 
 			// ── Host-resolved path (pick-don't-compose) ──────────────────────────
 			// Rank the REAL parts for THIS prompt host-side, inject the numbered

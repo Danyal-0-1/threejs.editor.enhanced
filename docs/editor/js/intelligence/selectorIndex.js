@@ -156,6 +156,13 @@ const PART_STOP = new Set( [ 'the', 'a', 'an', 'and', 'or', 'of', 'on', 'in', 't
 const PLURAL_HINT = /\b(all|both|every|each|two|three|four|wheels|lights|windows|doors|panels|parts|rims|tires|tyres)\b/i;
 const WHOLE_ASSET_HINT = /\b(whole|entire|everything)\b/i;
 
+// Multi-op segmentation vocab (segmentRequest). Clause boundaries are coordinating
+// conjunctions / punctuation; an op verb tells us a clause STARTS a new operation
+// (vs. inheriting the previous one). Both are deliberately conservative — a wrong
+// split is worse than none (see segmentRequest's confidence gate).
+const CLAUSE_BOUNDARY = /\s*(?:,|;|\bthen\b|\band\b)\s*/i;
+const OP_VERB = /\b(make|paint|recolou?r|colou?r|set|change|turn|spin|rotate|lift|raise|move|lower|drop|delete|remove|scale|resize|grow|shrink|enlarge|bigger|smaller|larger)\b/i;
+
 // Distinct part nouns the request names (modifiers + stopwords stripped, singularized).
 function partNouns( q ) {
 
@@ -472,6 +479,82 @@ export function rankSelectorCandidates( editor, text, opts = {} ) {
 	const ambiguous = !! a && ! a.hard && ( ( !! b && ! b.hard && ( a.score - b.score ) < 2 ) || a.score < 5 );
 
 	return { candidates, ambiguous, method: candidates.length ? ( candidates[ 0 ].hard ? 'matcher' : 'lexical' ) : 'none', query: q };
+
+}
+
+// segmentRequest — host-side multi-op decomposition (deterministic, no model).
+// Splits a request into N target-scoped clauses so the model never chooses HOW
+// MANY ops there are: N is the host's answer. Each clause carries a targetPhrase
+// (its own part noun, or the previous clause's target when it names none — the
+// target-inheritance rule) and an opPhrase (its text, prefixed with the previous
+// clause's verb when it has none — the op-inheritance rule). Confidence gates the
+// whole thing: a wrong split is worse than none, so an uncertain split declines
+// (confident:false) and the caller falls through to the single-target path.
+export function segmentRequest( text, editor ) {
+
+	const raw = String( text == null ? '' : text ).trim();
+	if ( ! raw ) return { segments: [], ambiguous: false, confident: false, single: true };
+
+	ensureIndexed( editor );
+	const nodes = listNodes( editor );
+
+	// A clause roots a target if any of its part nouns hits the tuned matcher, or it
+	// names the whole asset ("the whole truck").
+	const clauseHasTarget = ( clause ) => {
+
+		if ( WHOLE_ASSET_HINT.test( clause ) ) return true;
+		for ( const noun of partNouns( parseQuery( clause ) ) ) {
+
+			try {
+
+				const mp = matchPartNodes( nodes, noun );
+				if ( mp && mp.nodes && mp.nodes.length ) return true;
+
+			} catch ( e ) { /* matcher best-effort */ }
+
+		}
+		return false;
+
+	};
+
+	const clauses = raw.split( CLAUSE_BOUNDARY ).map( s => s.trim() ).filter( Boolean );
+
+	// One clause (or unsplittable) → N=1: the existing single-target flow owns this.
+	if ( clauses.length <= 1 ) {
+
+		return { segments: [ { text: raw, targetPhrase: raw, opPhrase: raw, hasTarget: clauseHasTarget( raw ) } ], ambiguous: false, confident: false, single: true };
+
+	}
+
+	const segments = [];
+	let prevTarget = null;
+	let prevOpVerb = null;
+	let firstUnrooted = false;
+	for ( const clause of clauses ) {
+
+		const hasTarget = clauseHasTarget( clause );
+		let targetPhrase;
+		if ( hasTarget ) { targetPhrase = clause; prevTarget = clause; }
+		else if ( prevTarget ) targetPhrase = prevTarget;          // target-inheritance
+		else { targetPhrase = clause; firstUnrooted = true; }       // no noun, nothing to inherit → shaky
+
+		// op-inheritance: a clause with no verb of its own ("… and rims") inherits the
+		// previous clause's verb so the model still knows WHICH op to emit for it.
+		const verbMatch = clause.match( OP_VERB );
+		let opPhrase = clause;
+		if ( verbMatch ) prevOpVerb = verbMatch[ 0 ];
+		else if ( prevOpVerb ) opPhrase = `${ prevOpVerb } ${ clause }`;
+
+		segments.push( { text: clause, targetPhrase, opPhrase, hasTarget } );
+
+	}
+
+	// Confident only when EVERY clause is rooted (its own target or an inherited one).
+	// If an early clause named no part with nothing to inherit ("the front and rear
+	// wheels" → "the front" roots nothing), decline — better to not split than to
+	// split wrong.
+	const confident = segments.length > 1 && ! firstUnrooted;
+	return { segments, ambiguous: firstUnrooted, confident, single: false };
 
 }
 
