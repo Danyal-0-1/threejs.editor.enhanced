@@ -35,7 +35,8 @@ import { SceneIntelligence, findByDescription, describeObject, listCandidates, r
 import { findParts } from './intelligence/sceneIndex.js';
 import * as selectorEngine from './intelligence/selectorEngine.js';
 import { selectorCounts } from './intelligence/vocabInjection.js';
-import { buildConstrainedOpsSchema, buildReasonConstrainedOpsSchema } from './intelligence/editOps.js';
+import { buildConstrainedOpsSchema, buildReasonConstrainedOpsSchema, buildCandidateConstrainedOpsSchema } from './intelligence/editOps.js';
+import { rankSelectorCandidates, buildCandidateInjection, candidateIds, resolveEmittedSelector, tryHostResolve, ESCAPE_ID, makeDisambiguationMemory, buildSelectorIndex, segmentRequest } from './intelligence/selectorIndex.js';
 import { runEditMatrix, newMatrix, recordRun, formatMatrix } from './ai/editMatrix.js';
 import { colorBase as editColorBase } from './ai/editEval.js';
 import { listClientModels, getClientConfig, isClientModel, makeClientEngine, openClientAPIDialog } from './ai/clientAPI.js';
@@ -419,6 +420,560 @@ function Shell( editor ) {
 	inputRow.appendChild( input );
 	container.dom.appendChild( inputRow );
 
+	// ── Autocomplete ──────────────────────────────────────────────────────────
+
+	const acDropdown = document.createElement( 'div' );
+	acDropdown.className = 'shell-autocomplete';
+	inputRow.appendChild( acDropdown );
+
+	// Static word list: 3DOM shell globals + common JS built-ins
+	const AC_WORDS = [
+		// ── Core globals ──
+		{ w: 'editor', k: 'var' }, { w: 'THREE', k: 'var' }, { w: 'scene', k: 'var' },
+		{ w: 'camera', k: 'var' }, { w: 'renderer', k: 'var' },
+
+		// ── Commands ──
+		{ w: 'AddObjectCommand', k: 'class' }, { w: 'RemoveObjectCommand', k: 'class' },
+		{ w: 'SetPositionCommand', k: 'class' }, { w: 'SetRotationCommand', k: 'class' },
+		{ w: 'SetScaleCommand', k: 'class' }, { w: 'SetMaterialColorCommand', k: 'class' },
+		{ w: 'SetMaterialCommand', k: 'class' }, { w: 'SetValueCommand', k: 'class' },
+
+		// ── Geometry ──
+		{ w: 'BoxGeometry', k: 'class' }, { w: 'SphereGeometry', k: 'class' },
+		{ w: 'CylinderGeometry', k: 'class' }, { w: 'ConeGeometry', k: 'class' },
+		{ w: 'PlaneGeometry', k: 'class' }, { w: 'TorusGeometry', k: 'class' },
+		{ w: 'TorusKnotGeometry', k: 'class' }, { w: 'CircleGeometry', k: 'class' },
+		{ w: 'CapsuleGeometry', k: 'class' }, { w: 'LatheGeometry', k: 'class' },
+		{ w: 'TubeGeometry', k: 'class' }, { w: 'ExtrudeGeometry', k: 'class' },
+		{ w: 'ShapeGeometry', k: 'class' }, { w: 'Shape', k: 'class' },
+		{ w: 'Path', k: 'class' }, { w: 'CatmullRomCurve3', k: 'class' },
+		{ w: 'QuadraticBezierCurve3', k: 'class' }, { w: 'CubicBezierCurve3', k: 'class' },
+
+		// ── Materials ──
+		{ w: 'MeshStandardMaterial', k: 'class' }, { w: 'MeshBasicMaterial', k: 'class' },
+		{ w: 'MeshPhongMaterial', k: 'class' }, { w: 'MeshLambertMaterial', k: 'class' },
+		{ w: 'MeshPhysicalMaterial', k: 'class' }, { w: 'LineBasicMaterial', k: 'class' },
+
+		// ── Objects ──
+		{ w: 'Mesh', k: 'class' }, { w: 'Group', k: 'class' }, { w: 'Line', k: 'class' },
+		{ w: 'Points', k: 'class' },
+
+		// ── Lights ──
+		{ w: 'DirectionalLight', k: 'class' }, { w: 'PointLight', k: 'class' },
+		{ w: 'AmbientLight', k: 'class' }, { w: 'SpotLight', k: 'class' },
+
+		// ── Math ──
+		{ w: 'Color', k: 'class' }, { w: 'Vector3', k: 'class' },
+		{ w: 'Vector2', k: 'class' }, { w: 'Euler', k: 'class' },
+		{ w: 'Quaternion', k: 'class' },
+
+		// ── Animation ──
+		{ w: 'AnimationClip', k: 'class' }, { w: 'VectorKeyframeTrack', k: 'class' },
+		{ w: 'QuaternionKeyframeTrack', k: 'class' }, { w: 'NumberKeyframeTrack', k: 'class' },
+		{ w: 'ColorKeyframeTrack', k: 'class' }, { w: 'BooleanKeyframeTrack', k: 'class' },
+
+		// ── Texture helpers ──
+		{ w: 'makeTexture', k: 'fn' }, { w: 'makeCheckerTex', k: 'fn' }, { w: 'makeGridTex', k: 'fn' },
+
+		// ── Codegen ──
+		{ w: 'showJS', k: 'fn' }, { w: 'objectToJS', k: 'fn' }, { w: 'sceneToJS', k: 'fn' },
+		{ w: 'sceneEqual', k: 'fn' }, { w: 'summarize', k: 'fn' },
+
+		// ── Object lookup ──
+		{ w: 'findObject', k: 'fn' }, { w: 'findAll', k: 'fn' },
+		{ w: 'findOfType', k: 'fn' }, { w: 'findNear', k: 'fn' },
+
+		// ── Scene intelligence ──
+		{ w: 'findByDescription', k: 'fn' }, { w: 'describeObject', k: 'fn' },
+		{ w: 'listCandidates', k: 'fn' }, { w: 'resolvePartAI', k: 'fn' },
+		{ w: 'findParts', k: 'fn' }, { w: 'diagnoseImport', k: 'fn' },
+		{ w: 'relabelAsset', k: 'fn' }, { w: 'verifyImport', k: 'fn' },
+
+		// ── Labels / classes ──
+		{ w: 'relabel', k: 'fn' }, { w: 'tagClass', k: 'fn' }, { w: 'untagClass', k: 'fn' },
+
+		// ── Selectors ──
+		{ w: '$S', k: 'fn' }, { w: 'Pick', k: 'fn' }, { w: 'pick', k: 'fn' },
+		{ w: 'query', k: 'fn' }, { w: 'queryOne', k: 'fn' },
+		{ w: 'isValidSelector', k: 'fn' }, { w: 'listSelectors', k: 'fn' },
+
+		// ── Ops ──
+		{ w: 'op', k: 'fn' }, { w: 'ops', k: 'fn' }, { w: 'listOps', k: 'fn' },
+		{ w: 'OP_VOCABULARY', k: 'var' },
+
+		// ── Agentic tools ──
+		{ w: 'findAPI', k: 'fn' }, { w: 'whatsVisible', k: 'fn' },
+		{ w: 'whatsAt', k: 'fn' }, { w: 'lasso', k: 'fn' },
+
+		// ── Modeling ──
+		{ w: 'booleanUnion', k: 'fn' }, { w: 'booleanSubtract', k: 'fn' },
+		{ w: 'booleanIntersect', k: 'fn' }, { w: 'mirrorMesh', k: 'fn' },
+		{ w: 'arrayDuplicate', k: 'fn' }, { w: 'subdivide', k: 'fn' },
+
+		// ── Scene / UI parity ──
+		{ w: 'addLight', k: 'fn' }, { w: 'setBackground', k: 'fn' },
+		{ w: 'setFog', k: 'fn' }, { w: 'clearFog', k: 'fn' },
+		{ w: 'setEnvironment', k: 'fn' }, { w: 'groupSelection', k: 'fn' },
+		{ w: 'ungroupSelection', k: 'fn' }, { w: 'isolate', k: 'fn' },
+		{ w: 'soloClass', k: 'fn' }, { w: 'showAll', k: 'fn' },
+		{ w: 'undo', k: 'fn' }, { w: 'redo', k: 'fn' }, { w: 'clearScene', k: 'fn' },
+
+		// ── Exporters ──
+		{ w: 'exportGLB', k: 'fn' }, { w: 'exportGLTF', k: 'fn' },
+		{ w: 'exportOBJ', k: 'fn' }, { w: 'exportSTL', k: 'fn' },
+		{ w: 'exportPLY', k: 'fn' },
+
+		// ── Spatial helpers ──
+		{ w: 'getSize', k: 'fn' }, { w: 'getTopY', k: 'fn' },
+		{ w: 'getCenter', k: 'fn' }, { w: 'placeOnTop', k: 'fn' },
+		{ w: 'lineFromPoints', k: 'fn' },
+
+		// ── Animation helpers ──
+		{ w: 'addClip', k: 'fn' }, { w: 'addSpinClip', k: 'fn' },
+
+		// ── Furniture builders ──
+		{ w: 'makeTable', k: 'fn' }, { w: 'makeChair', k: 'fn' },
+
+		// ── Edit mode ──
+		{ w: 'enterEditMode', k: 'fn' }, { w: 'exitEditMode', k: 'fn' },
+		{ w: 'extrude', k: 'fn' }, { w: 'inset', k: 'fn' }, { w: 'bevel', k: 'fn' },
+		{ w: 'deleteFaces', k: 'fn' }, { w: 'weld', k: 'fn' },
+		{ w: 'planarUV', k: 'fn' }, { w: 'boxUV', k: 'fn' },
+		{ w: 'selectFaces', k: 'fn' }, { w: 'selectVertices', k: 'fn' },
+		{ w: 'selectEdges', k: 'fn' }, { w: 'clearSelection', k: 'fn' },
+		{ w: 'selectTopFaces', k: 'fn' }, { w: 'selectFacingUp', k: 'fn' },
+		{ w: 'selectBoundaryEdges', k: 'fn' },
+
+		// ── Misc ──
+		{ w: 'fetchAPI', k: 'fn' }, { w: 'askScene', k: 'fn' },
+		{ w: 'evalAI', k: 'fn' }, { w: 'evalEditMatrix', k: 'fn' },
+		{ w: 'saveEvalRows', k: 'fn' }, { w: 'getAvailableModels', k: 'fn' },
+		{ w: 'askExternal', k: 'fn' }, { w: 'checkApiHealth', k: 'fn' },
+
+		// ── JS built-ins ──
+		{ w: 'Math', k: 'obj' }, { w: 'console', k: 'obj' }, { w: 'JSON', k: 'obj' },
+		{ w: 'Array', k: 'obj' }, { w: 'Object', k: 'obj' }, { w: 'String', k: 'obj' },
+		{ w: 'Number', k: 'obj' }, { w: 'Boolean', k: 'obj' }, { w: 'Date', k: 'obj' },
+		{ w: 'RegExp', k: 'obj' }, { w: 'Map', k: 'obj' }, { w: 'Set', k: 'obj' },
+		{ w: 'Promise', k: 'obj' }, { w: 'parseInt', k: 'fn' }, { w: 'parseFloat', k: 'fn' },
+		{ w: 'isNaN', k: 'fn' }, { w: 'isFinite', k: 'fn' }, { w: 'setTimeout', k: 'fn' },
+		{ w: 'setInterval', k: 'fn' }, { w: 'clearTimeout', k: 'fn' },
+		{ w: 'clearInterval', k: 'fn' }, { w: 'requestAnimationFrame', k: 'fn' },
+
+		// ── JS keywords ──
+		{ w: 'const', k: 'kw' }, { w: 'let', k: 'kw' }, { w: 'var', k: 'kw' },
+		{ w: 'function', k: 'kw' }, { w: 'return', k: 'kw' }, { w: 'if', k: 'kw' },
+		{ w: 'else', k: 'kw' }, { w: 'for', k: 'kw' }, { w: 'while', k: 'kw' },
+		{ w: 'switch', k: 'kw' }, { w: 'case', k: 'kw' }, { w: 'break', k: 'kw' },
+		{ w: 'continue', k: 'kw' }, { w: 'new', k: 'kw' }, { w: 'this', k: 'kw' },
+		{ w: 'typeof', k: 'kw' }, { w: 'instanceof', k: 'kw' }, { w: 'delete', k: 'kw' },
+		{ w: 'void', k: 'kw' }, { w: 'throw', k: 'kw' }, { w: 'try', k: 'kw' },
+		{ w: 'catch', k: 'kw' }, { w: 'finally', k: 'kw' }, { w: 'async', k: 'kw' },
+		{ w: 'await', k: 'kw' }, { w: 'true', k: 'kw' }, { w: 'false', k: 'kw' },
+		{ w: 'null', k: 'kw' }, { w: 'undefined', k: 'kw' },
+	];
+
+	// ── $S() chainable method completions ─────────────────────────────────────
+	const AC_CHAIN_METHODS = [
+		// Edit ops
+		{ w: 'recolor', k: 'method', h: "(color)" },
+		{ w: 'move', k: 'method', h: "(dx, dy, dz)" },
+		{ w: 'rotate', k: 'method', h: "(axis, degrees)" },
+		{ w: 'scale', k: 'method', h: "(factor, axis?)" },
+		{ w: 'delete', k: 'method', h: "()" },
+		{ w: 'duplicate', k: 'method', h: "(dx, dy, dz)" },
+		{ w: 'retexture', k: 'method', h: "(texture)" },
+		{ w: 'setMaterial', k: 'method', h: "(props)" },
+		{ w: 'setOpacity', k: 'method', h: "(0–1)" },
+		{ w: 'setVisible', k: 'method', h: "(bool)" },
+		{ w: 'show', k: 'method', h: "()" },
+		{ w: 'hide', k: 'method', h: "()" },
+		{ w: 'wireframe', k: 'method', h: "(bool)" },
+		{ w: 'moveTo', k: 'method', h: "(x, y, z)" },
+		{ w: 'rotateTo', k: 'method', h: "(x, y, z)" },
+		{ w: 'scaleTo', k: 'method', h: "(factor)" },
+		{ w: 'reset', k: 'method', h: "()" },
+		{ w: 'lookAt', k: 'method', h: "(target)" },
+		// Material props
+		{ w: 'metalness', k: 'prop', h: "(0–1)" },
+		{ w: 'roughness', k: 'prop', h: "(0–1)" },
+		{ w: 'emissive', k: 'prop', h: "(color)" },
+		{ w: 'emissiveIntensity', k: 'prop', h: "(value)" },
+		{ w: 'flatShading', k: 'prop', h: "(bool)" },
+		{ w: 'doubleSided', k: 'prop', h: "(bool)" },
+		{ w: 'setColor', k: 'method', h: "(color)" },
+		// Shadow / render
+		{ w: 'castShadow', k: 'prop', h: "(bool)" },
+		{ w: 'receiveShadow', k: 'prop', h: "(bool)" },
+		{ w: 'frustumCulled', k: 'prop', h: "(bool)" },
+		{ w: 'renderOrder', k: 'prop', h: "(n)" },
+		// Light props
+		{ w: 'intensity', k: 'prop', h: "(value)" },
+		{ w: 'lightColor', k: 'prop', h: "(color)" },
+		{ w: 'groundColor', k: 'prop', h: "(color)" },
+		{ w: 'distance', k: 'prop', h: "(value)" },
+		{ w: 'angle', k: 'prop', h: "(radians)" },
+		{ w: 'penumbra', k: 'prop', h: "(0–1)" },
+		{ w: 'decay', k: 'prop', h: "(value)" },
+		// Camera props
+		{ w: 'fov', k: 'prop', h: "(degrees)" },
+		{ w: 'near', k: 'prop', h: "(value)" },
+		{ w: 'far', k: 'prop', h: "(value)" },
+		// Animation recipes
+		{ w: 'bounce', k: 'anim', h: "(height, duration)" },
+		{ w: 'pulse', k: 'anim', h: "(scale, duration)" },
+		{ w: 'fade', k: 'anim', h: "(from, to, duration)" },
+		{ w: 'orbit', k: 'anim', h: "(center, radius, duration)" },
+		{ w: 'shake', k: 'anim', h: "(intensity, duration)" },
+		{ w: 'flyTo', k: 'anim', h: "(x, y, z, duration)" },
+		{ w: 'turnTo', k: 'anim', h: "(x, y, z, duration)" },
+		{ w: 'spin', k: 'anim', h: "(axis, speed)" },
+		{ w: 'fadeIn', k: 'anim', h: "(duration)" },
+		{ w: 'fadeOut', k: 'anim', h: "(duration)" },
+		{ w: 'zoomIn', k: 'anim', h: "(scale, duration)" },
+		{ w: 'zoomOut', k: 'anim', h: "(scale, duration)" },
+		{ w: 'slideInUp', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideInDown', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideInLeft', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideInRight', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideInForward', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideInBack', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutUp', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutDown', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutLeft', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutRight', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutForward', k: 'anim', h: "(distance, duration)" },
+		{ w: 'slideOutBack', k: 'anim', h: "(distance, duration)" },
+		{ w: 'bounceIn', k: 'anim', h: "(duration)" },
+		{ w: 'bounceOut', k: 'anim', h: "(duration)" },
+		{ w: 'flipInX', k: 'anim', h: "(duration)" },
+		{ w: 'flipInY', k: 'anim', h: "(duration)" },
+		{ w: 'flipInZ', k: 'anim', h: "(duration)" },
+		{ w: 'flipOutX', k: 'anim', h: "(duration)" },
+		{ w: 'flipOutY', k: 'anim', h: "(duration)" },
+		{ w: 'flipOutZ', k: 'anim', h: "(duration)" },
+		{ w: 'rotateIn', k: 'anim', h: "(angle, duration)" },
+		{ w: 'rotateOut', k: 'anim', h: "(angle, duration)" },
+		{ w: 'flash', k: 'anim', h: "(times, duration)" },
+		{ w: 'rubberBand', k: 'anim', h: "(scale, duration)" },
+		{ w: 'jello', k: 'anim', h: "(intensity, duration)" },
+		{ w: 'heartBeat', k: 'anim', h: "(scale, duration)" },
+		{ w: 'tada', k: 'anim', h: "(rotations, scale, duration)" },
+		{ w: 'wobble', k: 'anim', h: "(angle, duration)" },
+		{ w: 'raw', k: 'anim', h: "(code)" },
+		// Timeline
+		{ w: 'then', k: 'method', h: "(gap)" },
+		{ w: 'with', k: 'method', h: "()" },
+		{ w: 'at', k: 'method', h: "(time)" },
+		// Class/ID authoring
+		{ w: 'addClass', k: 'method', h: "(cls)" },
+		{ w: 'removeClass', k: 'method', h: "(cls)" },
+		{ w: 'toggleClass', k: 'method', h: "(cls, force?)" },
+		{ w: 'editID', k: 'method', h: "(newId)" },
+		// Query / read
+		{ w: 'count', k: 'query', h: "() → number" },
+		{ w: 'exists', k: 'query', h: "() → bool" },
+		{ w: 'isEmpty', k: 'query', h: "() → bool" },
+		{ w: 'names', k: 'query', h: "() → string[]" },
+		{ w: 'ids', k: 'query', h: "() → string[]" },
+		{ w: 'classes', k: 'query', h: "() → string[]" },
+		{ w: 'isClass', k: 'query', h: "(cls) → bool" },
+		{ w: 'id', k: 'query', h: "() → string" },
+		{ w: 'bounds', k: 'query', h: "() → {min,max,size}" },
+		{ w: 'size', k: 'query', h: "() → Vector3" },
+		{ w: 'color', k: 'query', h: "() → hex" },
+		{ w: 'material', k: 'query', h: "() → {type,color,…}" },
+		{ w: 'opacity', k: 'query', h: "() → number" },
+		{ w: 'visible', k: 'query', h: "() → bool" },
+		// Transform accessors
+		{ w: 'position', k: 'prop', h: ".x .y .z" },
+		{ w: 'rotation', k: 'prop', h: ".x .y .z" },
+		{ w: 'quaternion', k: 'prop', h: ".x .y .z .w" },
+		// Traversal
+		{ w: 'not', k: 'method', h: "(selector)" },
+		{ w: 'first', k: 'method', h: "()" },
+		{ w: 'last', k: 'method', h: "()" },
+		{ w: 'eq', k: 'method', h: "(index)" },
+		{ w: 'parent', k: 'method', h: "()" },
+		{ w: 'children', k: 'method', h: "()" },
+		{ w: 'closest', k: 'method', h: "(selector)" },
+		{ w: 'add', k: 'method', h: "(selector)" },
+		{ w: 'filter', k: 'method', h: "(selector)" },
+		{ w: 'each', k: 'method', h: "(fn)" },
+		{ w: 'result', k: 'method', h: "()" },
+		{ w: 'op', k: 'method', h: "(opJSON)" },
+		{ w: 'bulkSet', k: 'method', h: "(factory, pred?)" },
+	];
+
+	// ── Selector type literals (for use inside selector string arguments) ─────
+	const AC_SELECTOR_TYPES = [
+		{ w: 'mesh', k: 'type' }, { w: 'group', k: 'type' },
+		{ w: 'light', k: 'type' }, { w: 'camera', k: 'type' },
+		{ w: 'sprite', k: 'type' }, { w: 'line', k: 'type' },
+		{ w: 'points', k: 'type' }, { w: 'bone', k: 'type' },
+		{ w: 'object3d', k: 'type' },
+		{ w: '*', k: 'type' }, { w: ':selected', k: 'pseudo' }, { w: ':lasso', k: 'pseudo' },
+	];
+
+	// Functions whose first string arg is a selector
+	const SELECTOR_FUNCS = /\b(\$S|Pick|pick|query|queryOne|isolate|soloClass|groupSelection|isValidSelector)\s*\(\s*['"]/;
+
+	let acItems = [];     // current filtered list
+	let acIndex = - 1;    // highlighted index (- 1 = none)
+	let acPrefix = '';    // the token being completed
+	let acStart = - 1;    // cursor position where the token starts
+	let acMode = 'general'; // 'general' | 'selector' | 'chain'
+
+	// ── Context detection ─────────────────────────────────────────────────────
+
+	function acDetectContext () {
+
+		const pos = input.selectionStart;
+		const before = input.value.slice( 0, pos );
+
+		// 1) Inside a selector string? e.g. $S('  or Pick("
+		// Find the last unmatched opening quote preceded by a selector function
+		const selectorMatch = before.match( /\b(\$S|Pick|pick|query|queryOne|isolate|soloClass|groupSelection|isValidSelector)\s*\(\s*(['"])([^'"]*?)$/ );
+		if ( selectorMatch ) {
+
+			const selectorText = selectorMatch[ 3 ];
+			// Determine the current token inside the selector (after last space or combinator)
+			const parts = selectorText.split( /(\s+|>)/ );
+			const lastPart = parts[ parts.length - 1 ] || '';
+			return { mode: 'selector', prefix: lastPart, start: pos - lastPart.length };
+
+		}
+
+		// 2) After a dot on a chainable expression? e.g. $S('.x').  or ).method().
+		// Look for a chain context: )<whitespace?>. or .<identifier>
+		const chainMatch = before.match( /\)\s*\.(\w*)$/ );
+		if ( chainMatch ) {
+
+			return { mode: 'chain', prefix: chainMatch[ 1 ], start: pos - chainMatch[ 1 ].length };
+
+		}
+
+		// Also match chaining after a method with args: .recolor('#f00').
+		const chainMatch2 = before.match( /\.(\w+)\([^)]*\)\s*\.(\w*)$/ );
+		if ( chainMatch2 ) {
+
+			return { mode: 'chain', prefix: chainMatch2[ 2 ], start: pos - chainMatch2[ 2 ].length };
+
+		}
+
+		// 3) General mode — the default identifier completion
+		let i = before.length - 1;
+		while ( i >= 0 && /[\w$]/.test( before[ i ] ) ) i --;
+		const start = i + 1;
+		return { mode: 'general', prefix: before.slice( start ), start };
+
+	}
+
+	// ── Live scene selectors ──────────────────────────────────────────────────
+
+	function acGetSceneSelectors () {
+
+		try {
+
+			// Same SELECTOR INDEX the AI candidate injection reads (Part 0) — one
+			// ranked+capped source so the dropdown and the model never disagree about
+			// what's addressable. Each entry already carries its resolved node count.
+			const index = buildSelectorIndex( editor.scene );
+			return index.map( ( { selector, count } ) => ( {
+				w: selector,
+				k: 'selector',
+				h: count > 1 ? '×' + count : '',
+			} ) );
+
+		} catch ( e ) {
+
+			return [];
+
+		}
+
+	}
+
+	// ── Filtering ─────────────────────────────────────────────────────────────
+
+	function acFilter ( prefix, wordList ) {
+
+		const lc = prefix.toLowerCase();
+
+		if ( ! prefix ) {
+
+			// No prefix: show all items (capped)
+			return wordList.slice( 0, 24 ).map( item => ( { ...item, score: 0 } ) );
+
+		}
+
+		return wordList
+			.map( item => {
+
+				const w = item.w;
+				if ( w.startsWith( prefix ) ) return { ...item, score: 3 };
+				if ( w.toLowerCase().startsWith( lc ) ) return { ...item, score: 2 };
+				if ( w.toLowerCase().includes( lc ) ) return { ...item, score: 1 };
+				return null;
+
+			} )
+			.filter( Boolean )
+			.sort( ( a, b ) => b.score - a.score || a.w.localeCompare( b.w ) )
+			.slice( 0, 24 );
+
+	}
+
+	// ── Rendering ─────────────────────────────────────────────────────────────
+
+	function acRender () {
+
+		acDropdown.innerHTML = '';
+
+		if ( acItems.length === 0 ) {
+
+			acDropdown.classList.remove( 'visible' );
+			return;
+
+		}
+
+		const kindLabels = {
+			fn: 'function', class: 'class', var: 'variable', obj: 'object', kw: 'keyword',
+			method: 'method', prop: 'property', anim: 'animation', query: 'query',
+			selector: 'selector', type: 'type', pseudo: 'pseudo',
+		};
+
+		for ( let i = 0; i < acItems.length; i ++ ) {
+
+			const div = document.createElement( 'div' );
+			div.className = 'shell-ac-item' + ( i === acIndex ? ' active' : '' );
+
+			const nameSpan = document.createElement( 'span' );
+			nameSpan.textContent = acItems[ i ].w;
+			div.appendChild( nameSpan );
+
+			// Show hint (signature) for chain methods
+			if ( acItems[ i ].h ) {
+
+				const hintSpan = document.createElement( 'span' );
+				hintSpan.className = 'shell-ac-hint';
+				hintSpan.textContent = acItems[ i ].h;
+				div.appendChild( hintSpan );
+
+			}
+
+			const kindSpan = document.createElement( 'span' );
+			kindSpan.className = 'shell-ac-kind';
+			kindSpan.textContent = kindLabels[ acItems[ i ].k ] || acItems[ i ].k;
+			div.appendChild( kindSpan );
+
+			div.addEventListener( 'mousedown', ( e ) => {
+
+				e.preventDefault();
+				acAccept( i );
+
+			} );
+			acDropdown.appendChild( div );
+
+		}
+
+		acDropdown.classList.add( 'visible' );
+
+		const active = acDropdown.querySelector( '.active' );
+		if ( active ) active.scrollIntoView( { block: 'nearest' } );
+
+	}
+
+	// ── Accept completion ─────────────────────────────────────────────────────
+
+	function acAccept ( idx ) {
+
+		const item = acItems[ idx !== undefined ? idx : acIndex ];
+		if ( ! item ) return;
+
+		const before = input.value.slice( 0, acStart );
+		const after  = input.value.slice( input.selectionStart );
+		input.value  = before + item.w + after;
+
+		const newPos = acStart + item.w.length;
+		input.selectionStart = input.selectionEnd = newPos;
+
+		acHide();
+
+		// After accepting in selector mode, re-trigger to allow continued typing
+		if ( acMode === 'selector' ) {
+
+			setTimeout( acUpdate, 0 );
+
+		}
+
+	}
+
+	function acHide () {
+
+		acItems = [];
+		acIndex = - 1;
+		acPrefix = '';
+		acStart = - 1;
+		acDropdown.classList.remove( 'visible' );
+		acDropdown.innerHTML = '';
+
+	}
+
+	// ── Update (main entry point) ─────────────────────────────────────────────
+
+	function acUpdate () {
+
+		const ctx = acDetectContext();
+		acMode = ctx.mode;
+		acPrefix = ctx.prefix;
+		acStart = ctx.start;
+
+		let wordList;
+
+		if ( ctx.mode === 'selector' ) {
+
+			// Merge live scene selectors + static type selectors
+			wordList = [ ...acGetSceneSelectors(), ...AC_SELECTOR_TYPES ];
+
+		} else if ( ctx.mode === 'chain' ) {
+
+			wordList = AC_CHAIN_METHODS;
+
+		} else {
+
+			wordList = AC_WORDS;
+
+		}
+
+		acItems = acFilter( ctx.prefix, wordList );
+
+		// In general mode, if prefix is empty and input is empty, show all
+		// If prefix is empty but there's other text, only show when at start of a new token
+		if ( ctx.mode === 'general' && ! ctx.prefix ) {
+
+			const before = input.value.slice( 0, input.selectionStart );
+			// Show if empty or after whitespace/open-paren/semicolon/comma/equals
+			if ( before.length === 0 || /[\s(;,={\[+\-*/%|&!~<>?:]$/.test( before ) ) {
+
+				acItems = acFilter( '', wordList );
+
+			} else {
+
+				acItems = [];
+
+			}
+
+		}
+
+		acIndex = acItems.length > 0 ? 0 : - 1;
+		acRender();
+
+	}
+
+	input.addEventListener( 'input', acUpdate );
+	input.addEventListener( 'blur', () => setTimeout( acHide, 150 ) );
+	input.addEventListener( 'click', acUpdate );
+	input.addEventListener( 'focus', () => setTimeout( acUpdate, 0 ) );
+
 	// ── State ─────────────────────────────────────────────────────────────────
 
 	const history = [];
@@ -568,6 +1123,10 @@ function Shell( editor ) {
 						monacoEditorInstance.layout( { width: editorDiv.offsetWidth, height: contentHeight } );
 					}
 					
+					// Expose so the post-DOM-insertion layout pass can recompute the
+					// height once the element actually has a width (word-wrap, and thus
+					// contentHeight, is only correct after the editor is on-DOM).
+					editorDiv.__updateHeight = updateEditorHeight;
 					monacoEditorInstance.onDidChangeModelContent( updateEditorHeight );
 					updateEditorHeight();
 					resolve();
@@ -648,6 +1207,9 @@ function Shell( editor ) {
 			requestAnimationFrame( () => {
 				if ( editorDiv.__monacoInstance ) {
 					editorDiv.__monacoInstance.layout();
+					// Now that the editor has a real width, recompute the fit-to-content
+					// height (shrinks to the content, capped at 40vh as the max).
+					if ( editorDiv.__updateHeight ) editorDiv.__updateHeight();
 				}
 			} );
 
@@ -1975,12 +2537,15 @@ function Shell( editor ) {
 				// loop and print a 3-axis (structure/spatial/semantic) pass/fail table.
 				evalAI: function ( prompts ) { return evalAI( prompts ); },
 
-				// evalEditMatrix('bare'|'scaffolded'|'constrained'|'reason-constrained')
+				// evalEditMatrix('bare'|'scaffolded'|'constrained'|'reason-constrained'|'host-resolved')
 				// — run the 5 fuzzy editing tasks on the current model; accumulates the
 				// model×condition matrix and prints it. Load each model / flip condition
 				// / add Haiku for the ceiling. 'constrained' = scaffolded + JSON-schema
 				// constrained decode; 'reason-constrained' = constrained + a free-text
-				// reasoning field before the ops (reason freely, constrain the output).
+				// reasoning field before the ops (reason freely, constrain the output);
+				// 'host-resolved' = host ranks the real parts + injects a numbered
+				// candidate list, the model PICKS an id (pick-don't-compose) and an
+				// unambiguous top candidate is resolved host-side with no model call.
 				evalEditMatrix: function ( condition ) { return evalEditMatrix( condition ); },
 				// saveEvalRows() — download the accumulated per-case rows as JSONL.
 				saveEvalRows: function () { return saveEvalRows(); },
@@ -2372,6 +2937,13 @@ function Shell( editor ) {
 	// load Haiku (dev mode) and run again for the ceiling column.
 	const _editMatrix = newMatrix();
 	let _matrixRunning = false;
+	// Session-scoped disambiguation memory (Part 4): when the host asks the user
+	// which part they meant ("by 'the wheels' I mean the front ones"), the answer is
+	// remembered for THIS conversation only — keyed by the normalized request, never a
+	// global model change. Consulted before ranking so a settled ambiguity resolves
+	// silently next time; cleared when the scene is replaced.
+	const aiDisambig = makeDisambiguationMemory();
+	editor.signals.editorCleared.add( () => aiDisambig.clear() );
 	// Per-(model,condition,task,id) rows accumulated across runs → the re-run
 	// JSONL artifact. saveEvalRows() (JS surface) downloads it.
 	const _matrixRows = [];
@@ -2400,6 +2972,19 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 - "op" is one of the edit ops above; "selector" targets the part(s); "args" holds op-specific values (e.g. recolor→{"color":"#000000"}, scale→{"factor":2}, move→{"dy":0.3}).
 - One array entry per DISTINCT operation. Do NOT split a single set edit ("all four wheels") into one op per node — one op, one selector.`;
 
+	// Output contract for the 'host-resolved' condition (pick-don't-compose). The
+	// host has ALREADY ranked the real parts and injected a numbered candidate list;
+	// the model does NOT invent a selector, it CHOOSES an id from that list (the
+	// decoder's enum makes anything else unemittable). "__none__" routes to clarify.
+	const HOST_RESOLVED_JSON_INSTRUCTION = `
+
+HOST-RESOLVED OUTPUT MODE — respond with ONLY a JSON object, no prose, no code fences:
+{"ops":[{"op":"<op>","selector":"<candidate-id>","args":{ … }}]}
+- "selector" MUST be one of the candidate ids listed in ADDRESSABLE PARTS above (e.g. "c1", "c2"). Do NOT write a CSS selector — pick the id whose node count matches the request.
+- If none of the candidates fit, use "${ ESCAPE_ID }" (the host will ask the user which part).
+- "op" is one of the edit ops above; "args" holds op-specific values (recolor→{"color":"#000000"}, scale→{"factor":2}, move→{"dy":0.3}).
+- One array entry per DISTINCT operation; do NOT split a single set edit into one op per node.`;
+
 	async function evalEditMatrix( condition = 'scaffolded', opts = {} ) {
 
 		if ( ! aiEngine.ready ) { appendOutput( 'AI not loaded — click "Load AI" first.', 'error' ); return; }
@@ -2408,17 +2993,25 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 		const debug = opts.debug === true;
 		const model = aiEngine.modelId || 'unknown';
 		// Conditions: 'bare' (no scaffolding), 'scaffolded' (parts injection),
-		// 'constrained' (scaffolded + JSON-schema constrained decoding), and
+		// 'constrained' (scaffolded + JSON-schema constrained decoding),
 		// 'reason-constrained' (scaffolded + constrained decode with a free-text
-		// reasoning field BEFORE the ops array — reason freely, constrain the output).
-		// All but 'bare' inject parts; the two constrained conditions force schema-
-		// valid op JSON, and 'reason-constrained' additionally gives the model a
-		// think-first slot to recover the op-selection cost of premature commitment.
+		// reasoning field BEFORE the ops array — reason freely, constrain the output),
+		// and 'host-resolved' (the host ranks the real parts and injects a NUMBERED
+		// candidate list; the model PICKS an id from an enum instead of composing a
+		// selector — pick-don't-compose, so an invalid selector is unemittable and an
+		// unambiguous top candidate is resolved host-side with no model call for the
+		// selector slot). All but 'bare' inject scaffolding.
 		const injectParts = condition !== 'bare';
 		const reasonConstrain = condition === 'reason-constrained';
+		const hostResolve = condition === 'host-resolved';
 		const constrainDecode = condition === 'constrained' || reasonConstrain;
 		const opsResponseSchema = ! constrainDecode ? null
 			: reasonConstrain ? buildReasonConstrainedOpsSchema() : buildConstrainedOpsSchema();
+		// Host-resolved bookkeeping — how often the host resolved the selector with NO
+		// model decision (cheap-first skip) and how often it had to ask (ambiguous /
+		// escape). Reported honestly alongside the matrix (see the work order's "report
+		// ask-rate and host-only-resolve rate").
+		let _hostSkip = 0, _hostAsk = 0, _hostTotal = 0;
 		appendOutput( `Eval matrix: ${ model } / ${ condition } — measuring the 5 tasks (single-shot, quiet)…`, 'info' );
 
 		// runOnce — ONE quiet generation (no agentic loop, no retries, NO execution).
@@ -2443,8 +3036,94 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 			// free-text `reasoning` field before the ops.
 			if ( reasonConstrain ) systemPrompt += REASON_CONSTRAINED_JSON_INSTRUCTION;
 			else if ( constrainDecode ) systemPrompt += CONSTRAINED_JSON_INSTRUCTION;
-			const messages = buildMessages( systemPrompt, editor, prompt, apiHints, { injectParts } );
-			const response = await aiEngine.stream( messages, { maxTokens: aiTokenBudget(), temperature: 0, schema: opsResponseSchema } );
+
+			// ── Host-resolved multi-op decomposition (segment → N single-target) ──
+			// Take op-COUNTING off the model: the host splits the request into N
+			// target-scoped clauses (segmentRequest), then resolves each selector
+			// INDEPENDENTLY through the same cheap-first path used for single ops. The
+			// model's per-segment job shrinks to op-type + args; the selector is
+			// host-supplied. N is the host's answer, never the model's. N=1 or an
+			// uncertain split falls through to the single-target path below.
+			if ( hostResolve ) {
+
+				const seg = segmentRequest( prompt, editor );
+				if ( seg.confident && seg.segments.length > 1 ) {
+
+					const ops = [];
+					const seen = new Set();
+					for ( const s of seg.segments ) {
+
+						_hostTotal ++;
+						const rank = rankSelectorCandidates( editor, s.targetPhrase );
+						const cands = rank.candidates;
+						const cheap = tryHostResolve( rank );
+						if ( ! cands.length || rank.ambiguous ) _hostAsk ++;
+						let ids;
+						if ( cheap.resolved ) { _hostSkip ++; ids = [ cheap.resolved.id ]; } // host-only resolve
+						else ids = candidateIds( cands );
+						const segSchema = buildCandidateConstrainedOpsSchema( ids );
+						let segSys = partsPreview ? getCachedSystemPrompt( editor ) : SYSTEM_PROMPT;
+						segSys += '\n\n' + buildCandidateInjection( cands ) + HOST_RESOLVED_JSON_INSTRUCTION;
+						const segMsgs = buildMessages( segSys, editor, s.opPhrase, retrieveForPrompt( s.opPhrase ), { injectParts: false } );
+						const segResp = await aiEngine.stream( segMsgs, { maxTokens: aiTokenBudget(), temperature: 0, schema: segSchema } );
+						const segRaw = typeof segResp === 'string' ? segResp : segResp?.text || '';
+						const segUsage = typeof segResp === 'object' ? segResp?.usage : null;
+						if ( segUsage && ( segUsage.prompt_tokens || segUsage.completion_tokens ) )
+							aiEngine._trackUsage( segUsage.prompt_tokens || 0, segUsage.completion_tokens || 0 );
+
+						let segObj = null;
+						try { segObj = JSON.parse( segRaw ); }
+						catch { const m = segRaw && segRaw.match( /\{[\s\S]*\}/ ); if ( m ) { try { segObj = JSON.parse( m[ 0 ] ); } catch { /* unparseable */ } } }
+						const segOps = segObj && Array.isArray( segObj.ops ) ? segObj.ops : ( segObj && segObj.op ? [ segObj ] : [] );
+						if ( ! segOps.length ) continue; // this segment failed independently — the other N-1 still apply
+
+						const first = segOps[ 0 ];
+						const r = resolveEmittedSelector( first.selector, cands, editor );
+						// Co-reference collapse: the SAME op over the SAME node set is one op
+						// ("the wheels and rims" → both recolor {4} → collapse to one). A
+						// DIFFERENT op on the same set is kept ("lift the cab and paint it").
+						const key = `${ first.op }|${ [ ...r.nodes ].sort().join( ',' ) }`;
+						if ( r.selector && r.nodes.size && seen.has( key ) ) continue;
+						if ( r.nodes.size ) seen.add( key );
+						ops.push( { op: first.op, selector: r.selector, args: first.args || {} } );
+
+					}
+					return { code: JSON.stringify( { ops } ) };
+
+				}
+
+			}
+
+			// ── Host-resolved path (pick-don't-compose) ──────────────────────────
+			// Rank the REAL parts for THIS prompt host-side, inject the numbered
+			// candidate list (replacing the bulk vocab block), and constrain the
+			// selector field to that candidate enum. Cheap-first: if the top candidate
+			// is unambiguous, collapse the enum to it → the selector is host-decided
+			// (no model choice). Otherwise the model picks; "__none__" = ask.
+			let perPromptSchema = opsResponseSchema;
+			let hostCandidates = null;
+			if ( hostResolve ) {
+
+				_hostTotal ++;
+				const rank = rankSelectorCandidates( editor, prompt );
+				hostCandidates = rank.candidates;
+				// A settled ambiguity for this request (from an earlier clarify) resolves
+				// silently: if the remembered selector is one of the offered candidates,
+				// treat it as the cheap-first winner.
+				const remembered = aiDisambig.get( prompt );
+				const rememberedCand = remembered ? hostCandidates.find( c => c.selector === remembered ) : null;
+				const cheap = rememberedCand ? { resolved: rememberedCand } : tryHostResolve( rank );
+				if ( ! hostCandidates.length || rank.ambiguous ) _hostAsk ++;
+				let ids;
+				if ( cheap.resolved ) { _hostSkip ++; ids = [ cheap.resolved.id ]; } // host-only resolve
+				else ids = candidateIds( hostCandidates );
+				perPromptSchema = buildCandidateConstrainedOpsSchema( ids );
+				systemPrompt += '\n\n' + buildCandidateInjection( hostCandidates ) + HOST_RESOLVED_JSON_INSTRUCTION;
+
+			}
+
+			const messages = buildMessages( systemPrompt, editor, prompt, apiHints, { injectParts: hostResolve ? false : injectParts } );
+			const response = await aiEngine.stream( messages, { maxTokens: aiTokenBudget(), temperature: 0, schema: perPromptSchema } );
 
 			// Extract text from response (handle both string and {text, usage} formats)
 			const raw = typeof response === 'string' ? response : response?.text || '';
@@ -2455,9 +3134,35 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 				aiEngine._trackUsage( usage.prompt_tokens || 0, usage.completion_tokens || 0 );
 			}
 
+			// Host-resolved: the model emitted candidate IDS ("c2") — map each back to
+			// the concrete selector string the candidate resolves to, so the downstream
+			// parser + real selectorEngine score it exactly like every other condition.
+			if ( hostResolve ) return { code: remapHostSelectors( raw, hostCandidates ) };
+
 			// Constrained output is raw JSON (no code fence) — parseEmittedOps reads it
 			// directly; the JS-code conditions still go through the fenced-code extractor.
 			return { code: constrainDecode ? raw : extractCode( raw ) };
+
+		}
+
+		// Rewrite a host-resolved model reply: candidate id → resolved selector string.
+		// resolveEmittedSelector maps an id/free-form/escape to nodes; we emit the
+		// selector it resolved to (null when it escaped or nothing matched, so the case
+		// scores as an honest miss). Returns an { ops:[…] } JSON string for the parser.
+		function remapHostSelectors( raw, candidates ) {
+
+			let obj = null;
+			try { obj = JSON.parse( raw ); }
+			catch { const m = raw && raw.match( /\{[\s\S]*\}/ ); if ( m ) { try { obj = JSON.parse( m[ 0 ] ); } catch { /* unparseable */ } } }
+			if ( ! obj ) return raw;
+			const ops = Array.isArray( obj.ops ) ? obj.ops : ( obj.op ? [ obj ] : [] );
+			for ( const o of ops ) {
+
+				const r = resolveEmittedSelector( o.selector, candidates, editor );
+				o.selector = r.selector; // concrete selector string or null
+
+			}
+			return JSON.stringify( { ops } );
 
 		}
 
@@ -2533,6 +3238,13 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 		recordRun( _editMatrix, { model, condition, taskScores } );
 		const line = Object.entries( taskScores ).map( ( [ t, s ] ) => `${ t } ${ s.passed }/${ s.total }` ).join( '   ' );
 		appendOutput( `${ model } / ${ condition }:   ${ line }`, 'result' );
+		if ( hostResolve && _hostTotal ) {
+
+			const skipPct = Math.round( 100 * _hostSkip / _hostTotal );
+			const askPct = Math.round( 100 * _hostAsk / _hostTotal );
+			appendOutput( `host-resolved: ${ _hostSkip }/${ _hostTotal } selectors resolved host-side with no model call (${ skipPct }%); ${ _hostAsk }/${ _hostTotal } ambiguous → ask (${ askPct }%).`, 'info' );
+
+		}
 		appendOutput( formatMatrix( _editMatrix ), 'result' );
 		appendOutput( `${ _matrixRows.length } row(s) logged — saveEvalRows() to download JSONL.`, 'info' );
 		return taskScores;
@@ -2912,9 +3624,69 @@ REASON-THEN-CONSTRAIN OUTPUT MODE — respond with ONLY a JSON object, no prose,
 
 		event.stopPropagation(); // prevent global shortcut handler from eating Backspace/Delete
 
+		// ── Autocomplete keyboard handling ────────────────────────────────────
+		if ( acDropdown.classList.contains( 'visible' ) ) {
+
+			if ( event.key === 'Tab' || ( event.key === 'Enter' && ! event.shiftKey && acIndex >= 0 ) ) {
+
+				event.preventDefault();
+				acAccept();
+				return;
+
+			}
+
+			if ( event.key === 'Escape' ) {
+
+				event.preventDefault();
+				acHide();
+				return;
+
+			}
+
+			if ( event.key === 'ArrowDown' ) {
+
+				event.preventDefault();
+				acIndex = Math.min( acIndex + 1, acItems.length - 1 );
+				acRender();
+				return;
+
+			}
+
+			if ( event.key === 'ArrowUp' ) {
+
+				event.preventDefault();
+				acIndex = Math.max( acIndex - 1, 0 );
+				acRender();
+				return;
+
+			}
+
+		}
+
+		// Tab without dropdown: ignore (allow default)
+		if ( event.key === 'Tab' ) {
+
+			event.preventDefault();
+			// Insert a tab character
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+			input.value = input.value.slice( 0, start ) + '\t' + input.value.slice( end );
+			input.selectionStart = input.selectionEnd = start + 1;
+			return;
+
+		}
+
+		if ( event.key === 'Escape' ) {
+
+			acHide();
+			return;
+
+		}
+
 		if ( event.key === 'Enter' && ! event.shiftKey ) {
 
 			event.preventDefault();
+			acHide();
 			execute( input.value );
 			input.value = '';
 			input.style.height = 'auto';
