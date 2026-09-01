@@ -1,0 +1,100 @@
+# 3dom-grammar/1.1.0 — POSITIVE conformance corpus
+# Every line is one complete, VALID 3DOM program (one IIFE). CI asserts each
+# parses to exactly ONE derivation (zero ambiguity) and that the union achieves
+# 100% production coverage over the W3C grammar. Blank lines and #-comments are
+# ignored by the harness. Do not edit without re-running coverage.py.
+#
+# ── verb coverage: all 15 verbs, each at least once ──────────────────────────
+(function(){ $S('.wheel').recolor('#111111'); })();
+(function(){ $S('.wheel').scale(2); })();
+(function(){ $S('.wheel').move(1,0,0); })();
+(function(){ $S('.wheel').rotate('y',90); })();
+(function(){ $S('.wheel').delete(); })();
+(function(){ $S('.fan').spin('y',1,2); })();
+(function(){ $S('.wheel').duplicate(1,0,1); })();
+(function(){ $S('.body').setMaterial('glass'); })();
+(function(){ $S('.window').setOpacity(0.5); })();
+(function(){ $S('.wheel').setVisible('false'); })();
+(function(){ $S('.body').wireframe('true'); })();
+(function(){ $S('.body').metalness(0.8); })();
+(function(){ $S('.body').roughness(0.2); })();
+(function(){ $S('.wheel').castShadow('true'); })();
+(function(){ $S('.ground').receiveShadow('true'); })();
+#
+# ── matcher kinds: #id, .class, and each of the four type keywords ───────────
+(function(){ $S('#dump-bed').scale(1.5); })();
+(function(){ $S('.wheel').recolor('#000000'); })();
+(function(){ $S('mesh').wireframe('true'); })();
+(function(){ $S('group').setVisible('true'); })();
+(function(){ $S('light').metalness(0); })();
+(function(){ $S('camera').move(0,1,0); })();
+#
+# ── pseudo-selectors: :selected and :lasso ───────────────────────────────────
+(function(){ $S(':selected').recolor('#ff0000'); })();
+(function(){ $S(':lasso').delete(); })();
+#
+# ── wildcard ─────────────────────────────────────────────────────────────────
+(function(){ $S('*').setVisible('true'); })();
+(function(){ $S('*').recolor('#888888'); })();
+#
+# ── compound (AND, no spaces): two and three matchers ────────────────────────
+(function(){ $S('.wheel.front').recolor('#111111'); })();
+(function(){ $S('.wheel.front.left').scale(1.2); })();
+(function(){ $S('mesh.metallic').metalness(1); })();
+(function(){ $S('#hub.rim').recolor('#cccccc'); })();
+#
+# ── descendant combinator (whitespace) ───────────────────────────────────────
+(function(){ $S('.car .wheel').recolor('#111111'); })();
+(function(){ $S('.truck .cab .window').setOpacity(0.4); })();
+(function(){ $S('group .wheel').spin('x',2,4); })();
+#
+# ── child combinator, all four spacing branches of `whitespace? '>' whitespace?`
+(function(){ $S('.car>.wheel').recolor('#222222'); })();
+(function(){ $S('.car >.wheel').recolor('#222222'); })();
+(function(){ $S('.car> .wheel').recolor('#222222'); })();
+(function(){ $S('.car > .wheel').recolor('#222222'); })();
+#
+# ── mixed combinators / longer selectors ─────────────────────────────────────
+(function(){ $S('.car > .axle .wheel').rotate('z',45); })();
+(function(){ $S('group > mesh').castShadow('true'); })();
+#
+# ── argument kinds: numbers (int + float, signed), strings, comma lists ───────
+(function(){ $S('.wheel').move(-1,0,-2); })();
+(function(){ $S('.wheel').move(1.5,0,2.25); })();
+(function(){ $S('.wheel').scale(-3); })();
+(function(){ $S('.body').recolor('#0a0a0a'); })();
+(function(){ $S('.fan').spin('y',3,8); })();
+(function(){ $S('.wheel').rotate('x',-15); })();
+#
+# ── nullary vs argumented operations ─────────────────────────────────────────
+(function(){ $S('.wheel').delete(); })();
+(function(){ $S('.wheel').duplicate(); })();
+(function(){ $S('.wheel').scale(2); })();
+#
+# ── chaining: single op, and long unbounded chains (ops:more, many times) ─────
+(function(){ $S('.wheel').recolor('#111111').scale(1.5); })();
+(function(){ $S('.wheel').recolor('#111111').scale(1.5).rotate('y',90); })();
+(function(){ $S('.wheel').recolor('#111111').scale(1.5).rotate('y',90).move(0,1,0).spin('y',1,2); })();
+(function(){ $S('.body').metalness(0.9).roughness(0.1).wireframe('false').castShadow('true'); })();
+#
+# ── multiple statements in one IIFE (stmts:more) ─────────────────────────────
+(function(){ $S('.wheel').recolor('#111111'); $S('.body').recolor('#ff0000'); })();
+(function(){ $S('.wheel').scale(2); $S('.body').move(0,1,0); $S('.window').setOpacity(0.5); })();
+#
+# ── empty IIFE body (stmts:empty — a valid program with zero statements) ──────
+(function(){})();
+#
+# ── realistic multi-line formatting (L1 layout elision) ──────────────────────
+(function () {
+  $S( '.wheel' ) . recolor( '#111111' ) . scale( 1.5 ) ;
+  $S( '.body' ) . recolor( '#ff0000' ) ;
+})();
+#
+# ── a few more valid combinations to broaden the sample ──────────────────────
+(function(){ $S('.door.left').rotate('y',30); })();
+(function(){ $S('#chassis > .wheel.rear').spin('z',1,3); })();
+(function(){ $S('mesh.glass').setOpacity(0.3).metalness(0); })();
+(function(){ $S('.robot .arm.right').move(0,0,1).rotate('x',20); })();
+(function(){ $S('*').wireframe('true').setVisible('true'); })();
+(function(){ $S('.tree .leaf').recolor('#00aa00').duplicate(0.5,0,0.5); })();
+(function(){ $S(':selected').scale(1.1).recolor('#ffaa00'); })();

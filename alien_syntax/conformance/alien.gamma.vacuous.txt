@@ -1,0 +1,20 @@
+# alien-syntax/gamma on 3dom-grammar/1.1.0 — VALID-BUT-VACUOUS corpus (D5)
+# Every non-comment line is a SYNTACTICALLY VALID program whose chain has ZERO
+# operations (a pure query): a PARSE SUCCESS and a TASK FAILURE on any task
+# whose target IR has >= 1 operation (SCORING_POLICY.md).
+#
+# op list). Per SCORING_POLICY.md these are a PARSE SUCCESS but a TASK FAILURE on
+# any task whose target IR has >=1 operation. They are neither positive (they add
+#
+(⍤(){ ⟠⟠('◈wheel'); })();
+(⍤(){ ⟠⟠('⍟dump-bed'); })();
+(⍤(){ ⟠⟠('◈car ◈wheel'); })();
+(⍤(){ ⟠⟠('◈car ⊳ ◈wheel'); })();
+(⍤(){ ⟠⟠('◈wheel◈front'); })();
+(⍤(){ ⟠⟠('⌾'); })();
+(⍤(){ ⟠⟠('⍇'); })();
+(⍤(){ ⟠⟠('⍈'); })();
+(⍤(){ ⟠⟠('⍜⍋'); })();
+(⍤(){ ⟠⟠('⍜⍌'); })();
+(⍤(){ ⟠⟠('◈wheel'); ⟠⟠('◈body'); })();
+(⍤(){ ⟠⟠('◈robot ◈arm◈left'); })();

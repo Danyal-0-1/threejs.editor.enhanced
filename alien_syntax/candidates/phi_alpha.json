@@ -1,0 +1,147 @@
+{
+  "phi_id": "alpha",
+  "targets_grammar": "3dom-grammar/1.1.0",
+  "generated": "2026-08-28T18:40:24+00:00",
+  "construct": "INTERFERENCE — familiar spellings, wrong meanings",
+  "map": {
+    "T_SELECTOR_ENTRY": {
+      "from": "$S",
+      "to": "$$"
+    },
+    "T_FUNCTION": {
+      "from": "function",
+      "to": "recolor"
+    },
+    "T_CHAIN_OP": {
+      "from": ".",
+      "to": "#"
+    },
+    "T_CLASS_SIGIL": {
+      "from": ".",
+      "to": "#"
+    },
+    "T_ID_SIGIL": {
+      "from": "#",
+      "to": ":"
+    },
+    "T_PSEUDO_SIGIL": {
+      "from": ":",
+      "to": ">"
+    },
+    "T_CHILD": {
+      "from": ">",
+      "to": "*"
+    },
+    "T_WILDCARD": {
+      "from": "*",
+      "to": "."
+    },
+    "T_VERB_RECOLOR": {
+      "from": "recolor",
+      "to": "scale"
+    },
+    "T_VERB_SCALE": {
+      "from": "scale",
+      "to": "move"
+    },
+    "T_VERB_MOVE": {
+      "from": "move",
+      "to": "rotate"
+    },
+    "T_VERB_ROTATE": {
+      "from": "rotate",
+      "to": "delete"
+    },
+    "T_VERB_DELETE": {
+      "from": "delete",
+      "to": "spin"
+    },
+    "T_VERB_SPIN": {
+      "from": "spin",
+      "to": "duplicate"
+    },
+    "T_VERB_DUPLICATE": {
+      "from": "duplicate",
+      "to": "setMaterial"
+    },
+    "T_VERB_SETMATERIAL": {
+      "from": "setMaterial",
+      "to": "setOpacity"
+    },
+    "T_VERB_SETOPACITY": {
+      "from": "setOpacity",
+      "to": "setVisible"
+    },
+    "T_VERB_SETVISIBLE": {
+      "from": "setVisible",
+      "to": "wireframe"
+    },
+    "T_VERB_WIREFRAME": {
+      "from": "wireframe",
+      "to": "metalness"
+    },
+    "T_VERB_METALNESS": {
+      "from": "metalness",
+      "to": "roughness"
+    },
+    "T_VERB_ROUGHNESS": {
+      "from": "roughness",
+      "to": "castShadow"
+    },
+    "T_VERB_CASTSHADOW": {
+      "from": "castShadow",
+      "to": "receiveShadow"
+    },
+    "T_VERB_RECEIVESHADOW": {
+      "from": "receiveShadow",
+      "to": "mesh"
+    },
+    "T_TYPE_MESH": {
+      "from": "mesh",
+      "to": "group"
+    },
+    "T_TYPE_GROUP": {
+      "from": "group",
+      "to": "light"
+    },
+    "T_TYPE_LIGHT": {
+      "from": "light",
+      "to": "camera"
+    },
+    "T_TYPE_CAMERA": {
+      "from": "camera",
+      "to": "selected"
+    },
+    "T_PSEUDO_SELECTED": {
+      "from": "selected",
+      "to": "lasso"
+    },
+    "T_PSEUDO_LASSO": {
+      "from": "lasso",
+      "to": "function"
+    }
+  },
+  "overload_groups": [
+    [
+      "T_CHAIN_OP",
+      "T_CLASS_SIGIL"
+    ]
+  ],
+  "frozen": [
+    "T_LPAREN",
+    "T_RPAREN",
+    "T_LBRACE",
+    "T_RBRACE",
+    "T_SEMI",
+    "T_COMMA",
+    "T_QUOTE_S",
+    "T_QUOTE_D",
+    "T_SIGN_PLUS",
+    "T_SIGN_MINUS",
+    "T_IDENT",
+    "T_NUMBER",
+    "T_STRING_BODY",
+    "T_WS"
+  ],
+  "notes": "Permuted lexicon. Sigma_alpha is Sigma_3DOM itself under a class-respecting DERANGEMENT: a 5-cycle on the five distinct substitutable punctuation spellings and a 22-cycle on the twenty-two identifier-charset word spellings, with $S -> $$ (the DevTools/jQuery multi-select idiom, an in-vocabulary token whose prior points at the wrong semantics). No spelling maps to itself. Because the spelling INVENTORY is unchanged, tokenizer fertility is identical by construction and any measured delta-NLL is attributable to co-occurrence structure, not to token fragmentation. alpha measures INTERFERENCE (strong priors, all pointing the wrong way), which is a different psychological construct from ABSENCE and must not be reported as the same thing."
+}

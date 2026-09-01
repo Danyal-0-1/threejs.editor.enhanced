@@ -32,9 +32,16 @@ export const AI_MODELS = [
 	{ id: 'Llama-3.2-1B-Instruct-q4f32_1-MLC',       label: 'Lite     — Llama 3.2 1B       (~900 MB)' },
 ];
 
-// ── System prompt ─────────────────────────────────────────────────────────────
+// ── System prompt (modular: BASE + RULES + EXAMPLES, assembled per scaffolding level) ──
+//
+// Phase-0 audit finding: a single hardcoded string made every eval an implicit S2
+// run (rules + few-shot). The prompt is now three exported constants so
+// buildSystemPrompt() can assemble S0/S1/S2 on demand. Each is a strict superset
+// of the previous, and joining all three reproduces the original prompt exactly
+// (see SYSTEM_PROMPT below), so production behaviour is unchanged.
 
-export const SYSTEM_PROMPT = `JS generator for a three.js editor. Output ONLY valid JS in a markdown code block.
+// ── BASE_TASK_DESCRIPTION — task framing, scope, world orientation, globals (S0+) ──
+export const BASE_TASK_DESCRIPTION = `JS generator for a three.js editor. Output ONLY valid JS in a markdown code block.
 
 You do FIVE kinds of task, and they use DIFFERENT surfaces:
 • EDIT a LISTED ADDRESSABLE PART (recolor / scale / move / rotate / delete a named part
@@ -105,9 +112,10 @@ GLOBALS (no THREE. prefix needed):
   Furniture: makeTable({position:[x,y,z],width,depth,height}) makeChair({position:[x,y,z],faceToward:[tableX,tableZ]})  (complete legged furniture; chairs auto-face the table)
   Textures: makeTexture(fn,sz) makeCheckerTex(sz,dark,light,tiles) makeGridTex(sz,color,divs,bg)
   Modeling: booleanUnion(a,b) booleanSubtract(a,b) booleanIntersect(a,b) mirrorMesh(m,axis) arrayDuplicate(m,n,dx,dy,dz) subdivide(m,iters)
-  EditMode: enterEditMode() exitEditMode() extrude(d) inset(t) bevel(t) deleteFaces() weld(eps) planarUV(axis) boxUV()
+  EditMode: enterEditMode() exitEditMode() extrude(d) inset(t) bevel(t) deleteFaces() weld(eps) planarUV(axis) boxUV()`;
 
-RULES:
+// ── MANDATORY_RULES — grammar / DSL constraints, the numbered rulebook (S1+) ──────
+export const MANDATORY_RULES = `RULES:
 1. NEVER invent classes. Use ONLY globals above.
 2. ADD: editor.execute(new AddObjectCommand(editor, obj))
    AddObjectCommand takes EXACTLY two args (editor, object) — it has NO position arg.
@@ -301,9 +309,10 @@ RULES:
        -1 auto-computes duration. addClip registers it and shows it in the Animations panel.
    For a bounce/loop, make the last keyframe equal the first so it cycles cleanly.
    NEVER write setInterval, requestAnimationFrame, or an update() loop — ONLY clips (addSpinClip or addClip).
-   NEVER use ops({type:'rotate',...}) or ops({type:'spin',...}) for animation — these fail silently.
+   NEVER use ops({type:'rotate',...}) or ops({type:'spin',...}) for animation — these fail silently.`;
 
-EXAMPLES:
+// ── FEW_SHOT_EXAMPLES — worked prompt→code demonstrations (S2+) ───────────────────
+export const FEW_SHOT_EXAMPLES = `EXAMPLES:
 
 🎨 COLOR NAME → HEX MAPPING (from Rule 20 — use EXACTLY):
   • red:        #ff0000
@@ -681,31 +690,77 @@ User: add a cube
 
 User: make the cube red
 (function(){
-  ops([{type:'recolor',selector:'.cube',color:'#ff0000'}]);
+  $S('.cube').recolor('#ff0000');
 })();
 
 Output the JavaScript block and nothing else.`;
 
-/**
- * Build the full system prompt with operations registry injected.
- * Call this during initialization to augment the static prompt with current ops.
- *
- * @param {string} [opsSchema]  Serialized operation registry (from serializeForAI())
- * @returns {string}            Full system prompt for the AI
- */
-export function buildSystemPrompt( opsSchema = '' ) {
+// ── Reconstructed full prompt (S2 = current production baseline) ──────────────────
+// Back-compat: existing importers (Shell.js) use SYSTEM_PROMPT directly. It is the
+// three layers joined exactly as the original monolithic string was ("\n\n" between
+// sections), so it stays byte-identical to before aside from the recency-bias fix.
+export const SYSTEM_PROMPT = [ BASE_TASK_DESCRIPTION, MANDATORY_RULES, FEW_SHOT_EXAMPLES ].join( '\n\n' );
 
-	// If opsSchema is provided, inject it into the EditMode section
+// ── Scaffolding levels (Phase-0 eval axis) ────────────────────────────────────────
+// Each level is a STRICT SUPERSET of the one below (S0 ⊂ S1 ⊂ S2): the ONLY thing
+// that varies between conditions is how much scaffolding is prepended, never the
+// task itself. This is what lets us isolate the effect of rules vs. few-shot.
+//   S0 — Zero scaffolding: task description only.
+//   S1 — + MANDATORY_RULES (grammar / DSL constraints).
+//   S2 — + FEW_SHOT_EXAMPLES (current production prompt).
+// (S3/S4 are reserved for later conditions, e.g. the Alien-Syntax passes.)
+export const SCAFFOLDING = {
+	S0: [ BASE_TASK_DESCRIPTION ],
+	S1: [ BASE_TASK_DESCRIPTION, MANDATORY_RULES ],
+	S2: [ BASE_TASK_DESCRIPTION, MANDATORY_RULES, FEW_SHOT_EXAMPLES ],
+};
+
+/**
+ * Build the system prompt for a given scaffolding level, with the live EditMode op
+ * registry injected.
+ *
+ * Back-compat: a STRING first arg is treated as the legacy `opsSchema` and defaults
+ * to S2 (the historical behaviour), so the existing call site
+ * `buildSystemPrompt( opsSchema() )` is unaffected and produces the same prompt as
+ * before (aside from the recency-bias fix).
+ *
+ * @param {object|string} [config]                        config object, or legacy opsSchema string
+ * @param {string}        [config.opsSchema='']           serialized op registry (from serializeForAI())
+ * @param {'S0'|'S1'|'S2'} [config.scaffoldingLevel='S2'] how much scaffolding to include
+ * @returns {string}                                      the assembled system prompt
+ */
+export function buildSystemPrompt( config = {} ) {
+
+	// Accept the legacy string signature: buildSystemPrompt( opsSchemaString ).
+	const { opsSchema = '', scaffoldingLevel = 'S2' } =
+		typeof config === 'string' ? { opsSchema: config } : config;
+
+	const layers = SCAFFOLDING[ scaffoldingLevel ] || SCAFFOLDING.S2;
+
+	// ⚗️ ALIEN_SYNTAX_RULES INJECTION POINT (Phase-1 "Alien Syntax" experiment) ──────
+	// The prompt currently teaches a TWO-LANGUAGE surface: $S() for addressable-part
+	// edits, raw JS (findObject + Set*Command) for hand-built primitives. Next week's
+	// experimental condition replaces BOTH with a single unfamiliar grammar routed
+	// through the unified Operation IR, to test whether models can learn it cold.
+	// When that condition is active, append ALIEN_SYNTAX_RULES to `layers` HERE — it
+	// must come LAST so it OVERRIDES the $S() and findObject instructions above:
+	//   e.g.  const finalLayers = alienSyntax ? layers.concat( ALIEN_SYNTAX_RULES ) : layers;
+	// (Do NOT interleave it earlier — override semantics depend on recency.)
+
+	let prompt = layers.join( '\n\n' );
+
+	// Inject the live op registry into the EditMode globals line. That line lives in
+	// the BASE layer, so injection works at every scaffolding level (S0–S2).
 	if ( opsSchema ) {
 
 		const opsSection = opsSchema.split( '\n' ).map( line => '  ' + line ).join( '\n' );
-		return SYSTEM_PROMPT.replace(
+		prompt = prompt.replace(
 			'  EditMode: enterEditMode() exitEditMode() extrude(d) inset(t) bevel(t) deleteFaces() weld(eps) planarUV(axis) boxUV()',
 			'  EditMode:\n' + opsSection
 		);
 
 	}
 
-	return SYSTEM_PROMPT;
+	return prompt;
 
 }

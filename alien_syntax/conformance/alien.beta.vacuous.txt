@@ -1,0 +1,20 @@
+# alien-syntax/beta on 3dom-grammar/1.1.0 — VALID-BUT-VACUOUS corpus (D5)
+# Every non-comment line is a SYNTACTICALLY VALID program whose chain has ZERO
+# operations (a pure query): a PARSE SUCCESS and a TASK FAILURE on any task
+# whose target IR has >= 1 operation (SCORING_POLICY.md).
+#
+# op list). Per SCORING_POLICY.md these are a PARSE SUCCESS but a TASK FAILURE on
+# any task whose target IR has >=1 operation. They are neither positive (they add
+#
+(mumvumfe(){ &Q('~wheel'); })();
+(mumvumfe(){ &Q('%dump-bed'); })();
+(mumvumfe(){ &Q('~car ~wheel'); })();
+(mumvumfe(){ &Q('~car ^ ~wheel'); })();
+(mumvumfe(){ &Q('~wheel~front'); })();
+(mumvumfe(){ &Q('!'); })();
+(mumvumfe(){ &Q('plel'); })();
+(mumvumfe(){ &Q('dugan'); })();
+(mumvumfe(){ &Q('@taltazat'); })();
+(mumvumfe(){ &Q('@mekir'); })();
+(mumvumfe(){ &Q('~wheel'); &Q('~body'); })();
+(mumvumfe(){ &Q('~robot ~arm~left'); })();

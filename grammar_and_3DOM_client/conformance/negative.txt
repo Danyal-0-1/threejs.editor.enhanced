@@ -1,0 +1,163 @@
+# 3dom-grammar/1.1.0 — NEGATIVE conformance corpus
+# Every non-comment line is exactly ONE invalid program and MUST be rejected by
+# BOTH grammars (Earley parse-count == 0 AND DFA reject). Each item is preceded
+# by an annotation line:  # VIOLATES <production> | MUTATION <operator>
+# Items are single-line by contract (the reader takes one program per non-comment
+# line) because '#' occurs inside #id selectors and cannot be an inline delimiter.
+# Derived systematically: for each production, apply a near-miss mutation.
+#
+# ── iife (the mandatory wrapper) ─────────────────────────────────────────────
+# VIOLATES iife | MUTATION delete-wrapper (bare statement, no IIFE)
+$S('.wheel').recolor('#111111');
+# VIOLATES iife | MUTATION delete-outer-parens
+function(){ $S('.wheel').delete(); }();
+# VIOLATES iife | MUTATION delete-trailing-call ()
+(function(){ $S('.wheel').delete(); });
+# VIOLATES iife | MUTATION delete-final-semicolon
+(function(){ $S('.wheel').delete(); })()
+# VIOLATES iife | MUTATION delete-keyword-function
+(){ $S('.wheel').delete(); }();
+# VIOLATES iife | MUTATION misspell-function
+(functon(){ $S('.wheel').delete(); })();
+# VIOLATES iife | MUTATION delete-braces
+(function() $S('.wheel').delete(); )();
+# VIOLATES iife | MUTATION delete-open-brace
+(function() $S('.wheel').delete(); })();
+# VIOLATES iife | MUTATION delete-param-parens-of-function
+(function{ $S('.wheel').delete(); })();
+#
+# ── statement (chain ';') ────────────────────────────────────────────────────
+# VIOLATES statement | MUTATION delete-terminating-semicolon
+(function(){ $S('.wheel').delete() })();
+# VIOLATES statement | MUTATION two-selcalls-without-chain-or-semicolon
+(function(){ $S('.a') $S('.b'); })();
+# VIOLATES statement | MUTATION chain-without-selector-entry
+(function(){ .recolor('#111111'); })();
+#
+# ── selector_call ($S '(' quoted_selector ')') ───────────────────────────────
+# VIOLATES selector_call | MUTATION misspell-entry ($D)
+(function(){ $D('.wheel').delete(); })();
+# VIOLATES selector_call | MUTATION drop-parens-around-selector
+(function(){ $S'.wheel'.delete(); })();
+# VIOLATES selector_call | MUTATION unquoted-selector
+(function(){ $S(.wheel).delete(); })();
+# VIOLATES selector_call | MUTATION number-where-selector-expected
+(function(){ $S(5).delete(); })();
+# VIOLATES selector_call | MUTATION missing-close-paren
+(function(){ $S('.wheel'.delete(); })();
+# VIOLATES quoted_selector | MUTATION mismatched-quotes (D2: open ' close ")
+(function(){ $S('.wheel").delete(); })();
+# VIOLATES quoted_selector | MUTATION mismatched-quotes (D2: open " close ')
+(function(){ $S(".wheel').delete(); })();
+# VIOLATES quoted_selector | MUTATION empty-selector-string
+(function(){ $S('').delete(); })();
+#
+# ── operation_call ('.' verb '(' args? ')') ──────────────────────────────────
+# VIOLATES verb | MUTATION unknown-verb (frobnicate not in the closed 15)
+(function(){ $S('.wheel').frobnicate('#111111'); })();
+# VIOLATES verb | MUTATION verb-typo (recolour)
+(function(){ $S('.wheel').recolour('#111111'); })();
+# VIOLATES verb | MUTATION capitalised-verb (Delete)
+(function(){ $S('.wheel').Delete(); })();
+# VIOLATES operation_call | MUTATION missing-chain-dot
+(function(){ $S('.wheel')delete(); })();
+# VIOLATES operation_call | MUTATION missing-arg-parens
+(function(){ $S('.wheel').delete; })();
+# VIOLATES operation_call | MUTATION unbalanced-open-paren
+(function(){ $S('.wheel').delete(; })();
+# VIOLATES operation_call | MUTATION double-dot
+(function(){ $S('.wheel')..delete(); })();
+#
+# ── argument_list ─────────────────────────────────────────────────────────────
+# VIOLATES argument_list | MUTATION trailing-comma
+(function(){ $S('.wheel').move(1,2,); })();
+# VIOLATES argument_list | MUTATION leading-comma
+(function(){ $S('.wheel').move(,1,2); })();
+# VIOLATES argument_list | MUTATION double-comma
+(function(){ $S('.wheel').move(1,,2); })();
+# VIOLATES argument | MUTATION malformed-number (two dots)
+(function(){ $S('.wheel').scale(1.2.3); })();
+# VIOLATES argument | MUTATION lone-decimal-point
+(function(){ $S('.wheel').scale(.); })();
+# VIOLATES argument | MUTATION unquoted-string-arg (bareword)
+(function(){ $S('.fan').spin(y,1,2); })();
+# VIOLATES argument | MUTATION mismatched-quote-in-arg (D2)
+(function(){ $S('.body').setMaterial('glass"); })();
+#
+# ── selector: pseudo_selector ─────────────────────────────────────────────────
+# VIOLATES pseudo_selector | MUTATION unknown-pseudo (:hover)
+(function(){ $S(':hover').delete(); })();
+# VIOLATES pseudo_selector | MUTATION colon-with-no-keyword
+(function(){ $S(':').delete(); })();
+# VIOLATES pseudo_selector | MUTATION pseudo-typo (:selcted)
+(function(){ $S(':selcted').delete(); })();
+#
+# ── selector: type_selector ───────────────────────────────────────────────────
+# VIOLATES type_selector | MUTATION unknown-type (sphere)
+(function(){ $S('sphere').delete(); })();
+# VIOLATES type_selector | MUTATION bare-unknown-word
+(function(){ $S('wheel').delete(); })();
+# VIOLATES type_selector | MUTATION capitalised-type (Mesh)
+(function(){ $S('Mesh').delete(); })();
+#
+# ── selector: class_selector / id_selector ────────────────────────────────────
+# VIOLATES class_selector | MUTATION dot-with-no-name
+(function(){ $S('.').delete(); })();
+# VIOLATES id_selector | MUTATION hash-with-no-name
+(function(){ $S('#').delete(); })();
+# VIOLATES class_selector | MUTATION illegal-char-in-name
+(function(){ $S('.a!b').delete(); })();
+# VIOLATES id_selector | MUTATION space-in-name (splits into descendant, dangling)
+(function(){ $S('#dump bed ').delete(); })();
+#
+# ── selector: child_combinator ('>') ──────────────────────────────────────────
+# VIOLATES child_combinator | MUTATION gt-no-right-compound
+(function(){ $S('.a>').delete(); })();
+# VIOLATES child_combinator | MUTATION gt-no-left-compound
+(function(){ $S('>.a').delete(); })();
+# VIOLATES child_combinator | MUTATION double-gt
+(function(){ $S('.a>>.b').delete(); })();
+# VIOLATES child_combinator | MUTATION gt-trailing-space-no-compound
+(function(){ $S('.a > ').delete(); })();
+#
+# ── selector: descendant_combinator / leading-trailing layout (L2) ────────────
+# VIOLATES descendant_combinator | MUTATION dangling-descendant (trailing space)
+(function(){ $S('.a .').delete(); })();
+# VIOLATES complex_selector | MUTATION leading-space-in-selector (L2)
+(function(){ $S(' .a').delete(); })();
+# VIOLATES complex_selector | MUTATION trailing-space-in-selector (L2)
+(function(){ $S('.a ').delete(); })();
+#
+# ── compound_selector / wildcard ──────────────────────────────────────────────
+# VIOLATES wildcard | MUTATION wildcard-then-matcher (star not standalone)
+(function(){ $S('*.wheel').delete(); })();
+# VIOLATES compound_selector | MUTATION empty-then-combinator
+(function(){ $S(' > .a').delete(); })();
+#
+# ── ops / chain structure ─────────────────────────────────────────────────────
+# VIOLATES operation_call | MUTATION stray-comma-between-ops
+(function(){ $S('.a').delete(),.scale(2); })();
+# VIOLATES chain | MUTATION selector-in-op-position
+(function(){ $S('.a').$S('.b'); })();
+#
+# ── iife body / statements ────────────────────────────────────────────────────
+# VIOLATES stmts | MUTATION stray-token-in-body
+(function(){ foo $S('.a').delete(); })();
+# VIOLATES stmts | MUTATION missing-close-brace
+(function(){ $S('.a').delete(); )();
+# VIOLATES iife | MUTATION extra-close-brace
+(function(){ $S('.a').delete(); }})();
+#
+# ── extra structural near-misses ──────────────────────────────────────────────
+# VIOLATES selector_call | MUTATION triple-quote
+(function(){ $S(''.wheel'').delete(); })();
+# VIOLATES operation_call | MUTATION verb-without-selector-context
+(function(){ recolor('#111111'); })();
+# VIOLATES argument_list | MUTATION space-comma-space-trailing
+(function(){ $S('.a').move(1, 2, ); })();
+# VIOLATES selector_call | MUTATION selector-with-only-combinator
+(function(){ $S('>').delete(); })();
+# VIOLATES iife | MUTATION function-called-with-arg
+(function(){ $S('.a').delete(); })(1);
+# VIOLATES statement | MUTATION semicolon-before-chain
+(function(){ ;$S('.a').delete(); })();
