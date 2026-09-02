@@ -1,0 +1,6 @@
+captured_utc=2026-09-02T00:01:01Z
+python=Python 3.12.3
+os=Linux 7.0.0-30-generic x86_64 GNU/Linux
+git_commit=c3f9b26f893d7da7d31a5f694498ed1d86501c0a
+git_dirty=yes
+PHASE1_DIR=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client

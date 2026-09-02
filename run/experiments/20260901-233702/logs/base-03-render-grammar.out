@@ -1,0 +1,22 @@
+render_grammar — 3dom-grammar/1.1.0  (29 substitutable terminals)
+  φ = alpha
+    wrote grammar/generated/alien.alpha.iso.ebnf
+    wrote grammar/generated/alien.alpha.w3c.ebnf
+    wrote grammar/generated/alien.alpha.lark
+    wrote grammar/generated/alien.alpha.diagram.md
+    G-R5 ✓ both levels of alien.alpha.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)
+  φ = beta
+    wrote grammar/generated/alien.beta.iso.ebnf
+    wrote grammar/generated/alien.beta.w3c.ebnf
+    wrote grammar/generated/alien.beta.lark
+    wrote grammar/generated/alien.beta.diagram.md
+    G-R5 ✓ both levels of alien.beta.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)
+  φ = gamma
+    wrote grammar/generated/alien.gamma.iso.ebnf
+    wrote grammar/generated/alien.gamma.w3c.ebnf
+    wrote grammar/generated/alien.gamma.lark
+    wrote grammar/generated/alien.gamma.diagram.md
+    G-R5 ✓ both levels of alien.gamma.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)

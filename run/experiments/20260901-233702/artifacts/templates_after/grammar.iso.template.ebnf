@@ -1,0 +1,152 @@
+(* ═══════════════════════════════════════════════════════════════════════════ *)
+(* 3DOM grammar — ISO/IEC 14977 EBNF — version: 3dom-grammar/1.1.0  —  TEMPLATE (slots: {{ TERMINAL_ID }})             *)
+(* Normative appendix artifact. This file and 3dom_grammar.w3c.ebnf are TWO      *)
+(* NOTATIONS FOR ONE GRAMMAR and define the same language (see CHANGELOG,        *)
+(* "Language equivalence"). Grounded in selectorEngine.js + chain.js.           *)
+(* ═══════════════════════════════════════════════════════════════════════════ *)
+
+(* ─── NORMATIVE LEXICAL CONVENTIONS (numbered clauses — part of the spec) ───── *)
+(* (L1) Inter-token whitespace (space, tab, CR, LF) is INSIGNIFICANT and is       *)
+(*      elided by the lexer per the conventional lexer/parser separation. It may  *)
+(*      appear between any two terminals OUTSIDE a quoted string. The multi-line   *)
+(*      pretty-printed form of a program is therefore in the language, identical   *)
+(*      to its minified form.                                                      *)
+(* (L2) Whitespace INSIDE a quoted selector is SIGNIFICANT and is modelled         *)
+(*      explicitly by the `whitespace` non-terminal, because it IS the descendant  *)
+(*      combinator. Hence  {{T_SELECTOR_ENTRY}}('{{T_CLASS_SIGIL}}car {{T_CLASS_SIGIL}}wheel')  (descendant) and  {{T_SELECTOR_ENTRY}}('{{T_CLASS_SIGIL}}car{{T_CLASS_SIGIL}}wheel')   *)
+(*      (compound AND) are DIFFERENT programs with different parses; the           *)
+(*      conformance suite asserts this (coverage.py, gate G5).                     *)
+(* (L3) 3DOM is parsed in TWO LEVELS. The OUTER parser treats a quoted selector    *)
+(*      as one opaque terminal and elides layout (L1). The INNER parser runs over  *)
+(*      the selector's contents and elides nothing (L2). `quoted_selector` is the  *)
+(*      seam: its body is the `selector` non-terminal; every other quoted string   *)
+(*      (`quoted_string`) is an opaque argument value.                             *)
+(* (P1) REFERENCE PARSER = EARLEY. The grammar is intentionally NOT LL(1): on a    *)
+(*      selector-internal whitespace the choice descendant_combinator vs           *)
+(*      child_combinator needs a second token, so k = 2 (METRICS.md, an INVARIANT).*)
+(*      Earley is mandated: inputs are short, it handles k>1, and it reports        *)
+(*      ambiguity explicitly (used as the zero-ambiguity regression test).         *)
+
+program        = iife ;
+(* Whole 3DOM emission is exactly ONE IIFE — the top rule. *)
+
+iife           = "(" , "{{T_FUNCTION}}" , "(" , ")" , "{" , { statement } , "}" ,
+                 ")" , "(" , ")" , ";" ;
+(* The mandatory wrapper ({{T_FUNCTION}}(){ ... })(); spelled token-by-token.        *)
+(* { statement } = zero-or-more statements. Layout between these terminals is  *)
+(* elided per L1 — it is not threaded through the grammar.                     *)
+
+statement      = chain_expression , ";" ;
+(* One executable line; the ";" lets multiple statements sit in the body.      *)
+
+(* ─── Core: selector + an unbounded operation chain ─────────────────────────── *)
+
+chain_expression = selector_call , { operation_call } ;
+(* THE HEART OF THE LANGUAGE. One $S(...) selector then { operation_call } =    *)
+(* zero-or-more operations. The { } is what makes chaining unbounded; n = 0 is  *)
+(* a legal pure query (see SCORING_POLICY.md, "valid-but-vacuous").             *)
+
+selector_call  = "{{T_SELECTOR_ENTRY}}" , "(" , quoted_selector , ")" ;
+(* The one entry point. The selector is delivered as a quoted_selector, whose   *)
+(* body is descended into by the `selector` rule (L3 outer/inner seam).         *)
+
+quoted_selector = "'" , selector , "'" | '"' , selector , '"' ;
+(* D2 REPAIR: quotes agree STRUCTURALLY. Opening and closing quote are bound in *)
+(* one alternative, so {{T_SELECTOR_ENTRY}}('.wheel") is not derivable (mismatch impossible).     *)
+
+operation_call = "{{T_CHAIN_OP}}" , verb , "(" , [ argument_list ] , ")" ;
+(* One chain link: '{{T_CHAIN_OP}}'-chained verb. [ argument_list ] optional so nullary      *)
+(* verbs like .delete() parse with empty parens.                               *)
+
+argument_list  = argument , { "," , argument } ;
+(* One-or-more comma-separated arguments (the bare commas are ISO concatenation; *)
+(* the "," is the literal comma terminal).                                       *)
+
+argument       = number | quoted_string ;
+(* D3 REPAIR: no hex_color. All quoted values are quoted_string; value typing    *)
+(* (hex vs axis vs enum) moves to the IR builder's per-verb table, encoded ONCE. *)
+
+quoted_string  = "'" , { sq_char } , "'" | '"' , { dq_char } , '"' ;
+(* D2 REPAIR: an opaque argument string, quotes agreeing structurally.          *)
+
+(* ─── Selectors: the CSS subset (mirrors selectorEngine.js) ─────────────────── *)
+
+selector       = pseudo_selector | complex_selector ;
+(* Live-selection pseudo, or a normal graph query. *)
+
+pseudo_selector = "{{T_PSEUDO_SIGIL}}" , ( "{{T_PSEUDO_SELECTED}}" | "{{T_PSEUDO_LASSO}}" ) ;
+(* :selected / :lasso — resolved off the editor, bypassing traversal. *)
+
+complex_selector = compound_selector , { combinator , compound_selector } ;
+(* Compounds joined by combinators; { } gives descendant/child chaining. *)
+
+combinator     = child_combinator | descendant_combinator ;
+(* Child listed first (matches the k=2 disambiguation; see P1). *)
+
+descendant_combinator = whitespace ;
+(* Pure whitespace = the DESCENDANT combinator ('{{T_CLASS_SIGIL}}car {{T_CLASS_SIGIL}}wheel'). Significant per L2. *)
+
+child_combinator = [ whitespace ] , "{{T_CHILD}}" , [ whitespace ] ;
+(* '{{T_CHILD}}' = the CHILD combinator; optional whitespace on each side.                *)
+(* ┌── A6 SYNTAX/SEMANTICS ANNOTATION (see TERMINOLOGY.md) ───────────────────┐ *)
+(* │ In the AST this "{{T_CHILD}}" is a TERMINAL — a leaf, a literal character with ZERO │ *)
+(* │ children. It is NOT an AST node with descendants. Only in the SCENE GRAPH │ *)
+(* │ (semantics) does it become "walk one level down the physical spatial tree │ *)
+(* │ from the Car node to the Wheel node." EBNF/AST = SYNTAX; scene graph =     │ *)
+(* │ SEMANTICS. Never say "> selects the AST node's children."                 │ *)
+(* └──────────────────────────────────────────────────────────────────────────┘ *)
+
+compound_selector = wildcard | simple_matcher , { simple_matcher } ;
+(* Wildcard alone, OR 1+ matchers with NO space between them (compound AND):    *)
+(* '{{T_CLASS_SIGIL}}wheel{{T_CLASS_SIGIL}}front' = has class wheel AND class front.                            *)
+
+simple_matcher = id_selector | class_selector | type_selector ;
+(* The three atomic matchers ANDed inside a compound. *)
+
+id_selector    = "{{T_ID_SIGIL}}" , identifier ;
+(* #id → node whose normalized userData.label (fallback .name) equals id. *)
+
+class_selector = "{{T_CLASS_SIGIL}}" , identifier ;
+(* .class → node carrying that derived/custom class. *)
+
+type_selector  = "{{T_TYPE_MESH}}" | "{{T_TYPE_GROUP}}" | "{{T_TYPE_LIGHT}}" | "{{T_TYPE_CAMERA}}" ;
+(* Bare keyword → three.js object kind (via is* flags). Closed set of four.     *)
+(* An unknown bare word matches nothing (not every node), so it is not a type.  *)
+
+wildcard       = "{{T_WILDCARD}}" ;
+(* '{{T_WILDCARD}}' → every node in scope; stands alone as a whole compound. NOTE: this is a *)
+(* QUOTED terminal, NOT an EBNF repetition operator (see grammar_metrics.py).   *)
+
+(* ─── Operations: the closed verb set (EXACTLY 15 — a hard invariant) ────────── *)
+
+verb           = "{{T_VERB_RECOLOR}}" | "{{T_VERB_SCALE}}" | "{{T_VERB_MOVE}}" | "{{T_VERB_ROTATE}}" | "{{T_VERB_DELETE}}" | "{{T_VERB_SPIN}}"
+               | "{{T_VERB_DUPLICATE}}" | "{{T_VERB_SETMATERIAL}}" | "{{T_VERB_SETOPACITY}}" | "{{T_VERB_SETVISIBLE}}"
+               | "{{T_VERB_WIREFRAME}}" | "{{T_VERB_METALNESS}}" | "{{T_VERB_ROUGHNESS}}" | "{{T_VERB_CASTSHADOW}}"
+               | "{{T_VERB_RECEIVESHADOW}}" ;
+(* Fixed alternation — an unknown verb is a grammar error, not a runtime guess. *)
+
+(* ─── Lexical primitives ────────────────────────────────────────────────────── *)
+
+number         = [ sign ] , digit , { digit } , [ "." , digit , { digit } ] ;
+(* Optional sign, integer part, optional fractional part: ints and floats.     *)
+
+sign           = "+" | "-" ;
+(* The "+" / "-" here are QUOTED terminals, not EBNF operators. *)
+
+identifier     = ident_char , { ident_char } ;
+(* A class/id/label name: one-or-more ident_char. *)
+
+ident_char     = ? one character from A-Z a-z 0-9 or '-' or '_' ? ;
+(* ISO special sequence for the identifier character class (= W3C [a-zA-Z0-9_-]). *)
+
+digit          = ? one decimal digit 0-9 ? ;
+(* ISO special sequence (= W3C [0-9]). *)
+
+whitespace     = " " , { " " } ;
+(* One-or-more literal spaces; SIGNIFICANT inside selectors (L2). *)
+
+sq_char        = ? any character except the closing single quote ? ;
+(* = W3C [^'] . *)
+
+dq_char        = ? any character except the closing double quote ? ;
+(* = W3C [^"] . *)

@@ -1,0 +1,30 @@
+=== alpha: 0 finding(s)  (g1=0, g2=0) ===
+
+=== beta: 0 finding(s)  (g1=0, g2=0) ===
+
+=== gamma: 24 finding(s)  (g1=22, g2=2) ===
+  - g1 (outer) T_FUNCTION: 3DOM spells it as a identifier-charset word ('function'), the alien lexicon as a symbol ('⍤'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_CASTSHADOW: 3DOM spells it as a identifier-charset word ('castShadow'), the alien lexicon as a symbol ('⌟'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_DELETE: 3DOM spells it as a identifier-charset word ('delete'), the alien lexicon as a symbol ('⏧'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_DUPLICATE: 3DOM spells it as a identifier-charset word ('duplicate'), the alien lexicon as a symbol ('⌌'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_METALNESS: 3DOM spells it as a identifier-charset word ('metalness'), the alien lexicon as a symbol ('⌙'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_MOVE: 3DOM spells it as a identifier-charset word ('move'), the alien lexicon as a symbol ('⏢'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_RECEIVESHADOW: 3DOM spells it as a identifier-charset word ('receiveShadow'), the alien lexicon as a symbol ('⌞'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_RECOLOR: 3DOM spells it as a identifier-charset word ('recolor'), the alien lexicon as a symbol ('⏦'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_ROTATE: 3DOM spells it as a identifier-charset word ('rotate'), the alien lexicon as a symbol ('⏣'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_ROUGHNESS: 3DOM spells it as a identifier-charset word ('roughness'), the alien lexicon as a symbol ('⌜'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_SCALE: 3DOM spells it as a identifier-charset word ('scale'), the alien lexicon as a symbol ('⏥'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_SETMATERIAL: 3DOM spells it as a identifier-charset word ('setMaterial'), the alien lexicon as a symbol ('⌍'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_SETOPACITY: 3DOM spells it as a identifier-charset word ('setOpacity'), the alien lexicon as a symbol ('⌎'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_SETVISIBLE: 3DOM spells it as a identifier-charset word ('setVisible'), the alien lexicon as a symbol ('⌏'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_SPIN: 3DOM spells it as a identifier-charset word ('spin'), the alien lexicon as a symbol ('⌇'); the keyword-vs-identifier discrimination is not matched
+  - g1 (outer) T_VERB_WIREFRAME: 3DOM spells it as a identifier-charset word ('wireframe'), the alien lexicon as a symbol ('⌐'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_PSEUDO_LASSO: 3DOM spells it as a identifier-charset word ('lasso'), the alien lexicon as a symbol ('⍌'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_PSEUDO_SELECTED: 3DOM spells it as a identifier-charset word ('selected'), the alien lexicon as a symbol ('⍋'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_TYPE_CAMERA: 3DOM spells it as a identifier-charset word ('camera'), the alien lexicon as a symbol ('⍊'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_TYPE_GROUP: 3DOM spells it as a identifier-charset word ('group'), the alien lexicon as a symbol ('⍈'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_TYPE_LIGHT: 3DOM spells it as a identifier-charset word ('light'), the alien lexicon as a symbol ('⍉'); the keyword-vs-identifier discrimination is not matched
+  - g1 (inner) T_TYPE_MESH: 3DOM spells it as a identifier-charset word ('mesh'), the alien lexicon as a symbol ('⍇'); the keyword-vs-identifier discrimination is not matched
+  - g2 (outer) function+function lexes to 1 token(s) in 3DOM but ⍤+⍤ lexes to 2 in the alien lexicon — the alien language makes a token sequence reachable that no 3DOM string can produce, so L(alien) is a strict superset of phi(L(3DOM))
+  - g2 (inner) mesh+mesh lexes to 1 token(s) in 3DOM but ⍇+⍇ lexes to 2 in the alien lexicon — the alien language makes a token sequence reachable that no 3DOM string can produce, so L(alien) is a strict superset of phi(L(3DOM))
+

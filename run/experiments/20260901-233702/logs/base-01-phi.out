@@ -1,0 +1,7 @@
+terminals.json  3dom-grammar/1.1.0
+  43 terminals, 29 substitutable, 14 frozen
+  spelling partition: 28 distinct substitutable spellings
+OK  φ='identity'  29 substitutions, 1 overload group(s)
+OK  φ='alpha'  29 substitutions, 1 overload group(s)
+OK  φ='beta'  29 substitutions, 1 overload group(s)
+OK  φ='gamma'  29 substitutions, 1 overload group(s)

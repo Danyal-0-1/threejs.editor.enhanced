@@ -304,6 +304,10 @@ def main() -> int:
         except AssertionError as exc:
             failures += 1
             print(f"  FAIL  {name}\n        {exc}")
+        except Exception as exc:
+            # An ERROR is not a pass. See the note in test_isomorphism.main.
+            failures += 1
+            print(f"  ERROR {name}\n        {type(exc).__name__}: {exc}")
     print(f"\n{len(tests) - failures}/{len(tests)} passed")
     return 1 if failures else 0
 

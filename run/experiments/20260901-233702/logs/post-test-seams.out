@@ -1,0 +1,17 @@
+test_seams — 3dom-grammar/1.1.0
+  PASS  test_a_defect_is_not_repaired_and_not_multiplied
+  PASS  test_a_near_miss_stays_a_near_miss
+  PASS  test_an_argument_string_is_never_treated_as_a_selector
+  PASS  test_an_unterminated_string_stays_unterminated
+  PASS  test_lark_and_dfa_agree_on_every_corpus_item_in_every_lexicon
+  PASS  test_lexer_selector_detection_requires_the_entry_point
+  PASS  test_the_biconditional_is_not_vacuous
+  PASS  test_the_exact_parse_counter_agrees_with_both
+  PASS  test_the_transliterator_relaxes_exactly_that_rule
+  PASS  test_the_two_selector_position_rules_agree_on_well_formed_text
+  PASS  test_transliteration_is_invertible_on_well_formed_text
+  PASS  test_transliteration_preserves_identifiers_and_numbers_verbatim
+  PASS  test_transliterator_context_history_is_bounded
+  PASS  test_transliterator_never_raises_on_malformed_text
+
+14/14 passed

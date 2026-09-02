@@ -1,0 +1,186 @@
+{
+  "phase1_dir": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client",
+  "phase1_dir_source": "PHASE1_DIR",
+  "python": "3.12.3",
+  "lane": "structural",
+  "required": [
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/terminals.json",
+      "ok": true,
+      "why": "the 43-terminal table \u03c6 is keyed on; every \u03c6-map is validated against it",
+      "size": 13061
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/tasks.py",
+      "ok": true,
+      "why": "the C8 signature cross-check in src/canonicalize.py reads its _SIGNATURES",
+      "size": 24765
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/ir_schema.json",
+      "ok": true,
+      "why": "tests/test_isomorphism.py validates every IR against it",
+      "size": 5157
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/3dom_grammar.iso.ebnf",
+      "ok": true,
+      "why": "gate G-R4: the identity render must reproduce it byte-for-byte",
+      "size": 9164
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/3dom_grammar.w3c.ebnf",
+      "ok": true,
+      "why": "gate G-R4, and the |N|/|P| invariants I1/I2",
+      "size": 8517
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/grammar_metrics.py",
+      "ok": true,
+      "why": "invariants I1-I3 are measured with Phase 1's own instrument",
+      "size": 9721
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/conformance/refgrammar.py",
+      "ok": true,
+      "why": "the reference engine: parse counter, DFA, and the 57 coverage features",
+      "size": 25906
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/conformance/positive.txt",
+      "ok": true,
+      "why": "the 62-item positive corpus",
+      "size": 5889
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/conformance/negative.txt",
+      "ok": true,
+      "why": "the 64-item negative corpus",
+      "size": 9328
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client/conformance/vacuous.txt",
+      "ok": true,
+      "why": "the 12-item valid-but-vacuous corpus (D5)",
+      "size": 974
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/candidates/phi_alpha.json",
+      "ok": true,
+      "why": "the interference lexicon",
+      "size": 3470
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/candidates/phi_beta.json",
+      "ok": true,
+      "why": "the pseudo-lexicon",
+      "size": 3311
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/candidates/phi_gamma.json",
+      "ok": true,
+      "why": "the glyph lexicon",
+      "size": 3185
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/grammar/templates/grammar.lark.template",
+      "ok": true,
+      "why": "the ONE executable grammar, rendered through \u03c6 at both levels",
+      "size": 5056
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/grammar/templates/grammar.iso.template.ebnf",
+      "ok": true,
+      "why": "normative appendix template",
+      "size": 9781
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/grammar/templates/grammar.w3c.template.ebnf",
+      "ok": true,
+      "why": "normative appendix template",
+      "size": 9132
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/grammar/templates/grammar.diagram.template.md",
+      "ok": true,
+      "why": "syntax-diagram template",
+      "size": 3105
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/src/phi.py",
+      "ok": true,
+      "why": "\u03c6 validation, application and inversion",
+      "size": 20856
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/src/canonicalize.py",
+      "ok": true,
+      "why": "the frozen canonical IR and C0-C9",
+      "size": 19475
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/src/transpiler.py",
+      "ok": true,
+      "why": "lexer, transliterator, Lark front end, emitter",
+      "size": 36092
+    },
+    {
+      "kind": "file",
+      "path": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax/src/generate_corpus.py",
+      "ok": true,
+      "why": "the alien corpora and gates A1-A7",
+      "size": 11969
+    },
+    {
+      "kind": "module",
+      "path": "lark",
+      "ok": true,
+      "why": "the Earley front end (clause P1). pip install 'lark==1.3.1'",
+      "version": "1.3.1"
+    }
+  ],
+  "optional": [
+    {
+      "kind": "module",
+      "path": "jsonschema",
+      "ok": true,
+      "why": "validates the IR against Phase 1's schema; without it test_isomorphism falls back to a weaker structural check",
+      "version": "4.10.3"
+    },
+    {
+      "kind": "module",
+      "path": "transformers",
+      "ok": false,
+      "why": "AutoTokenizer for CONSTRAINT 1 fertility. pip install transformers",
+      "version": ""
+    },
+    {
+      "kind": "module",
+      "path": "torch",
+      "ok": false,
+      "why": "base-model forward passes for \u0394NLL. pip install torch",
+      "version": ""
+    }
+  ],
+  "ok": true
+}

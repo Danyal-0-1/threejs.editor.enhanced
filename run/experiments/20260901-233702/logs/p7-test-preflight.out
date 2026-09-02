@@ -1,0 +1,10 @@
+test_preflight — 3dom-grammar/1.1.0
+  PASS  test_canonicalize_records_a_skipped_phase1_signature_check
+  PASS  test_phase1_dir_default_matches_the_implementation
+  PASS  test_preflight_does_not_import_phase2
+  PASS  test_preflight_model_lane_requires_transformers_and_torch
+  PASS  test_preflight_names_each_missing_artifact_and_its_purpose
+  PASS  test_preflight_passes_on_this_checkout
+  PASS  test_preflight_reports_a_missing_phase1_directory_by_path
+
+7/7 passed

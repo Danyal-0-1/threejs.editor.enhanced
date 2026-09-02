@@ -1,0 +1,11 @@
+test_roundtrip — 3dom-grammar/1.1.0
+  PASS  test_canonical_form_is_actually_canonical
+  PASS  test_ir_to_text_to_ir_is_stable
+  PASS  test_loader_fails_loudly_not_softly
+  PASS  test_number_canonicalisation_decisions
+  PASS  test_phi_inverse_is_derived_not_declared
+  PASS  test_phi_is_a_bijection_on_text
+  PASS  test_string_quoting_decisions
+  PASS  test_text_to_ir_to_text_is_stable
+
+8/8 passed

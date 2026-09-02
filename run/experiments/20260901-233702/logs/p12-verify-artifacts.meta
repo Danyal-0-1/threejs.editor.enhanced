@@ -1,0 +1,9 @@
+slug=p12-verify-artifacts
+command=python3 run/verify_artifacts.py --write /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/20260901-233702/metadata/checksums.txt
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced
+exit_code=0
+started_utc=2026-09-02T00:01:19Z
+finished_utc=2026-09-02T00:01:19Z
+duration_seconds=0
+stdout_bytes=4899
+stderr_bytes=0

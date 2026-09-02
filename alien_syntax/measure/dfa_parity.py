@@ -56,13 +56,27 @@ def branching_stats() -> dict[str, float]:
             "max_branching": float(max(live))}
 
 
-def positional_profile(programs: list[str], phi: PhiMap) -> list[float]:
+def positional_profile(programs: list[str], phi: PhiMap,
+                       *, strict: bool = True) -> list[float]:
+    """Mean legal-next-token count by DSL token index, over `programs`.
+
+    `strict` (the default for the positive corpus) refuses to silently skip a
+    program that will not lex. Skipping used to be invisible, and two lexicons
+    that both failed on the same items would still compare equal — parity by
+    mutual absence.
+    """
     d = R.dfa()
     by_pos: dict[int, list[int]] = {}
     for src in programs:
         try:
             tokens = lex(src, phi)
-        except Exception:
+        except Exception as exc:
+            if strict:
+                raise ValueError(
+                    f"φ={phi.phi_id}: a program in the profiled corpus does not "
+                    f"lex ({type(exc).__name__}: {exc}); the positional profile "
+                    f"would silently be computed over a smaller corpus. "
+                    f"item={src[:60]!r}") from exc
             continue
         st = d["start"]
         for idx, (tt, _v, _p) in enumerate(tokens):
@@ -74,12 +88,18 @@ def positional_profile(programs: list[str], phi: PhiMap) -> list[float]:
     return [sum(by_pos[i]) / len(by_pos[i]) for i in sorted(by_pos)]
 
 
-def alphabet(programs: list[str], phi: PhiMap) -> set[str]:
+def alphabet(programs: list[str], phi: PhiMap, *, strict: bool = True) -> set[str]:
+    """The set of token types this lexicon's lexer emits over `programs`."""
     out: set[str] = set()
     for src in programs:
         try:
             out |= {t[0] for t in lex(src, phi)}
-        except Exception:
+        except Exception as exc:
+            if strict:
+                raise ValueError(
+                    f"φ={phi.phi_id}: a program in the alphabet corpus does not "
+                    f"lex ({type(exc).__name__}: {exc}); the alphabet would be "
+                    f"understated. item={src[:60]!r}") from exc
             continue
     return out
 
@@ -97,7 +117,13 @@ def compare(phi: PhiMap) -> dict[str, object]:
         fails.append(f"P1 token alphabet differs: only-3DOM={sorted(a_base - a_alien)}, "
                      f"only-alien={sorted(a_alien - a_base)}")
 
-    # P2 — token-stream parity, item by item
+    # P2 — token-stream parity, item by item.
+    # The length check is not decoration: zip() truncates to the shorter list,
+    # so a corpus that lost items would report ZERO mismatches over the items
+    # that survived — a parity PASS earned by comparing less.
+    if len(base) != len(alien):
+        fails.append(f"P2 corpora are not paired: {len(base)} 3DOM programs vs "
+                     f"{len(alien)} alien; item-by-item comparison is undefined")
     mismatches = 0
     first = ""
     for b, a in zip(base, alien):

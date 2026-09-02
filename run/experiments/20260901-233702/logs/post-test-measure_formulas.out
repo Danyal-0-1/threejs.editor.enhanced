@@ -1,0 +1,26 @@
+test_measure_formulas — 3dom-grammar/1.1.0
+  PASS  test_bootstrap_ci_brackets_the_point_estimate
+  PASS  test_bootstrap_edge_cases_do_not_crash_silently
+  PASS  test_bootstrap_is_paired_not_independent
+  PASS  test_bootstrap_is_reproducible_under_a_fixed_seed
+  PASS  test_bootstrap_rejects_unpaired_corpora
+  PASS  test_bootstrap_uses_a_local_rng_not_the_global_one
+  PASS  test_codepoint_and_byte_normalisation_disagree_on_the_glyph_lexicon
+  PASS  test_corpora_are_paired_across_lexicons
+  PASS  test_corpus_fingerprint_is_stable_and_sensitive
+  PASS  test_fertility_default_tokenizers_are_not_tiktoken
+  PASS  test_fertility_is_a_ratio_of_totals_not_a_mean_of_ratios
+  PASS  test_fertility_ratio_is_one_for_a_one_token_per_char_tokenizer
+  PASS  test_fragmentation_is_zero_on_ascii_and_positive_on_glyphs
+  PASS  test_load_bearing_constants_are_present_and_documented
+  PASS  test_percentile_indices_are_in_range
+  PASS  test_prefix_offset_against_a_hand_worked_slice
+  PASS  test_prefix_offset_is_zero_for_the_empty_prefix
+  PASS  test_prefix_offset_lands_on_the_first_program_token_with_bos
+  PASS  test_prefix_offset_lands_on_the_first_program_token_without_bos
+  PASS  test_ratio_of_totals_is_totals_not_means
+        (torch absent — full NLL path PENDING, alignment above is still verified)
+  PASS  test_score_program_matches_a_hand_computed_nll_if_torch_is_present
+  PASS  test_special_tokens_are_excluded_from_fertility
+
+22/22 passed

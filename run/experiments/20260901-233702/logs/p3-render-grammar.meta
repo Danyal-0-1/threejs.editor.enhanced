@@ -1,0 +1,9 @@
+slug=p3-render-grammar
+command=python3 grammar/render_grammar.py --outdir /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/20260901-233702/artifacts/generated alpha beta gamma
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-02T00:01:01Z
+finished_utc=2026-09-02T00:01:01Z
+duration_seconds=0
+stdout_bytes=1724
+stderr_bytes=0

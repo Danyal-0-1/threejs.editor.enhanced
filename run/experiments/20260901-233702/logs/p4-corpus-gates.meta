@@ -1,0 +1,9 @@
+slug=p4-corpus-gates
+command=python3 src/generate_corpus.py alpha beta gamma --check-only
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-02T00:01:01Z
+finished_utc=2026-09-02T00:01:03Z
+duration_seconds=2
+stdout_bytes=81
+stderr_bytes=0

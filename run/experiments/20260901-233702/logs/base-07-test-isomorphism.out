@@ -1,0 +1,7 @@
+test_isomorphism — 3dom-grammar/1.1.0
+  PASS  test_ir_identity_over_positive_corpus
+  PASS  test_ir_identity_over_vacuous_corpus
+  PASS  test_ir_validates_against_phase1_schema
+  PASS  test_negatives_stay_negative
+
+4/4 passed

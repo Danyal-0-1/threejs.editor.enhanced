@@ -94,17 +94,31 @@ def _is_word(spelling: str) -> bool:
     return bool(spelling) and all(c in IDENT_CHARS for c in spelling)
 
 
+_IDENT_CACHE: dict[str, frozenset[str]] = {}
+
+
 def _corpus_identifiers(phi: PhiMap) -> set[str]:
-    """Every IDENT value that occurs in this lexicon's three corpora."""
+    """Every IDENT value that occurs in this lexicon's three corpora.
+
+    Generated ONCE per lexicon and cached. The previous form called
+    G.generate() inside the loop over the three corpus names, so it rebuilt all
+    three corpora three times — nine transliterations of the whole Phase 1
+    corpus — for a set that never changes within a run.
+    """
+    key = phi.phi_id + "|" + repr(sorted(phi.substitutions.items()))
+    if key in _IDENT_CACHE:
+        return set(_IDENT_CACHE[key])
+    produced = G.generate(phi, write=False)
     idents: set[str] = set()
     for name in G.CORPORA:
-        for program in G.generate(phi, write=False)[name]:
+        for program in produced[name]:
             try:
                 for tt, value, _pos in lex(program, phi):
                     if tt == "IDENT":
                         idents.add(value)
             except Exception:
                 continue                    # negatives may not lex; that is fine
+    _IDENT_CACHE[key] = frozenset(idents)
     return idents
 
 

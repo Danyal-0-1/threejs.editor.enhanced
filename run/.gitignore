@@ -1,0 +1,3 @@
+# The Lane B / Lane C virtualenv and per-run experiment outputs are local
+# artifacts, not source. Experiment dirs are kept if you choose to commit them.
+.venv/

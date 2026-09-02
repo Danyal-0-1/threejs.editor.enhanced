@@ -1,0 +1,9 @@
+slug=base-00-phase1-coverage2
+command=python3 conformance/coverage2.py
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/grammar_and_3DOM_client
+exit_code=0
+started_utc=2026-09-01T23:37:41Z
+finished_utc=2026-09-01T23:37:42Z
+duration_seconds=1
+stdout_bytes=598
+stderr_bytes=0

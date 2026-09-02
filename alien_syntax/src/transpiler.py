@@ -46,9 +46,10 @@ ALIEN = os.path.dirname(HERE)
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
-from canonicalize import (GRAMMAR_VERSION, IRProgram, Matcher,  # noqa: E402
-                          Operation, Selector, Step, args_in_order, build_args,
-                          canonical_number, format_number, quote_string)
+from canonicalize import (GRAMMAR_VERSION, CanonicalisationError,  # noqa: E402
+                          IRProgram, Matcher, Operation, Selector, Step,
+                          args_in_order, build_args, canonical_number,
+                          format_number, quote_string)
 from phi import (IDENT_CHARS, PhiMap, identity_phi,  # noqa: E402
                  phase1_dir, render_slots)
 
@@ -643,8 +644,18 @@ def _build_transformers(phi: PhiMap):
             return kids[0]
 
         def complex_selector(self, kids):
-            steps: list[Step] = [Step(None, tuple(kids[0]))]
+            # kids is compound (combinator compound)*, so the tail must have EVEN
+            # length. zip() over the strided halves would silently DROP a
+            # trailing combinator and hand back a selector with a step missing —
+            # a shorter selector that still parses, still hashes, and quietly
+            # means something else. Check before pairing.
             rest = kids[1:]
+            if len(rest) % 2:
+                raise ParseError(
+                    f"complex_selector has {len(kids)} children: the "
+                    f"(combinator compound)* tail is odd-length, so a "
+                    f"combinator has no compound to attach to")
+            steps: list[Step] = [Step(None, tuple(kids[0]))]
             for combinator, compound in zip(rest[0::2], rest[1::2]):
                 steps.append(Step(combinator, tuple(compound)))
             return Selector(tuple(steps))
@@ -703,12 +714,23 @@ def _build_transformers(phi: PhiMap):
             return kids[0]
 
         def iife(self, kids):
-            # kids carries the FUNC keyword token plus zero or more statements;
-            # only the statements (already lowered to op lists) are IR.
+            # kids carries the FUNC keyword token plus zero or more statements.
+            # Each statement has already been lowered to a list of Operations by
+            # chain_expression; the FUNC token is a lark Token (a str subclass).
+            # Anything else means a rule was added to the grammar without a
+            # transformer method, and DROPPING it silently would lose operations
+            # from the IR while still producing a parse and a hash.
             ops: list[Operation] = []
-            for stmt in kids:
-                if isinstance(stmt, list):
-                    ops.extend(stmt)
+            for kid in kids:
+                if isinstance(kid, list):
+                    ops.extend(kid)
+                elif isinstance(kid, str):          # the FUNC keyword token
+                    continue
+                else:
+                    raise ParseError(
+                        f"iife received an unlowered child of type "
+                        f"{type(kid).__name__}: every statement must reach the "
+                        f"IR, so this cannot be skipped")
             return tuple(ops)
 
         def program(self, kids):
@@ -819,8 +841,14 @@ class Emitter:
     def _(self, node: Step) -> str:
         # C4: step order is meaning; C3: matcher order inside a step is not, and
         # was normalised by canonicalize before we got here.
-        lead = {"descendant": " ", "child": self.child, None: ""}[node.combinator]
-        return lead + "".join(self.emit(m) for m in node.matchers)
+        leads = {"descendant": " ", "child": self.child, None: ""}
+        if node.combinator not in leads:
+            raise CanonicalisationError(
+                f"cannot emit combinator {node.combinator!r}: the only "
+                f"combinators in the language are {sorted(k for k in leads if k)} "
+                f"and None (first step). Emitting an empty lead here would drop "
+                f"the combinator and silently change the selector's meaning")
+        return leads[node.combinator] + "".join(self.emit(m) for m in node.matchers)
 
     @emit.register
     def _(self, node: Selector) -> str:

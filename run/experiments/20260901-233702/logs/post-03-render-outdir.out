@@ -1,0 +1,23 @@
+render_grammar — 3dom-grammar/1.1.0  (29 substitutable terminals)
+  outdir = /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/20260901-233702/artifacts/generated_postfix
+  φ = alpha
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.alpha.iso.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.alpha.w3c.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.alpha.lark
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.alpha.diagram.md
+    G-R5 ✓ both levels of alien.alpha.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)
+  φ = beta
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.beta.iso.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.beta.w3c.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.beta.lark
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.beta.diagram.md
+    G-R5 ✓ both levels of alien.beta.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)
+  φ = gamma
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.gamma.iso.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.gamma.w3c.ebnf
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.gamma.lark
+    wrote ../run/experiments/20260901-233702/artifacts/generated_postfix/alien.gamma.diagram.md
+    G-R5 ✓ both levels of alien.gamma.lark load in Lark (Earley)
+    G-R6 ✓ generated appendices re-parse as EBNF (|N|=31, |P|=58 in both notations)

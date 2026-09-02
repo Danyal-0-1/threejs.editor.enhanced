@@ -1,0 +1,9 @@
+slug=base-09-fertility-structural
+command=python3 measure/fertility.py --structural --md
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-01T23:39:28Z
+finished_utc=2026-09-01T23:39:28Z
+duration_seconds=0
+stdout_bytes=888
+stderr_bytes=0

@@ -1,0 +1,9 @@
+slug=base-08-metrics-parity
+command=python3 measure/metrics_parity.py
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-01T23:39:19Z
+finished_utc=2026-09-01T23:39:21Z
+duration_seconds=2
+stdout_bytes=7780
+stderr_bytes=0

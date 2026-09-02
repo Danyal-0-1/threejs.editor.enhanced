@@ -203,14 +203,34 @@ def check_notation(written: dict[str, str], phi: PhiMap) -> None:
 
 
 def main(argv: list[str]) -> int:
-    names = argv[1:] or ["alpha", "beta", "gamma"]
+    """`render_grammar.py [--outdir DIR] [lexicon ...]`
+
+    --outdir renders somewhere other than grammar/generated/. It exists so the
+    committed artifacts can be REGENERATED AND COMPARED without being
+    overwritten first: verifying reproducibility by clobbering the thing you are
+    verifying leaves nothing to diff against if the render is wrong.
+    """
+    outdir = GENERATED
+    args = list(argv[1:])
+    for i, arg in enumerate(args):
+        if arg == "--outdir" and i + 1 < len(args):
+            outdir = os.path.abspath(args[i + 1])
+            args = args[:i] + args[i + 2:]
+            break
+        if arg.startswith("--outdir="):
+            outdir = os.path.abspath(arg.split("=", 1)[1])
+            args = args[:i] + args[i + 1:]
+            break
+    names = [a for a in args if not a.startswith("-")] or ["alpha", "beta", "gamma"]
     table = load_terminals()
     print(f"render_grammar — {GRAMMAR_VERSION}  "
           f"({len(table.substitutable_ids)} substitutable terminals)")
+    if outdir != GENERATED:
+        print(f"  outdir = {outdir}")
     for name in names:
         print(f"  φ = {name}")
         phi = load_candidate(name)                             # G-R1
-        render_one(phi)
+        render_one(phi, outdir=outdir)
     return 0
 
 

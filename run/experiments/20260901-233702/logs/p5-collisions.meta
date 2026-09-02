@@ -1,0 +1,9 @@
+slug=p5-collisions
+command=python3 measure/collisions.py identity alpha beta gamma --md
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-02T00:01:03Z
+finished_utc=2026-09-02T00:01:04Z
+duration_seconds=1
+stdout_bytes=1674
+stderr_bytes=0

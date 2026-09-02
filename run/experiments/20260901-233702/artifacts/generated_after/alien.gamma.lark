@@ -1,0 +1,110 @@
+// GENERATED FILE — do not edit.
+// rendered by grammar/render_grammar.py from grammar/templates/
+// lexicon  : φ = gamma
+// grammar  : 3dom-grammar/1.1.0 (N and P frozen; only Σ moves)
+// to change the lexicon, edit candidates/phi_gamma.json and re-render.
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 3DOM / Alien-Syntax — Lark grammar TEMPLATE (slots: {{ TERMINAL_ID }})
+// version: 3dom-grammar/1.1.0
+//
+// EXECUTABLE transliteration of grammar.w3c.template.ebnf. Rendered by
+// grammar/render_grammar.py; never edited by hand.
+//
+// TWO LEVELS (clause L3). This file holds BOTH levels, separated by the marker
+// line below. src/transpiler.py splits on that marker and instantiates two Lark
+// parsers:
+//
+//   LEVEL 1 (OUTER)     start = program   ; %ignore LAYOUT     -> layout elided
+//   LEVEL 2 (SELECTOR)  start = selector  ; no %ignore at all  -> WS SIGNIFICANT
+//
+// The outer level sees a quoted selector as ONE opaque STRING terminal; the
+// inner level is run over that string's body. That is exactly the L1/L2/L3
+// contract, expressed as two grammars rather than as a comment.
+//
+// PARSER = EARLEY (clause P1). The combinator rule is k = 2, not LL(1), so an
+// LALR front end would report a conflict; Earley handles k > 1 and reports
+// ambiguity explicitly, which tests/test_invariants.py uses as the I10
+// zero-ambiguity regression.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── LEVEL 1: OUTER (layout insignificant, L1) ──────────────────────────────
+
+program            : iife
+iife               : "(" FUNC "(" ")" "{" statement* "}" ")" "(" ")" ";"
+statement          : chain_expression ";"
+chain_expression   : selector_call operation_call*
+selector_call      : ENTRY "(" quoted_selector ")"
+quoted_selector    : STRING
+operation_call     : CHAIN verb "(" argument_list? ")"
+argument_list      : argument ("," argument)*
+argument           : NUMBER | quoted_string
+quoted_string      : STRING
+
+verb               : V_RECOLOR | V_SCALE | V_MOVE | V_ROTATE | V_DELETE | V_SPIN
+                   | V_DUPLICATE | V_SETMATERIAL | V_SETOPACITY | V_SETVISIBLE
+                   | V_WIREFRAME | V_METALNESS | V_ROUGHNESS | V_CASTSHADOW
+                   | V_RECEIVESHADOW
+
+FUNC               : "⍤"
+ENTRY              : "⟠⟠"
+CHAIN              : "◈"
+
+V_RECOLOR          : "⏦"
+V_SCALE            : "⏥"
+V_MOVE             : "⏢"
+V_ROTATE           : "⏣"
+V_DELETE           : "⏧"
+V_SPIN             : "⌇"
+V_DUPLICATE        : "⌌"
+V_SETMATERIAL      : "⌍"
+V_SETOPACITY       : "⌎"
+V_SETVISIBLE       : "⌏"
+V_WIREFRAME        : "⌐"
+V_METALNESS        : "⌙"
+V_ROUGHNESS        : "⌜"
+V_CASTSHADOW       : "⌟"
+V_RECEIVESHADOW    : "⌞"
+
+// D2: opening and closing quote bound in ONE alternative, so a mismatched
+// quote literal is not derivable. NOT substitutable (I8, delimiter symmetry).
+STRING             : /'[^'\n]*'/ | /"[^"\n]*"/
+NUMBER             : /[+-]?[0-9]+(\.[0-9]+)?/
+LAYOUT             : /[ \t\r\n]+/
+%ignore LAYOUT
+
+// ══════ LEVEL SPLIT ══════ (transpiler.py splits the file on this line) ══════
+
+// ── LEVEL 2: SELECTOR (whitespace SIGNIFICANT, L2) ─────────────────────────
+// There is deliberately no %ignore below this line: WS is the descendant
+// combinator (I9), not layout.
+
+selector           : pseudo_selector | complex_selector
+pseudo_selector    : PSEUDO_SIGIL (PSEUDO_SELECTED | PSEUDO_LASSO)
+complex_selector   : compound_selector (combinator compound_selector)*
+combinator         : child_combinator | descendant_combinator
+descendant_combinator : WS
+child_combinator   : WS? CHILD WS?
+compound_selector  : wildcard | simple_matcher+
+simple_matcher     : id_selector | class_selector | type_selector
+id_selector        : ID_SIGIL IDENT
+class_selector     : CLASS_SIGIL IDENT
+type_selector      : TYPE_MESH | TYPE_GROUP | TYPE_LIGHT | TYPE_CAMERA
+wildcard           : WILDCARD
+
+ID_SIGIL           : "⍟"
+CLASS_SIGIL        : "◈"
+PSEUDO_SIGIL       : "⍜"
+CHILD              : "⊳"
+WILDCARD           : "⌾"
+TYPE_MESH          : "⍇"
+TYPE_GROUP         : "⍈"
+TYPE_LIGHT         : "⍉"
+TYPE_CAMERA        : "⍊"
+PSEUDO_SELECTED    : "⍋"
+PSEUDO_LASSO       : "⍌"
+
+// FROZEN (substitutable:false): identifier values are copied verbatim into the
+// shared IR, and WS is the descendant combinator itself.
+IDENT              : /[a-zA-Z0-9_-]+/
+WS                 : / +/

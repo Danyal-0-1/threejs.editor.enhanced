@@ -1,0 +1,17 @@
+test_invariants — 3dom-grammar/1.1.0
+  PASS  test_I10_zero_ambiguity_over_positive_corpus
+  PASS  test_I1_same_nonterminal_set
+  PASS  test_I2_same_production_and_alternation_counts
+  PASS  test_I3_chain_stays_infix_and_left_to_right
+  PASS  test_I3_same_operator_skeleton
+  PASS  test_I4_no_nesting_introduced
+  PASS  test_I4_regular_non_self_embedding
+  PASS  test_I5_closed_set_cardinalities
+  PASS  test_I6_lookahead_is_still_two
+  PASS  test_I7_overload_preserved
+  PASS  test_I8_delimiter_symmetry_preserved
+  PASS  test_I9_whitespace_differential
+  PASS  test_I9_whitespace_significance_preserved
+  PASS  test_templates_render_to_phase1_under_identity
+
+14/14 passed

@@ -151,6 +151,12 @@ def main() -> int:
         except AssertionError as exc:
             failures += 1
             print(f"  FAIL  {fn.__name__}\n        {exc}")
+        except Exception as exc:
+            # An ERROR is not a pass. Catching only AssertionError let a
+            # ParseError or a missing Phase 1 file abort the runner before the
+            # summary line, so a red run could be mistaken for an interrupted one.
+            failures += 1
+            print(f"  ERROR {fn.__name__}\n        {type(exc).__name__}: {exc}")
     print(f"\n{len(tests) - failures}/{len(tests)} passed")
     return 1 if failures else 0
 

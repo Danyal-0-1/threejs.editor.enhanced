@@ -181,11 +181,26 @@ def check(phi) -> list[str]:
         fails.append(f"A3: {len(accepted)} negative(s) accepted, "
                      f"first {accepted[0][:60]!r}")
 
-    vbad = [p for p in produced["vacuous"]
-            if num_parses(p, phi) != 1
-            or sum(1 for t in lex(p, phi) if t[0] == "VERB") != 0]
+    # A4 — the claim is "parses, and yields ZERO OPERATIONS". Counting VERB
+    # tokens is a proxy for that; checking the lowered IR is the claim itself.
+    # Both are asserted, because they fail differently: a token-level regression
+    # shows up in the first, an IR-lowering regression only in the second.
+    vbad: list[str] = []
+    for p in produced["vacuous"]:
+        if num_parses(p, phi) != 1:
+            vbad.append(p)
+            continue
+        if sum(1 for t in lex(p, phi) if t[0] == "VERB") != 0:
+            vbad.append(p)
+            continue
+        try:
+            if len(parse(p, phi).ops) != 0:
+                vbad.append(p)
+        except ParseError:
+            vbad.append(p)
     if vbad:
-        fails.append(f"A4: {len(vbad)} vacuous item(s) invalid, "
+        fails.append(f"A4: {len(vbad)} vacuous item(s) invalid (must parse "
+                     f"uniquely AND lower to zero operations), "
                      f"first {vbad[0][:60]!r}")
 
     a = phi_forward("(function(){ $S('.car .wheel').delete(); })();", phi)
@@ -201,6 +216,15 @@ def check(phi) -> list[str]:
         fails.append(f"A6: {len(disagree)} Earley/DFA disagreement(s), "
                      f"first {disagree[0][1][:60]!r}")
 
+    # A7 pairs item i with item i. zip() would truncate to the shorter list and
+    # report a PASS over the prefix that survived, so the pairing is asserted
+    # before it is relied on (the size-drift check above reports it; this stops
+    # the loop from running on an unpaired corpus regardless).
+    if len(src["positive"]) != len(produced["positive"]):
+        fails.append(f"A7: corpora are unpaired ({len(src['positive'])} 3DOM vs "
+                     f"{len(produced['positive'])} alien); item-by-item IR "
+                     f"comparison is undefined")
+        return fails
     for original, alien in zip(src["positive"], produced["positive"]):
         if phi_inverse(alien, phi) != original:
             fails.append(f"A7: φ⁻¹∘φ != id on {original[:50]!r}")

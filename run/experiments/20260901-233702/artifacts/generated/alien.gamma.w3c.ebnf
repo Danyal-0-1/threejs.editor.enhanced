@@ -1,0 +1,142 @@
+/* GENERATED FILE — do not edit.
+   rendered by grammar/render_grammar.py from grammar/templates/
+   lexicon  : φ = gamma
+   grammar  : 3dom-grammar/1.1.0 (N and P frozen; only Σ moves)
+   to change the lexicon, edit candidates/phi_gamma.json and re-render. */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3DOM grammar — W3C EBNF  —  version: 3dom-grammar/1.1.0
+   Executable notation (::= , * + ? , [ranges]). Transliterate into Lark/ANTLR.
+   This file and 3dom_grammar.iso.ebnf are TWO NOTATIONS FOR ONE GRAMMAR; they
+   define the same language (see CHANGELOG "Language equivalence").
+
+   NORMATIVE LEXICAL CONVENTIONS  (numbered clauses — part of the specification,
+   not commentary). A conforming implementation MUST honour L1–L3 and P1.
+
+     (L1) Inter-token whitespace (space, tab, CR, LF) is INSIGNIFICANT and is
+          elided by the lexer per the conventional lexer/parser separation. It
+          may appear between any two terminals that lie OUTSIDE a quoted string.
+          Consequently the pretty-printed multi-line form
+              (⍤ () {
+                ⟠⟠( '◈wheel' )◈⏥( 2 );
+              })();
+          is in the language, identical to its minified form.
+
+     (L2) Whitespace INSIDE a quoted selector is SIGNIFICANT and is modelled
+          explicitly by the `whitespace` non-terminal, because it IS the
+          descendant combinator. Therefore  ⟠⟠('◈car ◈wheel')  (descendant) and
+          ⟠⟠('◈car◈wheel')  (compound AND) are DIFFERENT programs with different
+          parses. The conformance suite asserts this (coverage.py, gate G5).
+
+     (L3) 3DOM is parsed in TWO LEVELS. The OUTER parser treats a quoted selector
+          as a single opaque terminal and elides layout per L1. The INNER parser
+          runs over that selector's contents and elides nothing per L2. The
+          `quoted_selector` production is the seam: its body is the `selector`
+          non-terminal, lexed under L2; every other quoted string (`quoted_string`)
+          is an opaque argument value lexed under neither level's selector rules.
+
+     (P1) REFERENCE PARSER = EARLEY. This grammar is intentionally NOT LL(1): on
+          seeing whitespace inside a selector the parser cannot choose
+          descendant_combinator vs child_combinator without a second token, so
+          k = 2 (see METRICS.md, an INVARIANT). Earley is mandated because inputs
+          are short (parse cost is irrelevant) and Earley (a) handles k > 1
+          directly and (b) reports ambiguity explicitly, which the suite uses as a
+          regression test (gate: zero ambiguous parses over the positive corpus).
+          A left-factored LL(1) variant is given NON-NORMATIVELY in Appendix A.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+program            ::= iife                                   /* whole output = one IIFE */
+
+iife               ::= '(' '⍤' '(' ')' '{' statement* '}' ')' '(' ')' ';'
+                                                              /* mandatory wrapper; statement* = 0+ lines */
+
+statement          ::= chain_expression ';'                  /* one line, ';'-terminated */
+
+/* ── Core: selector + unbounded operation chain ───────────────────────────── */
+
+chain_expression   ::= selector_call operation_call*         /* '*' = the infinite-chaining rule */
+
+selector_call      ::= '⟠⟠' '(' quoted_selector ')'          /* the sole entry point */
+
+quoted_selector    ::= "'" selector "'" | '"' selector '"'   /* D2: quotes agree structurally */
+
+operation_call     ::= '◈' verb '(' argument_list? ')'       /* '◈'-chained verb; '?' = args optional */
+
+argument_list      ::= argument ( ',' argument )*            /* 1+ comma-separated args */
+
+argument           ::= number | quoted_string               /* D3: no hex_color; typing lives in the IR */
+
+quoted_string      ::= "'" sq_char* "'" | '"' dq_char* '"'   /* D2: quotes agree structurally */
+
+/* ── Selectors: CSS subset ─────────────────────────────────────────────────── */
+
+selector           ::= pseudo_selector | complex_selector    /* live-selection pseudo, else a graph query */
+
+pseudo_selector    ::= '⍜' ( '⍋' | '⍌' )          /* :selected / :lasso — resolved off the editor */
+
+complex_selector   ::= compound_selector ( combinator compound_selector )*
+                                                              /* compounds joined by combinators */
+
+combinator         ::= child_combinator | descendant_combinator
+                                                              /* child listed first (see P1 / k=2) */
+
+descendant_combinator ::= whitespace                         /* bare space = descendant ('◈car ◈wheel') */
+
+child_combinator   ::= whitespace? '⊳' whitespace?           /* '⊳' = direct child; padding optional */
+
+compound_selector  ::= wildcard | simple_matcher+            /* '+' = 1+ matchers ANDed, no space */
+
+simple_matcher     ::= id_selector | class_selector | type_selector
+
+id_selector        ::= '⍟' identifier                        /* #id → userData.label / name */
+
+class_selector     ::= '◈' identifier                        /* .class → derived/custom class */
+
+type_selector      ::= '⍇' | '⍈' | '⍉' | '⍊' /* bare keyword → three.js kind (closed set) */
+
+wildcard           ::= '⌾'                                   /* '⌾' → every node in scope */
+
+/* ── Operations: the closed verb set (EXACTLY 15 — a hard invariant) ────────── */
+
+verb               ::= '⏦' | '⏥' | '⏢' | '⏣' | '⏧' | '⌇'
+                     | '⌌' | '⌍' | '⌎' | '⌏'
+                     | '⌐' | '⌙' | '⌜' | '⌟'
+                     | '⌞'
+
+/* ── Lexical primitives ─────────────────────────────────────────────────────── */
+
+number             ::= sign? digit+ ( '.' digit+ )?          /* int or float, optional sign */
+
+sign               ::= '+' | '-'                             /* the '+' / '-' here are QUOTED literals */
+
+identifier         ::= ident_char+                           /* class/id/label name */
+
+ident_char         ::= [a-zA-Z0-9_-]                         /* hyphen allows kebab-case (dump-bed) */
+
+digit              ::= [0-9]                                 /* decimal digit */
+
+whitespace         ::= ' '+                                  /* 1+ spaces — SIGNIFICANT inside selectors (L2) */
+
+sq_char            ::= [^']                                  /* any char except the closing single quote */
+
+dq_char            ::= [^"]                                  /* any char except the closing double quote */
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   APPENDIX A — NON-NORMATIVE LL(1) variant of the combinator (D4)
+
+   The normative grammar above is k=2 by design and is parsed with Earley (P1).
+   IF a project instead needs an LL(1)/LALR front end, the combinator may be
+   left-factored as below. It accepts EXACTLY the same language; it is offered so
+   the option is explicit and auditable. IMPORTANT: if this variant is ever
+   ADOPTED as normative, the "Alien Syntax" grammar MUST be left-factored
+   IDENTICALLY — the isomorphism holds over the FINAL grammars, not over drafts.
+
+     complex_selector   ::= compound_selector ( combinator_lf compound_selector )*
+     combinator_lf      ::= whitespace ( '>' whitespace? )?   | '>' whitespace?
+
+   Reading: a leading whitespace may be a bare descendant, OR a child whose '>'
+   (with optional trailing whitespace) follows; with no leading whitespace it is a
+   child. This removes the k=2 first-set overlap on `whitespace` between
+   descendant_combinator and child_combinator, yielding an LL(1) decision.
+   ═══════════════════════════════════════════════════════════════════════════ */

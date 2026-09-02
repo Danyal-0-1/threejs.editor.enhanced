@@ -1,0 +1,3 @@
+build_templates — 3dom-grammar/1.1.0
+  grammar.iso.template.ebnf        identity render == Phase 1 ✓  (29 distinct slots)
+  grammar.w3c.template.ebnf        identity render == Phase 1 ✓  (29 distinct slots)

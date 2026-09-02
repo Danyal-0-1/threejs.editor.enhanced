@@ -1,0 +1,24 @@
+test_grammar_whitespace — 3dom-grammar/1.1.0
+  PASS  test_C9_does_not_erase_the_descendant_distinction
+  PASS  test_C9_multiple_internal_spaces_normalise
+  PASS  test_C9_normalisation_is_visible_in_the_canonical_text
+  PASS  test_C9_padding_around_the_child_combinator_normalises
+  PASS  test_a_selector_of_only_spaces_rejects
+  PASS  test_ambiguity_is_reported_not_silently_resolved
+  PASS  test_bare_unknown_word_rejects
+  PASS  test_empty_selector_rejects_at_the_L3_seam
+  PASS  test_every_whitespace_form_is_unambiguous
+  PASS  test_leading_selector_space_rejects
+  PASS  test_matching_quotes_are_accepted_in_both_forms
+  PASS  test_mismatched_quotes_reject
+  PASS  test_no_space_is_a_compound_AND_not_two_steps
+  PASS  test_outer_layout_cannot_be_smuggled_into_a_selector
+  PASS  test_outer_layout_is_insignificant
+  PASS  test_parser_cache_cannot_serve_the_wrong_lexicon
+  PASS  test_quote_characters_are_never_substituted
+  PASS  test_single_space_is_the_descendant_combinator
+  PASS  test_tab_inside_a_selector_rejects_at_the_lexer
+  PASS  test_the_whitespace_differential_survives_phi
+  PASS  test_trailing_selector_space_rejects
+
+21/21 passed

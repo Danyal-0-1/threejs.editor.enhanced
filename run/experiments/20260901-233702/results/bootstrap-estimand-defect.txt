@@ -1,0 +1,23 @@
+DEFECT: measure/prior_strength.py paired_bootstrap (pre-fix)
+========================================================================
+The reported point estimate is a difference of RATIOS OF TOTALS:
+    d = sum(nll_alien)/sum(chars_alien) - sum(nll_base)/sum(chars_base)
+The pre-fix CI resampled the MEAN OF PER-ITEM RATIOS instead.
+These are different estimands and coincide only when the denominators
+are equal across items -- i.e. when every program is the same length.
+
+--- equal-length programs (estimands coincide) ---
+  reported point estimate                     : +0.012000
+  OLD 95% CI (mean of per-item ratios)        : [+0.012000, +0.012000]   contains point: True
+  NEW 95% CI (same estimand as the point)     : [+0.012000, +0.012000]   contains point: True
+
+--- unequal-length programs (THE REAL CASE) ---
+  reported point estimate                     : +0.005714
+  OLD 95% CI (mean of per-item ratios)        : [+0.022950, +0.040050]   contains point: False
+  NEW 95% CI (same estimand as the point)     : [+0.004494, +0.007843]   contains point: True
+
+Real positive corpora DO vary in length (chars/program 55.4 mean, but
+individual programs range widely), so the second row is the operative one.
+Consequence if unfixed: a published 95% CI that does not contain the
+published point estimate. NOTE: no dNLL number has ever been produced on
+this machine, so NO reported result changes as a result of this fix.

@@ -59,6 +59,22 @@ be bolted onto an IR object, including a marker for which language produced it.
       signature stores all of them under "_positional" (the escape hatch
       tasks.py's arg_bag already understands). RATIONALE: value TYPING lives in
       the IR builder's per-verb table, not the grammar (D3); this is that table.
+
+  C9  Selector layout normalisation, ENFORCED BY THE GRAMMAR, NOT BY THIS FILE.
+      A run of spaces is ONE descendant combinator ('.a  .b' == '.a .b'), and
+      the optional padding around the child combinator is absorbed
+      ('.a>.b' == '.a > .b' == '.a  >  .b'). Leading and trailing selector
+      spaces REJECT, and a tab inside a selector rejects at the lexer.
+      MECHANISM: `WS : / +/` matches a whole run as one token, and
+      `child_combinator : WS? CHILD WS?` consumes its own padding — so these
+      forms are one derivation, not several that later collapse.
+      RATIONALE for listing it here: it IS a canonicalisation, it is load-
+      bearing for I9, and leaving it off the register made the C0–C8 list look
+      complete when it was not. RATIONALE for NOT moving it into Python: the
+      grammar already decides it correctly at parse time; re-implementing it as
+      a post-pass would add a second authority that can disagree with the
+      parser, which is strictly worse than an asymmetric-looking register.
+      Tested in tests/test_grammar_whitespace.py.
 """
 
 from __future__ import annotations
@@ -75,7 +91,6 @@ VERBS: tuple[str, ...] = (
     "setMaterial", "setOpacity", "setVisible", "wireframe",
     "metalness", "roughness", "castShadow", "receiveShadow",
 )
-assert len(VERBS) == 15 == len(set(VERBS)), "closed verb set is an INVARIANT"
 
 # C8 — the per-verb argument signature table.
 # The first seven rows are copied from Phase 1's tasks.py `_SIGNATURES` and are
@@ -99,7 +114,6 @@ SIGNATURES: dict[str, tuple[str, ...]] = {
     "castShadow": ("enabled",),
     "receiveShadow": ("enabled",),
 }
-assert set(SIGNATURES) == set(VERBS), "signature table must cover the closed set"
 
 MATCHER_KIND_RANK: dict[str, int] = {                                   # C3
     "type": 0, "id": 1, "class": 2, "pseudo": 3, "label": 4, "wildcard": 5,
@@ -115,19 +129,66 @@ class CanonicalisationError(Exception):
     pass
 
 
+def _assert_closed_sets() -> None:
+    """The closed-set invariants, as a real raise rather than a bare `assert`.
+
+    A module-level `assert` is DELETED by `python -O`, so an invariant carried
+    that way is unenforced in exactly the runs nobody is watching. These two are
+    hard invariants (METRICS.md; ir_schema.json pins the same 15-verb enum), so
+    they get an exception that survives optimisation.
+    """
+    if len(VERBS) != 15 or len(set(VERBS)) != 15:
+        raise CanonicalisationError(
+            f"closed verb set is an INVARIANT: expected 15 distinct verbs, got "
+            f"{len(VERBS)} ({len(set(VERBS))} distinct)")
+    if set(SIGNATURES) != set(VERBS):
+        raise CanonicalisationError(
+            f"the C8 signature table must cover the closed verb set exactly; "
+            f"missing={sorted(set(VERBS) - set(SIGNATURES))} "
+            f"extra={sorted(set(SIGNATURES) - set(VERBS))}")
+
+
+# Set by _check_against_phase1(): None once the cross-check has actually run,
+# otherwise the reason it could not. Read by run/preflight.py so a skipped
+# check is reportable instead of invisible.
+PHASE1_SIGNATURE_CHECK_SKIPPED: str | None = None
+
+
 def _check_against_phase1() -> None:
-    """Fail loudly if Phase 1's partial signature table has drifted from ours."""
+    """Fail loudly if Phase 1's partial signature table has drifted from ours.
+
+    Only a genuinely ABSENT Phase 1 is tolerated, and even then the reason is
+    recorded rather than swallowed. A `tasks.py` that exists but raises on
+    import is a real defect: catching it here would silently disable the one
+    check that keeps the C8 table tied to Phase 1's scorers.
+    """
+    global PHASE1_SIGNATURE_CHECK_SKIPPED
     import os
     import sys
     from phi import phase1_dir
     p1 = phase1_dir()
     if p1 not in sys.path:
         sys.path.insert(0, p1)
+    if not os.path.isfile(os.path.join(p1, "tasks.py")):
+        PHASE1_SIGNATURE_CHECK_SKIPPED = (
+            f"Phase 1 tasks.py not found under {p1!r}; the C8 signature table "
+            f"is UNVERIFIED against Phase 1. Set $PHASE1_DIR to the Phase 1 "
+            f"artifact directory.")
+        return
     try:
         import tasks                                   # type: ignore
-    except Exception:                                  # pragma: no cover
-        return                                         # Phase 1 not importable
+    except ImportError as exc:                         # pragma: no cover
+        raise CanonicalisationError(
+            f"Phase 1 tasks.py exists at {p1!r} but does not import ({exc}); "
+            f"the C8 signature cross-check cannot run, and running without it "
+            f"would let canonicalize.py drift away from Phase 1's scorers"
+        ) from exc
     theirs = getattr(tasks, "_SIGNATURES", {})
+    if not theirs:
+        PHASE1_SIGNATURE_CHECK_SKIPPED = (
+            "Phase 1 tasks.py exposes no _SIGNATURES table; C8 is UNVERIFIED "
+            "against Phase 1.")
+        return
     for verb, sig in theirs.items():
         if verb in SIGNATURES and tuple(sig) != SIGNATURES[verb]:
             raise CanonicalisationError(
@@ -140,10 +201,30 @@ def _check_against_phase1() -> None:
 # C1 — numbers
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _reject_non_finite(value: float, origin: str) -> None:
+    """inf / nan are not in the language and must fail DISTINGUISHABLY.
+
+    The grammar's NUMBER is /[+-]?[0-9]+(\\.[0-9]+)?/, so neither can arrive
+    from a parse; they can only come from a hand-built IR. Letting int() raise
+    OverflowError/ValueError from deep inside would be indistinguishable from a
+    genuine arithmetic bug, and §8.5 requires canonicalisation failures to be
+    tellable apart from parser and φ failures.
+    """
+    if value != value or value in (float("inf"), float("-inf")):
+        raise CanonicalisationError(
+            f"{origin}: {value!r} is not a 3DOM number — the grammar admits "
+            f"only /[+-]?[0-9]+(\\.[0-9]+)?/, which cannot express inf or nan")
+
+
 def canonical_number(text: str) -> int | float:
     """'+3' -> 3 ; '1.50' -> 1.5 ; '-0' -> 0 ; '2.0' -> 2."""
     body = text[1:] if text[:1] == "+" else text
-    value = float(body)
+    try:
+        value = float(body)
+    except ValueError as exc:
+        raise CanonicalisationError(
+            f"C1: {text!r} is not a numeric literal") from exc
+    _reject_non_finite(value, f"C1 canonical_number({text!r})")
     if value == int(value):
         return int(value) + 0                          # normalises -0 to 0
     return value
@@ -152,6 +233,8 @@ def canonical_number(text: str) -> int | float:
 def format_number(value: int | float) -> str:
     if isinstance(value, bool):                        # guard: bool is an int
         raise CanonicalisationError("booleans are not 3DOM numbers")
+    if not isinstance(value, int):
+        _reject_non_finite(float(value), f"C1 format_number({value!r})")
     if isinstance(value, int) or float(value) == int(float(value)):
         return str(int(value) + 0)
     return repr(float(value))
@@ -324,6 +407,7 @@ def args_in_order(verb: str, args: Mapping[str, Any]) -> list[Any]:     # C8, in
     return out
 
 
+_assert_closed_sets()
 _check_against_phase1()
 
 

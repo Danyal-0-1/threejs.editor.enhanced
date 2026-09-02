@@ -1,0 +1,71 @@
+SOURCE (3DOM):
+    (function(){ $S('.wheel.front').scale(1.5); })();
+
+=== 1. surface text per lexicon (phi_forward) ===
+  identity  (function(){ $S('.wheel.front').scale(1.5); })();
+  alpha     (recolor(){ $$('#wheel#front')#move(1.5); })();
+  beta      (mumvumfe(){ &Q('~wheel~front')~bungi(1.5); })();
+  gamma     (⍤(){ ⟠⟠('◈wheel◈front')◈⏥(1.5); })();
+
+=== 2. phi_inverse round-trip (exact textual inversion) ===
+  alpha     phi_inverse(phi_forward(x)) == x  ->  True
+  beta      phi_inverse(phi_forward(x)) == x  ->  True
+  gamma     phi_inverse(phi_forward(x)) == x  ->  True
+
+=== 3. DSL token stream (hand lexer, role-named token TYPES) ===
+  identity  ['LP', 'FUNC', 'LP', 'RP', 'LB', 'DOLLAR', 'LP', 'QUOTE', 'CSIG', 'IDENT', 'CSIG', 'IDENT', 'QUOTE', 'RP', 'DOT', 'VERB', 'LP', 'NUMBER', 'RP', 'SEMI', 'RB', 'RP', 'LP', 'RP', 'SEMI']
+  alpha     ['LP', 'FUNC', 'LP', 'RP', 'LB', 'DOLLAR', 'LP', 'QUOTE', 'CSIG', 'IDENT', 'CSIG', 'IDENT', 'QUOTE', 'RP', 'DOT', 'VERB', 'LP', 'NUMBER', 'RP', 'SEMI', 'RB', 'RP', 'LP', 'RP', 'SEMI']
+  beta      ['LP', 'FUNC', 'LP', 'RP', 'LB', 'DOLLAR', 'LP', 'QUOTE', 'CSIG', 'IDENT', 'CSIG', 'IDENT', 'QUOTE', 'RP', 'DOT', 'VERB', 'LP', 'NUMBER', 'RP', 'SEMI', 'RB', 'RP', 'LP', 'RP', 'SEMI']
+  gamma     ['LP', 'FUNC', 'LP', 'RP', 'LB', 'DOLLAR', 'LP', 'QUOTE', 'CSIG', 'IDENT', 'CSIG', 'IDENT', 'QUOTE', 'RP', 'DOT', 'VERB', 'LP', 'NUMBER', 'RP', 'SEMI', 'RB', 'RP', 'LP', 'RP', 'SEMI']
+
+=== 4. canonical IR (identical in every lexicon) ===
+  canonical JSON (C6):
+    {"grammar_version":"3dom-grammar/1.1.0","ops":[{"args":{"factor":1.5},"op":"scale","selector":{"raw":".front.wheel","steps":[{"combinator":null,"matchers":[{"kind":"class","name":"front"},{"kind":"class","name":"wheel"}]}]}}]}
+
+  pretty:
+{
+    "grammar_version": "3dom-grammar/1.1.0",
+    "ops": [
+        {
+            "op": "scale",
+            "selector": {
+                "raw": ".front.wheel",
+                "steps": [
+                    {
+                        "combinator": null,
+                        "matchers": [
+                            {
+                                "kind": "class",
+                                "name": "front"
+                            },
+                            {
+                                "kind": "class",
+                                "name": "wheel"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "args": {
+                "factor": 1.5
+            }
+        }
+    ]
+}
+
+=== 5. SHA-256 content hash (C7, source excluded) ===
+  identity  c2fd72263892a4b034de4ef09a367b8e9970233329d108b5c4c0a5dbe13341a4
+  alpha     c2fd72263892a4b034de4ef09a367b8e9970233329d108b5c4c0a5dbe13341a4
+  beta      c2fd72263892a4b034de4ef09a367b8e9970233329d108b5c4c0a5dbe13341a4
+  gamma     c2fd72263892a4b034de4ef09a367b8e9970233329d108b5c4c0a5dbe13341a4
+  all four identical: True
+
+=== 6. Emitter(phi): canonical IR -> canonical source text ===
+  identity  (function(){ $S('.front.wheel').scale(1.5); })();
+            idempotent: True
+  alpha     (recolor(){ $$('#front#wheel')#move(1.5); })();
+            idempotent: True
+  beta      (mumvumfe(){ &Q('~front~wheel')~bungi(1.5); })();
+            idempotent: True
+  gamma     (⍤(){ ⟠⟠('◈front◈wheel')◈⏥(1.5); })();
+            idempotent: True

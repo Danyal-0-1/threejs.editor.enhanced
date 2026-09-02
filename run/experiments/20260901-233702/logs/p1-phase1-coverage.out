@@ -1,0 +1,11 @@
+3DOM conformance — 3dom-grammar/1.1.0
+============================================================
+corpus sizes: positive=62  negative=64  vacuous=12
+G1 OK  — all 62 positives parse to exactly one derivation
+G2 OK  — production coverage = 100% (57/57 branches)
+G3 OK  — all 64 negatives rejected
+G4 OK  — all 12 vacuous items parse with zero operations
+G5 OK  — '.car .wheel' (descendant) != '.car.wheel' (compound AND)
+G6 OK  — Earley and DFA agree on all 138 corpus items (same language)
+============================================================
+RESULT: PASS — all gates green

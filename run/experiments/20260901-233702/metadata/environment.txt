@@ -1,0 +1,18 @@
+# Environment metadata
+captured_utc=2026-09-01T23:37:27Z
+repo_root=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced
+os=Linux 7.0.0-30-generic x86_64 GNU/Linux
+distro=Ubuntu 24.04.4 LTS
+cpu=12th Gen Intel(R) Core(TM) i7-12700H
+cpu_cores=20
+ram_total=62Gi
+gpu=NVIDIA GeForce RTX 3080 Ti Laptop GPU, 16384 MiB, 595.84
+disk_free_repo_fs=686G
+python=Python 3.12.3
+python_path=/usr/bin/python3
+git_commit=c3f9b26f893d7da7d31a5f694498ed1d86501c0a
+git_branch=main
+git_dirty=yes
+PHASE1_DIR=<unset, phi.phase1_dir() default applies>
+PYTHONPATH=<unset>
+PYTHONHASHSEED=<unset>

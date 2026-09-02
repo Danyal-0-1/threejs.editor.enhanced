@@ -1,0 +1,9 @@
+slug=laneB-01-fertility
+command=../run/.venv/bin/python measure/fertility.py --md
+cwd=/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/alien_syntax
+exit_code=0
+started_utc=2026-09-01T23:56:54Z
+finished_utc=2026-09-01T23:57:10Z
+duration_seconds=16
+stdout_bytes=12854
+stderr_bytes=274

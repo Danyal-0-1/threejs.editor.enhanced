@@ -42,10 +42,22 @@ def test_ir_identity_over_positive_corpus() -> None:
             alien = phi_forward(x, phi)
             got = parse(alien, phi)
             want = parse(x, ident)
+            # A bare "hash mismatch" is unactionable: the digests are the LAST
+            # step, so the message has to carry everything needed to find where
+            # the two pipelines diverged — both surfaces AND both canonical
+            # JSONs, so a reader can diff the IR without re-running anything.
             assert content_hash(got) == content_hash(want), (
-                f"[{name}] IR differs for {x!r}\n"
-                f"  3DOM : {canonical_json(want)}\n"
-                f"  alien: {canonical_json(got)}")
+                f"\n[{name}] IR content hashes differ.\n"
+                f"  candidate      : {name}\n"
+                f"  3DOM program   : {x!r}\n"
+                f"  alien program  : {alien!r}\n"
+                f"  3DOM canonical : {canonical_json(want)}\n"
+                f"  alien canonical: {canonical_json(got)}\n"
+                f"  3DOM digest    : {content_hash(want)}\n"
+                f"  alien digest   : {content_hash(got)}\n"
+                f"  NOTE: the digest is the operational WITNESS, not the "
+                f"theorem. A mismatch localises to the first differing field "
+                f"of the two canonical JSONs above.")
 
 
 def test_ir_identity_over_vacuous_corpus() -> None:
@@ -108,6 +120,12 @@ def main() -> int:
         except AssertionError as exc:
             failures += 1
             print(f"  FAIL  {fn.__name__}\n        {exc}")
+        except Exception as exc:
+            # An ERROR is not a pass. Catching only AssertionError let a
+            # ParseError or a missing Phase 1 file abort the runner before the
+            # summary line, so a red run could be mistaken for an interrupted one.
+            failures += 1
+            print(f"  ERROR {fn.__name__}\n        {type(exc).__name__}: {exc}")
     print(f"\n{len(tests) - failures}/{len(tests)} passed")
     return 1 if failures else 0
 

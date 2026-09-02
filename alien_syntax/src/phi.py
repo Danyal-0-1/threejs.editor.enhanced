@@ -44,6 +44,7 @@ whole cost of the change.
 
 from __future__ import annotations
 
+import functools
 import json
 import os
 import re
@@ -109,8 +110,18 @@ class TerminalTable:
     grammar_version: str
     terminals: tuple[Terminal, ...]
 
-    @property
+    @functools.cached_property
     def by_id(self) -> dict[str, Terminal]:
+        """id -> Terminal, built once.
+
+        This was a plain @property, which rebuilt a 43-entry dict on EVERY
+        lookup — and `PhiMap.spelling` calls it once per terminal, inside the
+        lexer's hot path and inside every collision check's cross product. The
+        table is frozen for the life of the process, so the rebuild bought
+        nothing. `cached_property` writes through `instance.__dict__` directly,
+        which is why it works on a frozen dataclass: it never calls the blocked
+        `__setattr__`.
+        """
         return {t.id: t for t in self.terminals}
 
     @property

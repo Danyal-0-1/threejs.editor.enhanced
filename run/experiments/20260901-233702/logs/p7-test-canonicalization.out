@@ -1,0 +1,37 @@
+test_canonicalization — 3dom-grammar/1.1.0
+  PASS  test_C0_grammar_version_on_every_top_level_object
+  PASS  test_C0_no_lexicon_identifier_leaks_into_identity
+  PASS  test_C1_booleans_are_rejected
+  PASS  test_C1_non_finite_values_raise_a_canonicalisation_error
+  PASS  test_C1_number_normalisation
+  PASS  test_C1_true_and_one_are_distinct_in_the_IR
+  PASS  test_C2_both_quotes_raises_rather_than_inventing_an_escape
+  PASS  test_C2_quote_selection
+  PASS  test_C3_compound_matcher_order_is_not_meaning
+  PASS  test_C3_sort_key_is_an_explicit_rank_not_alphabetical
+  PASS  test_C3_sorts_ONLY_within_one_compound
+  PASS  test_C4_combinator_kind_is_meaning
+  PASS  test_C4_operation_order_is_meaning
+  PASS  test_C4_selector_step_order_is_meaning
+  PASS  test_C5_raw_agrees_with_the_sorted_steps
+  PASS  test_C5_raw_is_rendered_from_steps_in_3DOM_spelling
+  PASS  test_C6_is_independent_of_dict_insertion_order
+  PASS  test_C6_serialisation_is_sorted_and_compact
+  PASS  test_C7_hash_is_sha256_of_the_utf8_canonical_json
+  PASS  test_C7_hash_is_stable_across_processes
+  PASS  test_C7_source_is_excluded_from_identity
+  PASS  test_C8_a_hole_in_the_mapping_raises
+  PASS  test_C8_a_prefix_is_legal_and_round_trips
+  PASS  test_C8_overflow_is_detected_not_truncated
+  PASS  test_C8_positional_arguments_map_to_named_fields
+  PASS  test_C8_structural_validity_is_not_intent_correctness
+  PASS  test_closed_set_invariants_survive_python_dash_O
+  PASS  test_emitter_raises_on_an_unsupported_node_type
+  PASS  test_emitter_rejects_an_impossible_combinator
+  PASS  test_frozen_dataclasses_reject_field_rebinding
+  PASS  test_matcher_post_init_enforces_invariants
+  PASS  test_operation_args_is_nested_mutable_and_unhashable
+  PASS  test_operation_post_init_rejects_a_verb_outside_the_closed_set
+  PASS  test_step_post_init_enforces_invariants
+
+34/34 passed
