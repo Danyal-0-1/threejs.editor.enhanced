@@ -1,9 +1,7 @@
 # run.md — executing and verifying the Phase 2 pipeline
 
 **Grammar:** `3dom-grammar/1.1.0` · **Repo:** `threejs.editor.enhanced` ·
-**Last executed:** 2026-09-01,
-[Experiment 01](experiments/20260901-233702/EXPERIMENT.md)
-(`run/experiments/20260901-233702`)
+**Last executed:** 2026-09-01, experiment `run/experiments/20260901-233702`
 
 This runbook is authoritative. The scripts in `run/` sequence the commands below
 and preserve logs; they hide nothing. If you prefer, run every phase by hand from

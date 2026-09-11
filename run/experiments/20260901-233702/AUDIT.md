@@ -1,4 +1,4 @@
-# AUDIT.md — Phase 2 end-to-end audit
+# AUDIT.md — Experiment 01 Phase 2 end-to-end audit
 
 **Date:** 2026-09-01 · **Commit at start:** `c3f9b26` ·
 **Experiment:** `run/experiments/20260901-233702` ·

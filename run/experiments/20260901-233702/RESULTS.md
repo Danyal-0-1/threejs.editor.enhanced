@@ -1,4 +1,4 @@
-# RESULTS.md — results actually obtained
+# RESULTS.md — Experiment 01 results actually obtained
 
 **Experiment:** `run/experiments/20260901-233702` (UTC) ·
 **Commit at start:** `c3f9b26` ·
@@ -300,7 +300,7 @@ Two independent reasons:
 remains a **stress diagnostic, not a clean control**.
 
 Options, consequences and the exact code that would change are in
-`run/AUDIT.md §11 (RD-1)`. The smallest defensible recommendation: re-engineer β
+`AUDIT.md §11 (RD-1)`. The smallest defensible recommendation: re-engineer β
 against a **token-count** objective using the existing
 `candidates/gen_beta_lexicon.py`, preserving the pre-committed band rather than
 widening it after seeing the numbers.
@@ -323,8 +323,9 @@ widening it after seeing the numbers.
 `grammar/render_grammar.py`, `tests/test_isomorphism.py`,
 `tests/test_roundtrip.py`, `tests/test_invariants.py`.
 
-**Files added (12):** 6 test suites under `alien_syntax/tests/`, and
-`run/{run.md,AUDIT.md,RESULTS.md,preflight.py,verify_artifacts.py,runlog.sh,run_structural.sh,run_model_metrics.sh}`.
+**Files added (12):** 6 test suites under `alien_syntax/tests/`, and the original
+`run/{run.md,AUDIT.md,RESULTS.md,preflight.py,verify_artifacts.py,runlog.sh,run_structural.sh,run_model_metrics.sh}`
+paths. The two experiment-specific reports were later archived in this directory.
 
 **Did any reported result change?** **No.** Every structural number is identical
 before and after the fixes — grammars, corpora and `METRICS_PARITY.md` regenerate
