@@ -1,0 +1,7 @@
+criterion,alpha,beta,gamma
+specified_finite_structural_gates,PASS,PASS,PASS
+original_collision_checks_a_to_f,PASS,PASS,PASS
+binding_fertility_constraint,FAIL 1.073,FAIL 1.448,FAIL 2.285
+proposed_diagnostic_g,PASS 0,PASS 0,FAIL 24
+base_model_delta_nll,NOT RUN,NOT RUN,NOT RUN
+eligible_winner,NO,NO,NO

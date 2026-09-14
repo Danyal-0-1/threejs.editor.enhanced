@@ -1,0 +1,5 @@
+model,language,n,VALID_CORRECT,VALID_WRONG,VALID_VACUOUS,PARSE_FAIL,LEX_FAIL,OOM,TIMEOUT,HARNESS_ERROR
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,8,0,8,0,0,0,0,0,0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,8,0,0,0,8,0,0,0,0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,8,0,0,0,8,0,0,0,0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,8,0,6,0,2,0,0,0,0

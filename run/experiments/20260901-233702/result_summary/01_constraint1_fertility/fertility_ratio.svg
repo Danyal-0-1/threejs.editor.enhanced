@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="plot-title plot-description">
+<title id="plot-title">Constraint 1: every candidate exceeds the fertility limit</title>
+<desc id="plot-description">Relative token density on the same 62 programs; a candidate had to pass every tokenizer</desc>
+<style>
+            text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #172033; }
+            .title { font-size: 30px; font-weight: 700; }
+            .subtitle { font-size: 16px; fill: #5b6475; }
+            .axis { font-size: 14px; fill: #374151; }
+            .axis-label { font-size: 16px; font-weight: 600; fill: #374151; }
+            .body { font-size: 15px; }
+            .value { font-size: 14px; font-weight: 700; }
+            .legend { font-size: 14px; font-weight: 600; }
+            .panel-title { font-size: 18px; font-weight: 700; }
+            .cell { font-size: 15px; font-weight: 700; }
+            .row-label { font-size: 15px; font-weight: 600; }
+            .footnote { font-size: 13px; fill: #5b6475; }
+        </style>
+<rect x="0" y="0" width="1280" height="760" fill="white"/>
+<text x="55.0" y="44.0" class="title" text-anchor="start" >Constraint 1: every candidate exceeds the fertility limit</text>
+<text x="55.0" y="73.0" class="subtitle" text-anchor="start" >Relative token density on the same 62 programs; a candidate had to pass every tokenizer</text>
+<rect x="55" y="91" width="18" height="18" rx="3" fill="#2563eb"/>
+<text x="81.0" y="105.0" class="legend" text-anchor="start" >Qwen2 shared tokenizer (4 repos)</text>
+<rect x="337" y="91" width="18" height="18" rx="3" fill="#7c3aed"/>
+<text x="363.0" y="105.0" class="legend" text-anchor="start" >DeepSeek-V3 tokenizer</text>
+<rect x="105" y="419.2" width="1130" height="19.6" fill="#dcfce7"/>
+<line x1="105" y1="419.2" x2="1235" y2="419.2" stroke="#166534" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1231.0" y="412.2" class="axis" text-anchor="end" >upper limit 1.05</text>
+<line x1="105" y1="625.0" x2="1235" y2="625.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="630.0" class="axis" text-anchor="end" >0</text>
+<line x1="105" y1="527.0" x2="1235" y2="527.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="532.0" class="axis" text-anchor="end" >0.5</text>
+<line x1="105" y1="429.0" x2="1235" y2="429.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="434.0" class="axis" text-anchor="end" >1</text>
+<line x1="105" y1="331.0" x2="1235" y2="331.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="336.0" class="axis" text-anchor="end" >1.5</text>
+<line x1="105" y1="233.0" x2="1235" y2="233.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="238.0" class="axis" text-anchor="end" >2</text>
+<line x1="105" y1="135.0" x2="1235" y2="135.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="93.0" y="140.0" class="axis" text-anchor="end" >2.5</text>
+<line x1="105" y1="625" x2="1235" y2="625" stroke="#172033" stroke-width="1.5"/>
+<text x="0.0" y="0.0" class="axis-label" text-anchor="middle" transform="translate(30 380.0) rotate(-90)">Relative fertility (alien tok/char ÷ 3DOM tok/char)</text>
+<rect x="223.3" y="415.6" width="68.0" height="209.4" rx="3" fill="#2563eb"/>
+<text x="257.3" y="407.6" class="value" text-anchor="middle" >1.068</text>
+<rect x="295.3" y="414.7" width="68.0" height="210.3" rx="3" fill="#7c3aed"/>
+<text x="329.3" y="406.7" class="value" text-anchor="middle" >1.073</text>
+<text x="293.3" y="653.0" class="axis-label" text-anchor="middle" >alpha</text>
+<rect x="600.0" y="350.4" width="68.0" height="274.6" rx="3" fill="#2563eb"/>
+<text x="634.0" y="342.4" class="value" text-anchor="middle" >1.401</text>
+<rect x="672.0" y="341.2" width="68.0" height="283.8" rx="3" fill="#7c3aed"/>
+<text x="706.0" y="333.2" class="value" text-anchor="middle" >1.448</text>
+<text x="670.0" y="653.0" class="axis-label" text-anchor="middle" >beta</text>
+<rect x="976.7" y="245.3" width="68.0" height="379.7" rx="3" fill="#2563eb"/>
+<text x="1010.7" y="237.3" class="value" text-anchor="middle" >1.937</text>
+<rect x="1048.7" y="177.2" width="68.0" height="447.8" rx="3" fill="#7c3aed"/>
+<text x="1082.7" y="169.2" class="value" text-anchor="middle" >2.285</text>
+<text x="1046.7" y="653.0" class="axis-label" text-anchor="middle" >gamma</text>
+<text x="55.0" y="684.0" class="footnote" text-anchor="start" >Allowed band: 0.95–1.05. Labels use exact provenance ratios rounded to three decimals.</text>
+<text x="55.0" y="705.0" class="footnote" text-anchor="start" >Source: results/fertility-tokenizers.md and results/constraint1-fertility-decision.md.</text>
+</svg>

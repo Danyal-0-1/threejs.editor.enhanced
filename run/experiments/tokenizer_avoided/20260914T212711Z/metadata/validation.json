@@ -1,0 +1,67 @@
+[
+  {
+    "check": "1. unit tests (prompt renderer, parser, checkpoint, scoring)",
+    "pass": true,
+    "detail": "26 tests, rc=0"
+  },
+  {
+    "check": "2. four-language smoke test recorded",
+    "pass": true,
+    "detail": "languages=['alpha', 'beta', 'gamma', 'identity']"
+  },
+  {
+    "check": "3. paired targets produce identical canonical IR across languages",
+    "pass": true,
+    "detail": "84 renderings checked, 0 mismatched"
+  },
+  {
+    "check": "4. aggregate denominators verified against raw rows",
+    "pass": true,
+    "detail": "0 mismatches"
+  },
+  {
+    "check": "5. selected aggregates independently recomputed",
+    "pass": true,
+    "detail": "0 discrepancies"
+  },
+  {
+    "check": "6. plot CSV values match aggregate data",
+    "pass": false,
+    "detail": "1 problems; 01_accuracy_bare Qwen/Qwen2.5-Coder-0.5B-Instruct/identity"
+  },
+  {
+    "check": "7. every plot dir has plot.png, plot.svg, data.csv, README.md",
+    "pass": true,
+    "detail": "30 plots, 0 incomplete"
+  },
+  {
+    "check": "8. no missing value became zero (real zeros listed for inspection)",
+    "pass": true,
+    "detail": "0 exact-zero cells, all traceable to raw rows"
+  },
+  {
+    "check": "9. outcome taxonomy totals equal the denominators",
+    "pass": true,
+    "detail": "0 mismatches"
+  },
+  {
+    "check": "10. VALID_CORRECT count == semantic-accuracy numerator",
+    "pass": true,
+    "detail": "0 mismatches"
+  },
+  {
+    "check": "11. greedy decoding deterministic across repetitions",
+    "pass": true,
+    "detail": "0 of 73 rows differed between reps"
+  },
+  {
+    "check": "12. blocked cells carry exact command and error",
+    "pass": true,
+    "detail": "1 blocked cells recorded"
+  },
+  {
+    "check": "13. checksums recorded for raw, metrics, reports, plots",
+    "pass": true,
+    "detail": "235 files hashed -> metadata/output-checksums.txt"
+  }
+]

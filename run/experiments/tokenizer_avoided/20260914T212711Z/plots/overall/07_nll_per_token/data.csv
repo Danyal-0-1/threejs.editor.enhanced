@@ -1,0 +1,17 @@
+model,n_parameters,device,language,value
+Qwen/Qwen2.5-Coder-0.5B,494032768,cuda,identity,3.997805798147607
+Qwen/Qwen2.5-Coder-0.5B,494032768,cuda,alpha,5.283419689538585
+Qwen/Qwen2.5-Coder-0.5B,494032768,cuda,beta,6.448085076401301
+Qwen/Qwen2.5-Coder-0.5B,494032768,cuda,gamma,6.336285336417441
+Qwen/Qwen2.5-Coder-1.5B,1543714304,cuda,identity,3.8201957278781467
+Qwen/Qwen2.5-Coder-1.5B,1543714304,cuda,alpha,5.338112172227953
+Qwen/Qwen2.5-Coder-1.5B,1543714304,cuda,beta,6.290307132960246
+Qwen/Qwen2.5-Coder-1.5B,1543714304,cuda,gamma,6.708550359595637
+Qwen/Qwen2.5-Coder-3B,3085938688,cuda,identity,3.75049299038197
+Qwen/Qwen2.5-Coder-3B,3085938688,cuda,alpha,5.334395710587402
+Qwen/Qwen2.5-Coder-3B,3085938688,cuda,beta,6.1466187715237135
+Qwen/Qwen2.5-Coder-3B,3085938688,cuda,gamma,5.9751949049671245
+Qwen/Qwen2.5-Coder-7B [cpu],7615616512,cpu,identity,3.805772831433714
+Qwen/Qwen2.5-Coder-7B [cpu],7615616512,cpu,alpha,5.201139618977966
+Qwen/Qwen2.5-Coder-7B [cpu],7615616512,cpu,beta,6.033460136122662
+Qwen/Qwen2.5-Coder-7B [cpu],7615616512,cpu,gamma,6.182752327297045

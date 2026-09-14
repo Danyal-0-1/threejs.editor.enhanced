@@ -1,0 +1,56 @@
+[
+  {
+    "repo": "Qwen/Qwen2.5-Coder-0.5B",
+    "kind": "base",
+    "status": "VERIFIED",
+    "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-0.5B/snapshots/8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+    "bytes_on_disk": 999586167,
+    "download_seconds": 46.89
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    "kind": "instruct",
+    "status": "VERIFIED",
+    "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-0.5B-Instruct/snapshots/ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+    "bytes_on_disk": 999586348,
+    "download_seconds": 9.25
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-1.5B",
+    "kind": "base",
+    "status": "VERIFIED",
+    "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-1.5B/snapshots/df3ce67c0e24480f20468b6ef2894622d69eb73b",
+    "bytes_on_disk": 3098955546,
+    "download_seconds": 44.042
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "kind": "instruct",
+    "status": "VERIFIED",
+    "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-1.5B-Instruct/snapshots/2e1fd397ee46e1388853d2af2c993145b0f1098a",
+    "bytes_on_disk": 3098955668,
+    "download_seconds": 19.333
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-3B",
+    "kind": "base",
+    "status": "VERIFIED",
+    "revision": "09d9bc5d376b0cfa0100a0694ea7de7232525803",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-3B/snapshots/09d9bc5d376b0cfa0100a0694ea7de7232525803",
+    "bytes_on_disk": 6183450926,
+    "download_seconds": 41.948
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+    "kind": "instruct",
+    "status": "VERIFIED",
+    "revision": "488639f1ff808d1d3d0ba301aef8c11461451ec5",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-3B-Instruct/snapshots/488639f1ff808d1d3d0ba301aef8c11461451ec5",
+    "bytes_on_disk": 6183451107,
+    "download_seconds": 28.568
+  }
+]

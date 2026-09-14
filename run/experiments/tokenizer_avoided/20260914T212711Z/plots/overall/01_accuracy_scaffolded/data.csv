@@ -1,0 +1,5 @@
+model,language,k,n,accuracy,wilson_lo,wilson_hi
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,0,8,0.0,0.0,0.32440756488388023
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,0,8,0.0,0.0,0.32440756488388023
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,0,8,0.0,0.0,0.32440756488388023
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,0,8,0.0,0.0,0.32440756488388023

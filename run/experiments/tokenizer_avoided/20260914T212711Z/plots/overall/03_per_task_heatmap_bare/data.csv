@@ -1,0 +1,17 @@
+model,language,task,k,n,accuracy
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,op-selection,6,8,0.75
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,selector-resolution,3,8,0.375
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,arg-extraction,4,8,0.5
+Qwen/Qwen2.5-Coder-0.5B-Instruct,identity,multi-op,5,8,0.625
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,op-selection,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,selector-resolution,2,8,0.25
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,arg-extraction,2,8,0.25
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,multi-op,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,op-selection,5,8,0.625
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,selector-resolution,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,arg-extraction,3,8,0.375
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,multi-op,5,8,0.625
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,op-selection,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,selector-resolution,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,arg-extraction,1,8,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,multi-op,1,8,0.125

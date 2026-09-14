@@ -1,0 +1,9 @@
+model,n_parameters,condition,language,accuracy
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,bare,identity,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,bare,alpha,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,bare,beta,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,bare,gamma,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,scaffolded,identity,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,scaffolded,alpha,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,scaffolded,beta,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,,scaffolded,gamma,0.0

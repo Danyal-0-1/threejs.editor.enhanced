@@ -1,0 +1,4 @@
+model,language,risk_difference,ci_lo,ci_hi,n_pairs,mcnemar_p,n_discordant
+Qwen/Qwen2.5-Coder-0.5B-Instruct,alpha,-0.125,-0.375,0.0,8,1.0,1
+Qwen/Qwen2.5-Coder-0.5B-Instruct,beta,-0.125,-0.375,0.0,8,1.0,1
+Qwen/Qwen2.5-Coder-0.5B-Instruct,gamma,-0.125,-0.375,0.0,8,1.0,1

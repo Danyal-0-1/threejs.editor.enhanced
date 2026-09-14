@@ -1,0 +1,16 @@
+ M alien_syntax/src/__pycache__/canonicalize.cpython-312.pyc
+ M alien_syntax/src/__pycache__/phi.cpython-312.pyc
+ M alien_syntax/src/__pycache__/transpiler.cpython-312.pyc
+ D project_status/phas2.md
+ M project_status/phase1.md
+ M run/experiments/20260901-233702/EXPERIMENT.md
+?? __pycache__/
+?? alien_syntax/src/__pycache__/canonicalize.cpython-312.opt-1.pyc
+?? alien_syntax/src/__pycache__/phi.cpython-312.opt-1.pyc
+?? grammar_and_3DOM_client/__pycache__/fixture_scene.cpython-312.opt-1.pyc
+?? grammar_and_3DOM_client/__pycache__/tasks.cpython-312.opt-1.pyc
+?? project_status/litreture_review.md
+?? project_status/phase2.md
+?? run/experiments/20260901-233702/result_summary/
+?? run/experiments/tokenizer_avoided/
+152c2aa14332432afffd81bfe1f3916887a41e07

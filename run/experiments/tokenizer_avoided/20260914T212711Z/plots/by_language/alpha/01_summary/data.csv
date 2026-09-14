@@ -1,0 +1,3 @@
+model,condition,n,semantic_accuracy,wilson_lo,wilson_hi,parse_validity,language_compliance,op-selection,selector-resolution,arg-extraction,multi-op
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,8,0.0,0.0,0.32440756488388023,0.875,1.0,0.125,0.25,0.25,0.125
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,8,0.0,0.0,0.32440756488388023,0.0,1.0,0.0,0.0,0.0,0.0

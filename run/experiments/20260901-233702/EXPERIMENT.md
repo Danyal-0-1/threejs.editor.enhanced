@@ -43,6 +43,7 @@ pipeline.
 | [AUDIT.md](AUDIT.md) | Detailed implementation and methodology audit |
 | [RUNBOOK.md](RUNBOOK.md) | Snapshot of the runbook used for this experiment |
 | [metadata/candidate-selection-precommit.md](metadata/candidate-selection-precommit.md) | Selection rule as it stood before the binding measurement |
+| [result_summary/why_no_winner.md](result_summary/why_no_winner.md) | Post-experiment plain-language explanation and plots |
 | [results/](results/) | Individual result tables and traces |
 | [logs/](logs/) | Captured stdout, stderr, commands, and exit metadata |
 | [artifacts/](artifacts/) | Generated and before/after comparison artifacts |
@@ -57,6 +58,7 @@ recording one run.
 
 ## Archive rule
 
-Treat this directory as read-only historical evidence. Changes to candidate
-construction, constraints, or measurements belong to a new timestamped
-experiment directory and must not replace these results.
+Treat the raw logs, results, metadata, and artifacts as read-only historical
+evidence. Clearly labeled derived summaries may be added, but changes to
+candidate construction, constraints, or measurements belong to a new
+timestamped experiment directory and must not replace these results.

@@ -1,0 +1,4 @@
+candidate,character_total,identity_character_total,character_length_ratio,qwen_relative_fertility,deepseek_relative_fertility
+alpha,3357,3432,0.978146853147,1.068155844541,1.073146483853
+beta,3432,3432,1.000000000000,1.400829875519,1.448125544900
+gamma,2458,3432,0.716200466200,1.937379173433,2.284895042290

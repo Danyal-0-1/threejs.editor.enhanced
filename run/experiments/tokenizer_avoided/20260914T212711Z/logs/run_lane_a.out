@@ -1,0 +1,53 @@
+=== 2026-09-14T21:42:04Z laneA Qwen/Qwen2.5-Coder-0.5B fp32 cuda
+[resume] 0 rows complete
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 4351.76it/s]
+[load] Qwen/Qwen2.5-Coder-0.5B load=1.9222s params=494,032,768
+  identity  62 programs in 1.59s
+  alpha     62 programs in 1.53s
+  beta      62 programs in 1.55s
+  gamma     62 programs in 1.55s
+[done] Qwen/Qwen2.5-Coder-0.5B: 248 rows
+EXIT 0  laneA Qwen/Qwen2.5-Coder-0.5B fp32 cuda
+=== 2026-09-14T21:42:17Z laneA Qwen/Qwen2.5-Coder-1.5B fp32 cuda
+[resume] 0 rows complete
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:00,  5.59it/s]Loading weights:  36%|███▋      | 123/338 [00:00<00:00, 535.58it/s]Loading weights:  57%|█████▋    | 193/338 [00:00<00:00, 567.66it/s]Loading weights:  77%|███████▋  | 259/338 [00:00<00:00, 542.17it/s]Loading weights:  94%|█████████▍| 319/338 [00:00<00:00, 553.04it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 522.82it/s]
+[load] Qwen/Qwen2.5-Coder-1.5B load=3.2166s params=1,543,714,304
+  identity  62 programs in 1.88s
+  alpha     62 programs in 1.84s
+  beta      62 programs in 1.87s
+  gamma     62 programs in 1.87s
+[done] Qwen/Qwen2.5-Coder-1.5B: 248 rows
+EXIT 0  laneA Qwen/Qwen2.5-Coder-1.5B fp32 cuda
+=== 2026-09-14T21:42:33Z laneA Qwen/Qwen2.5-Coder-3B fp32 cuda
+[resume] 0 rows complete
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:  10%|▉         | 43/434 [00:00<00:00, 409.55it/s]Loading weights:  28%|██▊       | 123/434 [00:00<00:00, 628.97it/s]Loading weights:  43%|████▎     | 187/434 [00:00<00:00, 485.19it/s]Loading weights:  55%|█████▌    | 239/434 [00:00<00:00, 446.46it/s]Loading weights:  66%|██████▌   | 286/434 [00:00<00:00, 416.77it/s]Loading weights:  76%|███████▌  | 329/434 [00:00<00:00, 376.20it/s]Loading weights:  86%|████████▋ | 375/434 [00:00<00:00, 369.90it/s]Loading weights:  95%|█████████▌| 413/434 [00:01<00:00, 369.51it/s]Loading weights: 100%|██████████| 434/434 [00:01<00:00, 417.33it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[load] Qwen/Qwen2.5-Coder-3B load=5.0417s params=3,085,938,688
+  identity  62 programs in 2.61s
+  alpha     62 programs in 2.61s
+  beta      62 programs in 2.84s
+  gamma     62 programs in 2.84s
+[done] Qwen/Qwen2.5-Coder-3B: 248 rows
+EXIT 0  laneA Qwen/Qwen2.5-Coder-3B fp32 cuda
+=== 2026-09-14T21:42:54Z laneA Qwen/Qwen2.5-Coder-7B fp32 cuda (sensitivity, expected VRAM-bound)
+[resume] 0 rows complete
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<03:33,  1.58it/s]Loading weights:  40%|████      | 136/339 [00:00<00:00, 245.59it/s]Loading weights:  61%|██████▏   | 208/339 [00:01<00:00, 176.47it/s]Loading weights:  75%|███████▍  | 253/339 [00:01<00:00, 166.83it/s]Loading weights:  84%|████████▍ | 286/339 [00:01<00:00, 149.94it/s]Loading weights:  92%|█████████▏| 312/339 [00:02<00:00, 94.46it/s] Loading weights:  97%|█████████▋| 330/339 [00:03<00:00, 62.31it/s]Loading weights: 100%|██████████| 339/339 [00:03<00:00, 100.62it/s]
+[W914 14:43:14.193707580 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 272629760 bytes (free: 119668736, total: 16760569856).
+[W914 14:43:14.193854288 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 272629760 bytes (free: 119668736, total: 16760569856).
+BLOCKED Qwen/Qwen2.5-Coder-7B: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 114.12 MiB is free. Including non-PyTorch memory, this process has 15.15 GiB memory in use. Of the allocated memory 14.87 GiB is allocated by PyTorch, and 91.35 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+EXIT 4  laneA Qwen/Qwen2.5-Coder-7B fp32 cuda (sensitivity, expected VRAM-bound)
+=== 2026-09-14T21:43:16Z laneA Qwen/Qwen2.5-Coder-7B fp32 cpu (separate condition)
+[resume] 0 rows complete
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<00:40,  8.42it/s]Loading weights:  14%|█▍        | 48/339 [00:00<00:01, 245.65it/s]Loading weights:  24%|██▍       | 81/339 [00:00<00:00, 281.33it/s]Loading weights:  37%|███▋      | 124/339 [00:00<00:00, 324.82it/s]Loading weights:  48%|████▊     | 162/339 [00:00<00:00, 325.17it/s]Loading weights:  61%|██████▏   | 208/339 [00:00<00:00, 347.05it/s]Loading weights:  72%|███████▏  | 245/339 [00:00<00:00, 344.01it/s]Loading weights:  83%|████████▎ | 282/339 [00:00<00:00, 337.74it/s]Loading weights:  94%|█████████▎| 317/339 [00:01<00:00, 331.86it/s]Loading weights: 100%|██████████| 339/339 [00:01<00:00, 253.84it/s]
+[load] Qwen/Qwen2.5-Coder-7B load=2.8284s params=7,615,616,512
+  identity  62 programs in 54.44s
+  alpha     62 programs in 57.44s
+  beta      62 programs in 69.23s
+  gamma     62 programs in 69.69s
+[done] Qwen/Qwen2.5-Coder-7B: 248 rows
+EXIT 0  laneA Qwen/Qwen2.5-Coder-7B fp32 cpu (separate condition)
+LANE A COMPLETE

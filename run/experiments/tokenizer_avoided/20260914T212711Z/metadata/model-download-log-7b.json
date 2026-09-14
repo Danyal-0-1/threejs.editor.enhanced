@@ -1,0 +1,20 @@
+[
+  {
+    "repo": "Qwen/Qwen2.5-Coder-7B",
+    "kind": "base",
+    "status": "VERIFIED",
+    "revision": "0396a76181e127dfc13e5c5ec48a8cee09938b02",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-7B/snapshots/0396a76181e127dfc13e5c5ec48a8cee09938b02",
+    "bytes_on_disk": 15242788031,
+    "download_seconds": 93.13
+  },
+  {
+    "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "kind": "instruct",
+    "status": "VERIFIED",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+    "local_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-7B-Instruct/snapshots/c03e6d358207e414f1eca0bb1891e29f1db0e242",
+    "bytes_on_disk": 15242788143,
+    "download_seconds": 100.696
+  }
+]

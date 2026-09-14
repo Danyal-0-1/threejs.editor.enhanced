@@ -1,0 +1,21 @@
+=== 2026-09-14T21:42:04Z laneA Qwen/Qwen2.5-Coder-0.5B fp32 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py --model Qwen/Qwen2.5-Coder-0.5B --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B/lane_a/nll.jsonl --precision fp32 --device cuda
+EXIT 0  laneA Qwen/Qwen2.5-Coder-0.5B fp32 cuda
+=== 2026-09-14T21:42:17Z laneA Qwen/Qwen2.5-Coder-1.5B fp32 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py --model Qwen/Qwen2.5-Coder-1.5B --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-1.5B/lane_a/nll.jsonl --precision fp32 --device cuda
+EXIT 0  laneA Qwen/Qwen2.5-Coder-1.5B fp32 cuda
+=== 2026-09-14T21:42:33Z laneA Qwen/Qwen2.5-Coder-3B fp32 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py --model Qwen/Qwen2.5-Coder-3B --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-3B/lane_a/nll.jsonl --precision fp32 --device cuda
+EXIT 0  laneA Qwen/Qwen2.5-Coder-3B fp32 cuda
+=== 2026-09-14T21:42:54Z laneA Qwen/Qwen2.5-Coder-7B fp32 cuda (sensitivity, expected VRAM-bound)
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py --model Qwen/Qwen2.5-Coder-7B --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-7B/lane_a/nll.jsonl --precision fp32 --device cuda
+EXIT 4  laneA Qwen/Qwen2.5-Coder-7B fp32 cuda (sensitivity, expected VRAM-bound)
+=== 2026-09-14T21:43:16Z laneA Qwen/Qwen2.5-Coder-7B fp32 cpu (separate condition)
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py --model Qwen/Qwen2.5-Coder-7B --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-7B/lane_a/nll_cpu.jsonl --precision fp32 --device cpu
+EXIT 0  laneA Qwen/Qwen2.5-Coder-7B fp32 cpu (separate condition)
+LANE A COMPLETE
+=== 2026-09-14T21:50:40Z starting Lane B
+=== 2026-09-14T21:50:40Z laneB Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda reps=3
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 3
+=== 2026-09-14T22:04:26Z laneB Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda reps=3
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 3

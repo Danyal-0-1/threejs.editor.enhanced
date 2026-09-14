@@ -1,0 +1,7 @@
+model,condition,language,relative_fertility,accuracy_difference,e2e_median,input_tokens_median
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,alpha,1.0681558445411026,-0.125,0.487704,719.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,beta,1.400829875518672,-0.125,0.5681134999999999,788.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,gamma,1.9373791734331793,-0.125,0.5162515,807.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,alpha,1.0681558445411026,0.0,0.60565,1174.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,beta,1.400829875518672,0.0,11.710041,1243.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,gamma,1.9373791734331793,0.0,0.6493325,1281.0

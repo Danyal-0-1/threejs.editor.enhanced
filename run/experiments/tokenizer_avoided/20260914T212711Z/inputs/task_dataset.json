@@ -1,0 +1,1549 @@
+{
+  "cases": [
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "color": "black"
+        },
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_20",
+          "Object_21",
+          "Object_22",
+          "Object_23"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('black'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "black"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "2e9a43fefaa73811e7a370fd53a161814a2813f62d13f1489bdae6dea3fb3854",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('black'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('black'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('black'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('black'); })();"
+      },
+      "id": "wheels-black",
+      "prompt": "make the wheels black",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "color": "red"
+        },
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_20",
+          "Object_21"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel.front').recolor('red'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".front.wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "front"
+                    },
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "879834aec5fa4bf498eee97a0f3a731e2949a32053351d45e1eb6fec6553dc04",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel#front')#scale('red'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel~front')~flertum('red'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel◈front')◈⏦('red'); })();",
+        "identity": "(function(){ $S('.wheel.front').recolor('red'); })();"
+      },
+      "id": "front-wheels",
+      "prompt": "make the front wheels red",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "color": "gray"
+        },
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_07"
+        ]
+      },
+      "gold": "(function(){ $S('.dump-bed').recolor('gray'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "gray"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "dd5a44cac146f8a41298a6218fd82054a4665858905e105c1ad12bb886ddbae0",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#dump-bed')#scale('gray'); })();",
+        "beta": "(mumvumfe(){ &Q('~dump-bed')~flertum('gray'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈dump-bed')◈⏦('gray'); })();",
+        "identity": "(function(){ $S('.dump-bed').recolor('gray'); })();"
+      },
+      "id": "dump-bed",
+      "prompt": "make the dump bed grey",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "color": "gold"
+        },
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_03"
+        ]
+      },
+      "gold": "(function(){ $S('.grille').recolor('gold'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "gold"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".grille",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "grille"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "fe540df45819840861404fb182b2cb7341aa4aa1e12663ce27b3655404bf6d1a",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#grille')#scale('gold'); })();",
+        "beta": "(mumvumfe(){ &Q('~grille')~flertum('gold'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈grille')◈⏦('gold'); })();",
+        "identity": "(function(){ $S('.grille').recolor('gold'); })();"
+      },
+      "id": "grille",
+      "prompt": "paint the grille gold",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "factor": {
+            "min": 1.05
+          }
+        },
+        "opCount": 1,
+        "opType": "scale",
+        "targetNodes": [
+          "DumpTruck"
+        ]
+      },
+      "gold": "(function(){ $S('.truck').scale(1.5); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "factor": 1.5
+            },
+            "op": "scale",
+            "selector": {
+              "raw": ".truck",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "truck"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "ea6409e63be4b2214fec2c09e67bd206c070302e28240295677f46d7894803c5",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#truck')#move(1.5); })();",
+        "beta": "(mumvumfe(){ &Q('~truck')~bungi(1.5); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈truck')◈⏥(1.5); })();",
+        "identity": "(function(){ $S('.truck').scale(1.5); })();"
+      },
+      "id": "bigger",
+      "prompt": "make it bigger",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "duration": {
+            "min": 3
+          }
+        },
+        "opCount": 1,
+        "opType": "spin",
+        "targetNodes": [
+          "Object_20",
+          "Object_21",
+          "Object_22",
+          "Object_23"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').spin('y',1,4); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "axis": "y",
+              "duration": 4,
+              "turns": 1
+            },
+            "op": "spin",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "1bce66b7716d0e275c51d3da97e4510d5eb59dd7b4d5273ae60ea82cd68d2c30",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#duplicate('y',1,4); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~grom('y',1,4); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⌇('y',1,4); })();",
+        "identity": "(function(){ $S('.wheel').spin('y',1,4); })();"
+      },
+      "id": "spin-wheels",
+      "prompt": "spin the wheels slowly",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "arg-extraction"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "args": {
+          "dy": {
+            "min": 0.01
+          }
+        },
+        "opCount": 1,
+        "opType": "move",
+        "targetNodes": [
+          "Object_03"
+        ]
+      },
+      "gold": "(function(){ $S('.cab').move(0,0.5,0); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "dx": 0,
+              "dy": 0.5,
+              "dz": 0
+            },
+            "op": "move",
+            "selector": {
+              "raw": ".cab",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "cab"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "a7906d48baadb23e4cb99ea477b09007ecbac304180fdc3aa216346116bc9f70",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#cab')#rotate(0,0.5,0); })();",
+        "beta": "(mumvumfe(){ &Q('~cab')~brom(0,0.5,0); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈cab')◈⏢(0,0.5,0); })();",
+        "identity": "(function(){ $S('.cab').move(0,0.5,0); })();"
+      },
+      "id": "lift",
+      "prompt": "lift the cab up a bit",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "opCount": 1,
+        "opType": "delete",
+        "targetNodes": [
+          "Object_20",
+          "Object_21"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel.front').delete(); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "op": "delete",
+            "selector": {
+              "raw": ".front.wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "front"
+                    },
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "1da5c794dc818fc0b58cd0c40fd97b777352b9b08997e6f847190dcad25da738",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel#front')#spin(); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel~front')~brofar(); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel◈front')◈⏧(); })();",
+        "identity": "(function(){ $S('.wheel.front').delete(); })();"
+      },
+      "id": "delete-front",
+      "prompt": "remove the front wheels",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 2,
+        "ops": [
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_20",
+              "Object_21",
+              "Object_22",
+              "Object_23"
+            ]
+          },
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_07"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('black'); $S('.dump-bed').recolor('red'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "black"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "fa969cb17c473b3e2fb8ee00ab539d014f2d157441d1f9191a43eb1adc46f27f",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('black'); $$('#dump-bed')#scale('red'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('black'); &Q('~dump-bed')~flertum('red'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('black'); ⟠⟠('◈dump-bed')◈⏦('red'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('black'); $S('.dump-bed').recolor('red'); })();"
+      },
+      "id": "two-colors",
+      "prompt": "make the wheels black and the bed red",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 3,
+        "ops": [
+          {
+            "opType": "spin",
+            "targetNodes": [
+              "Object_20",
+              "Object_21",
+              "Object_22",
+              "Object_23"
+            ]
+          },
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_07"
+            ]
+          },
+          {
+            "opType": "delete",
+            "targetNodes": [
+              "Object_03"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').spin('y',1,2); $S('.dump-bed').recolor('red'); $S('.grille').delete(); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "axis": "y",
+              "duration": 2,
+              "turns": 1
+            },
+            "op": "spin",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "op": "delete",
+            "selector": {
+              "raw": ".grille",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "grille"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "3192ebc8489cf7060ec5bed0b0462f4890b7533f23cd58c066e2f0820b5bbedc",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#duplicate('y',1,2); $$('#dump-bed')#scale('red'); $$('#grille')#spin(); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~grom('y',1,2); &Q('~dump-bed')~flertum('red'); &Q('~grille')~brofar(); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⌇('y',1,2); ⟠⟠('◈dump-bed')◈⏦('red'); ⟠⟠('◈grille')◈⏧(); })();",
+        "identity": "(function(){ $S('.wheel').spin('y',1,2); $S('.dump-bed').recolor('red'); $S('.grille').delete(); })();"
+      },
+      "id": "three-ops",
+      "prompt": "spin the wheels, paint the bed red, and remove the grille",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_20",
+          "Object_21",
+          "Object_22",
+          "Object_23"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('black'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "black"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "2e9a43fefaa73811e7a370fd53a161814a2813f62d13f1489bdae6dea3fb3854",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('black'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('black'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('black'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('black'); })();"
+      },
+      "id": "no-oversplit",
+      "prompt": "make the wheels black",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "DumpTruck"
+        ]
+      },
+      "gold": "(function(){ $S('.truck').recolor('red'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".truck",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "truck"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "9a10cdd1cd6acb0abe4e8c50bf91b426e5068edcfa022de3b5b4b96fe39a53f4",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#truck')#scale('red'); })();",
+        "beta": "(mumvumfe(){ &Q('~truck')~flertum('red'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈truck')◈⏦('red'); })();",
+        "identity": "(function(){ $S('.truck').recolor('red'); })();"
+      },
+      "id": "whole-truck",
+      "prompt": "paint the whole truck red",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 2,
+        "ops": [
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_20",
+              "Object_21",
+              "Object_22",
+              "Object_23"
+            ]
+          },
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_03"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('black'); $S('.grille').recolor('gold'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "black"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "color": "gold"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".grille",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "grille"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "e5c6b08b8d20282ec9360176b998e8df9baf84b3f300b6d2e1a2a192c973a0ce",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('black'); $$('#grille')#scale('gold'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('black'); &Q('~grille')~flertum('gold'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('black'); ⟠⟠('◈grille')◈⏦('gold'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('black'); $S('.grille').recolor('gold'); })();"
+      },
+      "id": "wheels-and-grille",
+      "prompt": "make the wheels black and paint the grille gold",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 2,
+        "ops": [
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_07"
+            ]
+          },
+          {
+            "opType": "delete",
+            "targetNodes": [
+              "Object_12",
+              "Object_13"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.dump-bed').recolor('red'); $S('.tail-light').delete(); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "op": "delete",
+            "selector": {
+              "raw": ".tail-light",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "tail-light"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "dbb6e4894ed2007d0eda26ead9f04fbfbe2913165b1a3533079f5eea2355e959",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#dump-bed')#scale('red'); $$('#tail-light')#spin(); })();",
+        "beta": "(mumvumfe(){ &Q('~dump-bed')~flertum('red'); &Q('~tail-light')~brofar(); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈dump-bed')◈⏦('red'); ⟠⟠('◈tail-light')◈⏧(); })();",
+        "identity": "(function(){ $S('.dump-bed').recolor('red'); $S('.tail-light').delete(); })();"
+      },
+      "id": "bed-and-lights",
+      "prompt": "paint the bed red and remove the tail lights",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 2,
+        "ops": [
+          {
+            "opType": "spin",
+            "targetNodes": [
+              "Object_20",
+              "Object_21",
+              "Object_22",
+              "Object_23"
+            ]
+          },
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_07"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').spin('y',1,2); $S('.dump-bed').recolor('gray'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "axis": "y",
+              "duration": 2,
+              "turns": 1
+            },
+            "op": "spin",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "color": "gray"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "0dc88f56e0770a3cb9bc5ce7616d31d53dd23027cb86bdb67df206695509dba4",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#duplicate('y',1,2); $$('#dump-bed')#scale('gray'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~grom('y',1,2); &Q('~dump-bed')~flertum('gray'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⌇('y',1,2); ⟠⟠('◈dump-bed')◈⏦('gray'); })();",
+        "identity": "(function(){ $S('.wheel').spin('y',1,2); $S('.dump-bed').recolor('gray'); })();"
+      },
+      "id": "spin-and-color",
+      "prompt": "spin the wheels and make the bed grey",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 2,
+        "ops": [
+          {
+            "opType": "move",
+            "targetNodes": [
+              "Object_03"
+            ]
+          },
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_03"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.cab').move(0,0.5,0).recolor('blue'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "dx": 0,
+              "dy": 0.5,
+              "dz": 0
+            },
+            "op": "move",
+            "selector": {
+              "raw": ".cab",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "cab"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "color": "blue"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".cab",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "cab"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "ff8a3b684cb3d1a4fbcb13fc21b35e6558eaee2ff999fd9e52fc431bad83c699",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#cab')#rotate(0,0.5,0)#scale('blue'); })();",
+        "beta": "(mumvumfe(){ &Q('~cab')~brom(0,0.5,0)~flertum('blue'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈cab')◈⏢(0,0.5,0)◈⏦('blue'); })();",
+        "identity": "(function(){ $S('.cab').move(0,0.5,0).recolor('blue'); })();"
+      },
+      "id": "lift-and-paint",
+      "prompt": "lift the cab up and paint it blue",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 3,
+        "ops": [
+          {
+            "opType": "recolor",
+            "targetNodes": [
+              "Object_03"
+            ]
+          },
+          {
+            "opType": "move",
+            "targetNodes": [
+              "Object_07"
+            ]
+          },
+          {
+            "opType": "delete",
+            "targetNodes": [
+              "Object_20",
+              "Object_21"
+            ]
+          }
+        ]
+      },
+      "gold": "(function(){ $S('.cab').recolor('blue'); $S('.dump-bed').move(0,0.5,0); $S('.wheel.front').delete(); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "blue"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".cab",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "cab"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "args": {
+              "dx": 0,
+              "dy": 0.5,
+              "dz": 0
+            },
+            "op": "move",
+            "selector": {
+              "raw": ".dump-bed",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "dump-bed"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "op": "delete",
+            "selector": {
+              "raw": ".front.wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "front"
+                    },
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "8c1d361c1081ac74ab7981af7676839fd13f38ad8d1e78e9c2fb5c5addd19d32",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#cab')#scale('blue'); $$('#dump-bed')#rotate(0,0.5,0); $$('#wheel#front')#spin(); })();",
+        "beta": "(mumvumfe(){ &Q('~cab')~flertum('blue'); &Q('~dump-bed')~brom(0,0.5,0); &Q('~wheel~front')~brofar(); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈cab')◈⏦('blue'); ⟠⟠('◈dump-bed')◈⏢(0,0.5,0); ⟠⟠('◈wheel◈front')◈⏧(); })();",
+        "identity": "(function(){ $S('.cab').recolor('blue'); $S('.dump-bed').move(0,0.5,0); $S('.wheel.front').delete(); })();"
+      },
+      "id": "color-move-delete",
+      "prompt": "paint the cab blue, move the bed up, and delete the front wheels",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_20",
+          "Object_21",
+          "Object_22",
+          "Object_23"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('black'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "black"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "2e9a43fefaa73811e7a370fd53a161814a2813f62d13f1489bdae6dea3fb3854",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('black'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('black'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('black'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('black'); })();"
+      },
+      "id": "all-four-wheels",
+      "prompt": "make all four wheels black",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_12",
+          "Object_13"
+        ]
+      },
+      "gold": "(function(){ $S('.tail-light').recolor('red'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".tail-light",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "tail-light"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "7b1e5de38e3c54b6291285b8c3fe2f1b03edc19ac8891ec6fdc617f57e8f60fd",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#tail-light')#scale('red'); })();",
+        "beta": "(mumvumfe(){ &Q('~tail-light')~flertum('red'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈tail-light')◈⏦('red'); })();",
+        "identity": "(function(){ $S('.tail-light').recolor('red'); })();"
+      },
+      "id": "both-lights",
+      "prompt": "make both tail lights bright red",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "DumpTruck"
+        ]
+      },
+      "gold": "(function(){ $S('.truck').recolor('red'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "red"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".truck",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "truck"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "9a10cdd1cd6acb0abe4e8c50bf91b426e5068edcfa022de3b5b4b96fe39a53f4",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#truck')#scale('red'); })();",
+        "beta": "(mumvumfe(){ &Q('~truck')~flertum('red'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈truck')◈⏦('red'); })();",
+        "identity": "(function(){ $S('.truck').recolor('red'); })();"
+      },
+      "id": "everything-red",
+      "prompt": "make everything red",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "op-selection",
+        "selector-resolution",
+        "multi-op"
+      ],
+      "asset": "dumptruck",
+      "expect": {
+        "multiOp": true,
+        "opCount": 1,
+        "opType": "recolor",
+        "targetNodes": [
+          "Object_20",
+          "Object_21",
+          "Object_22",
+          "Object_23"
+        ]
+      },
+      "gold": "(function(){ $S('.wheel').recolor('#222222'); })();",
+      "gold_ir": {
+        "grammar_version": "3dom-grammar/1.1.0",
+        "ops": [
+          {
+            "args": {
+              "color": "#222222"
+            },
+            "op": "recolor",
+            "selector": {
+              "raw": ".wheel",
+              "steps": [
+                {
+                  "combinator": null,
+                  "matchers": [
+                    {
+                      "kind": "class",
+                      "name": "wheel"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "gold_ir_hash": "b753096fd09c9df7906e1b0be6d1b66b70730cc84b1cafeee67bd10e2f61195f",
+      "gold_renderings": {
+        "alpha": "(recolor(){ $$('#wheel')#scale('#222222'); })();",
+        "beta": "(mumvumfe(){ &Q('~wheel')~flertum('#222222'); })();",
+        "gamma": "(⍤(){ ⟠⟠('◈wheel')◈⏦('#222222'); })();",
+        "identity": "(function(){ $S('.wheel').recolor('#222222'); })();"
+      },
+      "id": "wheels-and-rims",
+      "prompt": "darken the wheels and rims",
+      "scoring_family": "generation"
+    },
+    {
+      "applicable_tasks": [
+        "graceful-refusal"
+      ],
+      "asset": "merged-bed",
+      "expect": {
+        "mergedFail": true,
+        "target": "GothicBed"
+      },
+      "gold": null,
+      "gold_ir": null,
+      "gold_ir_hash": null,
+      "gold_renderings": null,
+      "id": "merged-sheets",
+      "prompt": "make the bed sheets blue",
+      "scoring_family": "graceful_refusal"
+    }
+  ],
+  "counts": {
+    "editing_requests": 22,
+    "generation_cases": 21,
+    "graceful_refusal_cases": 1,
+    "labeling_cases": 9,
+    "multi_op_cases": 13
+  },
+  "grammar_version": "3dom-grammar/1.1.0",
+  "labeling_cases": [
+    {
+      "asset": "dump truck",
+      "desc": "leaf, round, low, pair(left), material:\"Rims\"",
+      "gold": [
+        "wheel",
+        "tire",
+        "rim"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, blocky, front, material:\"Grille\"",
+      "gold": [
+        "grille",
+        "grill"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, small, back, pair(right), material:\"Tail Light\"",
+      "gold": [
+        "tail light",
+        "taillight",
+        "light",
+        "lamp"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, flat, front, low, material:\"Bumper\"",
+      "gold": [
+        "bumper",
+        "fender",
+        "guard"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, transparent, front, top, material:\"Windshield\"",
+      "gold": [
+        "windshield",
+        "windscreen",
+        "window",
+        "glass"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, round, low, pair(right), material:\"Rims\"",
+      "gold": [
+        "wheel",
+        "tire",
+        "rim"
+      ],
+      "kind": "material-named"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, large, open-top, center, largest",
+      "gold": [
+        "bed",
+        "dump bed",
+        "tray",
+        "bucket",
+        "cargo",
+        "flatbed",
+        "container"
+      ],
+      "kind": "descriptor-only"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, blocky, front, top",
+      "gold": [
+        "cab",
+        "cabin",
+        "roof",
+        "canopy"
+      ],
+      "kind": "descriptor-only"
+    },
+    {
+      "asset": "dump truck",
+      "desc": "leaf, round, low, pair(left)",
+      "gold": [
+        "wheel",
+        "tire"
+      ],
+      "kind": "descriptor-only"
+    }
+  ],
+  "languages": [
+    "identity",
+    "alpha",
+    "beta",
+    "gamma"
+  ],
+  "source": "docs/editor/js/ai/editMatrix.js"
+}

@@ -1,0 +1,9 @@
+model,condition,language,n_invalid,median,q1,q3,min,max
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,identity,0,,,,,
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,alpha,1,0.0,0.0,0.0,0.0,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,beta,0,,,,,
+Qwen/Qwen2.5-Coder-0.5B-Instruct,bare,gamma,0,,,,,
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,identity,0,,,,,
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,alpha,8,0.0,0.0,0.0,0.0,0.0
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,beta,8,0.0,0.0,0.0,0.0,9.814815
+Qwen/Qwen2.5-Coder-0.5B-Instruct,scaffolded,gamma,2,0.021739,0.0108695,0.0326085,0.0,0.043478

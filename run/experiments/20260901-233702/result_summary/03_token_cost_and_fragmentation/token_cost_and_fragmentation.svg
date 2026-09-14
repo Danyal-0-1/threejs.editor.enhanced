@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="plot-title plot-description">
+<title id="plot-title">Token cost and byte fallback are different signals</title>
+<desc id="plot-description">β costs many tokens with 0% byte fallback; γ is costly and also triggers byte fallback</desc>
+<style>
+            text { font-family: 'DejaVu Sans', Arial, sans-serif; fill: #172033; }
+            .title { font-size: 30px; font-weight: 700; }
+            .subtitle { font-size: 16px; fill: #5b6475; }
+            .axis { font-size: 14px; fill: #374151; }
+            .axis-label { font-size: 16px; font-weight: 600; fill: #374151; }
+            .body { font-size: 15px; }
+            .value { font-size: 14px; font-weight: 700; }
+            .legend { font-size: 14px; font-weight: 600; }
+            .panel-title { font-size: 18px; font-weight: 700; }
+            .cell { font-size: 15px; font-weight: 700; }
+            .row-label { font-size: 15px; font-weight: 600; }
+            .footnote { font-size: 13px; fill: #5b6475; }
+        </style>
+<rect x="0" y="0" width="1280" height="760" fill="white"/>
+<text x="55.0" y="44.0" class="title" text-anchor="start" >Token cost and byte fallback are different signals</text>
+<text x="55.0" y="73.0" class="subtitle" text-anchor="start" >β costs many tokens with 0% byte fallback; γ is costly and also triggers byte fallback</text>
+<rect x="55" y="91" width="18" height="18" rx="3" fill="#2563eb"/>
+<text x="81.0" y="105.0" class="legend" text-anchor="start" >Qwen2 shared tokenizer</text>
+<rect x="300" y="91" width="18" height="18" rx="3" fill="#7c3aed"/>
+<text x="326.0" y="105.0" class="legend" text-anchor="start" >DeepSeek-V3 tokenizer</text>
+<text x="342.5" y="135.0" class="panel-title" text-anchor="middle" >Mean tokenizer tokens per program</text>
+<line x1="75" y1="610.0" x2="610" y2="610.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="615.0" class="axis" text-anchor="end" >0</text>
+<line x1="75" y1="545.0" x2="610" y2="545.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="550.0" class="axis" text-anchor="end" >5</text>
+<line x1="75" y1="480.0" x2="610" y2="480.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="485.0" class="axis" text-anchor="end" >10</text>
+<line x1="75" y1="415.0" x2="610" y2="415.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="420.0" class="axis" text-anchor="end" >15</text>
+<line x1="75" y1="350.0" x2="610" y2="350.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="355.0" class="axis" text-anchor="end" >20</text>
+<line x1="75" y1="285.0" x2="610" y2="285.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="290.0" class="axis" text-anchor="end" >25</text>
+<line x1="75" y1="220.0" x2="610" y2="220.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="225.0" class="axis" text-anchor="end" >30</text>
+<line x1="75" y1="155.0" x2="610" y2="155.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="66.0" y="160.0" class="axis" text-anchor="end" >35</text>
+<line x1="75" y1="610" x2="610" y2="610" stroke="#172033" stroke-width="1.5"/>
+<rect x="96.4" y="357.3" width="42.5" height="252.7" rx="3" fill="#2563eb"/>
+<text x="117.6" y="350.3" class="value" text-anchor="middle" >19.4</text>
+<rect x="141.9" y="369.5" width="42.5" height="240.5" rx="3" fill="#7c3aed"/>
+<text x="163.1" y="362.5" class="value" text-anchor="middle" >18.5</text>
+<text x="141.9" y="637.0" class="axis" text-anchor="middle" >identity</text>
+<rect x="230.2" y="346.0" width="42.5" height="264.0" rx="3" fill="#2563eb"/>
+<text x="251.4" y="339.0" class="value" text-anchor="middle" >20.3</text>
+<rect x="275.6" y="357.5" width="42.5" height="252.5" rx="3" fill="#7c3aed"/>
+<text x="296.9" y="350.5" class="value" text-anchor="middle" >19.4</text>
+<text x="275.6" y="637.0" class="axis" text-anchor="middle" >alpha</text>
+<rect x="363.9" y="256.1" width="42.5" height="353.9" rx="3" fill="#2563eb"/>
+<text x="385.1" y="249.1" class="value" text-anchor="middle" >27.2</text>
+<rect x="409.4" y="261.7" width="42.5" height="348.3" rx="3" fill="#7c3aed"/>
+<text x="430.6" y="254.7" class="value" text-anchor="middle" >26.8</text>
+<text x="409.4" y="637.0" class="axis" text-anchor="middle" >beta</text>
+<rect x="497.6" y="259.4" width="42.5" height="350.6" rx="3" fill="#2563eb"/>
+<text x="518.9" y="252.4" class="value" text-anchor="middle" >27.0</text>
+<rect x="543.1" y="216.4" width="42.5" height="393.6" rx="3" fill="#7c3aed"/>
+<text x="564.4" y="209.4" class="value" text-anchor="middle" >30.3</text>
+<text x="543.1" y="637.0" class="axis" text-anchor="middle" >gamma</text>
+<text x="967.5" y="135.0" class="panel-title" text-anchor="middle" >Byte-fallback signal (fragmented %)</text>
+<line x1="715" y1="610.0" x2="1220" y2="610.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="615.0" class="axis" text-anchor="end" >0</text>
+<line x1="715" y1="534.2" x2="1220" y2="534.2" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="539.2" class="axis" text-anchor="end" >10</text>
+<line x1="715" y1="458.3" x2="1220" y2="458.3" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="463.3" class="axis" text-anchor="end" >20</text>
+<line x1="715" y1="382.5" x2="1220" y2="382.5" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="387.5" class="axis" text-anchor="end" >30</text>
+<line x1="715" y1="306.7" x2="1220" y2="306.7" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="311.7" class="axis" text-anchor="end" >40</text>
+<line x1="715" y1="230.8" x2="1220" y2="230.8" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="235.8" class="axis" text-anchor="end" >50</text>
+<line x1="715" y1="155.0" x2="1220" y2="155.0" stroke="#d9dee8" stroke-width="1"/>
+<text x="706.0" y="160.0" class="axis" text-anchor="end" >60</text>
+<line x1="715" y1="610" x2="1220" y2="610" stroke="#172033" stroke-width="1.5"/>
+<text x="755.2" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="798.1" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="778.1" y="637.0" class="axis" text-anchor="middle" >identity</text>
+<text x="881.4" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="924.3" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="904.4" y="637.0" class="axis" text-anchor="middle" >alpha</text>
+<text x="1007.7" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="1050.6" y="603.0" class="value" text-anchor="middle" >0.0</text>
+<text x="1030.6" y="637.0" class="axis" text-anchor="middle" >beta</text>
+<rect x="1114.0" y="334.2" width="39.9" height="275.8" rx="3" fill="#2563eb"/>
+<text x="1133.9" y="327.2" class="value" text-anchor="middle" >36.4</text>
+<rect x="1156.9" y="192.7" width="39.9" height="417.3" rx="3" fill="#7c3aed"/>
+<text x="1176.8" y="185.7" class="value" text-anchor="middle" >55.0</text>
+<text x="1156.9" y="637.0" class="axis" text-anchor="middle" >gamma</text>
+<text x="55.0" y="690.0" class="footnote" text-anchor="start" >The fragmented-% metric detects partial-character byte fallback, not ordinary subword splitting.</text>
+<text x="55.0" y="712.0" class="footnote" text-anchor="start" >Source: results/fertility-tokenizers.md provenance; 62 paired programs; no model forward pass.</text>
+</svg>

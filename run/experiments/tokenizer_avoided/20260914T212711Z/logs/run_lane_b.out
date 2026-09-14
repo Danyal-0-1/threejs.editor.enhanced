@@ -1,0 +1,2 @@
+run/experiments/tokenizer_avoided/20260914T212711Z/scripts/run_lane_b.sh: line 13: syntax error near unexpected token `)'
+run/experiments/tokenizer_avoided/20260914T212711Z/scripts/run_lane_b.sh: line 13: `.log).'

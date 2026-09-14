@@ -1,0 +1,308 @@
+{
+  "run_id": "20260914T212711Z",
+  "generated_utc": "2026-09-14T22:01:41.723876+00:00",
+  "study": "exploratory fertility-unmatched model evaluation",
+  "overall": "VERIFIED",
+  "lane_a_models_executed": [
+    "Qwen/Qwen2.5-Coder-0.5B",
+    "Qwen/Qwen2.5-Coder-1.5B",
+    "Qwen/Qwen2.5-Coder-3B",
+    "Qwen/Qwen2.5-Coder-7B [cpu]"
+  ],
+  "lane_b_models_executed": [
+    "Qwen/Qwen2.5-Coder-0.5B-Instruct"
+  ],
+  "blocked": [
+    {
+      "model": "Qwen/Qwen2.5-Coder-7B",
+      "lane": "A",
+      "device": "cuda",
+      "precision": "fp32",
+      "failure_kind": "OOM",
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 114.12 MiB is free. Including non-PyTorch memory, this process has 15.15 GiB memory in use. Of the allocated memory 14.87 GiB is allocated by PyTorch, and 91.35 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)",
+      "attempted_command": "lane_a.py --model Qwen/Qwen2.5-Coder-7B --precision fp32 --device cuda"
+    }
+  ],
+  "cells": [
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-0.5B",
+      "language": "identity",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-0.5B",
+      "language": "alpha",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-0.5B",
+      "language": "beta",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-0.5B",
+      "language": "gamma",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-1.5B",
+      "language": "identity",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-1.5B",
+      "language": "alpha",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-1.5B",
+      "language": "beta",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-1.5B",
+      "language": "gamma",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-3B",
+      "language": "identity",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-3B",
+      "language": "alpha",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-3B",
+      "language": "beta",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-3B",
+      "language": "gamma",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+      "language": "identity",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+      "language": "alpha",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+      "language": "beta",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+      "language": "gamma",
+      "condition": "nll",
+      "status": "VERIFIED",
+      "n": 62
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "A",
+      "model": "Qwen/Qwen2.5-Coder-7B",
+      "language": "ALL",
+      "condition": "fp32/cuda",
+      "status": "BLOCKED",
+      "reason": "OOM",
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 114.12 MiB is free. Including non-PyTorch memory, this process has 15.15 GiB memory in use. Of the allocated memory 14.87 GiB is allocated by PyTorch, and 91.35 MiB is reserved by PyT"
+    }
+  ],
+  "validation": [
+    {
+      "check": "1. unit tests (prompt renderer, parser, checkpoint, scoring)",
+      "pass": true,
+      "detail": "26 tests, rc=0"
+    },
+    {
+      "check": "2. four-language smoke test recorded",
+      "pass": true,
+      "detail": "languages=['alpha', 'beta', 'gamma', 'identity']"
+    },
+    {
+      "check": "3. paired targets produce identical canonical IR across languages",
+      "pass": true,
+      "detail": "84 renderings checked, 0 mismatched"
+    },
+    {
+      "check": "4. aggregate denominators verified against raw rows",
+      "pass": true,
+      "detail": "0 mismatches"
+    },
+    {
+      "check": "5. selected aggregates independently recomputed",
+      "pass": true,
+      "detail": "0 discrepancies"
+    },
+    {
+      "check": "6. plot CSV values match aggregate data",
+      "pass": false,
+      "detail": "1 problems; 01_accuracy_bare Qwen/Qwen2.5-Coder-0.5B-Instruct/identity"
+    },
+    {
+      "check": "7. every plot dir has plot.png, plot.svg, data.csv, README.md",
+      "pass": true,
+      "detail": "30 plots, 0 incomplete"
+    },
+    {
+      "check": "8. no missing value became zero (real zeros listed for inspection)",
+      "pass": true,
+      "detail": "0 exact-zero cells, all traceable to raw rows"
+    },
+    {
+      "check": "9. outcome taxonomy totals equal the denominators",
+      "pass": true,
+      "detail": "0 mismatches"
+    },
+    {
+      "check": "10. VALID_CORRECT count == semantic-accuracy numerator",
+      "pass": true,
+      "detail": "0 mismatches"
+    },
+    {
+      "check": "11. greedy decoding deterministic across repetitions",
+      "pass": true,
+      "detail": "0 of 73 rows differed between reps"
+    },
+    {
+      "check": "12. blocked cells carry exact command and error",
+      "pass": true,
+      "detail": "1 blocked cells recorded"
+    },
+    {
+      "check": "13. checksums recorded for raw, metrics, reports, plots",
+      "pass": true,
+      "detail": "235 files hashed -> metadata/output-checksums.txt"
+    }
+  ],
+  "counts": {
+    "lane_a_nll_rows": 9,
+    "lane_b_generation_rows": 78,
+    "lane_b_refusal_rows": 0,
+    "task_dataset": {
+      "editing_requests": 22,
+      "generation_cases": 21,
+      "graceful_refusal_cases": 1,
+      "labeling_cases": 9,
+      "multi_op_cases": 13
+    }
+  }
+}

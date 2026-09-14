@@ -1,0 +1,319 @@
+{
+  "H1": {
+    "cells": [
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B",
+        "language": "alpha",
+        "delta": 0.5524632473671325,
+        "lo": 0.5059033108039876,
+        "hi": 0.6005431656146689,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B",
+        "language": "beta",
+        "delta": 1.72351232719866,
+        "lo": 1.6256247802717105,
+        "hi": 1.8125684831273838,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B",
+        "language": "gamma",
+        "delta": 2.818855602682216,
+        "lo": 2.6292983291301946,
+        "hi": 2.991948833495771,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-1.5B",
+        "language": "alpha",
+        "delta": 0.6311164620467211,
+        "lo": 0.5867027937458502,
+        "hi": 0.6777997609277535,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-1.5B",
+        "language": "beta",
+        "delta": 1.7079124945304887,
+        "lo": 1.6158668793353839,
+        "hi": 1.790083519818677,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-1.5B",
+        "language": "gamma",
+        "delta": 3.1218423129382,
+        "lo": 2.9225257661541413,
+        "hi": 3.3056198856774826,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-3B",
+        "language": "alpha",
+        "delta": 0.6530052255740206,
+        "lo": 0.6088532803763105,
+        "hi": 0.6990616547960777,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-3B",
+        "language": "beta",
+        "delta": 1.6630503014251068,
+        "lo": 1.570141600705024,
+        "hi": 1.7471719603126579,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-3B",
+        "language": "gamma",
+        "delta": 2.6647054427877555,
+        "lo": 2.484928478597783,
+        "hi": 2.83214885600275,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+        "language": "alpha",
+        "delta": 0.5870798124102348,
+        "lo": 0.5409177523868944,
+        "hi": 0.6354920085074129,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+        "language": "beta",
+        "delta": 1.5910279239530052,
+        "lo": 1.5093652223568257,
+        "hi": 1.6659364431086867,
+        "supports": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-7B [cpu]",
+        "language": "gamma",
+        "delta": 2.7822458923256077,
+        "lo": 2.585179579995824,
+        "hi": 2.9681722160290525,
+        "supports": true
+      }
+    ],
+    "n_supporting": 12,
+    "n_total": 12,
+    "verdict": "SUPPORTED"
+  },
+  "H2": {
+    "cells": [
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "alpha",
+        "rd": -0.1111111111111111,
+        "lo": -0.3333333333333333,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 1,
+        "negative": true,
+        "ci_excludes_zero": false
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "beta",
+        "rd": -0.1111111111111111,
+        "lo": -0.3333333333333333,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 1,
+        "negative": true,
+        "ci_excludes_zero": false
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "gamma",
+        "rd": -0.1111111111111111,
+        "lo": -0.3333333333333333,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 1,
+        "negative": true,
+        "ci_excludes_zero": false
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "alpha",
+        "rd": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 0,
+        "negative": false,
+        "ci_excludes_zero": false
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "beta",
+        "rd": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 0,
+        "negative": false,
+        "ci_excludes_zero": false
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "gamma",
+        "rd": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "p": 1.0,
+        "n_disc": 0,
+        "negative": false,
+        "ci_excludes_zero": false
+      }
+    ],
+    "n_negative": 3,
+    "n_ci_excludes_zero": 0,
+    "n_total": 6,
+    "verdict": "MIXED"
+  },
+  "H3": {
+    "cells": [
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "identity",
+        "bare": 0.1111111111111111,
+        "scaffolded": 0.0,
+        "delta": -0.1111111111111111
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "alpha",
+        "bare": 0.0,
+        "scaffolded": 0.0,
+        "delta": 0.0
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "beta",
+        "bare": 0.0,
+        "scaffolded": 0.0,
+        "delta": 0.0
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "gamma",
+        "bare": 0.0,
+        "scaffolded": 0.0,
+        "delta": 0.0
+      }
+    ],
+    "gaps": [
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "alpha",
+        "gap_bare": -0.1111111111111111,
+        "gap_scaffolded": 0.0,
+        "narrowed": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "beta",
+        "gap_bare": -0.1111111111111111,
+        "gap_scaffolded": 0.0,
+        "narrowed": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "language": "gamma",
+        "gap_bare": -0.1111111111111111,
+        "gap_scaffolded": 0.0,
+        "narrowed": true
+      }
+    ],
+    "n_improved": 0,
+    "n_total": 4,
+    "n_gap_narrowed": 3,
+    "n_gap_total": 3,
+    "verdict": "NOT SUPPORTED"
+  },
+  "H4": {
+    "cells": [
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "alpha",
+        "relative_fertility": 1.0681558445411026,
+        "input_tokens_median": 719.0,
+        "identity_input_tokens_median": 715.0,
+        "token_ratio": 1.0055944055944055,
+        "more_tokens": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "beta",
+        "relative_fertility": 1.400829875518672,
+        "input_tokens_median": 788.0,
+        "identity_input_tokens_median": 715.0,
+        "token_ratio": 1.102097902097902,
+        "more_tokens": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "bare",
+        "language": "gamma",
+        "relative_fertility": 1.9373791734331793,
+        "input_tokens_median": 807.0,
+        "identity_input_tokens_median": 715.0,
+        "token_ratio": 1.1286713286713286,
+        "more_tokens": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "alpha",
+        "relative_fertility": 1.0681558445411026,
+        "input_tokens_median": 1174.0,
+        "identity_input_tokens_median": 1170.0,
+        "token_ratio": 1.0034188034188034,
+        "more_tokens": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "beta",
+        "relative_fertility": 1.400829875518672,
+        "input_tokens_median": 1243.0,
+        "identity_input_tokens_median": 1170.0,
+        "token_ratio": 1.0623931623931624,
+        "more_tokens": true
+      },
+      {
+        "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "condition": "scaffolded",
+        "language": "gamma",
+        "relative_fertility": 1.9373791734331793,
+        "input_tokens_median": 1281.0,
+        "identity_input_tokens_median": 1170.0,
+        "token_ratio": 1.094871794871795,
+        "more_tokens": true
+      }
+    ],
+    "n_more_tokens": 6,
+    "n_total": 6,
+    "verdict": "SUPPORTED (token cost)"
+  },
+  "dense_prior_rule": {
+    "a_nll_rises": true,
+    "b_accuracy_falls": false,
+    "c_consistent_across_sizes_and_tasks": false,
+    "d_not_only_gamma": false,
+    "suggestive_support": false
+  }
+}
