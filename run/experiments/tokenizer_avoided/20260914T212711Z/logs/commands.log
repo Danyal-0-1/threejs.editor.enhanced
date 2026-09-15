@@ -19,3 +19,43 @@ LANE A COMPLETE
 CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 3
 === 2026-09-14T22:04:26Z laneB Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda reps=3
 CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 3
+EXIT 0  laneB Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda reps=3
+=== 2026-09-14T22:17:54Z laneB Qwen/Qwen2.5-Coder-1.5B-Instruct fp16 cuda reps=3
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-1.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-1.5B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 3
+EXIT 0  laneB Qwen/Qwen2.5-Coder-1.5B-Instruct fp16 cuda reps=3
+=== 2026-09-14T22:29:56Z laneB Qwen/Qwen2.5-Coder-3B-Instruct fp16 cuda reps=1
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-3B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-3B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 1
+EXIT 0  laneB Qwen/Qwen2.5-Coder-3B-Instruct fp16 cuda reps=1
+=== 2026-09-14T22:34:18Z laneB Qwen/Qwen2.5-Coder-7B-Instruct fp16 cuda reps=1
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-7B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-7B-Instruct/lane_b/gen.jsonl --precision fp16 --device cuda --reps 1
+EXIT 1  laneB Qwen/Qwen2.5-Coder-7B-Instruct fp16 cuda reps=1
+=== 2026-09-14T22:34:31Z condloss Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/conditional_loss.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/condloss.jsonl --precision fp16 --device cuda
+EXIT 0  condloss Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda
+=== 2026-09-14T22:34:48Z condloss Qwen/Qwen2.5-Coder-1.5B-Instruct fp16 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/conditional_loss.py --model Qwen/Qwen2.5-Coder-1.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-1.5B-Instruct/lane_b/condloss.jsonl --precision fp16 --device cuda
+EXIT 0  condloss Qwen/Qwen2.5-Coder-1.5B-Instruct fp16 cuda
+=== 2026-09-14T22:35:18Z condloss Qwen/Qwen2.5-Coder-3B-Instruct fp16 cuda
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/conditional_loss.py --model Qwen/Qwen2.5-Coder-3B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-3B-Instruct/lane_b/condloss.jsonl --precision fp16 --device cuda
+EXIT 0  condloss Qwen/Qwen2.5-Coder-3B-Instruct fp16 cuda
+LANE B COMPLETE
+=== 2026-09-14T22:37:11Z laneB Qwen/Qwen2.5-Coder-7B-Instruct fp16 cuda reps=1 (re-attempt, guarded warm-up)
+EXIT 0  laneB 7B-Instruct re-attempt
+=== 2026-09-14T22:44:10Z SENSITIVITY Qwen/Qwen2.5-Coder-0.5B-Instruct scaffolded maxnew=1536 (all 4 languages)
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen_maxnew1536.jsonl --prompts-dir /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered_sensitivity --precision fp16 --device cuda --reps 1 --max-new-tokens 1536 --conditions scaffolded --condition-suffix @maxnew1536
+EXIT 0  SENSITIVITY Qwen/Qwen2.5-Coder-0.5B-Instruct scaffolded maxnew=1536 (all 4 languages)
+=== 2026-09-14T22:59:15Z SENSITIVITY Qwen/Qwen2.5-Coder-0.5B-Instruct bare maxnew=1536 (all 4 languages)
+CMD: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py --model Qwen/Qwen2.5-Coder-0.5B-Instruct --out /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen_maxnew1536.jsonl --prompts-dir /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered_sensitivity --precision fp16 --device cuda --reps 1 --max-new-tokens 1536 --conditions bare --condition-suffix @maxnew1536
+EXIT 0  SENSITIVITY Qwen/Qwen2.5-Coder-0.5B-Instruct bare maxnew=1536 (all 4 languages)
+SENSITIVITY COMPLETE
+=== 2026-09-14T23:01:02Z condloss Qwen/Qwen2.5-Coder-7B-Instruct fp16 cuda
+EXIT 0  condloss 7B-Instruct
+=== 2026-09-14T23:16:50Z labeling Qwen/Qwen2.5-Coder-0.5B-Instruct fp16 cuda
+EXIT 0  labeling Qwen/Qwen2.5-Coder-0.5B-Instruct
+=== 2026-09-14T23:17:04Z labeling Qwen/Qwen2.5-Coder-1.5B-Instruct fp16 cuda
+EXIT 0  labeling Qwen/Qwen2.5-Coder-1.5B-Instruct
+=== 2026-09-14T23:17:12Z labeling Qwen/Qwen2.5-Coder-3B-Instruct fp16 cuda
+EXIT 0  labeling Qwen/Qwen2.5-Coder-3B-Instruct
+=== 2026-09-14T23:17:22Z labeling Qwen/Qwen2.5-Coder-7B-Instruct fp16 cuda
+EXIT 0  labeling Qwen/Qwen2.5-Coder-7B-Instruct
+LABELING COMPLETE

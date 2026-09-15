@@ -1,0 +1,60 @@
+<|im_start|>system
+You write programs in the scene-edit language described below.
+This language is defined ONLY by this specification. Do not assume it
+behaves like any other language you have seen.
+
+PROGRAM SHAPE
+  A program is exactly:   (recolor(){ <statements> })();
+  Each statement selects parts and applies operations:
+      $$('<selector>')#<operation>(<args>);
+  Operations may be chained with '#' to act on the same parts:
+      $$('<selector>')#<op1>(...)#<op2>(...);
+  Two different groups of parts need two separate statements.
+
+SELECTORS  (inside the quotes)
+  #name        parts carrying the tag `name`
+  :name        the part whose identifier is `name`
+  >lasso    the parts currently selected by the user
+  >function       the parts inside the user's lasso
+  .           every part in the scene
+  #a#b        parts carrying BOTH tags (no space)
+  #a #b       parts tagged `b` anywhere beneath parts tagged `a`
+  #a*#b       parts tagged `b` that are DIRECT children of parts tagged `a`
+  bare words are node kinds: `group`, `light`, `camera`, `selected`
+
+OPERATIONS
+  scale(color)                       set the colour of the matched parts
+  move(factor)                       resize the matched parts by a factor
+  rotate(dx, dy, dz)                 shift the matched parts along x, y and z
+  delete(axis, degrees)              rotate the matched parts about an axis
+  spin()                             remove the matched parts from the scene
+  duplicate(axis, turns, duration)   spin the matched parts; duration is in seconds, larger = slower
+  setMaterial(dx, dy, dz)            copy the matched parts, offset by dx, dy, dz
+  setOpacity(material)               replace the material of the matched parts
+  setVisible(opacity)                set transparency, 0 = invisible, 1 = solid
+  wireframe(visible)                 show or hide the matched parts
+  metalness(enabled)                 draw the matched parts as wireframe
+  roughness(metalness)               set how metallic the surface is, 0 to 1
+  castShadow(roughness)              set how rough the surface is, 0 to 1
+  receiveShadow(enabled)             let the matched parts cast shadows
+  mesh(enabled)                      let the matched parts receive shadows
+
+EXAMPLES
+  one operation on one set of parts:
+  (recolor(){ $$('#rotor')#duplicate('y',1,2); })();
+  a compound selector - parts that are BOTH #panel AND #upper:
+  (recolor(){ $$('#panel#upper')#scale('#00ff00'); })();
+  two separate operations, written as two statements:
+  (recolor(){ $$('#lamp')#setVisible(0.5); $$('#pylon')#move(2); })();
+  two operations on the SAME parts, chained:
+  (recolor(){ $$('#strut')#rotate(0,1,0)#scale('#ff0000'); })();
+
+OUTPUT FORMAT
+  Reply with exactly ONE fenced code block containing ONE complete
+  program in the language above. No explanation, no prose, no
+  alternatives. Emit only operations the request actually asks for.<|im_end|>
+<|im_start|>user
+The user asks: "make both tail lights bright red"
+
+Write the program.<|im_end|>
+<|im_start|>assistant

@@ -109,14 +109,33 @@ def main() -> int:
     meta["n_parameters"] = sum(p.numel() for p in model.parameters())
     meta["vocab_size"] = len(tok)
 
-    # ── warm-up (EXCLUDED) ─────────────────────────────────────────────────
+    # ── warm-up (EXCLUDED from per-case latency) ───────────────────────────
+    # Guarded: weights can fit while the first generate still cannot. An
+    # unguarded warm-up crashes the process BEFORE the BLOCKED row is written,
+    # which loses the exact error the work order requires.
     t0 = time.perf_counter()
-    with torch.inference_mode():
-        warm = tok("warm up", return_tensors="pt").to(args.device)
-        model.generate(**warm, max_new_tokens=8, do_sample=False,
-                       pad_token_id=tok.pad_token_id or tok.eos_token_id)
-    if args.device.startswith("cuda"):
-        torch.cuda.synchronize()
+    try:
+        with torch.inference_mode():
+            warm = tok("warm up", return_tensors="pt").to(args.device)
+            model.generate(**warm, max_new_tokens=8, do_sample=False,
+                           pad_token_id=tok.pad_token_id or tok.eos_token_id)
+        if args.device.startswith("cuda"):
+            torch.cuda.synchronize()
+    except BaseException as exc:
+        meta.update(status="BLOCKED", stage="warmup",
+                    error=f"{type(exc).__name__}: {exc}"[:800],
+                    traceback=traceback.format_exc()[-2000:],
+                    failure_kind=("OOM" if "out of memory" in str(exc).lower()
+                                  else "warmup"))
+        if args.device.startswith("cuda"):
+            try:
+                meta["vram_free_bytes_at_failure"] = int(torch.cuda.mem_get_info()[0])
+                meta["vram_total_bytes"] = int(torch.cuda.mem_get_info()[1])
+            except Exception:
+                pass
+        C.append_row(args.out.replace(".jsonl", ".meta.jsonl"), meta)
+        print(f"BLOCKED {args.model} at warm-up: {exc}", flush=True)
+        return 4
     meta["warmup_seconds"] = round(time.perf_counter() - t0, 4)
     if args.device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()

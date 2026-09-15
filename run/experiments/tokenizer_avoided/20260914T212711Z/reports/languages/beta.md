@@ -11,7 +11,7 @@ _Run `20260914T212711Z` · an exploratory fertility-unmatched model evaluation._
 
 | tokenizer | tokens/program | tokens/char | vs identity | byte-fallback fragments |
 |---|---:|---:|---:|---:|
-| `Qwen/Qwen2.5-Coder-0.5B` | 27.226 | 0.4918 | 1.401× | 0.000% |
+| `Qwen2 BPE (shared by all 4 Qwen2.5-Coder repos)` | 27.226 | 0.4918 | 1.401× | 0.000% |
 | `deepseek-ai/DeepSeek-V3` | 26.790 | 0.4840 | 1.448× | 0.000% |
 
 Fertility demonstrates **token cost**. Whether accuracy degrades is a separate measurement, reported in §5.
@@ -45,27 +45,45 @@ NLL/character is the primary prior-distance measure (fertility-free). NLL/token 
 
 | instruct model | semantic accuracy | parse validity | language compliance | vacuous | Δ vs identity | 95% paired CI | McNemar p |
 |---|---|---|---|---:|---:|---|---:|
-| `0.5B` | 0.0% (0/8, 95% CI 0.0%–32.4%) | 100.0% | 100.0% | 0.0% | -0.125 | [-0.375, +0.000] | 1.0000 (n_disc=1) |
+| `0.5B` | 4.8% (1/21, 95% CI 0.8%–22.7%) | 95.2% | 100.0% | 0.0% | -0.095 | [-0.238, +0.000] | 0.5000 (n_disc=2) |
+| `1.5B` | 19.0% (4/21, 95% CI 7.7%–40.0%) | 90.5% | 100.0% | 0.0% | -0.238 | [-0.429, -0.095] | 0.0625 (n_disc=5) |
+| `3B` | 66.7% (14/21, 95% CI 45.4%–82.8%) | 100.0% | 100.0% | 0.0% | +0.095 | [-0.095, +0.286] | 0.6250 (n_disc=4) |
+| `7B` | 19.0% (4/21, 95% CI 7.7%–40.0%) | 100.0% | 100.0% | 0.0% | -0.524 | [-0.714, -0.333] | 0.0010 (n_disc=11) |
 
 ### scaffolded
 
 | instruct model | semantic accuracy | parse validity | language compliance | vacuous | Δ vs identity | 95% paired CI | McNemar p |
 |---|---|---|---|---:|---:|---|---:|
-| `0.5B` | 0.0% (0/8, 95% CI 0.0%–32.4%) | 0.0% | 100.0% | 0.0% | +0.000 | [+0.000, +0.000] | 1.0000 (n_disc=0) |
+| `0.5B` | 0.0% (0/21, 95% CI 0.0%–15.5%) | 0.0% | 100.0% | 0.0% | -0.048 | [-0.143, +0.000] | 1.0000 (n_disc=1) |
+| `1.5B` | 28.6% (6/21, 95% CI 13.8%–50.0%) | 95.2% | 100.0% | 0.0% | -0.286 | [-0.476, -0.095] | 0.0312 (n_disc=6) |
+| `3B` | 85.7% (18/21, 95% CI 65.4%–95.0%) | 95.2% | 100.0% | 0.0% | +0.048 | [+0.000, +0.143] | 1.0000 (n_disc=1) |
+| `7B` | 52.4% (11/21, 95% CI 32.4%–71.7%) | 66.7% | 100.0% | 0.0% | -0.381 | [-0.619, -0.143] | 0.0215 (n_disc=10) |
 
 ## 6. Task-specific strengths and failures
 
 | model | condition | op-selection | selector-resolution | arg-extraction | multi-op |
 |---|---|---|---|---|---|
-| `0.5B` | bare | 62.5% (5/8) | 12.5% (1/8) | 37.5% (3/8) | 62.5% (5/8) |
-| `0.5B` | scaffolded | 0.0% (0/8) | 0.0% (0/8) | 0.0% (0/8) | 0.0% (0/8) |
+| `0.5B` | bare | 66.7% (14/21) | 9.5% (2/21) | 71.4% (15/21) | 57.1% (12/21) |
+| `0.5B` | scaffolded | 0.0% (0/21) | 0.0% (0/21) | 0.0% (0/21) | 0.0% (0/21) |
+| `1.5B` | bare | 42.9% (9/21) | 38.1% (8/21) | 66.7% (14/21) | 42.9% (9/21) |
+| `1.5B` | scaffolded | 52.4% (11/21) | 66.7% (14/21) | 81.0% (17/21) | 52.4% (11/21) |
+| `3B` | bare | 95.2% (20/21) | 66.7% (14/21) | 100.0% (21/21) | 95.2% (20/21) |
+| `3B` | scaffolded | 90.5% (19/21) | 90.5% (19/21) | 95.2% (20/21) | 90.5% (19/21) |
+| `7B` | bare | 81.0% (17/21) | 38.1% (8/21) | 90.5% (19/21) | 81.0% (17/21) |
+| `7B` | scaffolded | 52.4% (11/21) | 66.7% (14/21) | 61.9% (13/21) | 52.4% (11/21) |
 
 ## 7. Parse failures versus semantic failures
 
 | model | condition | LEX_FAIL | PARSE_FAIL | VALID_VACUOUS | VALID_WRONG | VALID_CORRECT |
 |---|---|---:|---:|---:|---:|---:|
-| `0.5B` | bare | 0 | 0 | 0 | 8 | 0 |
-| `0.5B` | scaffolded | 0 | 8 | 0 | 0 | 0 |
+| `0.5B` | bare | 0 | 1 | 0 | 19 | 1 |
+| `0.5B` | scaffolded | 0 | 21 | 0 | 0 | 0 |
+| `1.5B` | bare | 0 | 2 | 0 | 15 | 4 |
+| `1.5B` | scaffolded | 0 | 1 | 0 | 14 | 6 |
+| `3B` | bare | 0 | 0 | 0 | 7 | 14 |
+| `3B` | scaffolded | 0 | 1 | 0 | 2 | 18 |
+| `7B` | bare | 0 | 0 | 0 | 17 | 4 |
+| `7B` | scaffolded | 0 | 7 | 0 | 3 | 11 |
 
 These are orthogonal constructs and are never averaged. A program can parse perfectly and mean the wrong thing (`VALID_WRONG`), or parse and mean nothing at all (`VALID_VACUOUS` — a parse success and a task failure).
 
@@ -73,8 +91,14 @@ These are orthogonal constructs and are never averaged. A program can parse perf
 
 | model | condition | invented_operation | invented_selector | invented_argument | wrong_language_spelling | extra_operation | missing_operation | prose_instead_of_code |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| `0.5B` | bare | 3 | 6 | 5 | 0 | 0 | 0 | 0 |
+| `0.5B` | bare | 6 | 10 | 5 | 0 | 3 | 0 | 0 |
 | `0.5B` | scaffolded | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| `1.5B` | bare | 10 | 8 | 5 | 0 | 1 | 0 | 0 |
+| `1.5B` | scaffolded | 9 | 0 | 3 | 0 | 2 | 0 | 0 |
+| `3B` | bare | 1 | 4 | 0 | 0 | 0 | 0 | 0 |
+| `3B` | scaffolded | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| `7B` | bare | 4 | 11 | 2 | 0 | 1 | 0 | 0 |
+| `7B` | scaffolded | 3 | 0 | 1 | 0 | 0 | 0 | 0 |
 
 A parse failure is **not** counted as a hallucination.
 
@@ -82,19 +106,30 @@ A parse failure is **not** counted as a hallucination.
 
 **Correct:**
 
-_none recorded_
+- **`whole-truck`** · 0.5B · bare · outcome `VALID_CORRECT`
+  - request: _paint the whole truck red_
+  - model wrote: `(mumvumfe(){ &Q('~truck')~flertum('#ff0000'); })();`
+  - parsed to: `[{"op": "recolor", "selector": ".truck", "args": {"color": "#ff0000"}}]`
+  - resolved nodes: `[["DumpTruck"]]`
+  - scorer said: verb(s) ok: recolor; right nodes, nothing extra; n/a (case carries no arg expectation); 1 op(s), types ok
+- **`all-four-wheels`** · 1.5B · bare · outcome `VALID_CORRECT`
+  - request: _make all four wheels black_
+  - model wrote: `(mumvumfe(){ &Q('~wheel')~flertum('#000000'); })();`
+  - parsed to: `[{"op": "recolor", "selector": ".wheel", "args": {"color": "#000000"}}]`
+  - resolved nodes: `[["Object_20", "Object_21", "Object_22", "Object_23"]]`
+  - scorer said: verb(s) ok: recolor; right nodes, nothing extra; n/a (case carries no arg expectation); 1 op(s), types ok
 
 
 **Failed:**
 
-- **`bigger`** · 0.5B · bare · outcome `VALID_WRONG`
-  - request: _make it bigger_
-  - model wrote: `(mumvumfe(){ &Q('~rotate')~grom('x',1,2); })();`
-  - parsed to: `[{"op": "spin", "selector": ".rotate", "args": {"axis": "x", "duration": 2, "turns": 1}}]`
+- **`all-four-wheels`** · 0.5B · bare · outcome `VALID_WRONG`
+  - request: _make all four wheels black_
+  - model wrote: `(mumvumfe(){ &Q('~wheels')~flertum('#000000'); })();`
+  - parsed to: `[{"op": "recolor", "selector": ".wheels", "args": {"color": "#000000"}}]`
   - resolved nodes: `[[]]`
-  - scorer said: op0: "spin" != "scale"; op0: missed DumpTruck; missing arg factor; op0 "spin" != "scale"
-- **`bigger`** · 0.5B · scaffolded · outcome `PARSE_FAIL`
-  - request: _make it bigger_
+  - scorer said: verb(s) ok: recolor; op0: missed Object_20, Object_21, Object_22, Object_23; n/a (case carries no arg expectation); 1 op(s), types ok
+- **`all-four-wheels`** · 0.5B · scaffolded · outcome `PARSE_FAIL`
+  - request: _make all four wheels black_
   - model wrote: `# Define the scene
 scene = {
     "DumpTruck": {"tag": "DumpTruck"},
@@ -111,14 +146,23 @@ scene = {
 
 | model | condition | input tok (med) | output tok (med) | e2e s (med) | e2e s (p95) | tok/s |
 |---|---|---:|---:|---:|---:|---:|
-| `0.5B` | bare | 788.000 | 24.500 | 0.568 | 0.618 | 45.666 |
-| `0.5B` | scaffolded | 1243.000 | 512.000 | 11.710 | 11.746 | 43.907 |
+| `0.5B` | bare | 789.000 | 27.000 | 0.626 | 1.244 | 45.324 |
+| `0.5B` | scaffolded | 1244.000 | 512.000 | 11.691 | 11.747 | 43.977 |
+| `1.5B` | bare | 789.000 | 29.000 | 0.864 | 1.529 | 37.532 |
+| `1.5B` | scaffolded | 1244.000 | 29.000 | 0.901 | 1.641 | 37.601 |
+| `3B` | bare | 789.000 | 28.000 | 1.178 | 1.809 | 28.818 |
+| `3B` | scaffolded | 1244.000 | 28.000 | 1.263 | 2.129 | 29.251 |
+| `7B` | bare | 789.000 | 31.000 | 1.477 | 2.383 | 27.979 |
+| `7B` | scaffolded | 1244.000 | 30.000 | 1.601 | 2.722 | 28.019 |
 
 ## 10. Effect of scaffolding
 
 | model | bare | scaffolded | difference |
 |---|---:|---:|---:|
-| `0.5B` | 0.0% | 0.0% | +0.000 |
+| `0.5B` | 4.8% | 0.0% | -0.048 |
+| `1.5B` | 19.0% | 28.6% | +0.095 |
+| `3B` | 66.7% | 85.7% | +0.190 |
+| `7B` | 19.0% | 52.4% | +0.333 |
 
 ## 11. Uncertainty
 

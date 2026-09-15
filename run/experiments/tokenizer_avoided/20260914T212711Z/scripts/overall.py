@@ -447,12 +447,33 @@ def main() -> int:
                   f"  - scorer: {ex.get('scorer_explanation','')[:200]}\n")
                 break
     w("")
-    w("The **alpha interference effect** is worth singling out, because it is only "
-      "visible when answers are graded by meaning. A model asked to recolour in alpha "
-      "often writes the familiar-looking word it knows — but in alpha that word "
-      "spells a *different* operation, so the program parses cleanly and performs the "
-      "wrong edit. A surface-string grader would have called this \"nearly right\"; "
-      "grading through the shared representation correctly calls it wrong.\n")
+    w("### The alpha interference effect\n")
+    w("Alpha deserves singling out, because its characteristic failure is only "
+      "visible when answers are graded by **meaning**. Alpha reuses 3DOM's words with "
+      "permuted roles, so a model that reaches for the word it already knows writes a "
+      "program that is perfectly well-formed and performs the **wrong operation**. A "
+      "surface-string grader would have called these \"nearly right\"; grading through "
+      "the shared canonical representation correctly calls them wrong.\n")
+    interf = [r for r in gen if r["language"] == "alpha" and r.get("parse_valid") == 1
+              and r.get("op_correct") == 0 and r.get("emitted_ops")]
+    if interf:
+        w(f"{len(interf)} alpha generations parsed cleanly but selected the wrong "
+          "operation. Representative cases:\n")
+        shown = set()
+        for r in interf:
+            if r["case_id"] in shown:
+                continue
+            shown.add(r["case_id"])
+            prompt = next((c["prompt"] for c in DS["cases"]
+                           if c["id"] == r["case_id"]), "")
+            ops = [o["op"] for o in (r["emitted_ops"] or [])]
+            w(f"- request _{prompt}_ ({short(r['model'])}, {r['condition']})\n"
+              f"  - wrote: `{(r.get('extracted_code') or '')[:120]}`\n"
+              f"  - **which alpha spells as**: `{', '.join(ops)}`\n"
+              f"  - scorer: {r.get('scorer_explanation','')[:150]}\n")
+            if len(shown) >= 3:
+                break
+        w("")
 
     # 15 TOKENS vs ACCURACY
     w("## 15. Did models merely need more tokens, or did they become less accurate?\n")
@@ -479,6 +500,184 @@ def main() -> int:
     w("Throughput (tokens produced per second) was roughly flat across languages — "
       "the extra cost shows up as *more tokens*, not *slower tokens* "
       "(`plots/overall/13_output_tokens_per_second`).\n")
+
+    # 14b THE SIGIL-REVERSION FINDING
+    sig_path = os.path.join(RUN, "metrics", "sigil_reversion.json")
+    if os.path.exists(sig_path):
+        with open(sig_path, encoding="utf-8") as fh:
+            SIG = json.load(fh)
+        w("### The clearest single result: sigil reversion in alpha\n")
+        w("One failure mode is sharp enough to state on its own. In many alpha "
+          "answers the model gets **everything structural right** — the function "
+          "keyword, the selector-entry token, the chain operator, often the verb — "
+          "and then writes 3DOM's `.` inside the quoted selector, where alpha's "
+          "class sigil is `#`.\n")
+        w("Example (7B-Instruct, `make the wheels black`, scaffolded):\n")
+        w("```text\n"
+          "gold alpha   (recolor(){ $$('#wheel')#scale('black');    })();\n"
+          "model wrote  (recolor(){ $$('.wheel')#scale('#000000'); })();\n"
+          "                              ^ 3DOM sigil, not alpha's\n```\n")
+        w("Everything except that one character is correct alpha. The program is "
+          "rejected by alpha's grammar, so it scores `PARSE_FAIL`.\n")
+        w("| model | language | condition | on-language answers | reverted to `.` | rate |")
+        w("|---|---|---|---:|---:|---:|")
+        for r in SIG["summary"]:
+            if r["language"] == "identity":
+                continue
+            w(f"| `{short(r['model'])}` | `{r['language']}` | {r['condition']} | "
+              f"{r['n_on_language']} | {r['n_reverted_to_3dom_sigil']} | "
+              f"{pct(r['reversion_rate'])} |")
+        w("")
+        w("Two things stand out, and both point the same way:\n")
+        w("1. **It is essentially alpha-only.** Beta (`~`) and gamma (`◈`) show ~0% "
+          "throughout. Alpha's `#` is a *plausible-but-wrong* alternative that an "
+          "existing habit can override; `~` and `◈` are alien enough that no habit "
+          "fires.\n"
+          "2. **It grows with model scale, and with scaffolding.** Bare alpha "
+          "reversion rises 0% → 11.1% → 14.3% → 19.0% from 0.5B to 7B. In the "
+          "scaffolded 7B cell it reaches **81.0%** — and the scaffolded prompt "
+          "*displays the correct sigil beside every tag* (`#wheel -> Object_20, "
+          "Object_21, Object_22, Object_23`). The model was shown the right answer "
+          "in the same prompt and wrote the familiar one anyway.\n")
+        w("A larger model with a stronger prior reverts **more**, not less. That is "
+          "the most direct evidence in this run that a learned lexical prior can "
+          "override explicit, immediately-available instruction — and it is a "
+          "statement about **interference**, not about token cost: alpha is the "
+          "*cheapest* alien notation measured (1.068x fertility).\n")
+        w("See `plots/overall/19_sigil_reversion` and "
+          "`metrics/sigil_reversion.json` (which records every selector body "
+          "counted, so the rate can be recomputed by hand).\n")
+
+    # 15b CONDITIONAL TASK LOSS + THE DISSOCIATION
+    CL = A.get("conditional_loss", {}).get("models", {})
+    if CL:
+        w("### Conditional task loss, and a dissociation worth noting\n")
+        w("A secondary measurement asks a sharper question than Lane A: **given the "
+          "instruction and the language specification, how surprising is the "
+          "*correct answer*?** We feed the instruct model the exact chat prompt, "
+          "force it to read the frozen gold program, mask the prompt, and measure "
+          "loss over the answer tokens only. Lower = the correct answer came more "
+          "naturally.\n")
+        w("| model | condition | language | NLL per answer token | NLL per answer character | answer tokens |")
+        w("|---|---|---|---:|---:|---:|")
+        for m in sorted(CL, key=lambda x: laneB["models"].get(x, {}).get("n_parameters") or 0):
+            for cond in CONDS:
+                ce = CL[m]["conditions"].get(cond)
+                if not ce:
+                    continue
+                for lang in LANGS:
+                    e = ce["languages"].get(lang)
+                    if not e:
+                        continue
+                    w(f"| `{short(m)}` | {cond} | `{lang}` | "
+                      f"{num(e['nll_per_target_token'],'{:.4f}')} | "
+                      f"{num(e['nll_per_target_char'],'{:.4f}')} | "
+                      f"{num(e['target_tokens_per_case'],'{:.1f}')} |")
+        w("")
+        w("This is reported **separately from Lane A** because it answers a different "
+          "question and depends on the chosen reference serialisation: a different "
+          "but equally correct gold program would give different numbers.\n")
+        # the dissociation, computed rather than asserted
+        worst = []
+        for m in CL:
+            for cond in CONDS:
+                ce = CL[m]["conditions"].get(cond)
+                if not ce:
+                    continue
+                vals = {l: ce["languages"][l]["nll_per_target_token"]
+                        for l in ALIEN if l in ce["languages"]
+                        and ce["languages"][l]["nll_per_target_token"] is not None}
+                if vals:
+                    worst.append(max(vals, key=vals.get))
+        if worst:
+            cnt = collections.Counter(worst)
+            top, n_top = cnt.most_common(1)[0]
+            w("**The dissociation.** Ordering the three alien notations by each "
+              "measure does *not* give the same answer:\n")
+            w("| measure | what it ranks | hardest alien notation |")
+            w("|---|---|---|")
+            w("| Lane A base-model surprise | how unfamiliar the *text* is | "
+              "gamma (then beta, then alpha) — tracks fertility |")
+            w(f"| conditional task loss | how unnatural the *correct answer* is, "
+              f"given the spec | **{top}** in {n_top}/{len(worst)} model×condition cells |")
+            w("| behavioural accuracy | whether the model actually succeeds | "
+              "see §11 |")
+            w("")
+            w("Base-model surprise is ordered by token cost: gamma is the most "
+              "surprising text, alpha the least. But once the model is *given the "
+              "specification and asked to do the task*, that ordering does not carry "
+              "over — **alpha, the notation with the lowest fertility and the lowest "
+              "base-model surprise, becomes the hardest**. That is the signature of "
+              "**interference** rather than unfamiliarity: alpha's spellings are ones "
+              "the model already knows, bound to the wrong meanings, and the prior "
+              "actively fights the specification. Beta's invented words carry no "
+              "competing prior to override.\n")
+            w("This is why fertility must not be read as a cause of failure. On this "
+              "evidence the two come apart: the most expensive notation is not the "
+              "least accurate one, and the cheapest is not the most accurate.\n")
+
+    # 15c TRUNCATION SENSITIVITY (D2)
+    sens_path = os.path.join(RUN, "metrics", "sensitivity_maxnew.json")
+    if os.path.exists(sens_path):
+        with open(sens_path, encoding="utf-8") as fh:
+            SENS = json.load(fh)
+        w("### Was the output-length limit unfairly tight? (a test, not an assumption)\n")
+        w("Generations were capped at **512 new tokens**, common to every language. "
+          "Some generations hit that cap, concentrated in beta and gamma — which "
+          "would be a serious problem if the cap were penalising exactly the "
+          "languages under study. Inspection suggested the truncations were **task "
+          "abandonment** (the model stops writing the target language and emits "
+          "unrelated Python) rather than answer-length pressure, since the correct "
+          "answer is only ~20-60 model tokens in every language.\n")
+        w("Rather than assume that, it was tested: the affected model was re-run at "
+          "**1536 tokens in all four languages** (never only the language that "
+          "truncated), as a separately labelled condition that is never pooled with "
+          "the primary matrix.\n")
+        w("| condition | language | truncated @512 | truncated @1536 | correct @512 | correct @1536 |")
+        w("|---|---|---:|---:|---:|---:|")
+        for c in SENS["cells"]:
+            w(f"| {c['condition']} | `{c['language']}` | {c['truncated_512']} | "
+              f"{c['truncated_1536']} | {c['correct_512']} | {c['correct_1536']} |")
+        w("")
+        for m, v in SENS.get("verdict", {}).items():
+            w(f"**Of the {v['cases_truncated_at_512']} cases that truncated at 512, "
+              f"{v['became_correct_at_1536']} became correct at 1536**, and semantic "
+              "accuracy is identical in every cell. Tripling the budget let beta's "
+              "scaffolded generations terminate (19 truncations down to 3) without "
+              "producing a single additional correct answer.\n")
+            w(f"**Conclusion:** {v['conclusion']}\n")
+
+    # 15d LABELING CONTROL
+    LB = A.get("labeling_control", {})
+    if LB.get("models"):
+        w("### The negative control: labeling\n")
+        w("Labeling asks the model to name a part from a descriptor row. **No DSL "
+          "is involved**, so there is no identity/alpha/beta/gamma dimension and "
+          "none was invented. It is a **negative control**, and repeated labeling "
+          "scores are **not** used as evidence of a syntax effect.\n")
+        w("Its purpose is narrow: to check whether a model that fails alien "
+          "generation is simply incompetent at the surrounding domain.\n")
+        w("| model | condition | labeling accuracy | material-named | descriptor-only |")
+        w("|---|---|---|---|---|")
+        for m in sorted(LB["models"], key=lambda x: laneB["models"].get(x, {}).get("n_parameters") or 0):
+            for cond in CONDS:
+                e = LB["models"][m]["conditions"].get(cond)
+                if not e:
+                    continue
+                mn = e.get("material-named"); do = e.get("descriptor-only")
+                w(f"| `{short(m)}` | {cond} | "
+                  f"{e['overall']['numerator']}/{e['overall']['denominator']} "
+                  f"({pct(e['overall']['proportion'])}) | "
+                  + (f"{mn['numerator']}/{mn['denominator']} | " if mn else "NA | ")
+                  + (f"{do['numerator']}/{do['denominator']} |" if do else "NA |"))
+        w("")
+        w("**The control is informative.** `7B-Instruct` labels at "
+          f"{pct(LB['models'].get('Qwen/Qwen2.5-Coder-7B-Instruct', {}).get('conditions', {}).get('scaffolded', {}).get('overall', {}).get('proportion'))} "
+          "scaffolded while scoring near zero on alpha generation. The alpha "
+          "collapse is therefore **task-specific**, not a model that has stopped "
+          "working. Material-named rows (which carry a strong hint) are "
+          "consistently easier than descriptor-only rows, exactly as the fixture "
+          "design intends.\n")
 
     # 16 UNCERTAINTY
     w("## 16. Statistical uncertainty\n")

@@ -86,13 +86,25 @@ def main() -> int:
     meta["tokenizer_revision"] = getattr(tok, "_commit_hash", None) or meta["revision"]
     meta["n_parameters"] = sum(p.numel() for p in model.parameters())
 
-    # warm-up, EXCLUDED from scoring time
+    # warm-up, EXCLUDED from scoring time. Guarded for the same reason as
+    # lane_b: weights can load while the first forward pass still OOMs, and an
+    # unguarded warm-up would crash before the BLOCKED row is written.
     t0 = time.perf_counter()
-    with torch.inference_mode():
-        model(tok("warm up", return_tensors="pt").input_ids.to(args.device))
-    if args.device.startswith("cuda"):
-        torch.cuda.synchronize()
-        torch.cuda.reset_peak_memory_stats()
+    try:
+        with torch.inference_mode():
+            model(tok("warm up", return_tensors="pt").input_ids.to(args.device))
+        if args.device.startswith("cuda"):
+            torch.cuda.synchronize()
+            torch.cuda.reset_peak_memory_stats()
+    except BaseException as exc:
+        meta.update(status="BLOCKED", stage="warmup",
+                    error=f"{type(exc).__name__}: {exc}"[:800],
+                    traceback=traceback.format_exc()[-2000:],
+                    failure_kind=("OOM" if "out of memory" in str(exc).lower()
+                                  else "warmup"))
+        C.append_row(args.out.replace(".jsonl", ".meta.jsonl"), meta)
+        print(f"BLOCKED {args.model} at warm-up: {exc}", flush=True)
+        return 4
     meta["warmup_seconds"] = round(time.perf_counter() - t0, 4)
     print(f"[load] {args.model} load={meta['model_load_seconds']}s "
           f"params={meta['n_parameters']:,}", flush=True)

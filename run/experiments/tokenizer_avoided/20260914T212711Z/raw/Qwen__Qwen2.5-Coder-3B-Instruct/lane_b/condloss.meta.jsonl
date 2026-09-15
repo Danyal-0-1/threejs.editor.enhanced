@@ -1,0 +1,1 @@
+{"model": "Qwen/Qwen2.5-Coder-3B-Instruct", "lane": "B-conditional-loss", "precision": "fp16", "device": "cuda", "seed": 20260910, "revision": "488639f1ff808d1d3d0ba301aef8c11461451ec5", "status": "VERIFIED", "rows_new": 168}

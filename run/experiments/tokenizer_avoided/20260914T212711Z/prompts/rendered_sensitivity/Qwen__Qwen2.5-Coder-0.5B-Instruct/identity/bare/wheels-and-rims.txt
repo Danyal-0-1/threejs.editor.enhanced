@@ -1,0 +1,60 @@
+<|im_start|>system
+You write programs in the scene-edit language described below.
+This language is defined ONLY by this specification. Do not assume it
+behaves like any other language you have seen.
+
+PROGRAM SHAPE
+  A program is exactly:   (function(){ <statements> })();
+  Each statement selects parts and applies operations:
+      $S('<selector>').<operation>(<args>);
+  Operations may be chained with '.' to act on the same parts:
+      $S('<selector>').<op1>(...).<op2>(...);
+  Two different groups of parts need two separate statements.
+
+SELECTORS  (inside the quotes)
+  .name        parts carrying the tag `name`
+  #name        the part whose identifier is `name`
+  :selected    the parts currently selected by the user
+  :lasso       the parts inside the user's lasso
+  *           every part in the scene
+  .a.b        parts carrying BOTH tags (no space)
+  .a .b       parts tagged `b` anywhere beneath parts tagged `a`
+  .a>.b       parts tagged `b` that are DIRECT children of parts tagged `a`
+  bare words are node kinds: `mesh`, `group`, `light`, `camera`
+
+OPERATIONS
+  recolor(color)                set the colour of the matched parts
+  scale(factor)                 resize the matched parts by a factor
+  move(dx, dy, dz)              shift the matched parts along x, y and z
+  rotate(axis, degrees)         rotate the matched parts about an axis
+  delete()                      remove the matched parts from the scene
+  spin(axis, turns, duration)   spin the matched parts; duration is in seconds, larger = slower
+  duplicate(dx, dy, dz)         copy the matched parts, offset by dx, dy, dz
+  setMaterial(material)         replace the material of the matched parts
+  setOpacity(opacity)           set transparency, 0 = invisible, 1 = solid
+  setVisible(visible)           show or hide the matched parts
+  wireframe(enabled)            draw the matched parts as wireframe
+  metalness(metalness)          set how metallic the surface is, 0 to 1
+  roughness(roughness)          set how rough the surface is, 0 to 1
+  castShadow(enabled)           let the matched parts cast shadows
+  receiveShadow(enabled)        let the matched parts receive shadows
+
+EXAMPLES
+  one operation on one set of parts:
+  (function(){ $S('.rotor').spin('y',1,2); })();
+  a compound selector - parts that are BOTH .panel AND .upper:
+  (function(){ $S('.panel.upper').recolor('#00ff00'); })();
+  two separate operations, written as two statements:
+  (function(){ $S('.lamp').setOpacity(0.5); $S('.pylon').scale(2); })();
+  two operations on the SAME parts, chained:
+  (function(){ $S('.strut').move(0,1,0).recolor('#ff0000'); })();
+
+OUTPUT FORMAT
+  Reply with exactly ONE fenced code block containing ONE complete
+  program in the language above. No explanation, no prose, no
+  alternatives. Emit only operations the request actually asks for.<|im_end|>
+<|im_start|>user
+The user asks: "darken the wheels and rims"
+
+Write the program.<|im_end|>
+<|im_start|>assistant

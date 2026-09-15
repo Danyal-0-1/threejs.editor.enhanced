@@ -166,17 +166,57 @@ def main() -> int:
           not missing, f"{len(plot_dirs)} plots, {len(missing)} incomplete")
 
     # 8 — no missing value silently became zero
-    zeros = []
+    #
+    # A zero accuracy is a legitimate result (alpha really does score 0 in some
+    # cells). What must never happen is a MISSING cell rendered as zero. Every
+    # zero-valued accuracy cell is therefore traced back to raw rows: it is valid
+    # only if raw rows exist for that cell AND none of them scored correct.
+    #
+    # The plot CSVs come in three shapes -- some carry `language`, some carry
+    # `condition`, and the per-task heatmaps carry `task` -- with the missing
+    # field encoded in the DIRECTORY name. All three are resolved here; a check
+    # that assumed one shape would silently pass the other two.
+    TASK_COL = {"op-selection": "op_correct",
+                "selector-resolution": "selector_correct",
+                "arg-extraction": "args_correct",
+                "multi-op": "multi_op_correct"}
+    zeros, bad_zeros = [], []
     for d in plot_dirs:
+        rel = os.path.relpath(d, RUN)
+        dir_lang = next((l for l in ("identity", "alpha", "beta", "gamma")
+                         if f"by_language/{l}" in rel.replace(os.sep, "/")), None)
+        dir_cond = ("scaffolded" if rel.endswith("scaffolded")
+                    else "bare" if rel.endswith("bare") else None)
         with open(os.path.join(d, "data.csv"), encoding="utf-8") as fh:
             for row in csv.DictReader(fh):
-                for k, v in row.items():
-                    if v == "0" and k in ("accuracy", "semantic_accuracy",
-                                          "nll_per_char", "e2e_median"):
-                        zeros.append(f"{os.path.relpath(d, RUN)}:{k}")
-    # a real zero accuracy is legitimate; this check reports them for inspection
-    check("8. no missing value became zero (real zeros listed for inspection)",
-          True, f"{len(zeros)} exact-zero cells, all traceable to raw rows")
+                for k in ("accuracy", "semantic_accuracy"):
+                    v = row.get(k)
+                    if v in (None, "", "None"):
+                        continue
+                    try:
+                        if float(v) != 0.0:
+                            continue
+                    except ValueError:
+                        continue
+                    model = row.get("model")
+                    lang = row.get("language") or dir_lang
+                    cond = row.get("condition") or dir_cond
+                    task = row.get("task")
+                    zeros.append(f"{rel}:{k}")
+                    rs = [r for r in gen if r["model"] == model
+                          and (lang is None or r["language"] == lang)
+                          and (cond is None or r["condition"] == cond)]
+                    col = TASK_COL.get(task, "semantic_correct")
+                    if not rs:
+                        bad_zeros.append(
+                            f"{rel} {model}/{lang}/{cond}: zero plotted but NO raw rows")
+                    elif any(r.get(col) == 1 for r in rs):
+                        bad_zeros.append(
+                            f"{rel} {model}/{lang}/{cond}/{task or 'semantic'}: "
+                            f"zero plotted but raw rows contain a correct answer")
+    check("8. every plotted zero is a REAL zero traced to raw rows",
+          not bad_zeros,
+          f"{len(zeros)} zero cells traced, {len(bad_zeros)} unsupported")
 
     # 9 — outcome taxonomy is mutually exclusive and totals match
     tax = []
@@ -205,7 +245,9 @@ def main() -> int:
           not nondet, f"{len(nondet)} of {len(gen)} rows differed between reps")
 
     # 12 — blocked cells carry an exact error and are not zero-filled
-    blocked = laneA["blocked"] + laneB["blocked"]
+    blocked = (laneA["blocked"] + laneB["blocked"]
+               + A.get("conditional_loss", {}).get("blocked", [])
+               + A.get("labeling_control", {}).get("blocked", []))
     check("12. blocked cells carry exact command and error",
           all(b.get("error") and b.get("attempted_command") for b in blocked),
           f"{len(blocked)} blocked cells recorded")
@@ -224,6 +266,39 @@ def main() -> int:
                     n += 1
     check("13. checksums recorded for raw, metrics, reports, plots", n > 0,
           f"{n} files hashed -> metadata/output-checksums.txt")
+
+    # 14 — nothing outside the experiment directory was changed by this session
+    #
+    # NOTE: the repository owner committed during this run (`E2_tokenizer_avoided`),
+    # which tracked a mid-run snapshot of the experiment directory AND their own
+    # pre-existing edits. That is an external event, not an action of this
+    # session. Comparing against the session-start snapshot would therefore
+    # report the owner's commit as a change by us. The meaningful question is
+    # asked directly instead: does any file OUTSIDE the experiment directory
+    # differ from HEAD, or has any been deleted?
+    try:
+        diff = subprocess.run(["git", "status", "--porcelain=v1"],
+                              cwd=REPO, capture_output=True, text=True).stdout.splitlines()
+        outside = [l for l in diff if l.strip()
+                   and "run/experiments/tokenizer_avoided/" not in l]
+        deleted = [l for l in diff if l.strip().startswith("D")]
+        with open(os.path.join(RUN, "metadata", "git-status-end.txt"), "w",
+                  encoding="utf-8") as fh:
+            fh.write("# git status at end of run\n")
+            fh.write(f"# HEAD: {subprocess.run(['git','rev-parse','HEAD'],cwd=REPO,capture_output=True,text=True).stdout.strip()}\n")
+            fh.write("# NOTE: commit E2_tokenizer_avoided was made by the repository\n"
+                     "# owner DURING this run; it is not an action of this session.\n")
+            for l in diff:
+                fh.write(l + "\n")
+            fh.write("\n# entries OUTSIDE run/experiments/tokenizer_avoided/\n")
+            for l in outside:
+                fh.write(l + "\n")
+        check("14. no file outside the experiment directory was modified or deleted",
+              not outside and not deleted,
+              f"{len(diff)} changed paths, {len(outside)} outside the experiment dir, "
+              f"{len(deleted)} deleted")
+    except Exception as exc:
+        check("14. git status comparison", False, f"{type(exc).__name__}: {exc}")
 
     print()
     n_fail = sum(1 for _n, ok, _d in results if not ok)

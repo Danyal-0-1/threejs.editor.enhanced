@@ -1,0 +1,163 @@
+# git status at end of run
+# HEAD: 3c45d7b4fcc65b713e80453855ab28b7484800cc
+# NOTE: commit E2_tokenizer_avoided was made by the repository
+# owner DURING this run; it is not an action of this session.
+ M run/experiments/tokenizer_avoided/20260914T212711Z/HYPOTHESIS_ASSESSMENT.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/MANIFEST.json
+ M run/experiments/tokenizer_avoided/20260914T212711Z/OVERALL_REPORT.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/STATUS.json
+ M run/experiments/tokenizer_avoided/20260914T212711Z/STUDY_PLAN.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/logs/commands.log
+ M run/experiments/tokenizer_avoided/20260914T212711Z/logs/lane_b.log
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metadata/output-checksums.txt
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metadata/validation.json
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/aggregate.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/aggregate.json
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_language/alpha/rows.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_language/beta/rows.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_language/gamma/rows.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_language/identity/rows.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_model/Qwen__Qwen2.5-Coder-0.5B-Instruct.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/hypothesis_assessment.json
+ M run/experiments/tokenizer_avoided/20260914T212711Z/metrics/paired-item-results.jsonl
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/alpha/01_summary/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/alpha/01_summary/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/alpha/01_summary/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/alpha/02_lane_a_nll/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/beta/01_summary/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/beta/01_summary/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/beta/01_summary/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/beta/02_lane_a_nll/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/gamma/01_summary/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/gamma/01_summary/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/gamma/01_summary/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/gamma/02_lane_a_nll/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/identity/01_summary/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/identity/01_summary/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/identity/01_summary/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/by_language/identity/02_lane_a_nll/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_bare/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_bare/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_bare/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_scaffolded/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_scaffolded/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/01_accuracy_scaffolded/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_bare/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_bare/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_bare/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_scaffolded/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_scaffolded/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/02_paired_accuracy_difference_scaffolded/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_bare/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_bare/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_bare/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_scaffolded/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_scaffolded/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/03_per_task_heatmap_scaffolded/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/04_parse_vs_semantic/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/04_parse_vs_semantic/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/04_parse_vs_semantic/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_bare/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_bare/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_bare/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_scaffolded/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_scaffolded/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/05_outcome_taxonomy_scaffolded/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/06_nll_per_char/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/07_nll_per_token/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/08_delta_nll_per_char/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/09_model_size_scaling/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/09_model_size_scaling/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/09_model_size_scaling/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/10_runtime_median_p95/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/10_runtime_median_p95/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/10_runtime_median_p95/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/11_prefill_and_decode/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/11_prefill_and_decode/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/11_prefill_and_decode/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/12_token_counts/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/12_token_counts/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/12_token_counts/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/13_output_tokens_per_second/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/13_output_tokens_per_second/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/13_output_tokens_per_second/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/14_peak_memory/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/14_peak_memory/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/14_peak_memory/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/15_fertility_vs_accuracy/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/15_fertility_vs_accuracy/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/15_fertility_vs_accuracy/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/16_fertility_vs_runtime/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/16_fertility_vs_runtime/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/16_fertility_vs_runtime/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/17_bare_vs_scaffolded/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/17_bare_vs_scaffolded/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/17_bare_vs_scaffolded/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/18_nlvp_invalid/data.csv
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/18_nlvp_invalid/plot.png
+ M run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/18_nlvp_invalid/plot.svg
+ M run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.jsonl
+ M run/experiments/tokenizer_avoided/20260914T212711Z/reports/languages/alpha.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/reports/languages/beta.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/reports/languages/gamma.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/reports/languages/identity.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/reports/models/Qwen__Qwen2.5-Coder-0.5B-Instruct_laneB.md
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/aggregate.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/finalize.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_a.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/overall.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/plots.py
+ M run/experiments/tokenizer_avoided/20260914T212711Z/scripts/validate.py
+?? run/experiments/tokenizer_avoided/20260914T212711Z/logs/labeling.log
+?? run/experiments/tokenizer_avoided/20260914T212711Z/logs/sensitivity.log
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metadata/experiment-config.json
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metadata/git-status-end.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metadata/model-revisions.json
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metadata/tokenizer-revisions.json
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_model/Qwen__Qwen2.5-Coder-1.5B-Instruct.csv
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_model/Qwen__Qwen2.5-Coder-3B-Instruct.csv
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metrics/by_model/Qwen__Qwen2.5-Coder-7B-Instruct.csv
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metrics/sensitivity_maxnew.json
+?? run/experiments/tokenizer_avoided/20260914T212711Z/metrics/sigil_reversion.json
+?? run/experiments/tokenizer_avoided/20260914T212711Z/plots/overall/19_sigil_reversion/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/alpha/bare/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/alpha/bare/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/alpha/scaffolded/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/alpha/scaffolded/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/beta/bare/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/beta/bare/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/beta/scaffolded/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/beta/scaffolded/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/gamma/bare/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/gamma/bare/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/gamma/scaffolded/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/gamma/scaffolded/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/identity/bare/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/identity/bare/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/identity/scaffolded/merged-sheets.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-0.5B-Instruct/identity/scaffolded/wheels-and-rims.txt
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-1.5B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-3B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered/Qwen__Qwen2.5-Coder-7B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/prompts/rendered_sensitivity/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/condloss.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/condloss.meta.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen.meta.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen_maxnew1536.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen_maxnew1536.meta.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/labeling.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/labeling.meta.jsonl
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-1.5B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-3B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-7B-Instruct/
+?? run/experiments/tokenizer_avoided/20260914T212711Z/reports/models/Qwen__Qwen2.5-Coder-1.5B-Instruct_laneB.md
+?? run/experiments/tokenizer_avoided/20260914T212711Z/reports/models/Qwen__Qwen2.5-Coder-3B-Instruct_laneB.md
+?? run/experiments/tokenizer_avoided/20260914T212711Z/reports/models/Qwen__Qwen2.5-Coder-7B-Instruct_laneB.md
+?? run/experiments/tokenizer_avoided/20260914T212711Z/scripts/labeling.py
+?? run/experiments/tokenizer_avoided/20260914T212711Z/scripts/run_labeling.sh
+?? run/experiments/tokenizer_avoided/20260914T212711Z/scripts/run_sensitivity_maxnew.sh
+?? run/experiments/tokenizer_avoided/20260914T212711Z/scripts/sensitivity_analysis.py
+?? run/experiments/tokenizer_avoided/20260914T212711Z/scripts/sigil_analysis.py
+
+# entries OUTSIDE run/experiments/tokenizer_avoided/

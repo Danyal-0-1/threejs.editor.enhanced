@@ -1,0 +1,115 @@
+{
+  "condition": "maxnew1536",
+  "primary_max_new_tokens": 512,
+  "sensitivity_max_new_tokens": 1536,
+  "cells": [
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "bare",
+      "language": "identity",
+      "n": 21,
+      "truncated_512": 0,
+      "truncated_1536": 0,
+      "correct_512": 3,
+      "correct_1536": 3,
+      "parse_valid_512": 20,
+      "parse_valid_1536": 20
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "bare",
+      "language": "alpha",
+      "n": 21,
+      "truncated_512": 0,
+      "truncated_1536": 0,
+      "correct_512": 0,
+      "correct_1536": 0,
+      "parse_valid_512": 13,
+      "parse_valid_1536": 13
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "bare",
+      "language": "beta",
+      "n": 21,
+      "truncated_512": 0,
+      "truncated_1536": 0,
+      "correct_512": 1,
+      "correct_1536": 1,
+      "parse_valid_512": 20,
+      "parse_valid_1536": 20
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "bare",
+      "language": "gamma",
+      "n": 21,
+      "truncated_512": 0,
+      "truncated_1536": 0,
+      "correct_512": 0,
+      "correct_1536": 0,
+      "parse_valid_512": 20,
+      "parse_valid_1536": 20
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "scaffolded",
+      "language": "identity",
+      "n": 21,
+      "truncated_512": 2,
+      "truncated_1536": 0,
+      "correct_512": 1,
+      "correct_1536": 1,
+      "parse_valid_512": 19,
+      "parse_valid_1536": 21
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "scaffolded",
+      "language": "alpha",
+      "n": 21,
+      "truncated_512": 5,
+      "truncated_1536": 5,
+      "correct_512": 0,
+      "correct_1536": 0,
+      "parse_valid_512": 0,
+      "parse_valid_1536": 0
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "scaffolded",
+      "language": "beta",
+      "n": 21,
+      "truncated_512": 19,
+      "truncated_1536": 3,
+      "correct_512": 0,
+      "correct_1536": 0,
+      "parse_valid_512": 0,
+      "parse_valid_1536": 0
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "condition": "scaffolded",
+      "language": "gamma",
+      "n": 21,
+      "truncated_512": 4,
+      "truncated_1536": 4,
+      "correct_512": 0,
+      "correct_1536": 0,
+      "parse_valid_512": 11,
+      "parse_valid_1536": 11
+    }
+  ],
+  "models": [
+    "Qwen/Qwen2.5-Coder-0.5B-Instruct"
+  ],
+  "verdict": {
+    "Qwen/Qwen2.5-Coder-0.5B-Instruct": {
+      "cases_truncated_at_512": 30,
+      "became_correct_at_1536": 0,
+      "still_failed_at_1536": 30,
+      "limit_was_binding": false,
+      "conclusion": "The 512-token limit was NOT the binding constraint: no case that truncated at 512 became correct at 1536. The primary matrix stands, and truncation is reported as a failure mode in its own right."
+    }
+  }
+}

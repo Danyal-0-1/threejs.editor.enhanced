@@ -487,3 +487,28 @@ claim above is tested empirically in a separately labelled sensitivity condition
 larger common limit. Its result is reported separately and is never pooled with
 the primary runs. Truncation rates are reported per language throughout.
 
+**RESULT (2026-09-14, after the sensitivity run).** `0.5B-Instruct`, both
+conditions, all four languages, `max_new_tokens = 1536`
+(`raw/Qwen__Qwen2.5-Coder-0.5B-Instruct/lane_b/gen_maxnew1536.jsonl`):
+
+| condition | language | truncated @512 | truncated @1536 | correct @512 | correct @1536 |
+|---|---|---:|---:|---:|---:|
+| bare | identity | 0 | 0 | 3 | 3 |
+| bare | alpha | 0 | 0 | 0 | 0 |
+| bare | beta | 0 | 0 | 1 | 1 |
+| bare | gamma | 0 | 0 | 0 | 0 |
+| scaffolded | identity | 2 | 0 | 1 | 1 |
+| scaffolded | alpha | 5 | 5 | 0 | 0 |
+| scaffolded | beta | 19 | 3 | 0 | 0 |
+| scaffolded | gamma | 4 | 4 | 0 | 0 |
+
+**Of the 30 cases that truncated at 512, 0 became `VALID_CORRECT` at 1536**, and
+semantic accuracy is **identical in every cell**. Tripling the budget let beta's
+scaffolded generations terminate (19 truncations to 3) without producing a single
+additional correct answer.
+
+**Conclusion, by the interpretation rule fixed in advance:** the 512-token limit
+was **not** the binding constraint. The primary matrix **stands unchanged**, and
+truncation is reported per language as a failure mode in its own right rather
+than as a measurement artefact.
+

@@ -180,7 +180,12 @@ def main() -> int:
 
     b_models = sorted(laneB["models"], key=lambda m: laneB["models"][m]["n_parameters"] or 0)
     a_models = list(laneA["models"])
-    blocked = laneA["blocked"] + laneB["blocked"]
+    # Every lane's blocked cells, including the secondary analyses -- a blocked
+    # cell that is not listed reads as "not attempted", which is a different and
+    # stronger claim than "attempted and failed".
+    blocked = (laneA["blocked"] + laneB["blocked"]
+               + A.get("conditional_loss", {}).get("blocked", [])
+               + A.get("labeling_control", {}).get("blocked", []))
 
     # ── STATUS.json ─────────────────────────────────────────────────────────
     cells = []
@@ -196,6 +201,18 @@ def main() -> int:
                 cells.append({"lane": "B", "model": model, "language": lang,
                               "condition": cond, "status": "VERIFIED",
                               "n": e["semantic_accuracy"]["denominator"]})
+    for model, m in A.get("conditional_loss", {}).get("models", {}).items():
+        for cond, ce in m["conditions"].items():
+            for lang in ce["languages"]:
+                cells.append({"lane": "B-conditional-loss", "model": model,
+                              "language": lang, "condition": cond,
+                              "status": "VERIFIED", "n": ce["n_paired_cases"]})
+    for model, m in A.get("labeling_control", {}).get("models", {}).items():
+        for cond, e in m["conditions"].items():
+            cells.append({"lane": "B-labeling-control", "model": model,
+                          "language": "none", "condition": cond,
+                          "status": "VERIFIED",
+                          "n": e["overall"]["denominator"]})
     for b in blocked:
         cells.append({"lane": b["lane"], "model": b["model"], "language": "ALL",
                       "condition": f"{b['precision']}/{b['device']}",

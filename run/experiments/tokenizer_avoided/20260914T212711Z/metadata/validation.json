@@ -26,18 +26,18 @@
   },
   {
     "check": "6. plot CSV values match aggregate data",
-    "pass": false,
-    "detail": "1 problems; 01_accuracy_bare Qwen/Qwen2.5-Coder-0.5B-Instruct/identity"
+    "pass": true,
+    "detail": "0 problems"
   },
   {
     "check": "7. every plot dir has plot.png, plot.svg, data.csv, README.md",
     "pass": true,
-    "detail": "30 plots, 0 incomplete"
+    "detail": "31 plots, 0 incomplete"
   },
   {
-    "check": "8. no missing value became zero (real zeros listed for inspection)",
+    "check": "8. every plotted zero is a REAL zero traced to raw rows",
     "pass": true,
-    "detail": "0 exact-zero cells, all traceable to raw rows"
+    "detail": "33 zero cells traced, 0 unsupported"
   },
   {
     "check": "9. outcome taxonomy totals equal the denominators",
@@ -52,16 +52,21 @@
   {
     "check": "11. greedy decoding deterministic across repetitions",
     "pass": true,
-    "detail": "0 of 73 rows differed between reps"
+    "detail": "0 of 672 rows differed between reps"
   },
   {
     "check": "12. blocked cells carry exact command and error",
     "pass": true,
-    "detail": "1 blocked cells recorded"
+    "detail": "2 blocked cells recorded"
   },
   {
     "check": "13. checksums recorded for raw, metrics, reports, plots",
     "pass": true,
-    "detail": "235 files hashed -> metadata/output-checksums.txt"
+    "detail": "1079 files hashed -> metadata/output-checksums.txt"
+  },
+  {
+    "check": "14. no file outside the experiment directory was modified or deleted",
+    "pass": true,
+    "detail": "157 changed paths, 0 outside the experiment dir, 0 deleted"
   }
 ]

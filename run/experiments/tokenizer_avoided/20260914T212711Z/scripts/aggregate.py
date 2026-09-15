@@ -243,6 +243,129 @@ def lane_b() -> dict:
     return out
 
 
+# ── CONDITIONAL TASK LOSS (secondary) ────────────────────────────────────────
+
+def conditional_loss() -> dict:
+    """Loss over a FORCED gold completion, given the exact chat prompt.
+
+    Reported separately from Lane A: it answers a different question (how
+    surprising is the CORRECT ANSWER, given the instruction) and it depends on
+    the chosen reference serialisation.
+    """
+    out = {"models": {}, "blocked": []}
+    for meta_path in find("condloss.meta.jsonl"):
+        for m in C.read_rows(meta_path):
+            if m.get("status") == "BLOCKED":
+                out["blocked"].append({
+                    "model": m["model"], "lane": "B-conditional-loss",
+                    "device": m.get("device"), "precision": m.get("precision"),
+                    "failure_kind": m.get("failure_kind"), "error": m.get("error"),
+                    "attempted_command":
+                        f"conditional_loss.py --model {m['model']} --precision "
+                        f"{m.get('precision')} --device {m.get('device')}"})
+    for path in find("condloss.jsonl"):
+        all_rows = C.read_rows(path)
+        rows = [r for r in all_rows if r.get("outcome") == "VERIFIED"]
+        if not rows:
+            # Every cell failed. Record WHY rather than letting the model vanish
+            # from the table -- a missing row must never read as "not attempted".
+            if all_rows:
+                kinds = collections.Counter(r.get("outcome") for r in all_rows)
+                dominant = kinds.most_common(1)[0][0]
+                out["blocked"].append({
+                    "model": all_rows[0]["model"], "lane": "B-conditional-loss",
+                    "device": all_rows[0].get("device"),
+                    "precision": all_rows[0].get("precision"),
+                    "failure_kind": dominant,
+                    "n_cells_attempted": len(all_rows),
+                    "outcome_counts": dict(kinds),
+                    "error": str(all_rows[0].get("error_category"))[:400],
+                    "attempted_command":
+                        f"conditional_loss.py --model {all_rows[0]['model']} "
+                        f"--precision {all_rows[0].get('precision')} "
+                        f"--device {all_rows[0].get('device')}"})
+            continue
+        model = rows[0]["model"]
+        entry = {"model": model, "conditions": {}}
+        for cond in CONDITIONS:
+            by = collections.defaultdict(dict)
+            for r in rows:
+                if r["condition"] == cond:
+                    by[r["language"]][r["case_id"]] = r
+            if not by:
+                continue
+            common = set.intersection(*(set(v) for v in by.values()))
+            cases = sorted(common)
+            ce = {"n_paired_cases": len(cases), "languages": {}}
+            for lang in LANGUAGES:
+                if lang not in by:
+                    continue
+                rs = [by[lang][c] for c in cases]
+                tot = sum(r["total_nll_nats"] for r in rs)
+                tok = sum(r["target_tokens"] for r in rs)
+                ch = sum(r["target_chars"] for r in rs)
+                e = {"total_nll_nats": tot,
+                     "nll_per_target_token": tot / tok if tok else None,
+                     "nll_per_target_char": tot / ch if ch else None,
+                     "target_tokens_per_case": tok / len(rs),
+                     "prompt_tokens_median": ST.median_iqr_p95(
+                         [r.get("prompt_tokens") for r in rs])["median"]}
+                if lang != "identity" and "identity" in by:
+                    base = [by["identity"][c] for c in cases]
+                    e["delta_nll_per_target_token"] = ST.paired_bootstrap_ratio(
+                        [(r["total_nll_nats"], r["target_tokens"]) for r in rs],
+                        [(r["total_nll_nats"], r["target_tokens"]) for r in base])
+                    e["delta_nll_per_target_char"] = ST.paired_bootstrap_ratio(
+                        [(r["total_nll_nats"], r["target_chars"]) for r in rs],
+                        [(r["total_nll_nats"], r["target_chars"]) for r in base])
+                ce["languages"][lang] = e
+            entry["conditions"][cond] = ce
+        out["models"][model] = entry
+    return out
+
+
+# ── TASK 4: LABELING CONTROL ─────────────────────────────────────────────────
+
+def labeling() -> dict:
+    """Language-independent negative control.
+
+    Never pooled with generation accuracy, and never used as evidence of a
+    syntax effect -- its value is to show whether a model that fails alien
+    generation is nonetheless competent at the surrounding domain.
+    """
+    out = {"models": {}, "blocked": [], "note": (
+        "Language-independent. There is no identity/alpha/beta/gamma dimension "
+        "here and none was invented. Not evidence of a syntax effect.")}
+    for meta_path in find("labeling.meta.jsonl"):
+        for m in C.read_rows(meta_path):
+            if m.get("status") == "BLOCKED":
+                out["blocked"].append({
+                    "model": m["model"], "lane": "B-labeling-control",
+                    "device": m.get("device"), "precision": m.get("precision"),
+                    "failure_kind": m.get("failure_kind"), "error": m.get("error"),
+                    "attempted_command": f"labeling.py --model {m['model']}"})
+    for path in find("labeling.jsonl"):
+        rows = [r for r in C.read_rows(path) if r.get("outcome") == "VERIFIED"]
+        if not rows:
+            continue
+        model = rows[0]["model"]
+        entry = {"model": model, "conditions": {}}
+        for cond in CONDITIONS:
+            rs = [r for r in rows if r["condition"] == cond]
+            if not rs:
+                continue
+            e = {"overall": ST.proportion(
+                sum(int(r.get("labeling_correct") or 0) for r in rs), len(rs))}
+            for kind in ("material-named", "descriptor-only"):
+                ks = [r for r in rs if r.get("kind") == kind]
+                if ks:
+                    e[kind] = ST.proportion(
+                        sum(int(r.get("labeling_correct") or 0) for r in ks), len(ks))
+            entry["conditions"][cond] = e
+        out["models"][model] = entry
+    return out
+
+
 def write_csv(path: str, rows: list[dict], fields: list[str]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", newline="", encoding="utf-8") as fh:
@@ -253,11 +376,12 @@ def write_csv(path: str, rows: list[dict], fields: list[str]) -> None:
 
 
 def main() -> int:
-    A, B = lane_a(), lane_b()
+    A, B, CL, LB = lane_a(), lane_b(), conditional_loss(), labeling()
     with open(os.path.join(RUN, "metrics", "fertility.json"), encoding="utf-8") as fh:
         fert = json.load(fh)
 
-    payload = {"lane_a": A, "lane_b": B, "fertility": fert,
+    payload = {"lane_a": A, "lane_b": B, "conditional_loss": CL,
+               "labeling_control": LB, "fertility": fert,
                "languages": LANGUAGES, "conditions": CONDITIONS, "tasks": TASKS}
     with open(os.path.join(RUN, "metrics", "aggregate.json"), "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2, ensure_ascii=False)
@@ -337,6 +461,9 @@ def main() -> int:
     print(f"lane A models: {list(A['models'])}")
     print(f"lane B models: {list(B['models'])}")
     print(f"blocked: {[b['model']+' ('+str(b.get('failure_kind'))+')' for b in A['blocked']+B['blocked']]}")
+    print(f"conditional-loss models: {list(CL['models'])}")
+    print(f"conditional-loss blocked: {[b['model'] for b in CL['blocked']]}")
+    print(f"labeling-control models: {list(LB['models'])}")
     print(f"aggregate.csv rows: {len(flat)}")
     print(f"paired items: {len(B['paired_items'])}")
     return 0

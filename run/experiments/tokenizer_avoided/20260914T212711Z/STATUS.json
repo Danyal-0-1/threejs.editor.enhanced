@@ -1,6 +1,6 @@
 {
   "run_id": "20260914T212711Z",
-  "generated_utc": "2026-09-14T22:01:41.723876+00:00",
+  "generated_utc": "2026-09-15T22:28:31.580522+00:00",
   "study": "exploratory fertility-unmatched model evaluation",
   "overall": "VERIFIED",
   "lane_a_models_executed": [
@@ -10,7 +10,10 @@
     "Qwen/Qwen2.5-Coder-7B [cpu]"
   ],
   "lane_b_models_executed": [
-    "Qwen/Qwen2.5-Coder-0.5B-Instruct"
+    "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "Qwen/Qwen2.5-Coder-3B-Instruct",
+    "Qwen/Qwen2.5-Coder-7B-Instruct"
   ],
   "blocked": [
     {
@@ -21,6 +24,19 @@
       "failure_kind": "OOM",
       "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 114.12 MiB is free. Including non-PyTorch memory, this process has 15.15 GiB memory in use. Of the allocated memory 14.87 GiB is allocated by PyTorch, and 91.35 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)",
       "attempted_command": "lane_a.py --model Qwen/Qwen2.5-Coder-7B --precision fp32 --device cuda"
+    },
+    {
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "lane": "B-conditional-loss",
+      "device": "cuda",
+      "precision": "fp16",
+      "failure_kind": "OOM",
+      "n_cells_attempted": 168,
+      "outcome_counts": {
+        "OOM": 168
+      },
+      "error": "OOM: CUDA out of memory. Tried to allocate 424.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 438.81 MiB is free. Including non-PyTorch memory, this process has 14.81 GiB memory in use. Of t",
+      "attempted_command": "conditional_loss.py --model Qwen/Qwen2.5-Coder-7B-Instruct --precision fp16 --device cuda"
     }
   ],
   "cells": [
@@ -158,7 +174,7 @@
       "language": "identity",
       "condition": "bare",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -166,7 +182,7 @@
       "language": "alpha",
       "condition": "bare",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -174,7 +190,7 @@
       "language": "beta",
       "condition": "bare",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -182,7 +198,7 @@
       "language": "gamma",
       "condition": "bare",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -190,7 +206,7 @@
       "language": "identity",
       "condition": "scaffolded",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -198,7 +214,7 @@
       "language": "alpha",
       "condition": "scaffolded",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
@@ -206,12 +222,460 @@
       "language": "beta",
       "condition": "scaffolded",
       "status": "VERIFIED",
-      "n": 9
+      "n": 21
     },
     {
       "lane": "B",
       "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
       "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "identity",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "alpha",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "beta",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "gamma",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "identity",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "alpha",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "beta",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "gamma",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 21
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "none",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+      "language": "none",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "none",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "language": "none",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "none",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "language": "none",
+      "condition": "scaffolded",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "none",
+      "condition": "bare",
+      "status": "VERIFIED",
+      "n": 9
+    },
+    {
+      "lane": "B-labeling-control",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "none",
       "condition": "scaffolded",
       "status": "VERIFIED",
       "n": 9
@@ -224,6 +688,15 @@
       "status": "BLOCKED",
       "reason": "OOM",
       "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 260.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 114.12 MiB is free. Including non-PyTorch memory, this process has 15.15 GiB memory in use. Of the allocated memory 14.87 GiB is allocated by PyTorch, and 91.35 MiB is reserved by PyT"
+    },
+    {
+      "lane": "B-conditional-loss",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "language": "ALL",
+      "condition": "fp16/cuda",
+      "status": "BLOCKED",
+      "reason": "OOM",
+      "error": "OOM: CUDA out of memory. Tried to allocate 424.00 MiB. GPU 0 has a total capacity of 15.61 GiB of which 438.81 MiB is free. Including non-PyTorch memory, this process has 14.81 GiB memory in use. Of t"
     }
   ],
   "validation": [
@@ -254,18 +727,18 @@
     },
     {
       "check": "6. plot CSV values match aggregate data",
-      "pass": false,
-      "detail": "1 problems; 01_accuracy_bare Qwen/Qwen2.5-Coder-0.5B-Instruct/identity"
+      "pass": true,
+      "detail": "0 problems"
     },
     {
       "check": "7. every plot dir has plot.png, plot.svg, data.csv, README.md",
       "pass": true,
-      "detail": "30 plots, 0 incomplete"
+      "detail": "31 plots, 0 incomplete"
     },
     {
-      "check": "8. no missing value became zero (real zeros listed for inspection)",
+      "check": "8. every plotted zero is a REAL zero traced to raw rows",
       "pass": true,
-      "detail": "0 exact-zero cells, all traceable to raw rows"
+      "detail": "33 zero cells traced, 0 unsupported"
     },
     {
       "check": "9. outcome taxonomy totals equal the denominators",
@@ -280,23 +753,28 @@
     {
       "check": "11. greedy decoding deterministic across repetitions",
       "pass": true,
-      "detail": "0 of 73 rows differed between reps"
+      "detail": "0 of 672 rows differed between reps"
     },
     {
       "check": "12. blocked cells carry exact command and error",
       "pass": true,
-      "detail": "1 blocked cells recorded"
+      "detail": "2 blocked cells recorded"
     },
     {
       "check": "13. checksums recorded for raw, metrics, reports, plots",
       "pass": true,
-      "detail": "235 files hashed -> metadata/output-checksums.txt"
+      "detail": "1079 files hashed -> metadata/output-checksums.txt"
+    },
+    {
+      "check": "14. no file outside the experiment directory was modified or deleted",
+      "pass": true,
+      "detail": "154 changed paths, 0 outside the experiment dir, 0 deleted"
     }
   ],
   "counts": {
     "lane_a_nll_rows": 9,
-    "lane_b_generation_rows": 78,
-    "lane_b_refusal_rows": 0,
+    "lane_b_generation_rows": 672,
+    "lane_b_refusal_rows": 32,
     "task_dataset": {
       "editing_requests": 22,
       "generation_cases": 21,

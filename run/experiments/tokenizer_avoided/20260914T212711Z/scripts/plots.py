@@ -907,6 +907,65 @@ Language-model surprise on teacher-forced programs with no task prompt. **Not**
 task accuracy; **no training occurred.**
 """))
 
+    # ── 19. 3DOM sigil reversion (the interference signature) ──────────────
+    sig_path = os.path.join(RUN, "metrics", "sigil_reversion.json")
+    if os.path.exists(sig_path):
+        with open(sig_path, encoding="utf-8") as fh:
+            SIG = json.load(fh)
+        rows = [r for r in SIG["summary"] if r["language"] != "identity"]
+        if rows:
+            def draw_sig(back):
+                models = list(dict.fromkeys(r["model"] for r in back))
+                fig, axes = plt.subplots(1, 2, figsize=(11, 4.3), sharey=True)
+                for ax, cond in zip(axes, CONDS):
+                    wbar = 0.26
+                    for i, l in enumerate(["alpha", "beta", "gamma"]):
+                        xs, ys = [], []
+                        for j, m in enumerate(models):
+                            r = next((r for r in back if r["model"] == m
+                                      and r["language"] == l
+                                      and r["condition"] == cond), None)
+                            v = f(r["reversion_rate"]) if r else None
+                            if v is not None:
+                                xs.append(j + (i - 1) * wbar); ys.append(v)
+                        ax.bar(xs, ys, wbar, color=LCOL[l], label=l)
+                    ax.set_xticks(range(len(models)))
+                    ax.set_xticklabels([short(m) for m in models], fontsize=8)
+                    ax.set_title(cond); ax.grid(axis="y", alpha=0.3)
+                    ax.set_ylim(0, 1.0)
+                axes[0].set_ylabel("share of on-language answers\nreverting to the 3DOM '.' sigil")
+                axes[0].legend(fontsize=8)
+                fig.suptitle("Interference signature — 3DOM class-sigil reversion inside selectors")
+                return fig
+
+            made.append(emit("overall", "19_sigil_reversion", rows,
+                ["model", "language", "condition", "n_on_language",
+                 "n_reverted_to_3dom_sigil", "reversion_rate", "n_used_own_sigil"],
+                draw_sig,
+                """# 3DOM class-sigil reversion — the interference signature
+
+**Y axis** the share of *on-language* answers whose quoted selector body uses
+3DOM's `.` class sigil even though this language's class sigil is something
+else. **Denominator** `n_on_language`: generations that used this language's
+selector-entry spelling, i.e. answers that were otherwise written in the right
+language.
+
+**What it isolates.** These are outputs where the model got the program shape,
+the selector-entry token, the chain operator and often the verb right, and then
+reached for `.` inside the selector — the one habit 3DOM and CSS share most
+strongly.
+
+**Why it matters.** The effect is essentially confined to **alpha**, whose class
+sigil is `#` — a plausible-but-wrong alternative that an existing habit can
+override. Beta (`~`) and gamma (`◈`) are alien enough that no competing habit
+fires, and they show ~0% throughout. In the `scaffolded` condition the prompt
+*displays the correct sigil next to every tag*, so reversion there is a
+reversion against explicit, immediately-available instruction.
+
+Descriptive: this counts a specific surface behaviour; it does not by itself
+establish a mechanism.
+"""))
+
     print(f"plots written: {len(made)}")
     for d in made:
         print("  " + os.path.relpath(d, RUN))

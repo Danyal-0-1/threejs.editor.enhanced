@@ -165,3 +165,416 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
   everything-red       alpha     bare        VALID_WRONG    out=19 t=0.438389s
   everything-red       alpha     scaffolded  PARSE_FAIL     out=25 t=0.589677s
   everything-red       beta      bare        VALID_WRONG    out=25 t=0.584928s
+  everything-red       beta      scaffolded  PARSE_FAIL     out=512 t=11.734477s
+  wheels-and-rims      identity  bare        VALID_WRONG    out=37 t=0.408679s
+  wheels-and-rims      identity  scaffolded  PARSE_FAIL     out=512 t=11.692887s
+  wheels-and-rims      alpha     bare        PARSE_FAIL     out=39 t=0.938531s
+  wheels-and-rims      alpha     scaffolded  PARSE_FAIL     out=512 t=11.606317s
+  wheels-and-rims      beta      bare        VALID_WRONG    out=45 t=1.087023s
+  wheels-and-rims      beta      scaffolded  PARSE_FAIL     out=512 t=9.459377s
+  wheels-and-rims      gamma     bare        VALID_WRONG    out=39 t=0.413022s
+  wheels-and-rims      gamma     scaffolded  VALID_WRONG    out=31 t=0.756973s
+  merged-sheets        alpha     bare        VALID_CORRECT  out=21 t=0.507486s
+  merged-sheets        alpha     scaffolded  PARSE_FAIL     out=27 t=0.656957s
+  merged-sheets        beta      bare        VALID_CORRECT  out=26 t=0.636439s
+  merged-sheets        beta      scaffolded  VALID_WRONG    out=32 t=0.783652s
+  merged-sheets        gamma     bare        VALID_CORRECT  out=22 t=0.481408s
+  merged-sheets        gamma     scaffolded  PARSE_FAIL     out=21 t=0.529213s
+  merged-sheets        identity  bare        VALID_CORRECT  out=20 t=0.493883s
+  merged-sheets        identity  scaffolded  VALID_WRONG    out=19 t=0.479337s
+[done] Qwen/Qwen2.5-Coder-0.5B-Instruct: 81 new, 95 resumed
+[resume] 0 rows already complete in /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-1.5B-Instruct/lane_b/gen.jsonl
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  19%|█▊        | 63/338 [00:00<00:00, 563.13it/s]Loading weights:  36%|███▋      | 123/338 [00:00<00:00, 556.85it/s]Loading weights:  54%|█████▍    | 183/338 [00:00<00:00, 565.28it/s]Loading weights:  75%|███████▌  | 254/338 [00:00<00:00, 619.91it/s]Loading weights:  94%|█████████▍| 317/338 [00:00<00:00, 566.83it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 592.32it/s]
+[load] Qwen/Qwen2.5-Coder-1.5B-Instruct load=2.8392s warmup=1.0389s params=1,543,714,304
+  wheels-black         identity  bare        VALID_CORRECT  out=23 t=0.70785s
+  wheels-black         identity  scaffolded  VALID_CORRECT  out=24 t=0.77288s
+  wheels-black         alpha     bare        VALID_CORRECT  out=23 t=0.508367s
+  wheels-black         alpha     scaffolded  VALID_CORRECT  out=23 t=0.72175s
+  wheels-black         beta      bare        VALID_CORRECT  out=29 t=0.45246s
+  wheels-black         beta      scaffolded  VALID_CORRECT  out=29 t=0.512782s
+  wheels-black         gamma     bare        VALID_CORRECT  out=29 t=0.856801s
+  wheels-black         gamma     scaffolded  VALID_CORRECT  out=29 t=0.88271s
+  front-wheels         alpha     bare        VALID_WRONG    out=24 t=0.699392s
+  front-wheels         alpha     scaffolded  VALID_WRONG    out=22 t=0.690727s
+  front-wheels         beta      bare        VALID_WRONG    out=31 t=0.904466s
+  front-wheels         beta      scaffolded  VALID_WRONG    out=28 t=0.846332s
+  front-wheels         gamma     bare        PARSE_FAIL     out=29 t=0.877464s
+  front-wheels         gamma     scaffolded  VALID_WRONG    out=28 t=0.844302s
+  front-wheels         identity  bare        VALID_CORRECT  out=23 t=0.718307s
+  front-wheels         identity  scaffolded  VALID_WRONG    out=26 t=0.824808s
+  dump-bed             beta      bare        VALID_WRONG    out=29 t=0.851788s
+  dump-bed             beta      scaffolded  VALID_WRONG    out=27 t=0.824031s
+  dump-bed             gamma     bare        VALID_WRONG    out=30 t=0.869867s
+  dump-bed             gamma     scaffolded  VALID_CORRECT  out=30 t=0.914671s
+  dump-bed             identity  bare        VALID_WRONG    out=24 t=0.713084s
+  dump-bed             identity  scaffolded  VALID_CORRECT  out=25 t=0.777696s
+  dump-bed             alpha     bare        VALID_WRONG    out=24 t=0.720633s
+  dump-bed             alpha     scaffolded  VALID_CORRECT  out=24 t=0.763931s
+  grille               gamma     bare        VALID_CORRECT  out=28 t=0.68909s
+  grille               gamma     scaffolded  VALID_CORRECT  out=28 t=0.890515s
+  grille               identity  bare        VALID_CORRECT  out=22 t=0.337411s
+  grille               identity  scaffolded  VALID_CORRECT  out=23 t=0.744776s
+  grille               alpha     bare        VALID_WRONG    out=23 t=0.368585s
+  grille               alpha     scaffolded  VALID_CORRECT  out=21 t=0.375226s
+  grille               beta      bare        VALID_WRONG    out=29 t=0.781849s
+  grille               beta      scaffolded  VALID_WRONG    out=29 t=0.900865s
+  bigger               identity  bare        VALID_WRONG    out=16 t=0.453407s
+  bigger               identity  scaffolded  VALID_WRONG    out=19 t=0.375524s
+  bigger               alpha     bare        VALID_WRONG    out=19 t=0.33018s
+  bigger               alpha     scaffolded  VALID_WRONG    out=19 t=0.378689s
+  bigger               beta      bare        VALID_WRONG    out=24 t=0.725901s
+  bigger               beta      scaffolded  VALID_WRONG    out=24 t=0.770811s
+  bigger               gamma     bare        PARSE_FAIL     out=26 t=0.805204s
+  bigger               gamma     scaffolded  VALID_WRONG    out=27 t=0.856718s
+  spin-wheels          alpha     bare        VALID_WRONG    out=25 t=0.753882s
+  spin-wheels          alpha     scaffolded  VALID_WRONG    out=22 t=0.711431s
+  spin-wheels          beta      bare        VALID_WRONG    out=27 t=0.822372s
+  spin-wheels          beta      scaffolded  VALID_WRONG    out=27 t=0.865082s
+  spin-wheels          gamma     bare        VALID_WRONG    out=31 t=0.918278s
+  spin-wheels          gamma     scaffolded  VALID_WRONG    out=28 t=0.488553s
+  spin-wheels          identity  bare        VALID_WRONG    out=24 t=0.441796s
+  spin-wheels          identity  scaffolded  VALID_WRONG    out=24 t=0.467543s
+  lift                 beta      bare        VALID_WRONG    out=30 t=0.894152s
+  lift                 beta      scaffolded  VALID_CORRECT  out=27 t=0.871031s
+  lift                 gamma     bare        VALID_WRONG    out=30 t=0.904646s
+  lift                 gamma     scaffolded  VALID_CORRECT  out=39 t=1.19112s
+  lift                 identity  bare        VALID_CORRECT  out=25 t=0.749726s
+  lift                 identity  scaffolded  VALID_CORRECT  out=26 t=0.559259s
+  lift                 alpha     bare        VALID_WRONG    out=20 t=0.613779s
+  lift                 alpha     scaffolded  VALID_WRONG    out=20 t=0.453742s
+  delete-front         gamma     bare        PARSE_FAIL     out=23 t=0.705502s
+  delete-front         gamma     scaffolded  VALID_WRONG    out=22 t=0.730998s
+  delete-front         identity  bare        VALID_CORRECT  out=17 t=0.537384s
+  delete-front         identity  scaffolded  VALID_WRONG    out=19 t=0.631447s
+  delete-front         alpha     bare        VALID_WRONG    out=18 t=0.539778s
+  delete-front         alpha     scaffolded  VALID_WRONG    out=16 t=0.553461s
+  delete-front         beta      bare        VALID_WRONG    out=22 t=0.672126s
+  delete-front         beta      scaffolded  VALID_WRONG    out=21 t=0.690147s
+  two-colors           identity  bare        VALID_CORRECT  out=39 t=1.131305s
+  two-colors           identity  scaffolded  VALID_CORRECT  out=40 t=1.217803s
+  two-colors           alpha     bare        VALID_CORRECT  out=36 t=1.0625s
+  two-colors           alpha     scaffolded  VALID_WRONG    out=37 t=1.129639s
+  two-colors           beta      bare        VALID_CORRECT  out=45 t=1.308082s
+  two-colors           beta      scaffolded  VALID_WRONG    out=58 t=1.708935s
+  two-colors           gamma     bare        VALID_WRONG    out=47 t=1.266282s
+  two-colors           gamma     scaffolded  VALID_WRONG    out=48 t=1.280041s
+  three-ops            alpha     bare        PARSE_FAIL     out=33 t=0.517579s
+  three-ops            alpha     scaffolded  PARSE_FAIL     out=31 t=0.689325s
+  three-ops            beta      bare        VALID_WRONG    out=52 t=1.529243s
+  three-ops            beta      scaffolded  VALID_WRONG    out=57 t=1.553773s
+  three-ops            gamma     bare        VALID_WRONG    out=60 t=1.347989s
+  three-ops            gamma     scaffolded  VALID_WRONG    out=61 t=1.295359s
+  three-ops            identity  bare        VALID_WRONG    out=49 t=1.322757s
+  three-ops            identity  scaffolded  VALID_WRONG    out=49 t=0.79389s
+  no-oversplit         beta      bare        VALID_CORRECT  out=29 t=0.877268s
+  no-oversplit         beta      scaffolded  VALID_CORRECT  out=29 t=0.934133s
+  no-oversplit         gamma     bare        VALID_CORRECT  out=29 t=0.872368s
+  no-oversplit         gamma     scaffolded  VALID_CORRECT  out=29 t=0.778659s
+  no-oversplit         identity  bare        VALID_CORRECT  out=23 t=0.419522s
+  no-oversplit         identity  scaffolded  VALID_CORRECT  out=24 t=0.671128s
+  no-oversplit         alpha     bare        VALID_CORRECT  out=23 t=0.664421s
+  no-oversplit         alpha     scaffolded  VALID_CORRECT  out=23 t=0.755848s
+  whole-truck          gamma     bare        PARSE_FAIL     out=28 t=0.856405s
+  whole-truck          gamma     scaffolded  VALID_CORRECT  out=28 t=0.762732s
+  whole-truck          identity  bare        VALID_WRONG    out=21 t=0.646187s
+  whole-truck          identity  scaffolded  VALID_CORRECT  out=23 t=0.54667s
+  whole-truck          alpha     bare        PARSE_FAIL     out=20 t=0.580012s
+  whole-truck          alpha     scaffolded  VALID_CORRECT  out=22 t=0.672001s
+  whole-truck          beta      bare        VALID_WRONG    out=27 t=0.777935s
+  whole-truck          beta      scaffolded  VALID_WRONG    out=26 t=0.796524s
+  wheels-and-grille    identity  bare        VALID_WRONG    out=36 t=1.012927s
+  wheels-and-grille    identity  scaffolded  VALID_WRONG    out=36 t=0.710477s
+  wheels-and-grille    alpha     bare        VALID_WRONG    out=37 t=1.051238s
+  wheels-and-grille    alpha     scaffolded  VALID_WRONG    out=36 t=1.0516s
+  wheels-and-grille    beta      bare        VALID_WRONG    out=46 t=1.290324s
+  wheels-and-grille    beta      scaffolded  VALID_WRONG    out=58 t=1.640914s
+  wheels-and-grille    gamma     bare        VALID_WRONG    out=47 t=0.825012s
+  wheels-and-grille    gamma     scaffolded  VALID_WRONG    out=47 t=0.944573s
+  bed-and-lights       alpha     bare        PARSE_FAIL     out=27 t=0.747219s
+  bed-and-lights       alpha     scaffolded  VALID_CORRECT  out=31 t=0.812346s
+  bed-and-lights       beta      bare        VALID_WRONG    out=38 t=1.113984s
+  bed-and-lights       beta      scaffolded  VALID_CORRECT  out=41 t=1.223396s
+  bed-and-lights       gamma     bare        VALID_WRONG    out=41 t=1.189859s
+  bed-and-lights       gamma     scaffolded  VALID_WRONG    out=44 t=1.332594s
+  bed-and-lights       identity  bare        PARSE_FAIL     out=32 t=0.942328s
+  bed-and-lights       identity  scaffolded  VALID_CORRECT  out=33 t=1.010545s
+  spin-and-color       beta      bare        VALID_WRONG    out=46 t=1.333929s
+  spin-and-color       beta      scaffolded  VALID_WRONG    out=48 t=1.431773s
+  spin-and-color       gamma     bare        VALID_WRONG    out=47 t=1.364558s
+  spin-and-color       gamma     scaffolded  VALID_WRONG    out=45 t=1.350528s
+  spin-and-color       identity  bare        VALID_WRONG    out=41 t=1.190519s
+  spin-and-color       identity  scaffolded  VALID_WRONG    out=42 t=1.264305s
+  spin-and-color       alpha     bare        PARSE_FAIL     out=45 t=1.299483s
+  spin-and-color       alpha     scaffolded  PARSE_FAIL     out=35 t=1.0699s
+  lift-and-paint       gamma     bare        PARSE_FAIL     out=38 t=1.120395s
+  lift-and-paint       gamma     scaffolded  PARSE_FAIL     out=38 t=1.165285s
+  lift-and-paint       identity  bare        VALID_CORRECT  out=39 t=1.029867s
+  lift-and-paint       identity  scaffolded  VALID_CORRECT  out=39 t=0.835567s
+  lift-and-paint       alpha     bare        VALID_WRONG    out=31 t=0.54406s
+  lift-and-paint       alpha     scaffolded  VALID_WRONG    out=31 t=0.801043s
+  lift-and-paint       beta      bare        VALID_WRONG    out=39 t=0.713895s
+  lift-and-paint       beta      scaffolded  VALID_WRONG    out=46 t=1.311896s
+  color-move-delete    identity  bare        PARSE_FAIL     out=47 t=1.10801s
+  color-move-delete    identity  scaffolded  VALID_WRONG    out=50 t=1.201014s
+  color-move-delete    alpha     bare        PARSE_FAIL     out=35 t=1.049581s
+  color-move-delete    alpha     scaffolded  VALID_WRONG    out=88 t=2.517255s
+  color-move-delete    beta      bare        PARSE_FAIL     out=53 t=1.535414s
+  color-move-delete    beta      scaffolded  PARSE_FAIL     out=58 t=1.341936s
+  color-move-delete    gamma     bare        PARSE_FAIL     out=88 t=2.039319s
+  color-move-delete    gamma     scaffolded  VALID_WRONG    out=87 t=2.535591s
+  all-four-wheels      alpha     bare        PARSE_FAIL     out=23 t=0.688348s
+  all-four-wheels      alpha     scaffolded  VALID_CORRECT  out=23 t=0.744961s
+  all-four-wheels      beta      bare        VALID_CORRECT  out=29 t=0.810636s
+  all-four-wheels      beta      scaffolded  VALID_CORRECT  out=29 t=0.656664s
+  all-four-wheels      gamma     bare        VALID_CORRECT  out=29 t=0.873641s
+  all-four-wheels      gamma     scaffolded  VALID_CORRECT  out=29 t=0.921463s
+  all-four-wheels      identity  bare        VALID_CORRECT  out=23 t=0.680864s
+  all-four-wheels      identity  scaffolded  VALID_CORRECT  out=24 t=0.464325s
+  both-lights          beta      bare        PARSE_FAIL     out=29 t=0.623637s
+  both-lights          beta      scaffolded  VALID_CORRECT  out=29 t=0.97731s
+  both-lights          gamma     bare        VALID_WRONG    out=29 t=0.69262s
+  both-lights          gamma     scaffolded  VALID_CORRECT  out=29 t=0.79395s
+  both-lights          identity  bare        VALID_WRONG    out=23 t=0.388984s
+  both-lights          identity  scaffolded  VALID_CORRECT  out=24 t=0.433416s
+  both-lights          alpha     bare        VALID_WRONG    out=37 t=0.578808s
+  both-lights          alpha     scaffolded  VALID_CORRECT  out=23 t=0.703226s
+  everything-red       gamma     bare        PARSE_FAIL     out=28 t=0.857303s
+  everything-red       gamma     scaffolded  VALID_WRONG    out=28 t=0.788523s
+  everything-red       identity  bare        VALID_WRONG    out=21 t=0.43324s
+  everything-red       identity  scaffolded  VALID_WRONG    out=22 t=0.444028s
+  everything-red       alpha     bare        VALID_WRONG    out=21 t=0.642824s
+  everything-red       alpha     scaffolded  PARSE_FAIL     out=28 t=0.883173s
+  everything-red       beta      bare        VALID_WRONG    out=29 t=0.863923s
+  everything-red       beta      scaffolded  VALID_WRONG    out=29 t=0.912429s
+  wheels-and-rims      identity  bare        PARSE_FAIL     out=25 t=0.747443s
+  wheels-and-rims      identity  scaffolded  VALID_CORRECT  out=25 t=0.790746s
+  wheels-and-rims      alpha     bare        VALID_WRONG    out=37 t=0.971405s
+  wheels-and-rims      alpha     scaffolded  PARSE_FAIL     out=27 t=0.852442s
+  wheels-and-rims      beta      bare        VALID_WRONG    out=44 t=1.2713s
+  wheels-and-rims      beta      scaffolded  VALID_WRONG    out=28 t=0.877211s
+  wheels-and-rims      gamma     bare        VALID_WRONG    out=48 t=1.393068s
+  wheels-and-rims      gamma     scaffolded  VALID_WRONG    out=33 t=1.030082s
+  merged-sheets        alpha     bare        PARSE_FAIL     out=23 t=0.697507s
+  merged-sheets        alpha     scaffolded  VALID_WRONG    out=22 t=0.678909s
+  merged-sheets        beta      bare        VALID_CORRECT  out=29 t=0.881583s
+  merged-sheets        beta      scaffolded  VALID_WRONG    out=29 t=0.87568s
+  merged-sheets        gamma     bare        VALID_CORRECT  out=29 t=0.876193s
+  merged-sheets        gamma     scaffolded  VALID_WRONG    out=28 t=0.748661s
+  merged-sheets        identity  bare        VALID_CORRECT  out=24 t=0.721385s
+  merged-sheets        identity  scaffolded  VALID_WRONG    out=25 t=0.750624s
+[done] Qwen/Qwen2.5-Coder-1.5B-Instruct: 176 new, 0 resumed
+[resume] 0 rows already complete in /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-3B-Instruct/lane_b/gen.jsonl
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:   9%|▉         | 39/434 [00:00<00:01, 310.44it/s]Loading weights:  20%|█▉        | 85/434 [00:00<00:00, 389.73it/s]Loading weights:  29%|██▉       | 125/434 [00:00<00:00, 351.01it/s]Loading weights:  39%|███▉      | 171/434 [00:00<00:00, 361.62it/s]Loading weights:  50%|█████     | 219/434 [00:00<00:00, 375.27it/s]Loading weights:  59%|█████▉    | 257/434 [00:00<00:00, 374.68it/s]Loading weights:  70%|██████▉   | 303/434 [00:00<00:00, 374.34it/s]Loading weights:  79%|███████▊  | 341/434 [00:00<00:00, 371.73it/s]Loading weights:  87%|████████▋ | 379/434 [00:01<00:00, 370.74it/s]Loading weights:  97%|█████████▋| 423/434 [00:01<00:00, 364.92it/s]Loading weights: 100%|██████████| 434/434 [00:01<00:00, 375.64it/s]
+[load] Qwen/Qwen2.5-Coder-3B-Instruct load=4.5286s warmup=1.0394s params=3,085,938,688
+  wheels-black         identity  bare        VALID_CORRECT  out=22 t=0.917616s
+  wheels-black         identity  scaffolded  VALID_CORRECT  out=22 t=0.997023s
+  wheels-black         alpha     bare        VALID_CORRECT  out=22 t=0.915467s
+  wheels-black         alpha     scaffolded  VALID_CORRECT  out=22 t=1.010474s
+  wheels-black         beta      bare        VALID_CORRECT  out=28 t=1.136426s
+  wheels-black         beta      scaffolded  VALID_CORRECT  out=28 t=1.219609s
+  wheels-black         gamma     bare        VALID_CORRECT  out=28 t=1.141937s
+  wheels-black         gamma     scaffolded  VALID_CORRECT  out=28 t=1.243625s
+  front-wheels         alpha     bare        PARSE_FAIL     out=21 t=0.887222s
+  front-wheels         alpha     scaffolded  VALID_CORRECT  out=23 t=1.066784s
+  front-wheels         beta      bare        VALID_CORRECT  out=29 t=1.178324s
+  front-wheels         beta      scaffolded  VALID_CORRECT  out=29 t=1.26656s
+  front-wheels         gamma     bare        VALID_WRONG    out=28 t=1.042423s
+  front-wheels         gamma     scaffolded  VALID_CORRECT  out=29 t=1.160899s
+  front-wheels         identity  bare        VALID_WRONG    out=22 t=0.911591s
+  front-wheels         identity  scaffolded  VALID_CORRECT  out=23 t=1.060469s
+  dump-bed             beta      bare        VALID_WRONG    out=29 t=1.182959s
+  dump-bed             beta      scaffolded  VALID_CORRECT  out=29 t=1.263461s
+  dump-bed             gamma     bare        VALID_WRONG    out=29 t=1.176496s
+  dump-bed             gamma     scaffolded  VALID_CORRECT  out=29 t=1.28149s
+  dump-bed             identity  bare        VALID_WRONG    out=23 t=0.941315s
+  dump-bed             identity  scaffolded  VALID_CORRECT  out=23 t=1.020276s
+  dump-bed             alpha     bare        VALID_WRONG    out=23 t=0.946212s
+  dump-bed             alpha     scaffolded  VALID_CORRECT  out=23 t=1.05835s
+  grille               gamma     bare        VALID_CORRECT  out=27 t=1.125911s
+  grille               gamma     scaffolded  VALID_CORRECT  out=27 t=1.233764s
+  grille               identity  bare        VALID_CORRECT  out=21 t=0.88214s
+  grille               identity  scaffolded  VALID_CORRECT  out=21 t=0.985496s
+  grille               alpha     bare        VALID_CORRECT  out=21 t=0.826225s
+  grille               alpha     scaffolded  VALID_CORRECT  out=21 t=0.976788s
+  grille               beta      bare        VALID_CORRECT  out=28 t=0.875556s
+  grille               beta      scaffolded  VALID_CORRECT  out=27 t=1.199006s
+  bigger               identity  bare        VALID_WRONG    out=15 t=0.663085s
+  bigger               identity  scaffolded  VALID_WRONG    out=17 t=0.818046s
+  bigger               alpha     bare        VALID_WRONG    out=22 t=0.921061s
+  bigger               alpha     scaffolded  VALID_WRONG    out=17 t=0.834172s
+  bigger               beta      bare        VALID_WRONG    out=23 t=0.962252s
+  bigger               beta      scaffolded  VALID_CORRECT  out=22 t=0.984388s
+  bigger               gamma     bare        VALID_WRONG    out=23 t=1.059725s
+  bigger               gamma     scaffolded  VALID_CORRECT  out=23 t=0.766682s
+  spin-wheels          alpha     bare        VALID_WRONG    out=15 t=0.445461s
+  spin-wheels          alpha     scaffolded  VALID_WRONG    out=25 t=1.336771s
+  spin-wheels          beta      bare        VALID_CORRECT  out=28 t=1.248308s
+  spin-wheels          beta      scaffolded  VALID_CORRECT  out=31 t=1.46498s
+  spin-wheels          gamma     bare        VALID_WRONG    out=29 t=1.55719s
+  spin-wheels          gamma     scaffolded  VALID_WRONG    out=29 t=1.501835s
+  spin-wheels          identity  bare        VALID_CORRECT  out=22 t=0.932554s
+  spin-wheels          identity  scaffolded  VALID_CORRECT  out=22 t=0.783724s
+  lift                 beta      bare        VALID_CORRECT  out=26 t=1.002583s
+  lift                 beta      scaffolded  VALID_CORRECT  out=26 t=0.842884s
+  lift                 gamma     bare        VALID_CORRECT  out=27 t=0.747346s
+  lift                 gamma     scaffolded  VALID_CORRECT  out=29 t=0.868155s
+  lift                 identity  bare        VALID_CORRECT  out=22 t=0.643746s
+  lift                 identity  scaffolded  VALID_CORRECT  out=22 t=0.748968s
+  lift                 alpha     bare        VALID_WRONG    out=19 t=0.595031s
+  lift                 alpha     scaffolded  VALID_WRONG    out=23 t=0.777608s
+  delete-front         gamma     bare        PARSE_FAIL     out=21 t=0.60939s
+  delete-front         gamma     scaffolded  PARSE_FAIL     out=20 t=0.824971s
+  delete-front         identity  bare        VALID_WRONG    out=15 t=0.497898s
+  delete-front         identity  scaffolded  VALID_CORRECT  out=16 t=0.913137s
+  delete-front         alpha     bare        VALID_WRONG    out=16 t=0.510407s
+  delete-front         alpha     scaffolded  VALID_WRONG    out=15 t=0.586559s
+  delete-front         beta      bare        VALID_CORRECT  out=22 t=0.995102s
+  delete-front         beta      scaffolded  VALID_CORRECT  out=22 t=0.739568s
+  two-colors           identity  bare        VALID_CORRECT  out=36 t=0.887372s
+  two-colors           identity  scaffolded  VALID_CORRECT  out=36 t=1.033996s
+  two-colors           alpha     bare        PARSE_FAIL     out=35 t=0.939748s
+  two-colors           alpha     scaffolded  VALID_CORRECT  out=35 t=1.104623s
+  two-colors           beta      bare        VALID_CORRECT  out=44 t=1.399931s
+  two-colors           beta      scaffolded  VALID_CORRECT  out=44 t=1.247428s
+  two-colors           gamma     bare        VALID_CORRECT  out=46 t=1.755105s
+  two-colors           gamma     scaffolded  VALID_CORRECT  out=46 t=1.778208s
+  three-ops            alpha     bare        VALID_WRONG    out=42 t=1.584125s
+  three-ops            alpha     scaffolded  VALID_WRONG    out=45 t=1.76099s
+  three-ops            beta      bare        VALID_CORRECT  out=54 t=2.027845s
+  three-ops            beta      scaffolded  VALID_CORRECT  out=61 t=2.244268s
+  three-ops            gamma     bare        PARSE_FAIL     out=59 t=2.271421s
+  three-ops            gamma     scaffolded  PARSE_FAIL     out=59 t=2.335136s
+  three-ops            identity  bare        VALID_CORRECT  out=44 t=1.646094s
+  three-ops            identity  scaffolded  VALID_CORRECT  out=51 t=2.053014s
+  no-oversplit         beta      bare        VALID_CORRECT  out=28 t=1.133466s
+  no-oversplit         beta      scaffolded  VALID_CORRECT  out=28 t=1.242264s
+  no-oversplit         gamma     bare        VALID_CORRECT  out=28 t=0.996595s
+  no-oversplit         gamma     scaffolded  VALID_CORRECT  out=28 t=1.076225s
+  no-oversplit         identity  bare        VALID_CORRECT  out=22 t=0.895032s
+  no-oversplit         identity  scaffolded  VALID_CORRECT  out=22 t=0.98953s
+  no-oversplit         alpha     bare        VALID_CORRECT  out=22 t=0.876048s
+  no-oversplit         alpha     scaffolded  VALID_CORRECT  out=22 t=0.972822s
+  whole-truck          gamma     bare        VALID_WRONG    out=27 t=1.115629s
+  whole-truck          gamma     scaffolded  VALID_CORRECT  out=27 t=1.18575s
+  whole-truck          identity  bare        VALID_WRONG    out=20 t=0.857981s
+  whole-truck          identity  scaffolded  VALID_CORRECT  out=21 t=0.945747s
+  whole-truck          alpha     bare        PARSE_FAIL     out=21 t=0.878186s
+  whole-truck          alpha     scaffolded  VALID_WRONG    out=20 t=0.909199s
+  whole-truck          beta      bare        VALID_CORRECT  out=27 t=1.10191s
+  whole-truck          beta      scaffolded  VALID_CORRECT  out=27 t=1.263094s
+  wheels-and-grille    identity  bare        VALID_CORRECT  out=36 t=1.488161s
+  wheels-and-grille    identity  scaffolded  VALID_CORRECT  out=39 t=1.648297s
+  wheels-and-grille    alpha     bare        VALID_CORRECT  out=35 t=1.137839s
+  wheels-and-grille    alpha     scaffolded  VALID_CORRECT  out=35 t=1.495418s
+  wheels-and-grille    beta      bare        VALID_CORRECT  out=44 t=1.744227s
+  wheels-and-grille    beta      scaffolded  VALID_CORRECT  out=47 t=1.893662s
+  wheels-and-grille    gamma     bare        VALID_CORRECT  out=46 t=1.773571s
+  wheels-and-grille    gamma     scaffolded  VALID_CORRECT  out=46 t=1.870649s
+  bed-and-lights       alpha     bare        PARSE_FAIL     out=29 t=1.017973s
+  bed-and-lights       alpha     scaffolded  VALID_CORRECT  out=29 t=1.234729s
+  bed-and-lights       beta      bare        VALID_WRONG    out=38 t=1.326697s
+  bed-and-lights       beta      scaffolded  VALID_CORRECT  out=37 t=1.187315s
+  bed-and-lights       gamma     bare        PARSE_FAIL     out=40 t=1.589546s
+  bed-and-lights       gamma     scaffolded  PARSE_FAIL     out=39 t=1.665019s
+  bed-and-lights       identity  bare        PARSE_FAIL     out=29 t=1.225594s
+  bed-and-lights       identity  scaffolded  VALID_CORRECT  out=29 t=1.356085s
+  spin-and-color       beta      bare        VALID_CORRECT  out=45 t=1.726292s
+  spin-and-color       beta      scaffolded  VALID_CORRECT  out=45 t=1.794325s
+  spin-and-color       gamma     bare        VALID_WRONG    out=48 t=1.812104s
+  spin-and-color       gamma     scaffolded  VALID_WRONG    out=48 t=1.963731s
+  spin-and-color       identity  bare        VALID_CORRECT  out=37 t=1.423897s
+  spin-and-color       identity  scaffolded  VALID_CORRECT  out=37 t=1.540835s
+  spin-and-color       alpha     bare        VALID_WRONG    out=30 t=1.194513s
+  spin-and-color       alpha     scaffolded  VALID_WRONG    out=30 t=1.271499s
+  lift-and-paint       gamma     bare        VALID_CORRECT  out=37 t=1.371506s
+  lift-and-paint       gamma     scaffolded  VALID_CORRECT  out=37 t=1.484211s
+  lift-and-paint       identity  bare        VALID_CORRECT  out=29 t=1.139152s
+  lift-and-paint       identity  scaffolded  VALID_CORRECT  out=29 t=1.247021s
+  lift-and-paint       alpha     bare        VALID_WRONG    out=29 t=1.131682s
+  lift-and-paint       alpha     scaffolded  VALID_WRONG    out=34 t=1.397138s
+  lift-and-paint       beta      bare        VALID_CORRECT  out=37 t=1.459961s
+  lift-and-paint       beta      scaffolded  VALID_CORRECT  out=37 t=1.586875s
+  color-move-delete    identity  bare        VALID_WRONG    out=42 t=1.677173s
+  color-move-delete    identity  scaffolded  VALID_WRONG    out=45 t=1.817443s
+  color-move-delete    alpha     bare        PARSE_FAIL     out=47 t=1.796424s
+  color-move-delete    alpha     scaffolded  VALID_WRONG    out=48 t=1.904293s
+  color-move-delete    beta      bare        VALID_WRONG    out=52 t=1.808753s
+  color-move-delete    beta      scaffolded  VALID_WRONG    out=55 t=2.129002s
+  color-move-delete    gamma     bare        PARSE_FAIL     out=58 t=2.374973s
+  color-move-delete    gamma     scaffolded  VALID_WRONG    out=57 t=2.384617s
+  all-four-wheels      alpha     bare        PARSE_FAIL     out=22 t=0.891127s
+  all-four-wheels      alpha     scaffolded  VALID_WRONG    out=40 t=1.66321s
+  all-four-wheels      beta      bare        VALID_CORRECT  out=28 t=1.173657s
+  all-four-wheels      beta      scaffolded  VALID_CORRECT  out=28 t=1.27695s
+  all-four-wheels      gamma     bare        VALID_CORRECT  out=28 t=1.188921s
+  all-four-wheels      gamma     scaffolded  VALID_CORRECT  out=28 t=1.212622s
+  all-four-wheels      identity  bare        VALID_CORRECT  out=22 t=0.873552s
+  all-four-wheels      identity  scaffolded  VALID_CORRECT  out=22 t=0.971296s
+  both-lights          beta      bare        VALID_WRONG    out=28 t=1.030617s
+  both-lights          beta      scaffolded  VALID_CORRECT  out=28 t=1.186736s
+  both-lights          gamma     bare        VALID_WRONG    out=28 t=1.094072s
+  both-lights          gamma     scaffolded  VALID_CORRECT  out=28 t=1.16978s
+  both-lights          identity  bare        VALID_CORRECT  out=22 t=0.878967s
+  both-lights          identity  scaffolded  VALID_CORRECT  out=22 t=0.954265s
+  both-lights          alpha     bare        VALID_WRONG    out=22 t=0.925278s
+  both-lights          alpha     scaffolded  VALID_CORRECT  out=22 t=0.985745s
+  everything-red       gamma     bare        VALID_WRONG    out=27 t=1.109692s
+  everything-red       gamma     scaffolded  VALID_WRONG    out=27 t=1.209222s
+  everything-red       identity  bare        VALID_WRONG    out=20 t=0.874849s
+  everything-red       identity  scaffolded  VALID_WRONG    out=20 t=0.875516s
+  everything-red       alpha     bare        PARSE_FAIL     out=20 t=0.838018s
+  everything-red       alpha     scaffolded  PARSE_FAIL     out=20 t=0.914625s
+  everything-red       beta      bare        VALID_WRONG    out=27 t=1.0998s
+  everything-red       beta      scaffolded  PARSE_FAIL     out=27 t=1.356206s
+  wheels-and-rims      identity  bare        VALID_WRONG    out=31 t=1.499821s
+  wheels-and-rims      identity  scaffolded  VALID_WRONG    out=21 t=1.056919s
+  wheels-and-rims      alpha     bare        PARSE_FAIL     out=38 t=1.492598s
+  wheels-and-rims      alpha     scaffolded  VALID_WRONG    out=23 t=1.017013s
+  wheels-and-rims      beta      bare        VALID_WRONG    out=29 t=1.187375s
+  wheels-and-rims      beta      scaffolded  VALID_WRONG    out=27 t=1.136134s
+  wheels-and-rims      gamma     bare        VALID_WRONG    out=27 t=1.099277s
+  wheels-and-rims      gamma     scaffolded  VALID_WRONG    out=25 t=1.152657s
+  merged-sheets        alpha     bare        PARSE_FAIL     out=22 t=0.909841s
+  merged-sheets        alpha     scaffolded  VALID_WRONG    out=21 t=0.873699s
+  merged-sheets        beta      bare        VALID_CORRECT  out=28 t=1.151891s
+  merged-sheets        beta      scaffolded  VALID_WRONG    out=27 t=1.097562s
+  merged-sheets        gamma     bare        VALID_CORRECT  out=28 t=1.14968s
+  merged-sheets        gamma     scaffolded  VALID_WRONG    out=27 t=1.14891s
+  merged-sheets        identity  bare        VALID_CORRECT  out=22 t=0.900474s
+  merged-sheets        identity  scaffolded  VALID_WRONG    out=21 t=0.85958s
+[done] Qwen/Qwen2.5-Coder-3B-Instruct: 176 new, 0 resumed
+[resume] 0 rows already complete in /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/raw/Qwen__Qwen2.5-Coder-7B-Instruct/lane_b/gen.jsonl
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<03:06,  1.82it/s]Loading weights:  12%|█▏        | 40/339 [00:00<00:03, 81.73it/s]Loading weights:  19%|█▊        | 63/339 [00:00<00:02, 113.61it/s]Loading weights:  25%|██▌       | 86/339 [00:00<00:02, 123.15it/s]Loading weights:  31%|███▏      | 106/339 [00:01<00:02, 108.26it/s]Loading weights:  36%|███▌      | 122/339 [00:01<00:01, 112.06it/s]Loading weights:  40%|████      | 137/339 [00:01<00:02, 90.10it/s] Loading weights:  44%|████▍     | 149/339 [00:01<00:02, 79.82it/s]Loading weights:  51%|█████     | 172/339 [00:01<00:01, 95.44it/s]Loading weights:  55%|█████▍    | 185/339 [00:02<00:01, 101.24it/s]Loading weights:  58%|█████▊    | 198/339 [00:02<00:01, 107.23it/s]Loading weights:  65%|██████▍   | 220/339 [00:02<00:00, 119.17it/s]Loading weights:  69%|██████▊   | 233/339 [00:02<00:00, 119.23it/s]Loading weights:  73%|███████▎  | 246/339 [00:02<00:00, 117.17it/s]Loading weights:  79%|███████▉  | 268/339 [00:02<00:00, 120.44it/s]Loading weights:  83%|████████▎ | 281/339 [00:02<00:00, 116.68it/s]Loading weights:  90%|████████▉ | 304/339 [00:02<00:00, 125.32it/s]Loading weights:  94%|█████████▎| 317/339 [00:03<00:00, 124.42it/s]Loading weights: 100%|██████████| 339/339 [00:03<00:00, 108.19it/s]
+Traceback (most recent call last):
+  File "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py", line 265, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/experiments/tokenizer_avoided/20260914T212711Z/scripts/lane_b.py", line 116, in main
+    model.generate(**warm, max_new_tokens=8, do_sample=False,
+  File "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/lib/python3.12/site-packages/transformers/generation/utils.py", line 2524, in generate
+    self._prepare_special_tokens(
+  File "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/lib/python3.12/site-packages/transformers/generation/utils.py", line 2094, in _prepare_special_tokens
+    if eos_token_tensor is not None and torch.isin(eos_token_tensor, pad_token_tensor).any():
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: out of memory
+Search for `cudaErrorMemoryAllocation' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights:  83%|████████▎ | 242/290 [00:00<00:00, 2418.87it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 2098.39it/s]
+[W914 15:34:45.871906186 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 819986432 bytes (free: 684851200, total: 16760569856).
+[done] Qwen/Qwen2.5-Coder-0.5B-Instruct: 168 rows
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  47%|████▋     | 160/338 [00:00<00:00, 1577.40it/s]Loading weights:  94%|█████████▍| 318/338 [00:00<00:00, 1501.42it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 1558.96it/s]
+[W914 15:35:05.480798185 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 817889280 bytes (free: 25100288, total: 16760569856).
+[done] Qwen/Qwen2.5-Coder-1.5B-Instruct: 168 rows
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:  24%|██▍       | 105/434 [00:00<00:00, 1038.09it/s]Loading weights:  48%|████▊     | 209/434 [00:00<00:00, 1011.55it/s]Loading weights:  72%|███████▏  | 311/434 [00:00<00:00, 955.81it/s] Loading weights:  95%|█████████▍| 411/434 [00:00<00:00, 959.67it/s]Loading weights: 100%|██████████| 434/434 [00:00<00:00, 988.60it/s]
+[W914 15:35:38.237360772 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 796917760 bytes (free: 104857600, total: 16760569856).
+[W914 15:35:57.051173985 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 819986432 bytes (free: 209715200, total: 16760569856).
+[done] Qwen/Qwen2.5-Coder-3B-Instruct: 168 rows

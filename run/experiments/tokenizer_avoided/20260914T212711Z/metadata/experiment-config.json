@@ -1,0 +1,68 @@
+{
+  "run_id": "20260914T212711Z",
+  "study": "exploratory fertility-unmatched model evaluation",
+  "fertility_gate": "WAIVED (Experiment 01 band [0.95, 1.05]); fertility still measured and treated as a confounding variable",
+  "languages": [
+    "identity",
+    "alpha",
+    "beta",
+    "gamma"
+  ],
+  "support_conditions": [
+    "bare",
+    "scaffolded"
+  ],
+  "lane_a": {
+    "checkpoints": "base",
+    "precision": "fp32",
+    "device": "cuda (7B: cpu, separately labelled)",
+    "corpus": "62 paired positive programs",
+    "neutral_prefix": "",
+    "scoring": "teacher-forced causal LM",
+    "training": "NONE \u2014 no training occurred"
+  },
+  "lane_b": {
+    "checkpoints": "instruct",
+    "precision": "fp16",
+    "device": "cuda",
+    "decoding": "greedy, do_sample=False, num_beams=1, batch_size=1",
+    "max_new_tokens": 512,
+    "completions_per_case": 1,
+    "reps": {
+      "0.5B": 3,
+      "1.5B": 3,
+      "3B": 1,
+      "7B": 1,
+      "note": "protocol deviation D1; greedy decoding verified deterministic (0/672 rows differed)"
+    },
+    "retries": "none",
+    "repair": "none",
+    "language_order": "Latin square rotated by case index"
+  },
+  "seed": 20260910,
+  "bootstrap_resamples": 10000,
+  "statistics": [
+    "Wilson 95%",
+    "paired item-level bootstrap",
+    "exact McNemar",
+    "Holm within model/condition family"
+  ],
+  "task_dataset": {
+    "editing_requests": 22,
+    "generation_cases": 21,
+    "graceful_refusal_cases": 1,
+    "labeling_cases": 9,
+    "multi_op_cases": 13
+  },
+  "hashes": {
+    "task_dataset_sha256": "b311ffd2dbb039b351178d3a1ecab032e0f72e010a77d69ace981da426bee904",
+    "lane_a_corpus_sha256": "38bbbac1a335d2541594f4a3f11157daadd6c724350ebd0ffba88142da33339d",
+    "note": "the Lane A corpus hash is IDENTICAL to Experiment 01's archived hash"
+  },
+  "secondary_analyses": [
+    "conditional task loss",
+    "labeling control (task 4)",
+    "sigil reversion",
+    "truncation sensitivity (D2)"
+  ]
+}

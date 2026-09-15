@@ -1,0 +1,94 @@
+<|im_start|>system
+You write programs in the scene-edit language described below.
+This language is defined ONLY by this specification. Do not assume it
+behaves like any other language you have seen.
+
+PROGRAM SHAPE
+  A program is exactly:   (mumvumfe(){ <statements> })();
+  Each statement selects parts and applies operations:
+      &Q('<selector>')~<operation>(<args>);
+  Operations may be chained with '~' to act on the same parts:
+      &Q('<selector>')~<op1>(...)~<op2>(...);
+  Two different groups of parts need two separate statements.
+
+SELECTORS  (inside the quotes)
+  ~name        parts carrying the tag `name`
+  %name        the part whose identifier is `name`
+  @taltazat    the parts currently selected by the user
+  @mekir       the parts inside the user's lasso
+  !           every part in the scene
+  ~a~b        parts carrying BOTH tags (no space)
+  ~a ~b       parts tagged `b` anywhere beneath parts tagged `a`
+  ~a^~b       parts tagged `b` that are DIRECT children of parts tagged `a`
+  bare words are node kinds: `plel`, `dugan`, `mumin`, `sutput`
+
+OPERATIONS
+  flertum(color)                set the colour of the matched parts
+  bungi(factor)                 resize the matched parts by a factor
+  brom(dx, dy, dz)              shift the matched parts along x, y and z
+  fisris(axis, degrees)         rotate the matched parts about an axis
+  brofar()                      remove the matched parts from the scene
+  grom(axis, turns, duration)   spin the matched parts; duration is in seconds, larger = slower
+  dirpusram(dx, dy, dz)         copy the matched parts, offset by dx, dy, dz
+  vorFlumpeti(material)         replace the material of the matched parts
+  morKlutmor(opacity)           set transparency, 0 = invisible, 1 = solid
+  gulBlantol(visible)           show or hide the matched parts
+  notbutgus(enabled)            draw the matched parts as wireframe
+  pomnelkol(metalness)          set how metallic the surface is, 0 to 1
+  trotnites(roughness)          set how rough the surface is, 0 to 1
+  blisVetbis(enabled)           let the matched parts cast shadows
+  fetelorBrirfi(enabled)        let the matched parts receive shadows
+
+EXAMPLES
+  one operation on one set of parts:
+  (mumvumfe(){ &Q('~rotor')~grom('y',1,2); })();
+  a compound selector - parts that are BOTH ~panel AND ~upper:
+  (mumvumfe(){ &Q('~panel~upper')~flertum('#00ff00'); })();
+  two separate operations, written as two statements:
+  (mumvumfe(){ &Q('~lamp')~morKlutmor(0.5); &Q('~pylon')~bungi(2); })();
+  two operations on the SAME parts, chained:
+  (mumvumfe(){ &Q('~strut')~brom(0,1,0)~flertum('#ff0000'); })();
+
+OUTPUT FORMAT
+  Reply with exactly ONE fenced code block containing ONE complete
+  program in the language above. No explanation, no prose, no
+  alternatives. Emit only operations the request actually asks for.<|im_end|>
+<|im_start|>user
+The user asks: "darken the wheels and rims"
+
+ADDRESSABLE PARTS IN THE CURRENT SCENE
+
+  parts:
+    DumpTruck  "DumpTruck"  (group)
+    Object_03  "Cab"  (mesh)
+    Object_07  "Dump Bed"  (mesh)
+    Object_12  "Tail Light (left)"  (mesh)
+    Object_13  "Tail Light (right)"  (mesh)
+    Object_20  "Front Left Wheel"  (mesh)
+    Object_21  "Front Right Wheel"  (mesh)
+    Object_22  "Rear Left Wheel"  (mesh)
+    Object_23  "Rear Right Wheel"  (mesh)
+
+  tags you may select with:
+    ~back                -> Object_12, Object_13, Object_22, Object_23
+    ~bed                 -> Object_07
+    ~cab                 -> Object_03
+    ~center              -> Object_07
+    ~dump-bed            -> Object_07
+    ~front               -> Object_03, Object_20, Object_21
+    ~grille              -> Object_03
+    ~largest             -> Object_07
+    ~left                -> Object_12, Object_20, Object_22
+    ~light               -> Object_12, Object_13
+    ~pair-left           -> Object_12, Object_20, Object_22
+    ~pair-right          -> Object_13, Object_21, Object_23
+    ~right               -> Object_13, Object_21, Object_23
+    ~rims                -> Object_20, Object_21, Object_22, Object_23
+    ~tail-light          -> Object_12, Object_13
+    ~top                 -> Object_03
+    ~truck               -> DumpTruck
+    ~vehicle             -> DumpTruck
+    ~wheel               -> Object_20, Object_21, Object_22, Object_23
+
+Write the program.<|im_end|>
+<|im_start|>assistant

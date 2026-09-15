@@ -1,0 +1,75 @@
+{
+  "note": "All four Qwen2.5-Coder repositories share ONE Qwen2 BPE tokenizer and produce identical fertility rows, so this is evidence from TWO distinct tokenizer designs, not five. DeepSeek-V3 is TOKENIZER-ONLY: its weights were never loaded and it was never behaviourally tested.",
+  "tokenizers": [
+    {
+      "repo": "Qwen/Qwen2.5-Coder-0.5B",
+      "role": "behavioural+tokenizer",
+      "tokenizer_class": "Qwen2Tokenizer",
+      "vocab_size": 151643,
+      "tokenizer_length": 151665,
+      "is_fast": true,
+      "relative_fertility_vs_identity": {
+        "identity": 1.0,
+        "alpha": 1.0681558445411026,
+        "beta": 1.400829875518672,
+        "gamma": 1.9373791734331793
+      }
+    },
+    {
+      "repo": "Qwen/Qwen2.5-Coder-1.5B",
+      "role": "behavioural+tokenizer",
+      "tokenizer_class": "Qwen2Tokenizer",
+      "vocab_size": 151643,
+      "tokenizer_length": 151665,
+      "is_fast": true,
+      "relative_fertility_vs_identity": {
+        "identity": 1.0,
+        "alpha": 1.0681558445411026,
+        "beta": 1.400829875518672,
+        "gamma": 1.9373791734331793
+      }
+    },
+    {
+      "repo": "Qwen/Qwen2.5-Coder-3B",
+      "role": "behavioural+tokenizer",
+      "tokenizer_class": "Qwen2Tokenizer",
+      "vocab_size": 151643,
+      "tokenizer_length": 151665,
+      "is_fast": true,
+      "relative_fertility_vs_identity": {
+        "identity": 1.0,
+        "alpha": 1.0681558445411026,
+        "beta": 1.400829875518672,
+        "gamma": 1.9373791734331793
+      }
+    },
+    {
+      "repo": "Qwen/Qwen2.5-Coder-7B",
+      "role": "behavioural+tokenizer",
+      "tokenizer_class": "Qwen2Tokenizer",
+      "vocab_size": 151643,
+      "tokenizer_length": 151665,
+      "is_fast": true,
+      "relative_fertility_vs_identity": {
+        "identity": 1.0,
+        "alpha": 1.0681558445411026,
+        "beta": 1.400829875518672,
+        "gamma": 1.9373791734331793
+      }
+    },
+    {
+      "repo": "deepseek-ai/DeepSeek-V3",
+      "role": "TOKENIZER-ONLY (weights not runnable here)",
+      "tokenizer_class": "TokenizersBackend",
+      "vocab_size": 128000,
+      "tokenizer_length": 128815,
+      "is_fast": true,
+      "relative_fertility_vs_identity": {
+        "identity": 1.0,
+        "alpha": 1.0731464838530478,
+        "beta": 1.4481255448997385,
+        "gamma": 2.2848950422902496
+      }
+    }
+  ]
+}
