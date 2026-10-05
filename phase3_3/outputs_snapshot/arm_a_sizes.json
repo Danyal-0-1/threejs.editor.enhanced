@@ -1,0 +1,158 @@
+{
+ "fertility": {
+  "dom/identity": {
+   "tokens": 2928,
+   "chars": 7980,
+   "tok_per_char": 0.3669172932330827,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "dom/d50s1": {
+   "tokens": 3158,
+   "chars": 7995,
+   "tok_per_char": 0.3949968730456535,
+   "rel_fertility_vs_identity": 1.0765283630137688,
+   "rel_token_count": 1.078551912568306
+  },
+  "blk/identity": {
+   "tokens": 3106,
+   "chars": 6954,
+   "tok_per_char": 0.4466494104112741,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "blk/d50s1": {
+   "tokens": 3136,
+   "chars": 6969,
+   "tok_per_char": 0.4499928253694935,
+   "rel_fertility_vs_identity": 1.0074855465613193,
+   "rel_token_count": 1.0096587250482936
+  }
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-1.5B": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.08520402135327458,
+    "median_m_seq": -0.0625,
+    "reversion_rate": 0.5083333333333333,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 0,
+    "seconds": 18.917498350143433
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.508030471407761,
+     "median_m_seq": -0.453125,
+     "reversion_rate": 0.5932203389830508
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.15417850790827564,
+     "median_m_seq": 0.1328125,
+     "reversion_rate": 0.48484848484848486
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 0.6136979570194167,
+     "median_m_seq": 1.3426513671875,
+     "reversion_rate": 0.46938775510204084
+    }
+   }
+  },
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.23752322238869966,
+    "median_m_seq": 0.26171875,
+    "reversion_rate": 0.4583333333333333,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 0,
+    "seconds": 18.06906008720398
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.45070980943865696,
+     "median_m_seq": -0.1328125,
+     "reversion_rate": 0.5423728813559322
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.29928683306118753,
+     "median_m_seq": 0.30859386920928955,
+     "reversion_rate": 0.4393939393939394
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 0.8998283707365697,
+     "median_m_seq": 1.3153047561645508,
+     "reversion_rate": 0.40816326530612246
+    }
+   }
+  },
+  "Qwen/Qwen2.5-Coder-3B": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": -0.15929805853714546,
+    "median_m_seq": -0.1484375,
+    "reversion_rate": 0.5375,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 1,
+    "seconds": 23.41588854789734
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.43151201989691135,
+     "median_m_seq": -0.15625,
+     "reversion_rate": 0.5423728813559322
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": -0.1758996145517537,
+     "median_m_seq": -0.20703125,
+     "reversion_rate": 0.5833333333333334
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 0.2131923315476398,
+     "median_m_seq": 1.0147361755371094,
+     "reversion_rate": 0.40816326530612246
+    }
+   }
+  },
+  "Qwen/Qwen2.5-Coder-3B-Instruct": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": -0.15898972127276162,
+    "median_m_seq": -0.16111540794372559,
+    "reversion_rate": 0.525,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 1,
+    "seconds": 23.518455028533936
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.5282561555504799,
+     "median_m_seq": -0.90625,
+     "reversion_rate": 0.5932203389830508
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": -0.2088955898458759,
+     "median_m_seq": -0.09375,
+     "reversion_rate": 0.5151515151515151
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 0.42007750880961514,
+     "median_m_seq": 1.088010311126709,
+     "reversion_rate": 0.46938775510204084
+    }
+   }
+  }
+ }
+}

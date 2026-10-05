@@ -1,0 +1,147 @@
+{
+  "phi_id": "beta",
+  "targets_grammar": "3dom-grammar/1.1.0",
+  "generated": "2026-08-28T18:39:43+00:00",
+  "construct": "ABSENCE — novel whole tokens, matched fertility",
+  "map": {
+    "T_SELECTOR_ENTRY": {
+      "from": "$S",
+      "to": "&Q"
+    },
+    "T_FUNCTION": {
+      "from": "function",
+      "to": "mumvumfe"
+    },
+    "T_CHAIN_OP": {
+      "from": ".",
+      "to": "~"
+    },
+    "T_CLASS_SIGIL": {
+      "from": ".",
+      "to": "~"
+    },
+    "T_ID_SIGIL": {
+      "from": "#",
+      "to": "%"
+    },
+    "T_PSEUDO_SIGIL": {
+      "from": ":",
+      "to": "@"
+    },
+    "T_CHILD": {
+      "from": ">",
+      "to": "^"
+    },
+    "T_WILDCARD": {
+      "from": "*",
+      "to": "!"
+    },
+    "T_VERB_RECOLOR": {
+      "from": "recolor",
+      "to": "flertum"
+    },
+    "T_VERB_SCALE": {
+      "from": "scale",
+      "to": "bungi"
+    },
+    "T_VERB_MOVE": {
+      "from": "move",
+      "to": "brom"
+    },
+    "T_VERB_ROTATE": {
+      "from": "rotate",
+      "to": "fisris"
+    },
+    "T_VERB_DELETE": {
+      "from": "delete",
+      "to": "brofar"
+    },
+    "T_VERB_SPIN": {
+      "from": "spin",
+      "to": "grom"
+    },
+    "T_VERB_DUPLICATE": {
+      "from": "duplicate",
+      "to": "dirpusram"
+    },
+    "T_VERB_SETMATERIAL": {
+      "from": "setMaterial",
+      "to": "vorFlumpeti"
+    },
+    "T_VERB_SETOPACITY": {
+      "from": "setOpacity",
+      "to": "morKlutmor"
+    },
+    "T_VERB_SETVISIBLE": {
+      "from": "setVisible",
+      "to": "gulBlantol"
+    },
+    "T_VERB_WIREFRAME": {
+      "from": "wireframe",
+      "to": "notbutgus"
+    },
+    "T_VERB_METALNESS": {
+      "from": "metalness",
+      "to": "pomnelkol"
+    },
+    "T_VERB_ROUGHNESS": {
+      "from": "roughness",
+      "to": "trotnites"
+    },
+    "T_VERB_CASTSHADOW": {
+      "from": "castShadow",
+      "to": "blisVetbis"
+    },
+    "T_VERB_RECEIVESHADOW": {
+      "from": "receiveShadow",
+      "to": "fetelorBrirfi"
+    },
+    "T_TYPE_MESH": {
+      "from": "mesh",
+      "to": "plel"
+    },
+    "T_TYPE_GROUP": {
+      "from": "group",
+      "to": "dugan"
+    },
+    "T_TYPE_LIGHT": {
+      "from": "light",
+      "to": "mumin"
+    },
+    "T_TYPE_CAMERA": {
+      "from": "camera",
+      "to": "sutput"
+    },
+    "T_PSEUDO_SELECTED": {
+      "from": "selected",
+      "to": "taltazat"
+    },
+    "T_PSEUDO_LASSO": {
+      "from": "lasso",
+      "to": "mekir"
+    }
+  },
+  "overload_groups": [
+    [
+      "T_CHAIN_OP",
+      "T_CLASS_SIGIL"
+    ]
+  ],
+  "frozen": [
+    "T_LPAREN",
+    "T_RPAREN",
+    "T_LBRACE",
+    "T_RBRACE",
+    "T_SEMI",
+    "T_COMMA",
+    "T_QUOTE_S",
+    "T_QUOTE_D",
+    "T_SIGN_PLUS",
+    "T_SIGN_MINUS",
+    "T_IDENT",
+    "T_NUMBER",
+    "T_STRING_BODY",
+    "T_WS"
+  ],
+  "notes": "Pseudo-lexicon. Word-class spellings come from the constrained phonotactic generator in candidates/gen_beta_lexicon.py under rules R1 (exact character-length match) and R2 (camelCase shape and split point preserved), both of which exist to hold tokenizer fertility near 1.00 — the binding constraint. Sigils are single ASCII characters outside the identifier charset. T_CHAIN_OP and T_CLASS_SIGIL share '~' so the '.' overload survives (I7); T_WS is untouched so the descendant combinator is still whitespace (I9); the quote terminals are untouched so delimiters stay symmetric (I8)."
+}

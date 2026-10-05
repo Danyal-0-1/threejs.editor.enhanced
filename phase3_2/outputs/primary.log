@@ -1,0 +1,40 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+sites: 120  {'blk': 60, 'dom': 60}  {'keyword': 40, 'sigil': 40, 'verb': 40}
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 3809.93it/s]
+[W1002 18:00:08.154421158 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 612368384 bytes (free: 584187904, total: 16737042432).
+[W1002 18:00:48.408187465 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 639631360 bytes (free: 550174720, total: 16737042432).
+
+=== paraphrase robustness: Qwen/Qwen2.5-Coder-0.5B ===
+  variant  family    n     mean   median  revert
+  p0       blk      60   -0.163   +0.012   0.500
+  p0       dom      60   -0.323   +0.167   0.450
+  p1       blk      60   -0.190   +0.119   0.467
+  p1       dom      60   -0.271   +0.188   0.450
+  p2       blk      60   -0.082   +0.137   0.483
+  p2       dom      60   -0.285   +0.037   0.500
+
+=== extinction curves (PRIMARY estimand): Qwen/Qwen2.5-Coder-0.5B ===
+  blk: n=60  already-correct at 0 shots=30  crossed=37  censored(still negative at 32)=6
+        k* median=4.96 mean=7.36
+  dom: n=60  already-correct at 0 shots=33  crossed=36  censored(still negative at 32)=4
+        k* median=6.64 mean=8.80
+  (58s)
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 5036.74it/s]
+
+=== paraphrase robustness: Qwen/Qwen2.5-Coder-0.5B-Instruct ===
+  variant  family    n     mean   median  revert
+  p0       blk      60   +0.188   +0.148   0.467
+  p0       dom      60   +0.060   -0.039   0.500
+  p1       blk      60   -0.017   +0.053   0.483
+  p1       dom      60   -0.084   -0.039   0.500
+  p2       blk      60   +0.055   +0.192   0.483
+  p2       dom      60   +0.108   +0.309   0.483
+
+=== extinction curves (PRIMARY estimand): Qwen/Qwen2.5-Coder-0.5B-Instruct ===
+  blk: n=60  already-correct at 0 shots=32  crossed=36  censored(still negative at 32)=4
+        k* median=5.83 mean=9.38
+  dom: n=60  already-correct at 0 shots=30  crossed=39  censored(still negative at 32)=2
+        k* median=6.94 mean=9.37
+  (57s)
+
+wrote outputs/primary.json  (720 paraphrase rows, 240 curves)

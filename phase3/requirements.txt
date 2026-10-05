@@ -1,0 +1,14 @@
+# Phase 3 dependencies.
+#
+# TIER 1 — everything in scripts/ and tests/ runs with just this.
+lark>=1.1
+
+# TIER 2 — only for real models (models.HFModel). Not needed by the test suite,
+# which runs entirely on models.FakeLM.
+# torch>=2.0
+# transformers>=4.40
+
+# TIER 3 — NOT YET USED. The mixed-effects / power-simulation layer the review
+# requires is not implemented (see README "Status"). When it is, it needs one
+# of these, and this is a NEW dependency for the repository:
+# statsmodels>=0.14

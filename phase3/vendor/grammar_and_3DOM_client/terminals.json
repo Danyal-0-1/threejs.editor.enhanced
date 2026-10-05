@@ -1,0 +1,481 @@
+{
+  "grammar_version": "3dom-grammar/1.1.0",
+  "note": "Terminal inventory for mechanical Alien-Syntax generation. 'substitutable':true marks terminals whose SPELLING is arbitrary lexicon (CSS/jQuery/JS familiarity signals) and is renamed by the \u03c6-map; 'substitutable':false marks terminals whose spelling is load-bearing for structure (generic delimiters, string quotes, whitespace-as-combinator) or is an infinite value class copied verbatim into the IR. Structural isomorphism holds BY CONSTRUCTION: apply \u03c6 keyed on 'id', emit. Rationale for each 'false' is in CHANGELOG.md (A1).",
+  "counts": {
+    "total_terminals": 43,
+    "substitutable": 29,
+    "non_substitutable": 14,
+    "distinct_quoted_spellings": 39
+  },
+  "terminals": [
+    {
+      "id": "T_LPAREN",
+      "spelling": "(",
+      "role": "grouping / call delimiter",
+      "productions": [
+        "iife",
+        "selector_call",
+        "operation_call"
+      ],
+      "substitutable": false,
+      "note": "generic structural delimiter shared by all C-family langs; not a CSS/jQuery familiarity signal"
+    },
+    {
+      "id": "T_RPAREN",
+      "spelling": ")",
+      "role": "grouping / call delimiter",
+      "productions": [
+        "iife",
+        "selector_call",
+        "operation_call"
+      ],
+      "substitutable": false,
+      "note": "generic structural delimiter"
+    },
+    {
+      "id": "T_LBRACE",
+      "spelling": "{",
+      "role": "IIFE body open",
+      "productions": [
+        "iife"
+      ],
+      "substitutable": false,
+      "note": "generic structural delimiter"
+    },
+    {
+      "id": "T_RBRACE",
+      "spelling": "}",
+      "role": "IIFE body close",
+      "productions": [
+        "iife"
+      ],
+      "substitutable": false,
+      "note": "generic structural delimiter"
+    },
+    {
+      "id": "T_SEMI",
+      "spelling": ";",
+      "role": "statement / IIFE terminator",
+      "productions": [
+        "statement",
+        "iife"
+      ],
+      "substitutable": false,
+      "note": "generic statement terminator"
+    },
+    {
+      "id": "T_COMMA",
+      "spelling": ",",
+      "role": "argument separator",
+      "productions": [
+        "argument_list"
+      ],
+      "substitutable": false,
+      "note": "generic list separator"
+    },
+    {
+      "id": "T_QUOTE_S",
+      "spelling": "'",
+      "role": "string delimiter (single)",
+      "productions": [
+        "quoted_selector",
+        "quoted_string"
+      ],
+      "substitutable": false,
+      "note": "structural string delimiter; the two-level lexer (L3) depends on it"
+    },
+    {
+      "id": "T_QUOTE_D",
+      "spelling": "\"",
+      "role": "string delimiter (double)",
+      "productions": [
+        "quoted_selector",
+        "quoted_string"
+      ],
+      "substitutable": false,
+      "note": "structural string delimiter"
+    },
+    {
+      "id": "T_SELECTOR_ENTRY",
+      "spelling": "$S",
+      "role": "selector entry point",
+      "productions": [
+        "selector_call"
+      ],
+      "substitutable": true,
+      "note": "jQuery `$`-idiom prior; prime target for alien substitution"
+    },
+    {
+      "id": "T_FUNCTION",
+      "spelling": "function",
+      "role": "IIFE keyword",
+      "productions": [
+        "iife"
+      ],
+      "substitutable": true,
+      "note": "JavaScript keyword \u2014 a pretraining familiarity signal; substitute to break the JS prior"
+    },
+    {
+      "id": "T_CHAIN_OP",
+      "spelling": ".",
+      "role": "fluent chain operator",
+      "productions": [
+        "operation_call"
+      ],
+      "substitutable": true,
+      "note": "jQuery method-chaining idiom"
+    },
+    {
+      "id": "T_CLASS_SIGIL",
+      "spelling": ".",
+      "role": "class matcher sigil",
+      "productions": [
+        "class_selector"
+      ],
+      "substitutable": true,
+      "note": "CSS class sigil \u2014 COLLIDES in spelling with T_CHAIN_OP"
+    },
+    {
+      "id": "T_ID_SIGIL",
+      "spelling": "#",
+      "role": "id matcher sigil",
+      "productions": [
+        "id_selector"
+      ],
+      "substitutable": true,
+      "note": "CSS id sigil"
+    },
+    {
+      "id": "T_PSEUDO_SIGIL",
+      "spelling": ":",
+      "role": "pseudo-selector sigil",
+      "productions": [
+        "pseudo_selector"
+      ],
+      "substitutable": true,
+      "note": "CSS pseudo-class sigil"
+    },
+    {
+      "id": "T_CHILD",
+      "spelling": ">",
+      "role": "child combinator",
+      "productions": [
+        "child_combinator"
+      ],
+      "substitutable": true,
+      "note": "CSS child combinator"
+    },
+    {
+      "id": "T_WILDCARD",
+      "spelling": "*",
+      "role": "universal selector",
+      "productions": [
+        "wildcard"
+      ],
+      "substitutable": true,
+      "note": "CSS universal selector; NOT an EBNF Kleene star (see grammar_metrics.py)"
+    },
+    {
+      "id": "T_SIGN_PLUS",
+      "spelling": "+",
+      "role": "numeric sign (plus)",
+      "productions": [
+        "sign"
+      ],
+      "substitutable": false,
+      "note": "generic numeric sign; value-carrying, copied to IR"
+    },
+    {
+      "id": "T_SIGN_MINUS",
+      "spelling": "-",
+      "role": "numeric sign (minus)",
+      "productions": [
+        "sign"
+      ],
+      "substitutable": false,
+      "note": "generic numeric sign \u2014 COLLIDES in spelling with the hyphen inside T_IDENT"
+    },
+    {
+      "id": "T_VERB_RECOLOR",
+      "spelling": "recolor",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_SCALE",
+      "spelling": "scale",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_MOVE",
+      "spelling": "move",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_ROTATE",
+      "spelling": "rotate",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_DELETE",
+      "spelling": "delete",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_SPIN",
+      "spelling": "spin",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_DUPLICATE",
+      "spelling": "duplicate",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_SETMATERIAL",
+      "spelling": "setMaterial",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_SETOPACITY",
+      "spelling": "setOpacity",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_SETVISIBLE",
+      "spelling": "setVisible",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_WIREFRAME",
+      "spelling": "wireframe",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_METALNESS",
+      "spelling": "metalness",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_ROUGHNESS",
+      "spelling": "roughness",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_CASTSHADOW",
+      "spelling": "castShadow",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_VERB_RECEIVESHADOW",
+      "spelling": "receiveShadow",
+      "role": "operation verb",
+      "productions": [
+        "verb"
+      ],
+      "substitutable": true,
+      "note": "one of the closed 15 operation verbs"
+    },
+    {
+      "id": "T_TYPE_MESH",
+      "spelling": "mesh",
+      "role": "type selector keyword",
+      "productions": [
+        "type_selector"
+      ],
+      "substitutable": true,
+      "note": "three.js object-kind keyword"
+    },
+    {
+      "id": "T_TYPE_GROUP",
+      "spelling": "group",
+      "role": "type selector keyword",
+      "productions": [
+        "type_selector"
+      ],
+      "substitutable": true,
+      "note": "three.js object-kind keyword"
+    },
+    {
+      "id": "T_TYPE_LIGHT",
+      "spelling": "light",
+      "role": "type selector keyword",
+      "productions": [
+        "type_selector"
+      ],
+      "substitutable": true,
+      "note": "three.js object-kind keyword"
+    },
+    {
+      "id": "T_TYPE_CAMERA",
+      "spelling": "camera",
+      "role": "type selector keyword",
+      "productions": [
+        "type_selector"
+      ],
+      "substitutable": true,
+      "note": "three.js object-kind keyword"
+    },
+    {
+      "id": "T_PSEUDO_SELECTED",
+      "spelling": "selected",
+      "role": "pseudo-selector keyword",
+      "productions": [
+        "pseudo_selector"
+      ],
+      "substitutable": true,
+      "note": "live-selection pseudo keyword"
+    },
+    {
+      "id": "T_PSEUDO_LASSO",
+      "spelling": "lasso",
+      "role": "pseudo-selector keyword",
+      "productions": [
+        "pseudo_selector"
+      ],
+      "substitutable": true,
+      "note": "live-selection pseudo keyword"
+    },
+    {
+      "id": "T_IDENT",
+      "spelling": "[a-zA-Z0-9_-]+",
+      "role": "identifier (class/id/label name)",
+      "productions": [
+        "id_selector",
+        "class_selector"
+      ],
+      "substitutable": false,
+      "note": "infinite value class copied verbatim into the IR; no fixed spelling to substitute"
+    },
+    {
+      "id": "T_NUMBER",
+      "spelling": "sign? digit+ ('.' digit+)?",
+      "role": "numeric literal",
+      "productions": [
+        "argument",
+        "number"
+      ],
+      "substitutable": false,
+      "note": "value class copied verbatim into the IR"
+    },
+    {
+      "id": "T_STRING_BODY",
+      "spelling": "[^']* / [^\"]*",
+      "role": "opaque argument-string content",
+      "productions": [
+        "quoted_string"
+      ],
+      "substitutable": false,
+      "note": "value class copied verbatim into the IR"
+    },
+    {
+      "id": "T_WS",
+      "spelling": "' '+",
+      "role": "descendant combinator / significant whitespace",
+      "productions": [
+        "descendant_combinator",
+        "child_combinator"
+      ],
+      "substitutable": false,
+      "note": "whitespace-as-combinator is STRUCTURAL: the two-level lexer contract (L2/L3) is defined in terms of it; COLLIDES with insignificant inter-token layout (L1)"
+    }
+  ],
+  "collisions": [
+    {
+      "spelling": ".",
+      "terminals": [
+        "T_CHAIN_OP",
+        "T_CLASS_SIGIL"
+      ],
+      "hazard": "A \u03c6-map that renames \".\" once will break whichever role it does not target. Alien generation MUST key substitution on the terminal ID, not the surface character: T_CHAIN_OP and T_CLASS_SIGIL get INDEPENDENT alien spellings.",
+      "disambiguation": "lexical level: T_CHAIN_OP occurs in the outer stream (after a selector_call); T_CLASS_SIGIL occurs only inside a quoted selector (before an identifier)."
+    },
+    {
+      "spelling": " ",
+      "terminals": [
+        "<layout>",
+        "T_WS"
+      ],
+      "hazard": "The same character is INSIGNIFICANT layout under L1 (elided everywhere outside quotes) and the SIGNIFICANT descendant combinator under L2 (inside a selector). A substitution or reformatter that treats all whitespace uniformly will destroy the descendant combinator.",
+      "disambiguation": "level: outside quotes -> elided layout; inside a quoted selector -> T_WS combinator."
+    },
+    {
+      "spelling": "-",
+      "terminals": [
+        "T_SIGN_MINUS",
+        "T_IDENT (member char)"
+      ],
+      "hazard": "\"-\" is both the numeric sign terminal and a legal identifier character (kebab-case). A rename of the sign must not touch the identifier character class.",
+      "disambiguation": "position: leading a numeric argument -> T_SIGN_MINUS; within an identifier run -> part of T_IDENT."
+    }
+  ]
+}

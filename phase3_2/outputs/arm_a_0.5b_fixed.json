@@ -1,0 +1,96 @@
+{
+ "fertility": {
+  "dom/identity": {
+   "tokens": 2928,
+   "chars": 7980,
+   "tok_per_char": 0.3669172932330827,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "dom/d50s1": {
+   "tokens": 3158,
+   "chars": 7995,
+   "tok_per_char": 0.3949968730456535,
+   "rel_fertility_vs_identity": 1.0765283630137688,
+   "rel_token_count": 1.078551912568306
+  },
+  "blk/identity": {
+   "tokens": 3106,
+   "chars": 6954,
+   "tok_per_char": 0.4466494104112741,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "blk/d50s1": {
+   "tokens": 3136,
+   "chars": 6969,
+   "tok_per_char": 0.4499928253694935,
+   "rel_fertility_vs_identity": 1.0074855465613193,
+   "rel_token_count": 1.0096587250482936
+  }
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.13375622613045077,
+    "median_m_seq": -0.04056406021118164,
+    "reversion_rate": 0.5041666666666667,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 0,
+    "seconds": 9.15683889389038
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.8687398522082022,
+     "median_m_seq": -0.640625,
+     "reversion_rate": 0.559322033898305
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.16314509604126215,
+     "median_m_seq": -0.1953125,
+     "reversion_rate": 0.5151515151515151
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 1.2616733239621531,
+     "median_m_seq": 2.3331198692321777,
+     "reversion_rate": 0.40816326530612246
+    }
+   }
+  },
+  "Qwen/Qwen2.5-Coder-0.5B-Instruct": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.3432262487709522,
+    "median_m_seq": 0.6126856803894043,
+    "reversion_rate": 0.45416666666666666,
+    "n_merged_candidates": 106,
+    "n_exact_zero_margin": 1,
+    "seconds": 14.52982473373413
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.8071357001692562,
+     "median_m_seq": -0.48828125,
+     "reversion_rate": 0.559322033898305
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.4543678977272727,
+     "median_m_seq": 0.9140625149011612,
+     "reversion_rate": 0.4393939393939394
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 1.4289539492860133,
+     "median_m_seq": 2.2633275985717773,
+     "reversion_rate": 0.3673469387755102
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://strata.local/schema/3dom-ir/1.0.0",
+  "title": "3DOM Operation IR",
+  "description": "The Intermediate Representation emitted by the IR builder from a parsed 3DOM program. Task accuracy is scored on THIS object, never on the surface string, so 3DOM and the Alien-Syntax language are graded against identical ground truth (SCORING_POLICY.md S6).",
+
+  "type": "object",
+  "required": ["grammar_version", "ops"],
+  "additionalProperties": false,
+
+  "properties": {
+    "grammar_version": {
+      "type": "string",
+      "const": "3dom-grammar/1.1.0",
+      "description": "Stamped into EVERY IR object by the IR builder (SCORING_POLICY.md S6a). A row whose IR carries no version is unreportable."
+    },
+
+    "source": {
+      "type": "string",
+      "description": "Optional: the raw program the IR was built from. Kept for offline re-scoring; scorers MUST NOT read it."
+    },
+
+    "ops": {
+      "type": "array",
+      "description": "The operation list. LENGTH IS SEMANTIC: an empty array is the VALID-BUT-VACUOUS case (D5) - a parse success and a task failure on any task whose target IR has >= 1 op.",
+      "items": { "$ref": "#/$defs/operation" }
+    }
+  },
+
+  "$defs": {
+
+    "operation": {
+      "type": "object",
+      "required": ["op", "selector"],
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "$ref": "#/$defs/verb",
+          "description": "The operation verb. Task 1 (op-selection) reads exactly this field."
+        },
+        "selector": {
+          "$ref": "#/$defs/selector",
+          "description": "The unresolved selector AST. Task 5 (selector-resolution) hands this to a fixture scene; it has NO meaning without one (TERMINOLOGY.md S4)."
+        },
+        "args": {
+          "type": "object",
+          "description": "Operation arguments. Task 2 (arg-extraction) reads this. Keys are canonical by convention but the scorer canonicalises synonyms before comparing.",
+          "additionalProperties": true
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional human label proposed for the target part. Task 3 (labeling) reads this."
+        }
+      }
+    },
+
+    "verb": {
+      "type": "string",
+      "enum": [
+        "recolor", "scale", "move", "rotate", "delete", "spin", "duplicate",
+        "setMaterial", "setOpacity", "setVisible", "wireframe",
+        "metalness", "roughness", "castShadow", "receiveShadow"
+      ],
+      "description": "The CLOSED verb set: 15 verbs, INVARIANT (METRICS.md). Never add or remove one - the Alien grammar must match this cardinality exactly."
+    },
+
+    "selector": {
+      "type": "object",
+      "required": ["raw"],
+      "additionalProperties": false,
+      "description": "A selector is a SEQUENCE OF STEPS joined by combinators. `raw` is always present so a scorer can recover structure even when the builder emitted no `steps`.",
+      "properties": {
+        "raw": {
+          "type": "string",
+          "description": "The literal selector text, e.g. '.car > .wheel'. Authoritative fallback: if `steps` is absent, the scorer re-parses this."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" }
+        }
+      }
+    },
+
+    "step": {
+      "type": "object",
+      "required": ["matchers"],
+      "additionalProperties": false,
+      "properties": {
+        "combinator": {
+          "enum": [null, "descendant", "child"],
+          "description": "How this step attaches to the PREVIOUS step. null on the first step. 'child' is the `>` terminal - a syntactic LEAF whose MEANING is a one-level scene-graph walk (TERMINOLOGY.md). It has no AST children."
+        },
+        "matchers": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Matchers within one step are ANDed (a compound selector): '.front.wheel' is one step, two matchers.",
+          "items": { "$ref": "#/$defs/matcher" }
+        }
+      }
+    },
+
+    "matcher": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": ["class", "id", "type", "pseudo", "wildcard", "label"],
+          "description": "class='.x'  id='#x'  type=mesh|group|light|camera  pseudo=:selected|:lasso  wildcard='*'  label=a human label match."
+        },
+        "name": {
+          "type": "string",
+          "description": "The matcher payload. Absent only for kind='wildcard'."
+        }
+      }
+    }
+  },
+
+  "examples": [
+    {
+      "grammar_version": "3dom-grammar/1.1.0",
+      "source": "(function(){ $S('.wheel').recolor('#111111'); })();",
+      "ops": [
+        {
+          "op": "recolor",
+          "selector": {
+            "raw": ".wheel",
+            "steps": [ { "combinator": null, "matchers": [ { "kind": "class", "name": "wheel" } ] } ]
+          },
+          "args": { "color": "#111111" }
+        }
+      ]
+    },
+    {
+      "grammar_version": "3dom-grammar/1.1.0",
+      "source": "(function(){ $S('.truck > .wheel'); })();",
+      "ops": []
+    }
+  ]
+}

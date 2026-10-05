@@ -1,0 +1,92 @@
+{
+ "fertility": {
+  "dom/identity": {
+   "tokens": 2928,
+   "chars": 7980,
+   "tok_per_char": 0.3669172932330827,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "dom/d50s1": {
+   "tokens": 3158,
+   "chars": 7995,
+   "tok_per_char": 0.3949968730456535,
+   "rel_fertility_vs_identity": 1.0765283630137688,
+   "rel_token_count": 1.078551912568306
+  },
+  "blk/identity": {
+   "tokens": 3106,
+   "chars": 6954,
+   "tok_per_char": 0.4466494104112741,
+   "rel_fertility_vs_identity": 1.0,
+   "rel_token_count": 1.0
+  },
+  "blk/d50s1": {
+   "tokens": 3136,
+   "chars": 6969,
+   "tok_per_char": 0.4499928253694935,
+   "rel_fertility_vs_identity": 1.0074855465613193,
+   "rel_token_count": 1.0096587250482936
+  }
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.14243950974196196,
+    "median_m_seq": 0.0,
+    "reversion_rate": 0.25833333333333336,
+    "seconds": 8.963419198989868
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.767673909411592,
+     "median_m_seq": 0.0,
+     "reversion_rate": 0.4745762711864407
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.13375947060007037,
+     "median_m_seq": 0.0,
+     "reversion_rate": 0.10606060606060606
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 1.2616733239621531,
+     "median_m_seq": 2.3331198692321777,
+     "reversion_rate": 0.40816326530612246
+    }
+   }
+  },
+  "Qwen/Qwen2.5-Coder-0.5B-Instruct": {
+   "overall": {
+    "n": 240,
+    "mean_m_seq": 0.43186557417114574,
+    "median_m_seq": 0.0,
+    "reversion_rate": 0.2125,
+    "seconds": 7.767752647399902
+   },
+   "by_stratum": {
+    "keyword": {
+     "n": 59,
+     "mean_m_seq": -0.7478136662709511,
+     "median_m_seq": 0.0,
+     "reversion_rate": 0.4745762711864407
+    },
+    "sigil": {
+     "n": 132,
+     "mean_m_seq": 0.5890151560306549,
+     "median_m_seq": 0.0,
+     "reversion_rate": 0.03787878787878788
+    },
+    "verb": {
+     "n": 49,
+     "mean_m_seq": 1.4289539492860133,
+     "median_m_seq": 2.2633275985717773,
+     "reversion_rate": 0.3673469387755102
+    }
+   }
+  }
+ }
+}
