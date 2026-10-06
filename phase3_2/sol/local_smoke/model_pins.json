@@ -1,0 +1,24 @@
+{
+ "failed": {},
+ "hf_root": "/home/mesquite/.cache/huggingface",
+ "pairing_problems": [
+  "Qwen/Qwen2.5-Coder-0.5B requested without its instruct pair Qwen/Qwen2.5-Coder-0.5B-Instruct -- it cannot enter H4"
+ ],
+ "pins": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "allow_patterns": [
+    "*.json",
+    "*.safetensors",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt"
+   ],
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "snapshot_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-0.5B/snapshots/8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "source": "verify-only (already cached)",
+   "tokenizer_id": "cc349caf59f0697a"
+  }
+ }
+}

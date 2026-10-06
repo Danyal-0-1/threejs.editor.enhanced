@@ -1,0 +1,7 @@
+# Compiled caches from running the pipeline and its tests. Scoped to phase3_2/sol only.
+__pycache__/
+*.pyc
+# Never commit an environment, weights or a Hugging Face cache.
+env/*/
+*.safetensors
+*.bin

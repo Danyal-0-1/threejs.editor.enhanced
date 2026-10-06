@@ -1,0 +1,20 @@
+# Phase 3.3 runtime + analysis dependencies (top level). The resolved lock is
+# written by make_env.sh to $P33_ENV_DIR/requirements.lock.sol.txt on Sol.
+#
+# torch: NOT listed. In overlay mode it comes from Sol's shared PyTorch env;
+# in standalone mode make_env.sh installs it from the PyTorch CUDA index.
+
+lark==1.3.1                  # the grammar recognizer; MISSING from Sol's shared env
+transformers>=4.46,<6        # scoring and generation
+huggingface_hub>=0.25        # download-only prefetch + offline snapshot resolution
+tokenizers>=0.19
+safetensors>=0.4
+numpy>=1.26                  # power simulation
+matplotlib>=3.8              # plots (loaded lazily; scoring never needs it)
+
+# Statistical package: NONE required. Bootstrap, logistic calibration,
+# Kaplan-Meier, Holm and power are implemented in numpy/stdlib (p33.h4,
+# p33.kstar, p33.power, phase3_2.analysis) and tested. Optional extras for
+# interactive analysis of the CSVs, never imported by the pipeline:
+pandas>=2.0
+scipy>=1.11

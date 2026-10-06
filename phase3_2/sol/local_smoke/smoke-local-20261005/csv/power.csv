@@ -1,0 +1,27 @@
+status,n_templates,analysis,hi,icc,lo,median_of_medians,pilot_mean,pilot_sd,power,reason,share_median_unreached,sites_per_template
+NOT RUN,,h4_criterion1,,,,,,,,no development H4 table (needs base AND instruct Arm A rows),,
+,20,rule_effect,,0,,,0.181757,1.39158,0.0885279,,,1.09
+,20,rule_effect,,0.05,,,0.181757,1.39158,0.0883065,,,1.09
+,20,rule_effect,,0.1,,,0.181757,1.39158,0.0880869,,,1.09
+,20,rule_effect,,0.2,,,0.181757,1.39158,0.0876535,,,1.09
+,40,rule_effect,,0,,,0.181757,1.39158,0.136284,,,1.09
+,40,rule_effect,,0.05,,,0.181757,1.39158,0.135857,,,1.09
+,40,rule_effect,,0.1,,,0.181757,1.39158,0.135434,,,1.09
+,40,rule_effect,,0.2,,,0.181757,1.39158,0.1346,,,1.09
+,80,rule_effect,,0,,,0.181757,1.39158,0.229715,,,1.09
+,80,rule_effect,,0.05,,,0.181757,1.39158,0.228877,,,1.09
+,80,rule_effect,,0.1,,,0.181757,1.39158,0.228046,,,1.09
+,80,rule_effect,,0.2,,,0.181757,1.39158,0.226407,,,1.09
+,160,rule_effect,,0,,,0.181757,1.39158,0.407348,,,1.09
+,160,rule_effect,,0.05,,,0.181757,1.39158,0.405831,,,1.09
+,160,rule_effect,,0.1,,,0.181757,1.39158,0.404327,,,1.09
+,160,rule_effect,,0.2,,,0.181757,1.39158,0.401352,,,1.09
+,320,rule_effect,,0,,,0.181757,1.39158,0.684525,,,1.09
+,320,rule_effect,,0.05,,,0.181757,1.39158,0.682557,,,1.09
+,320,rule_effect,,0.1,,,0.181757,1.39158,0.680598,,,1.09
+,320,rule_effect,,0.2,,,0.181757,1.39158,0.676704,,,1.09
+NOT RUN,,armb_conditional_precision,,,,,,,,no development Arm B hurdle estimates,,
+OK,40,kstar_km_median_precision,6.78877,,1.70649,6.78877,,,,,0.065,
+OK,80,kstar_km_median_precision,6.78877,,1.70649,6.78877,,,,,0.025,
+OK,160,kstar_km_median_precision,6.78877,,6.78877,6.78877,,,,,0,
+OK,320,kstar_km_median_precision,6.78877,,6.78877,6.78877,,,,,0,

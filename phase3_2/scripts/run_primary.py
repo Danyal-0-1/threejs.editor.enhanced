@@ -1,25 +1,18 @@
-"""run_primary.py — the PRIMARY estimand (extinction curves) + paraphrase
-robustness, both on real weights.
+"""run_primary.py — DEPRECATED wrapper over the corrected Phase 3.3 pipeline.
 
-    python3 scripts/run_primary.py --models Qwen/Qwen2.5-Coder-0.5B \
-        --sites 120 --json outputs/primary.json
+The original runner had three stop-ship defects, fixed in `sol/src/p33`:
 
-Two things that had never been run on a real model:
+  P33-006  one rule table and one example pool from `--lexicons[0]` for all sites
+  P33-008  demonstrations = the first 32 templates, so 82 of 120 sites saw
+           their own target program (the pre-freeze k* is withdrawn, D3)
+  P33-007  k* left already-correct sites as None, took later re-crossings,
+           and marked crossed-then-dropped curves as censored
 
-  EXTINCTION CURVES -- `k*`, the number of in-context examples at which
-  `M_seq` crosses zero. This is the DECLARED PRIMARY ESTIMAND of the whole
-  programme (see `phase3/phase3_explained/02 section 6`) and until now it
-  existed only as code exercised by a fake model. A threshold on the x-axis is
-  far more robust to monotone rescaling of the y-axis than a
-  difference-of-differences, which is why it is primary.
+This file now runs `p33.pipeline` with experiment "primary": leakage-free
+nested demonstrations, every rung saved, the corrected k* computed at export,
+and the development split lock enforced.
 
-  PARAPHRASE ROBUSTNESS -- every number so far rests on ONE rule phrasing.
-  Three framings carry the identical rendered table. If the effect moves
-  materially across them, the finding is about the wording.
-
-Censoring is reported, never dropped: a curve still negative at the top rung
-has `k_star = None`, and discarding those would bias `k*` downward exactly
-where the prior is strongest.
+    python3 scripts/run_primary.py --lexicons d50s1 --sites 120 --json out.json
 """
 
 from __future__ import annotations
@@ -27,149 +20,53 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import platform
-import statistics as st
 import sys
 import time
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
-    os.path.abspath(__file__))), "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sol", "src"))
 
-from phase3_2 import _vendor  # noqa: E402
-
-import phi as P  # noqa: E402
-
-from phase3_2 import prompts, sampling, sites2 as S, templates as TM  # noqa: E402
-from phase3_2.backends import BACKENDS  # noqa: E402
-from phase3_2.margins import TokenScorer, divergent_margin  # noqa: E402
-
-LADDER = (0, 1, 2, 4, 8, 16, 32)
-
-
-def collect(lexicons, families):
-    ident = P.identity_phi()
-    temps = TM.build_templates()
-    out = []
-    for fam in families:
-        be = BACKENDS[fam]
-        for pid in lexicons:
-            lex = P.load_candidate(pid)
-            for t in temps:
-                try:
-                    out += [s for s in S.classify(be.render(t.ir, lex), lex, be,
-                                                  template_id=t.template_id,
-                                                  identity=ident) if s.is_usable]
-                except Exception:
-                    continue
-    return out
-
-
-def interpolate(xs, ys):
-    """First upward zero crossing, interpolated in x. None => censored."""
-    for i in range(1, len(xs)):
-        y0, y1 = ys[i - 1], ys[i]
-        if y0 < 0.0 <= y1:
-            if y1 == y0:
-                return float(xs[i])
-            t = (0.0 - y0) / (y1 - y0)
-            return float(xs[i - 1]) + t * (xs[i] - xs[i - 1])
-    return None
+import p33  # noqa: E402,F401
+from p33 import config as CFG, pipeline as PL, splits  # noqa: E402
 
 
 def main(argv):
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--models", nargs="*", default=["Qwen/Qwen2.5-Coder-0.5B"])
     ap.add_argument("--lexicons", nargs="*", default=["d50s1"])
-    ap.add_argument("--families", nargs="*", default=["dom", "blk"])
+    ap.add_argument("--families", nargs="*", default=["dom"])
     ap.add_argument("--sites", type=int, default=120)
     ap.add_argument("--skip-paraphrase", action="store_true")
-    ap.add_argument("--skip-extinction", action="store_true")
     ap.add_argument("--json", default=None)
-    args = ap.parse_args(argv)
-
-    _vendor.assert_self_contained()
-    _vendor.assert_scorer_repaired()
-
-    lex = P.load_candidate(args.lexicons[0])
-    temps = TM.build_templates()
-    pool = collect(args.lexicons, args.families)
-    sites = sampling.balanced(pool, args.sites)
-    sampling.assert_balanced(sites, families=args.families)
-    counts = sampling.cell_counts(sites)
-    print(f"sites: {counts['n']}  {counts['by_family']}  {counts['by_stratum']}")
-
-    out = {"sample": counts, "ladder": list(LADDER),
-           "env": {"python": platform.python_version(),
-                   "platform": platform.platform(),
-                   "dtype": os.environ.get("PHASE3_DTYPE", "float16")},
-           "paraphrase": [], "extinction": []}
-
-    for mid in args.models:
-        scorer = TokenScorer(mid, dtype=out["env"]["dtype"])
-
-        # ---- paraphrase robustness -------------------------------------
-        if not args.skip_paraphrase:
-            print(f"\n=== paraphrase robustness: {mid} ===")
-            print(f"  {'variant':8s} {'family':6s} {'n':>4s} {'mean':>8s} "
-                  f"{'median':>8s} {'revert':>7s}")
-            for which in prompts.PARAPHRASES:
-                rule = prompts.paraphrase(lex, which)
-                for fam in sorted({sampling.family_of(s) for s in sites}):
-                    rows = []
-                    for s in [x for x in sites if sampling.family_of(x) == fam]:
-                        m = divergent_margin(scorer, s, rule=rule)
-                        rows.append(m.m_seq)
-                        out["paraphrase"].append(
-                            {"model": mid, "variant": which, "family": fam,
-                             "site_id": s.site_id, "stratum": S.stratum(s),
-                             "template": s.template_id, "lexicon": s.phi_id,
-                             "m_seq": m.m_seq, "merged": m.merged,
-                             "k_common": m.k_common})
-                    print(f"  {which:8s} {fam:6s} {len(rows):4d} "
-                          f"{st.mean(rows):+8.3f} {st.median(rows):+8.3f} "
-                          f"{sum(x < 0 for x in rows)/len(rows):7.3f}")
-
-        # ---- extinction curves -----------------------------------------
-        if not args.skip_extinction:
-            print(f"\n=== extinction curves (PRIMARY estimand): {mid} ===")
-            rule = prompts.rule_prompt(lex)
-            t0 = time.time()
-            for fam in sorted({sampling.family_of(s) for s in sites}):
-                be = BACKENDS[fam]
-                ex = prompts.examples_for(lex, be, temps, max(LADDER))
-                ks, cens = [], 0
-                for s in [x for x in sites if sampling.family_of(x) == fam]:
-                    ys = [divergent_margin(scorer, s, rule=rule, shots=k,
-                                           examples=ex).m_seq for k in LADDER]
-                    k_star = interpolate(LADDER, ys)
-                    if k_star is None and ys[-1] < 0:
-                        cens += 1
-                    if k_star is not None:
-                        ks.append(k_star)
-                    out["extinction"].append(
-                        {"model": mid, "family": fam, "site_id": s.site_id,
-                         "stratum": S.stratum(s), "template": s.template_id,
-                         "margins": ys, "k_star": k_star,
-                         "censored": ys[-1] < 0})
-                n = len([x for x in sites if sampling.family_of(x) == fam])
-                already = sum(1 for r in out["extinction"]
-                              if r["family"] == fam and r["model"] == mid
-                              and r["margins"][0] >= 0)
-                print(f"  {fam}: n={n}  already-correct at 0 shots={already}  "
-                      f"crossed={len(ks)}  censored(still negative at "
-                      f"{max(LADDER)})={cens}")
-                if ks:
-                    print(f"        k* median={st.median(ks):.2f} "
-                          f"mean={st.mean(ks):.2f}")
-            print(f"  ({time.time()-t0:.0f}s)")
-
-    if args.json:
-        with open(args.json, "w", encoding="utf-8") as fh:
-            json.dump(out, fh, indent=1)
-        print(f"\nwrote {args.json}  "
-              f"({len(out['paraphrase'])} paraphrase rows, "
-              f"{len(out['extinction'])} curves)")
-    return 0
+    ap.add_argument("--run", default=None)
+    a = ap.parse_args(argv)
+    print("NOTE: run_primary.py is a deprecated wrapper over sol/src/p33 (see its docstring).",
+          file=sys.stderr)
+    cfg = CFG.RunConfig(run_id=a.run or f"dev-legacy-{int(time.time())}", stage="dev",
+                        models=a.models, families=a.families, lexicons=a.lexicons)
+    cfg.primary["site_limit"] = a.sites
+    if a.skip_paraphrase:
+        cfg.primary["paraphrases"] = []
+    try:
+        splits.enforce_config(cfg)
+    except splits.SplitViolation as exc:
+        print(f"REFUSED: {exc}")
+        return 2
+    sol = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sol", "scripts", "p33.py")
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("p33cli", sol)
+    cli = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli)
+    rd = CFG.run_dir(cfg.run_id)
+    CFG.ensure_run_layout(rd)
+    from p33 import shards
+    shards.assert_compatible(rd, cfg)
+    pins = cli.load_pins(cfg, argparse.Namespace(pins=None))
+    st = PL.run(cfg, rd, "primary", scorer_factory=cli.scorer_factory(cfg, pins), pins=pins)
+    res = PL.merge(cfg, rd, "primary", pins=pins)
+    print(f"primary: {st}; merged {len(res.rows)} rows -> {rd}/merged/primary.jsonl")
+    if a.json:
+        json.dump({"status": res.status, "run_dir": rd, "rows": res.rows}, open(a.json, "w"), indent=1)
+    return cli.EXIT.get(st, 1)
 
 
 if __name__ == "__main__":

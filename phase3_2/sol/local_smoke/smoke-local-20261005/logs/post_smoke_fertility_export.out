@@ -1,0 +1,9 @@
+[2026-10-05T17:42:26-07:00] post-smoke: tokenizer-only fertility + export regeneration (no model weights loaded, nothing re-scored)
+fertility: 2 rows across 1 tokenizer(s) -> /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005/manifests/fertility.json
+fertility exit=0
+export: 19 CSVs, 24 plot files, 10 reports -> /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005
+export exit=0
+
+[2026-10-05T22:01:06-07:00] export regenerated with the final code (no model loaded, nothing re-scored)
+export: 19 CSVs, 24 plot files, 10 reports -> /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005
+export exit=0

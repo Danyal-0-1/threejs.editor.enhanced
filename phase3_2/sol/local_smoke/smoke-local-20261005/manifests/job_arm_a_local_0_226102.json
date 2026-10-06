@@ -1,0 +1,229 @@
+{
+ "artifacts": {},
+ "command": [
+  "scripts/p33.py",
+  "smoke",
+  "--config",
+  "configs/local_smoke.json",
+  "--run",
+  "smoke-local-20261005",
+  "--allow-non-a100"
+ ],
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": true,
+  "analysis": {
+   "B": 200,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 4,
+  "dtype": "bfloat16",
+  "families": [
+   "dom"
+  ],
+  "freeze_path": null,
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d50s1"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "Qwen/Qwen2.5-Coder-0.5B"
+  ],
+  "note": "Laptop smoke (RTX 3080 Ti): identical to smoke.json; A100 check waived and recorded.",
+  "primary": {
+   "demo_pool": 48,
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 6
+  },
+  "run_id": "smoke-local-20261005",
+  "schema_version": "p33/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 12,
+  "stage": "smoke"
+ },
+ "config_hash": "190fbc72fc747e109582e4fd29ad6a4c5b6241dd267667fd2a08ef4e565c65bb",
+ "cwd": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol",
+ "disk_free_gb": {
+  "hf_root": 610.2,
+  "results": 610.2
+ },
+ "dtype": "bfloat16",
+ "end_utc": "2026-10-06T00:17:42+00:00",
+ "experiment": "arm_a",
+ "git_commit": "699dfdbd03773f3d889579d59b652e9d12785a8c",
+ "git_dirty": true,
+ "gpu": {
+  "bf16_supported": true,
+  "cuda_available": true,
+  "cuda_runtime": "13.0",
+  "device_mem_gb": 15.6,
+  "device_name": "NVIDIA GeForce RTX 3080 Ti Laptop GPU",
+  "nvidia_smi": "NVIDIA GeForce RTX 3080 Ti Laptop GPU, 595.91.07, 16384 MiB, 14730 MiB",
+  "torch": "2.14.0+cu130"
+ },
+ "hf_env": {
+  "HF_HOME": null,
+  "HF_HUB_CACHE": null,
+  "HF_HUB_OFFLINE": "1",
+  "TRANSFORMERS_CACHE": null,
+  "TRANSFORMERS_OFFLINE": "1"
+ },
+ "job": {
+  "array_task_id": null,
+  "job_id": null,
+  "node": "mesquite-Alienware-m15-R7",
+  "pid": 226102
+ },
+ "lm_head_fp32": true,
+ "materials_hashes": {
+  "blk_grammar": "3070a10af2f960c018b72dfbdf4525d42cb2d35e3ce0693c3d17c0535baea4f3",
+  "phi_d50s1.json": "b6fc5fdb764d85578b7f381e3e0d8182ea105919b4a8e12ed62e020916284b0b",
+  "templates": "482a72a7b0e27b2b29e8a6af3001ccaedb2ef8457c2e24b23172cabc84dc8e78",
+  "terminals.json": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5"
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "n_cells": 9,
+   "n_todo": 9,
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "snapshot_path": "/home/mesquite/.cache/huggingface/hub/models--Qwen--Qwen2.5-Coder-0.5B/snapshots/8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "tokenizer_id": "cc349caf59f0697a"
+  }
+ },
+ "packages": {
+  "accelerate": "MISSING",
+  "huggingface_hub": "1.29.0",
+  "lark": "1.3.1",
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.2",
+  "platform": "Linux-7.0.0-34-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "safetensors": "0.8.0",
+  "tokenizers": "0.23.1",
+  "transformers": "5.16.1"
+ },
+ "prompt_hashes": {
+  "d50s1/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d50s1/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d50s1/rule": "9668e9c3a58c94ac3fc1b1db7eede01ec995c8a80fac2ed143b7e0b8b40b6c92"
+ },
+ "run_id": "smoke-local-20261005",
+ "schema_version": "p33/1",
+ "seeds": {
+  "bootstrap": 20261002,
+  "demo_order": 20261005,
+  "h5_random": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "power": 20261006
+ },
+ "slurm": {
+  "account": null,
+  "array_job_id": null,
+  "array_task_id": null,
+  "cpus": null,
+  "job_id": null,
+  "node": null,
+  "partition": null,
+  "qos": null
+ },
+ "source_hashes": {
+  "phase3/src/phase3/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3/src/phase3/_vendor.py": "ae21d0ceef96c65b9984e3e96b2e0abc6f1fc74b180a5fd8f44c2630f4fb843d",
+  "phase3/src/phase3/linter.py": "6f24ee1d3d600ea3c9fb6cb1f56549271ee4f846cf1955e276ff75f0dcfd8bb5",
+  "phase3/src/phase3/models.py": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62",
+  "phase3/src/phase3/outcomes.py": "4d65ebf704b4c05530703b19fc06d8314389a7f99fd0e80bb652b1bfef8ef7b5",
+  "phase3/src/phase3/scoring.py": "7de5a6aff42b4c7e34629f53f5e03e88bb6bab1314f747de146bdc4b8fb149d6",
+  "phase3/src/phase3/sites.py": "3becc24107e000a89850ab1519c99d77040af22807755dcc3ab12e7166ff4a00",
+  "phase3_2/sol/src/p33/__init__.py": "9e9ccb9af6e24df7c43f4246bde50d04f609322ba72c5a461e1858957736811c",
+  "phase3_2/sol/src/p33/_paths.py": "30649b9fc8d8a33324c18d417d558f2e12196e5052af54e750d26a77d26b6c9c",
+  "phase3_2/sol/src/p33/armb.py": "c262de4e6d82fddf7df3067d586cd47b3103459a0429ec992135e9c796dd88f1",
+  "phase3_2/sol/src/p33/config.py": "04441f5c6f3f7d8edbcb18d9132c28fff1debc2c494aeaed7dbac763ec89251d",
+  "phase3_2/sol/src/p33/demos.py": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c",
+  "phase3_2/sol/src/p33/export.py": "4977822e6104631c28530784199f378ce89f8c6f9f13310e8cbdc05a6e78bb25",
+  "phase3_2/sol/src/p33/fakes.py": "0173b6a9a98e6681e9f202da0cfb7570084db797fe722154cb48ffe9b340851c",
+  "phase3_2/sol/src/p33/fertility.py": "3497a1e29c10000f7e45a0c85c2b54ea2325608dbdd043010c2407da3c2d72d8",
+  "phase3_2/sol/src/p33/freeze.py": "8f65b6399656091e2168c8e74483e6e46efbb25bc4089abc0bfc6825a3dc01cf",
+  "phase3_2/sol/src/p33/h2.py": "071acee006b7f6c249fbd72f254f5de2cb103d744a19dc2ee8c0c2bf68c185d1",
+  "phase3_2/sol/src/p33/h4.py": "00e6a9ac6a5db2a0ff4234e2946772eaca6aeaeaf65f2461475e36e32de6db05",
+  "phase3_2/sol/src/p33/h5.py": "a888a2bd32df22afe475724a1717351f01be164c8a6f4502d00fed44074274c3",
+  "phase3_2/sol/src/p33/kstar.py": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c",
+  "phase3_2/sol/src/p33/pipeline.py": "2ccce13bc338bc8f988b027e55c851f6db8c16b4ddbd8812b47cbd53a9e97a8d",
+  "phase3_2/sol/src/p33/plots.py": "f6dea1f46024feb1016bff506fc4ffaf518b880e1db89e1ae448acd17a004f6e",
+  "phase3_2/sol/src/p33/power.py": "7cbae01e347391014333a7cc8150a5f3a38e4e704c95e950fd23da0b07dfb43d",
+  "phase3_2/sol/src/p33/prefetch.py": "30590ccbdc721d93eb44f20cde9fcef9846433a046fa2956f614abd8e97ade66",
+  "phase3_2/sol/src/p33/preflight.py": "f1cff3cff33fa2efbb21bbfab917baeac0f6f4f85ec645e91ac2cd8b9a0ac9c8",
+  "phase3_2/sol/src/p33/provenance.py": "fc000ce8625cc7f62e6a6768de0e152b4c784bcfdd23a3a299b692fb386a09f5",
+  "phase3_2/sol/src/p33/registry.py": "b96a461bb2db2ee2e50754b7aeb88a76e5cdee15dbac2fc3c4d21f8d80bde363",
+  "phase3_2/sol/src/p33/reports.py": "739e10acdb55f3d146a9f9364ee99f945eb292360e0b74696db061ed595c589a",
+  "phase3_2/sol/src/p33/scorers.py": "abff183b32e08f5157b217796b1a91977aaf437dedc9bfce57a1ae707e420ff9",
+  "phase3_2/sol/src/p33/shards.py": "538027179ae1eeb9f31c2466e7bed60ee2519dbb2f233e8bc533ca7f116971f5",
+  "phase3_2/sol/src/p33/splits.py": "33e944487aced940c793cdf400c3f9a1055a9e738b3fdf277bca7c751846cb0b",
+  "phase3_2/src/phase3_2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3_2/src/phase3_2/_vendor.py": "4988993a46ad290d46486d0299263479f68fa593c601ee4e869d2e18faeb1f81",
+  "phase3_2/src/phase3_2/analysis.py": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246",
+  "phase3_2/src/phase3_2/backends.py": "4634f572050a4bc9c81638c719253a715dd404f79e346783c698dbc613397ad3",
+  "phase3_2/src/phase3_2/deltafam.py": "25629c036b4c54507ee0766f1b2de1ca4e9dd3b9b7a5e603e1afbcd32b1f49c9",
+  "phase3_2/src/phase3_2/margins.py": "3ecdbeb79a0a55f9878eed6bb07bc4db8c45f1e13836b692cd3dfa6ba80bb52d",
+  "phase3_2/src/phase3_2/prompts.py": "e561b526dce1c0a06e8774fbcc181b8af9c0b40a117e3134d6dedf05fd7a4a4d",
+  "phase3_2/src/phase3_2/runmeta.py": "0e988aadc7022d61b80cca20e10e8cf5f9c7e36fd59750e5d74eb95eab0021ee",
+  "phase3_2/src/phase3_2/sampling.py": "a674d2ae65f9ae3cee28d42d0934e9cb25a5880cdcdcbc2a01575df533b7f248",
+  "phase3_2/src/phase3_2/sites2.py": "97f5abbb476d37e723b53fc13acc57396322ff212a94ac4291c1b0d4091f648d",
+  "phase3_2/src/phase3_2/templates.py": "f9c4658f761d948d285438664d1dedcbfb0b9441a360a67efb20bbe33324714f"
+ },
+ "stage": "smoke",
+ "start_utc": "2026-10-06T00:17:36+00:00",
+ "status": "COMPLETE"
+}

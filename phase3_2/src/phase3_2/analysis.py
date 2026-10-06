@@ -84,18 +84,36 @@ class Interval:
         return (self.lo > 0) or (self.hi < 0)
 
 
+def _draw_rows(buckets: dict, keys: Sequence[str], drawn: Sequence[int]) -> list[dict]:
+    """Rows for one resample, each tagged with its DRAW POSITION.
+
+    P33-005: the first version concatenated the drawn clusters' rows as-is.
+    Any statistic that re-keys rows by `site_id` (pairing rule with no-rule)
+    then silently collapsed a cluster drawn twice into one copy, so the
+    resample was effectively drawn WITHOUT replacement. Tagging each copy with
+    `_draw` keeps duplicates distinct, so a cluster drawn twice counts twice.
+    """
+    out: list[dict] = []
+    for pos, ki in enumerate(drawn):
+        for r in buckets[keys[ki]]:
+            out.append({**r, "_draw": pos})
+    return out
+
+
 def cluster_bootstrap(rows: Sequence[dict], stat: Callable[[Sequence[dict]], float],
                       *, unit: str = "template", B: int = 2000,
-                      seed: int = 20261002, alpha: float = 0.05) -> Interval | None:
+                      seed: int = 20261002, alpha: float = 0.05,
+                      min_clusters: int = 8, return_draws: bool = False):
     """Percentile bootstrap resampling whole CLUSTERS, not rows.
 
-    `unit` names the row field to cluster on -- "template" or "lexicon".
-    Clusters are drawn with replacement and contribute all of their rows, so
-    the within-cluster correlation is preserved rather than averaged away.
+    `unit` names the row field to cluster on ("template" or "lexicon").
+    Clusters are drawn with replacement and contribute all of their rows,
+    tagged with a draw position so duplicates keep their weight (P33-005).
 
-    Returns None when there are too few clusters for the interval to mean
-    anything. With fewer than ~8 clusters the percentile bootstrap is
-    badly behaved, and reporting a number would be worse than reporting none.
+    Returns None below `min_clusters` clusters: with fewer, the percentile
+    bootstrap is unreliable, and no interval is better than a misleading one.
+    With `return_draws=True` returns (Interval, draws) for p-values and
+    differences.
     """
     if not rows:
         return None
@@ -103,26 +121,47 @@ def cluster_bootstrap(rows: Sequence[dict], stat: Callable[[Sequence[dict]], flo
     for r in rows:
         buckets[r[unit]].append(r)
     keys = sorted(buckets)
-    if len(keys) < 8:
+    if len(keys) < min_clusters:
         return None
 
     rng = random.Random(seed)
-    point = stat(rows)
+    try:
+        point = stat(rows)
+    except (ZeroDivisionError, st.StatisticsError, ValueError):
+        return None          # the statistic is undefined on the full data
     draws: list[float] = []
     for _ in range(B):
-        pick: list[dict] = []
-        for _ in range(len(keys)):
-            pick.extend(buckets[keys[rng.randrange(len(keys))]])
+        drawn = [rng.randrange(len(keys)) for _ in keys]
         try:
-            draws.append(stat(pick))
-        except (ZeroDivisionError, st.StatisticsError):
+            draws.append(stat(_draw_rows(buckets, keys, drawn)))
+        except (ZeroDivisionError, st.StatisticsError, ValueError):
             continue
     if len(draws) < B // 2:
         return None
     draws.sort()
     lo = draws[int(alpha / 2 * len(draws))]
     hi = draws[min(len(draws) - 1, int((1 - alpha / 2) * len(draws)))]
-    return Interval(point, lo, hi, len(rows), len(keys), unit)
+    iv = Interval(point, lo, hi, len(rows), len(keys), unit)
+    return (iv, draws) if return_draws else iv
+
+
+def bootstrap_pvalue_greater(draws: Sequence[float], null: float = 0.0) -> float:
+    """One-sided bootstrap p-value for H1: statistic > null. (+1 smoothing.)"""
+    n_le = sum(1 for d in draws if d <= null)
+    return (n_le + 1) / (len(draws) + 1)
+
+
+def holm(pvalues: dict[str, float]) -> dict[str, float]:
+    """Holm step-down adjusted p-values (the preregistered correction)."""
+    items = sorted(pvalues.items(), key=lambda kv: kv[1])
+    m = len(items)
+    out: dict[str, float] = {}
+    running = 0.0
+    for i, (name, p) in enumerate(items):
+        adj = min(1.0, (m - i) * p)
+        running = max(running, adj)
+        out[name] = running
+    return out
 
 
 # statistics, all written to take a row list so the bootstrap can reuse them
@@ -135,15 +174,16 @@ def reversion_rate(rows: Sequence[dict]) -> float:
 
 
 def paired_rule_effect(rows: Sequence[dict]) -> float:
-    """mean over sites of M_seq(rule) - M_seq(norule).
+    """mean over (draw, site) of M_seq(rule) - M_seq(norule).
 
-    Pairs are formed INSIDE the resample, so a template drawn twice
-    contributes its pairs twice -- which is the point of a cluster bootstrap.
+    Keyed on (`_draw`, site_id) so a cluster drawn twice contributes its pairs
+    twice. Outside a bootstrap `_draw` is absent and every site pairs once.
     """
-    idx: dict[str, dict[str, float]] = defaultdict(dict)
+    idx: dict[tuple, dict[str, float]] = defaultdict(dict)
     for r in rows:
-        idx[r["site_id"]][r["condition"]] = r["m_seq"]
-    d = [v["rule"] - v["norule"] for v in idx.values() if len(v) == 2]
+        idx[(r.get("_draw"), r["site_id"])][r["condition"]] = r["m_seq"]
+    d = [v["rule"] - v["norule"] for v in idx.values()
+         if "rule" in v and "norule" in v]
     if not d:
         raise st.StatisticsError("no paired sites")
     return st.mean(d)

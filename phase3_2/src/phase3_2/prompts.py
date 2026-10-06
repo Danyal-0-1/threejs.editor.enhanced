@@ -199,3 +199,93 @@ def examples_for(phi, backend, templates, n: int) -> list[str]:
         if len(out) >= n:
             break
     return out
+
+
+# ---------------------------------------------------------------------------
+# P33-006: one prompt per LEXICON, verified against every site
+# ---------------------------------------------------------------------------
+# The first Phase 3.2 runners rendered the rule table ONCE, from the first
+# lexicon on the command line, and reused it for sites from every other
+# lexicon. A `d50s2` site was then scored against `d25s1`'s table -- the model
+# was told one mapping and graded against another, which looks exactly like
+# reversion. `PromptBundle` carries the lexicon it was rendered from, and
+# `assert_prompt_matches` refuses any site/prompt pairing that disagrees.
+
+import hashlib as _hashlib
+from dataclasses import dataclass as _dataclass
+
+NEUTRAL_FILLER = "  (this line intentionally carries no token information)\n"
+
+
+@_dataclass(frozen=True)
+class PromptBundle:
+    condition: str          # rule | norule | norule_lenmatched | p0 | p1 | p2
+    phi_id: str
+    text: str
+
+    @property
+    def sha(self) -> str:
+        return _hashlib.sha256(self.text.encode("utf-8")).hexdigest()
+
+    @property
+    def carries_table(self) -> bool:
+        return "TOKEN TABLE" in self.text
+
+
+def norule_lenmatched(phi: P.PhiMap, count_tokens) -> str:
+    """The no-rule control padded with neutral lines to the rule prompt's length.
+
+    The plain `norule` control is ~33% shorter (1,014 vs 1,527 chars), so a
+    rule-vs-norule difference is partly a context-length difference. This
+    variant appends a fixed, content-free line until its token count reaches
+    the rule prompt's under the SAME tokenizer. It is tokenizer-specific by
+    construction, so the runner records the token counts of both.
+    """
+    target = count_tokens(rule_prompt(phi))
+    text = norule_prompt(phi)
+    guard = 0
+    while count_tokens(text) < target and guard < 400:
+        text = text.replace("\nWrite 3DOM using the correct spellings.\n",
+                            NEUTRAL_FILLER + "\nWrite 3DOM using the correct spellings.\n", 1)
+        guard += 1
+    return text
+
+
+def bundle(condition: str, phi: P.PhiMap, *, count_tokens=None) -> PromptBundle:
+    """Render the prompt for (condition, lexicon). The only constructor runners use."""
+    if condition == "rule":
+        text = rule_prompt(phi)
+    elif condition == "norule":
+        text = norule_prompt(phi)
+    elif condition == "norule_lenmatched":
+        if count_tokens is None:
+            raise ValueError("norule_lenmatched needs the scorer's tokenizer")
+        text = norule_lenmatched(phi, count_tokens)
+    elif condition in _FRAMINGS:
+        text = paraphrase(phi, condition)
+    else:
+        raise KeyError(f"unknown prompt condition {condition!r}")
+    return PromptBundle(condition, phi.phi_id, text)
+
+
+def assert_prompt_matches(site, phi: P.PhiMap, prompt: PromptBundle) -> None:
+    """Refuse any disagreement between a site, its lexicon and its prompt."""
+    if site.phi_id != phi.phi_id:
+        raise AssertionError(f"site {site.site_id} is from {site.phi_id!r} "
+                             f"but was paired with lexicon {phi.phi_id!r}")
+    if prompt.phi_id != phi.phi_id:
+        raise AssertionError(f"prompt rendered for {prompt.phi_id!r} used for a "
+                             f"{phi.phi_id!r} site ({site.site_id}) -- P33-006")
+    if site.correct != phi.spelling(site.terminal_id):
+        raise AssertionError(f"site {site.site_id}: correct {site.correct!r} != "
+                             f"phi spelling {phi.spelling(site.terminal_id)!r}")
+    if prompt.carries_table:
+        label = ROLE_LABEL.get(site.terminal_id)
+        if label is not None:
+            line = f"  {label:34s} {phi.spelling(site.terminal_id)}\n"
+            if line not in prompt.text:
+                raise AssertionError(
+                    f"rule table does not state {site.terminal_id} = "
+                    f"{phi.spelling(site.terminal_id)!r} for site {site.site_id}")
+    elif prompt.condition in ("rule",) + PARAPHRASES:
+        raise AssertionError(f"condition {prompt.condition!r} must carry the table")

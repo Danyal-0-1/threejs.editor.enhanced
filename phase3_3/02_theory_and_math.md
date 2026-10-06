@@ -1,5 +1,8 @@
 # 02 — Theory and mathematics behind the new results
 
+> ⚠️ **ERRATUM (2026-10-05) — read [`ERRATA.md`](ERRATA.md) first.** The `k*` ≈ 5–7 result below is **withdrawn** (82/120 sites saw their own target program among the demonstrations, plus two definition errors), and the rule-effect intervals are **corrected** (all four now include zero). `blk` is not a clean held-out grammar family.
+
+
 > Full definitions live in `../phase3/phase3_explained/02_*` and
 > `../phase3_2/phase3_2_explained/02_*`. This covers only what the new
 > analyses require.

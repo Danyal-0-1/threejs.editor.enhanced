@@ -176,11 +176,33 @@ def build(density: float, seed: int, *, mode: str = "strict",
     return blob, member
 
 
+def _material(blob: dict) -> dict:
+    """The blob minus its `generated` timestamp, normalised through JSON."""
+    return {k: v for k, v in json.loads(json.dumps(blob)).items() if k != "generated"}
+
+
 def write(blob: dict) -> str:
+    """Write one member -- idempotently and atomically (P33-011).
+
+    The test suite and `build_materials.py` rebuild the whole family. A plain
+    rewrite stamped a fresh `generated` time on nine TRACKED files every run,
+    which changed their sha256: a run's materials check then reported
+    "materials CHANGED" mid-run, and a scoring job reading a lexicon while
+    the CPU tests rewrote it could see a truncated file. Now an unchanged
+    member is left untouched, and a changed one is replaced via os.replace.
+    """
     path = os.path.join(OUT_DIR, f"phi_{blob['phi_id']}.json")
-    with open(path, "w", encoding="utf-8") as fh:
+    try:
+        with open(path, encoding="utf-8") as fh:
+            if _material(json.load(fh)) == _material(blob):
+                return path
+    except (OSError, ValueError):
+        pass
+    tmp = f"{path}.tmp.{os.getpid()}"
+    with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(blob, fh, indent=1, ensure_ascii=False)
         fh.write("\n")
+    os.replace(tmp, path)
     return path
 
 

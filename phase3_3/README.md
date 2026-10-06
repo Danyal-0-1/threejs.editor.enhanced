@@ -1,5 +1,8 @@
 # Phase 3.3 — next steps executed, results, and Sol readiness
 
+> ⚠️ **ERRATUM (2026-10-05) — read [`ERRATA.md`](ERRATA.md) first.** The `k*` ≈ 5–7 result below is **withdrawn** (82/120 sites saw their own target program among the demonstrations, plus two definition errors), and the rule-effect intervals are **corrected** (all four now include zero). `blk` is not a clean held-out grammar family.
+
+
 **Code stays in [`../phase3_2/`](../phase3_2/)** — almost all of it was
 already there, and holding the measurement code fixed while the analysis
 changes is the design. This directory holds the **reports, the results, and a

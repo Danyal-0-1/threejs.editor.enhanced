@@ -1,5 +1,8 @@
 # 01 — Changes and results (rigorous)
 
+> ⚠️ **ERRATUM (2026-10-05) — read [`ERRATA.md`](ERRATA.md) first.** The `k*` ≈ 5–7 result below is **withdrawn** (82/120 sites saw their own target program among the demonstrations, plus two definition errors), and the rule-effect intervals are **corrected** (all four now include zero). `blk` is not a clean held-out grammar family.
+
+
 The precise version of `00_results_in_plain_language.md`. Code lives in
 `../phase3_2/`; this directory holds the reports and a snapshot of the data.
 

@@ -1,5 +1,8 @@
 # 00 — What we found, in plain language
 
+> ⚠️ **ERRATUM (2026-10-05) — read [`ERRATA.md`](ERRATA.md) first.** The `k*` ≈ 5–7 result below is **withdrawn** (82/120 sites saw their own target program among the demonstrations, plus two definition errors), and the rule-effect intervals are **corrected** (all four now include zero). `blk` is not a clean held-out grammar family.
+
+
 Every important result below comes with a **mental image**. Read the images
 first; the numbers and the maths are underneath each one. Nothing here is
 simplified to the point of being wrong — where a result is shaky, it says so.

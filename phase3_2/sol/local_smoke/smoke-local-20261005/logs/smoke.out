@@ -1,0 +1,19 @@
+initialised /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005 (config 190fbc72fc74)
+  [PASS] scheduler              not inside Slurm (local run)
+  [PASS] nvidia_smi             NVIDIA GeForce RTX 3080 Ti Laptop GPU, 595.91.07, 16384 MiB, 14927 MiB
+  [PASS] torch_cuda             torch 2.14.0+cu130, CUDA runtime 13.0
+  [PASS] a100                   NVIDIA GeForce RTX 3080 Ti Laptop GPU (waived: allow_non_a100)
+  [PASS] bf16                   bfloat16 support
+  [PASS] gpu_memory             free 14.4 GiB of 15.6 GiB
+  [PASS] results_space          610.2 GiB free at /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005 (need 2.0)
+  [PASS] hf_cache_space         610.2 GiB free at /home/mesquite/.cache/huggingface (need 5.0)
+  [PASS] output_writable        /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005
+  [PASS] model:Qwen/Qwen2.5-Coder-0.5B local 8123ea2e9354 pinned 8123ea2e9354
+  [PASS] materials              first job in this run; hashes recorded now
+  [PASS] split_permission       1 cells allowed for stage smoke: ['DEVELOPMENT']
+smoke arm_a: COMPLETE
+smoke primary: COMPLETE
+merge arm_a    COMPLETE  rows=    36 done=9/9 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows=    48 done=8/8 missing=0 failed=0 corrupt=0 dup_dropped=0
+export: 19 CSVs, 24 plot files, 10 reports -> /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_2/sol/local_smoke/smoke-local-20261005
+exit=0

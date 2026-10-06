@@ -190,7 +190,16 @@ class HFModel:
         pre_ids = tok(prefix, add_special_tokens=False)["input_ids"]
         all_ids = tok(prefix + continuation, add_special_tokens=False)["input_ids"]
         if len(all_ids) <= len(pre_ids):
-            return 0.0
+            # P32-001 / P33-001: this branch used to `return 0.0`. BPE merges
+            # the continuation into the preceding token for ~44% of real sites,
+            # so 0.0 was returned for BOTH candidates and the site scored as
+            # "no reversion" -- a silent false null. A zero-length span is not
+            # a measurement. Fail loudly; use phase3_2.margins.TokenScorer,
+            # which scores both candidates from the first divergent token.
+            raise ValueError(
+                "zero-length continuation span: the continuation merged into "
+                "the prefix's last token. This path cannot score it; use "
+                "phase3_2.margins.TokenScorer.score_pair_detailed.")
         ids = torch.tensor([all_ids], device=self.device)
         with torch.no_grad():
             logits = model(ids).logits.float()
