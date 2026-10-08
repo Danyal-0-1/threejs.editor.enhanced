@@ -196,12 +196,18 @@ def _md(out: dict, meta: dict) -> str:
          "- `blk` cells are HELDOUT-WEAK-FAMILY (D1); the 3B pair is HELDOUT-WEAKENED (D2)", "",
          "| family | outcome | models | slope per 10x size | 95% CI | p (two-sided) | p (Holm) |",
          "|---|---|---|---:|---|---:|---:|"]
+    m = sum(1 for r in out["results"] if r["status"] == "ESTIMATED")
+
+    def fmt(p, floor):   # a bootstrap p of 0 only says "below the resolution 1/B"
+        return f"< {floor:.4f}" if p == 0 else f"{p:.4f}"
     for r in out["results"]:
         if r["status"] != "ESTIMATED":
             s.append(f"| {r['family']} | {r['outcome']} | {r['kind']} | {r['status']} | {r['detail']} | | |")
             continue
+        floor = 1 / r["replicates_used"]
         s.append(f"| {r['family']} | {r['outcome']} | {r['kind']} | {r['slope_per_log10_size']:+.4f} | "
-                 f"[{r['ci_lo']:+.4f}, {r['ci_hi']:+.4f}] | {r['p_two_sided']:.4f} | {r['p_holm']:.4f} |")
+                 f"[{r['ci_lo']:+.4f}, {r['ci_hi']:+.4f}] | {fmt(r['p_two_sided'], floor)} | "
+                 f"{fmt(r['p_holm'], min(1.0, m * floor))} |")
     s += ["", "## Per size", "", "| family | outcome | models | " +
           " | ".join(f"{x:g}B" for x in out["ladder_sizes_b"]) + " |",
           "|---|---|---|" + "---|" * len(out["ladder_sizes_b"])]

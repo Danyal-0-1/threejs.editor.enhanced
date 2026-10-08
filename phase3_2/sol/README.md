@@ -5,6 +5,7 @@ order the code permits.
 
 | For | Read |
 |---|---|
+| **the whole experiment in one file: hypotheses, math, one site traced through every step with its code, results** | [`EXPERIMENT_IN_ONE_FILE.md`](EXPERIMENT_IN_ONE_FILE.md) |
 | why each step exists | [`sol_experiment_explained/`](sol_experiment_explained/) |
 | what was wrong and how it was verified | [`AUDIT.md`](AUDIT.md) |
 | which parts of the original brief were corrected or not done | [`PROMPT_REVIEW.md`](PROMPT_REVIEW.md) |
