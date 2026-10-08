@@ -327,3 +327,6 @@ pending the investigator's review. Any change made after held-out outcomes are
 seen would be post hoc and must be labelled so. Size is not randomized: within
 the ladder the tokenizer and training recipe are fixed, but other differences
 between sizes remain, so a trend is an association.
+
+**Review.** Approved by the investigator on 2026-10-08, unchanged, before any
+held-out outcome was examined.
