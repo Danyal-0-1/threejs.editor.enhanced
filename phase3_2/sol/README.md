@@ -262,6 +262,18 @@ bash submit.sh final_export $HO
 This writes 19 CSVs, 12 figures (PNG + SVG) and 10 reports. Data that does not exist reads
 NOT RUN or NOT TESTABLE, and a PARTIAL run says so on every report.
 
+**Then the D10 scale analysis**, as specified by deviation D11. It reads the export's CSVs,
+uses no GPU and is not part of the frozen code:
+
+```bash
+git pull                                     # after the chain has finished: brings in the script
+$P33_PY scripts/scale_analysis.py --run $HO   # -> results/$HO/analysis_addenda/d11_scale/
+```
+
+- **What it computes:** the slope of the reversion rate (base and instruct) and of the H4
+  AUROC on log10(size), across the Qwen2.5-Coder ladder, for each grammar family.
+- **Uncertainty:** template-cluster bootstrap intervals and Holm-adjusted two-sided p values.
+
 ---
 
 ## 13. Re-deriving an analysis from saved measurements (CPU, no model)

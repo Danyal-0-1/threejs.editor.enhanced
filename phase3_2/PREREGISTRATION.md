@@ -294,3 +294,36 @@ calibration frozen on 0.5B and 1.5B, a stronger transfer test: the criteria
 are rank-based, and calibration metrics are reported knowing they may degrade.
 Outside the Qwen2.5-Coder ladder, size remains confounded with everything else
 that differs between checkpoints.
+
+### D11 — 2026-10-08 — specification of the D10 scale analysis (after the freeze, before any held-out outcome was examined)
+
+**What happened.** D10 pre-specified a two-sided scale analysis, but the
+frozen pipeline (`DEV_FREEZE.json` of `dev-20261006a`, 2026-10-07) exports only
+its inputs: the per-model Arm A rows and the per-pair H4 predictions. The
+analysis itself was never implemented, and D10 did not state its statistic.
+This was found on 2026-10-08, while the held-out chain of `heldout-20261007a`
+was running and before any held-out outcome had been examined: only job
+states and cell counts had been read.
+
+**Change.** The analysis is computed by `phase3_2/sol/scripts/scale_analysis.py`
+from the frozen export's CSVs, after the export and outside the frozen code.
+It adds no file to the frozen source set; the analysis-source digest stays
+`3c3e772c66ecf51e`.
+
+- Ladder: Qwen2.5-Coder 0.5B, 1.5B, 3B, 7B, 14B and 32B (registry sizes); x = log10(parameters).
+- Reversion: per model, the share of Arm A rows with M < 0 in the rule condition
+  (status ok), base and instruct models separately.
+- H4: the AUROC of the risk score per base/instruct pair.
+- Data: every lexicon of the held-out run; each grammar family separately, never pooled.
+- Statistic: the OLS slope across the six sizes.
+- Uncertainty: 95% percentile template-cluster bootstrap within the family, with the same
+  template draw for every size; B = 2000, seed 20261002.
+- Tests: two-sided bootstrap p, and Holm over all six slopes.
+
+**Scientific consequence.** The analysis follows D10 wherever D10 is explicit.
+The statistic, interval and multiplicity rule are the project's registered
+defaults, applied to D10's question. It was written by the assistant and is
+pending the investigator's review. Any change made after held-out outcomes are
+seen would be post hoc and must be labelled so. Size is not randomized: within
+the ladder the tokenizer and training recipe are fixed, but other differences
+between sizes remain, so a trend is an association.
