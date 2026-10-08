@@ -367,3 +367,16 @@ detectable AUROC at the pilot ICC is 0.62 at 80 templates.
 - `test_metric_and_report_corrections.py` (20);
 - `test_model_scale.py` (6);
 - plus a test that the runner never uses the real results root.
+
+### 7.6 Execution on Sol (2026-10-07)
+
+| Step | Evidence |
+|---|---|
+| pushed and pulled | commit `78b2bcd` on branch `sol-d9-d10`; Sol's checkout on that commit (only tracked `__pycache__` files and the untracked Sol lock file differ) |
+| test artifact quarantined | `results/dev-status-readonly/` (fake rows, 2026-10-06) moved to `results/_quarantine/` |
+| CPU tests (job 64939805) | Sol 138 passed + 1 hardware-blocked; Phase 3.2 36; Phase 3 54; exit 0; the results root untouched |
+| D9 re-analysis on Sol | `r1-2026-10-07-metric-corrections`: 652 inputs byte-identical, all checks passed, digest `3c3e772c66ecf51e`. Against the local record, 18/19 CSVs are byte-identical; the 19th differs in one `cal_intercept` cell by 6e-18 |
+| prefetch (job 64939806) | the 10 D10 checkpoints, 600.6 GiB, every file sha256-verified, 36 min; `model_pins.json`: 21 pins, no failures |
+| freeze (job 64942745) | `DEV_FREEZE.json` sha256 `b319c3fc…`; 44 source hashes; 21 model pins; drift `[]` |
+| unlock | `heldout-20261007a`, phrase entered at the investigator's direction (`UNLOCK_NOTE.md`) |
+| held-out chain | jobs 64943130–64943136, one at a time (`logs/submission_chain.env`); first task's preflight OK (one informational WARN: materials recorded by the first job), 210 cells permitted |

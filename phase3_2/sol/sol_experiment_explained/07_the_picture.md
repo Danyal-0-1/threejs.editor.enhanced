@@ -207,21 +207,19 @@ stays crossed.
 | spotting the risky intersections (H4) | AUROC **0.87 / 0.94**. It beats both simple guesses (criteria C1 and C2), on practice roads only |
 | the scorekeeping | corrected on 2026-10-07: tied scores no longer depend on the order of the file (D9). Only the simple guesses' AP and precision@k moved; every headline number stayed |
 | is the exam big enough? | for the rulebook question, **no**. Siblings agree (ICC 0.252), so 80 families give about **25%** power, not the 99% the old report printed. For H4, yes: an AUROC of 0.62 or more is detected 80% of the time |
-| bigger drivers | 10 drivers from 7B to 72B were added, for the exam only (D10). They are **not downloaded yet**; the 72B pair needs two GPUs |
+| bigger drivers | 10 drivers from 7B to 72B were added, for the exam only (D10). All are downloaded and pinned; the 72B pair drives with two GPUs |
 | model access | all 11 original checkpoints are downloaded and pinned; the Llama-3.2-1B pair was approved on 2026-10-07 |
 | old "~6 examples" headline | **withdrawn** (leakage plus two definition errors) |
 | "works on a new grammar" | **not testable** with these materials |
-| the exam envelope | **still sealed**: no freeze, no unlock, and no held-out intersection touched |
+| the grading rules | **in ink** since 2026-10-07: `DEV_FREEZE.json`, written by job 64942745 |
+| the exam envelope | **opened** on 2026-10-07 at the investigator's direction. The exam (`heldout-20261007a`) runs one driver at a time: about 2–4 days |
 
-Next, in order:
+Still to come, in order:
 
-1. corrected analysis and reports on Sol;
-2. decide whether the exam's size is acceptable;
-3. finish the approved downloads;
-4. freeze;
-5. the exam (held-out);
-6. Arm B / H5;
-7. the final analysis.
+1. the exam for all 21 drivers;
+2. Arm B and H5;
+3. the final export;
+4. the interpretation.
 
 ---
 

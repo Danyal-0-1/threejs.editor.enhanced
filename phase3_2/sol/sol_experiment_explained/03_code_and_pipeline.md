@@ -413,7 +413,7 @@ The columns are:
 
 | Component | Implemented | Unit-tested | Fake end-to-end | CLI rehearsal | Laptop smoke | Sol development run |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|
-| split, freeze, unlock, drift | ✔ | ✔ | ✔ | ✔ | — (development only) | split ✔; **no freeze yet** |
+| split, freeze, unlock, drift | ✔ | ✔ | ✔ | ✔ | — (development only) | split ✔; freeze and unlock ✔ (2026-10-07); held-out preflight saw 210 permitted cells |
 | plan, de-duplication, expected cells | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ (852 sites, 400 primary) |
 | canonical scorer + fp32 head | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ (1 GPU) |
 | two-GPU sharded load (D10) | ✔ | registry, preflight, submit only | — | `submit.sh` with a stand-in `sbatch` | — | **NOT RUN** (needs two GPUs) |

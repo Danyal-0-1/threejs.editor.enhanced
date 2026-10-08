@@ -9,18 +9,26 @@ order the code permits.
 | what was wrong and how it was verified | [`AUDIT.md`](AUDIT.md) |
 | which parts of the original brief were corrected or not done | [`PROMPT_REVIEW.md`](PROMPT_REVIEW.md) |
 
-> **Where things stand (2026-10-07)**
+> **Where things stand (2026-10-07, 23:10 MST)**
 >
-> - **Development run.** `dev-20261006a` ran on Sol's A100s and is complete: 4 models, 192/192 Arm A
->   and 112/112 primary cells, no failed, missing or corrupt cell.
-> - **Corrected analysis.** Its tables, plots and reports were re-derived locally with the corrected
->   analysis, without re-scoring (§13). On Sol, apply the corrections and re-derive there (§13)
->   **before** you freeze.
-> - **Held-out stage.** Not started. The freeze and the unlock are your decisions.
-> - **Models.** The held-out set now has **21 checkpoints** (deviation D10):
->   - all 11 of the original checkpoints are downloaded and pinned on Sol. The gated
->     Llama-3.2-1B pair was approved on 2026-10-07 and downloaded by prefetch job 64914503;
->   - the 10 large checkpoints added on 2026-10-07 are **not downloaded yet** (§4).
+> - **Development run.** `dev-20261006a` is complete: 4 models, 192/192 Arm A and 112/112 primary
+>   cells. Its corrected analysis (D9) was re-derived **on Sol** without re-scoring
+>   (`analysis_revisions/r1-2026-10-07-metric-corrections`):
+>   - 652 inputs are byte-identical and every check passed;
+>   - the source digest is `3c3e772c66ecf51e`, the same as the local record (§13).
+> - **Models.** All **21** held-out checkpoints are on `$SCRATCH/hf` (641 GB) and pinned:
+>   - the 10 D10 checkpoints came from prefetch job 64939806, with every file's sha256 verified;
+>   - the gated Llama-3.2-1B pair was approved on 2026-10-07.
+> - **Freeze.** `results/dev-20261006a/DEV_FREEZE.json` was written by job 64942745 on 2026-10-07:
+>   sha256 `b319c3fc…`, commit `78b2bcd`, 21 model pins, 44 source hashes.
+> - **Held-out run `heldout-20261007a`.**
+>   - It was unlocked on 2026-10-07 at the investigator's direction (`UNLOCK_NOTE.md` in the run
+>     directory).
+>   - The whole stage runs as **one chain, one job at a time** (`submit_chain.sh`, §10). The job ids
+>     are in `results/heldout-20261007a/logs/submission_chain.env`.
+>   - Expect 2–4 days (§15).
+> - **Keep Sol's checkout at `78b2bcd` until the chain finishes.** Every held-out job re-checks the
+>   source against the freeze, and a changed source file stops it.
 
 ---
 
@@ -147,7 +155,8 @@ bash submit.sh dev_arm_a dev-<date> && bash submit.sh dev_primary dev-<date>
 
 ## 8. Development analysis, then freeze
 
-**First apply and run the 2026-10-07 analysis corrections on Sol (§13).**
+**Done on 2026-10-07.** The corrections were applied and recorded on Sol (§13), and the
+freeze was written by job 64942745. The procedure is kept below for reference.
 
 Then read `results/$DEV/reports/` in this order:
 
@@ -216,6 +225,24 @@ bash submit.sh heldout_eval_2gpu $HO   # models 19-20 (the Qwen2.5-72B pair), tw
   fails its own task and nothing else.
 - **Resubmitting some models:** `P33_ARRAY=8,9 bash submit.sh heldout_eval $HO`.
 - **Exact sizes:** printed by `$P33 status --run $HO` after the unlock.
+
+**What ran on 2026-10-07** — the whole held-out stage as one chain, one job at a time:
+
+```bash
+bash submit_chain.sh heldout-20261007a      # after `heldout init` and the unlock
+```
+
+- **Order:** held-out evaluation (models 0–18, then the 72B pair) → Arm B → H5 → final
+  export. Arrays use `%1`, so only one task runs at a time.
+- **Gaps don't stall it:** each stage starts when the previous one ends (`afterany`). A failed
+  task is resubmitted later with `P33_ARRAY`.
+- **Instruct models only:** Arm B and H5 are submitted just for the instruct models (indices
+  1, 3, 5, 7, 9, 12, 14, 16, 18 and 20). Base-model tasks would be no-ops holding a GPU.
+- **H5 gating:** H5 also requires both evaluation jobs to have succeeded (`afterok`). It derives
+  its arms from the merged held-out Arm A and stores them for good, so it must never start on an
+  incomplete Arm A.
+- **Time limits:** Arm B and H5 get 12 h and 10 h per task. `submit.sh`'s defaults (8 h, 6 h) are
+  tight for the 32B/33B models.
 
 ## 11. Arm B and H5
 
@@ -306,6 +333,9 @@ inputs stayed byte-identical.
 | validate (0 = every started experiment complete; 3 = not) | `$P33 validate --run <run>` |
 | regenerate CSVs → plots → reports (no model) | `$P33 export --run <run>`, wrapped by §13 when it matters |
 | cancel | `scancel <jobid>` (finished cells stay finished) |
+| the held-out chain's job ids | `cat $P33_RESULTS_ROOT/heldout-20261007a/logs/submission_chain.env` |
+| the whole chain at once | `sacct -j $(grep -o '^[A-Z0-9_]*JID=[0-9]*' $P33_RESULTS_ROOT/heldout-20261007a/logs/submission_chain.env \| cut -d= -f2 \| paste -sd,) -X --format=JobID%18,JobName%22,State,Elapsed` |
+| a failed held-out task (model *i*) | `P33_ARRAY=i bash submit.sh heldout_eval heldout-20261007a` (or `heldout_eval_2gpu` for 19, 20) |
 
 **Interrupts and failures:**
 

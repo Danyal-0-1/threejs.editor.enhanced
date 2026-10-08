@@ -61,15 +61,17 @@ file is byte-identical; see `08 §5` and the run's `analysis_revisions/`.
   power 0.25 at the 80-template corpus. The report used to show 0.99, from the ICC = 0 row.
   H4 criterion 1 is well powered for a true AUROC of 0.62 or more.
 
-**What's next:**
+**What happened next (2026-10-07, on Sol):**
 
-1. corrected analysis on Sol;
-2. review power and design;
-3. finish the model downloads (the Llama pair is approved and downloaded; the 10 large checkpoints are to fetch);
-4. freeze;
-5. held-out evaluation;
-6. Arm B and H5;
-7. final analysis.
+1. **Corrected analysis on Sol:** recorded (`r1-2026-10-07-metric-corrections`). The 652 inputs
+   are byte-identical and every check passed.
+2. **Power and design:** frozen as registered, at the investigator's direction.
+3. **Model downloads:** all 21 checkpoints downloaded and pinned (641 GB on scratch).
+4. **Freeze:** `DEV_FREEZE.json` written by job 64942745.
+5. **Held-out evaluation:** run `heldout-20261007a`, unlocked and running as one chain, one job
+   at a time.
+6. **Arm B and H5:** queued in that chain.
+7. **Final analysis:** the chain's last job (`final_export`), then interpretation.
 
 ---
 
@@ -98,7 +100,7 @@ repairs them. Extinction curves are the scientific result. H2 is secondary.
 | margin precision | bf16 | fp32 output head |
 | controls | `norule` | + `norule_lenmatched` |
 | Sol readiness | scripts that would not have run | 11 jobs, a submit wrapper, safe environment activation, preflight, pinned offline models |
-| tests | Phase 3 (54) + Phase 3.2 (36) | **+ 112 Sol tests**, and a full CLI rehearsal |
+| tests | Phase 3 (54) + Phase 3.2 (36) | **+ 139 Sol tests** (112 before 2026-10-07), and a full CLI rehearsal |
 
 ---
 
@@ -131,8 +133,8 @@ Each stage, with its inputs, outputs and checks, is in [`03 §4`](03_code_and_pi
 | corrected pipeline (`src/p33`, CLI, 11 jobs) | **built and tested** (2026-10-07, locally): 139 tests pass (venv); 135 + 4 dependency-blocked (bare python); the CPU-tests job, run as Slurm would on CPU only, exits 0 and writes nothing into the results root |
 | full CLI rehearsal of the runbook, fake scorer | **passed** end to end, including a real SIGUSR1 interrupt and a single-index resume (`AUDIT.md` §6) |
 | development smoke, one real model, 12 sites | **ran** on the laptop GPU (A100 check waived and recorded). 19 CSVs, 24 plot files, 10 reports |
-| development sweep | **not run** (Sol) |
-| freeze, unlock, held-out evaluation | **not run**. Your decision; nothing is automatic |
+| development sweep | **ran on Sol** (`dev-20261006a`, complete); analysis corrected and re-derived (D9) |
+| freeze, unlock, held-out evaluation | **frozen and unlocked on 2026-10-07** at the investigator's direction. `heldout-20261007a` is running as one chain |
 | H4, Arm B, H5 on a real model | **not run**. H4 needs an instruct twin, which the smoke does not include |
 | H2; H4 criterion C3 | **NOT TESTABLE** with these materials |
 
