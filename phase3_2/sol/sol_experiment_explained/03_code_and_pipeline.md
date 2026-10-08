@@ -14,40 +14,43 @@ The commands are in [`../README.md`](../README.md); the maths is in [`02`](02_ma
 
 ```
 phase3_2/sol/
-├── src/p33/            the pipeline (24 modules, 5,023 lines)
+├── src/p33/            the pipeline (25 modules, 5,530 lines)
 ├── scripts/p33.py      the ONE command-line entry point (stage groups: dev / heldout / smoke)
+├── scripts/analysis_revision.py  records a re-derivation from saved measurements (no model)
 ├── jobs/*.slurm        11 Slurm jobs, each a thin wrapper around scripts/p33.py
-├── submit.sh           the only way to submit (log dir first; account/partition/QOS from sol.env)
+├── submit.sh           the only way to submit (log dir first; account/partition/QOS from sol.env;
+│                       array indices per GPU class)
 ├── sol.env             defaults, all overridable; never a username
 ├── env/                make_env.sh, activate.sh (safe under set -u), requirements.in, lock
 ├── configs/            smoke.json, local_smoke.json, dev.json, heldout.json
-├── tests/              6 test modules + a dependency-free runner (112 tests)
+├── tests/              8 test modules + a dependency-free runner (139 tests)
 ├── local_smoke/        the one real-model development smoke
 └── legacy_superseded/  the Phase 3.3 scripts that would not have run, kept with WHY_SUPERSEDED.md
 ```
 
 | Module | Lines | Role | Kind |
 |---|---:|---|---|
-| `splits.py` | 334 | registered split, freeze, unlock, drift check | **load-bearing** |
+| `splits.py` | 338 | registered split, size ceiling (72B, D10), freeze, unlock, drift check | **load-bearing** |
 | `pipeline.py` | 448 | plan → cells → score → shards; signals | **load-bearing** |
 | `shards.py` | 262 | atomic shards, status, quarantine, deterministic merge | **load-bearing** |
 | `kstar.py` | 166 | `k*`, censoring, Kaplan–Meier | **load-bearing** |
 | `demos.py` | 111 | leakage-free nested demonstrations | **load-bearing** |
-| `h4.py` | 350 | H4 table, metrics, baselines, criteria | **load-bearing** |
+| `h4.py` | 468 | H4 table, tie-grouped metrics and curves (D9), baselines, criteria | **load-bearing** |
 | `h5.py` | 249 | repair arms, IR proof | **load-bearing** |
 | `armb.py` | 289 | NL requests, generation, five buckets, hurdle | **load-bearing** |
-| `power.py` | 262 | clustered power from development data | load-bearing (for sizing) |
+| `power.py` | 342 | clustered power from development data, one row per (T, ICC) scenario (D9) | load-bearing (for sizing) |
 | `freeze.py` | 109 | builds `DEV_FREEZE.json` | load-bearing |
 | `config.py` | 274 | paths, Sol defaults, `RunConfig`, hashing, `atomic_write_text` | plumbing (with teeth) |
 | `provenance.py` | 154 | `JobManifest`, git/Slurm/GPU/package identity | plumbing |
-| `preflight.py` | 158 | refuse a job that would waste an allocation | plumbing |
+| `preflight.py` | 188 | refuse a job that would waste an allocation; checks only its own task's models, GPU count and memory (D10) | plumbing |
 | `prefetch.py` | 184 | download-only, pinned revisions; keeps existing pins | plumbing |
-| `scorers.py` | 66 | load one model from its pinned snapshot, offline | plumbing |
+| `scorers.py` | 68 | load one model from its pinned snapshot, offline, on its GPU class (D10) | plumbing |
 | `fertility.py` | 80 | tokens/char per distinct tokenizer | plumbing |
-| `export.py` | 414 | the 19 CSVs, from merged shards only | reporting |
-| `plots.py` | 429 | the 12 figures, from CSVs only | reporting |
-| `reports.py` | 329 | the 10 reports, from CSVs and manifests only | reporting |
-| `registry.py` | 83 | every model the programme may touch | data |
+| `export.py` | 411 | the 19 CSVs, from merged shards only | reporting |
+| `plots.py` | 507 | the 12 figures, from CSVs only; footers pair each model with its revision | reporting |
+| `reports.py` | 460 | the 10 reports, from CSVs and manifests only | reporting |
+| `artifacts.py` | 50 | the registry of files an export must produce; `RUN_SUMMARY` counts against it (D9) | reporting |
+| `registry.py` | 100 | every model the programme may touch, with its GPU class (D10) | data |
 | `fakes.py` | 194 | deterministic GPU-free scorer for tests | test support |
 | `h2.py` | 43 | NOT TESTABLE, with the machinery ready | — |
 | `_paths.py`, `__init__.py` | 35 | locating `phase3_2` and `phase3` | — |
@@ -57,7 +60,7 @@ The shared scientific code lives outside `p33`, in `phase3_2/src/phase3_2/`
 
 | File | Lines | What it holds |
 |---|---:|---|
-| `margins.py` | 323 | canonical scorer, refusals, fp32 head |
+| `margins.py` | 358 | canonical scorer, refusals, fp32 head; two-GPU sharded load (D10) |
 | `sampling.py` | 189 | within-cell de-duplication, balanced selection, expected cells |
 | `analysis.py` | 263 | cluster bootstrap with multiplicity, Holm |
 | `prompts.py` | 291 | prompt bundles, length-matched control, per-site check |
@@ -145,9 +148,15 @@ A resumed run with a different configuration computes different keys, and
 | 6 | `dev_analyze` | 8 CPU, 32G, 2h | `dev fertility`, `dev analyze`, `validate` | 4, 5 |
 | 7 | `dev_freeze` | 2 CPU, 8G, 30m | `validate` (fatal), then `dev freeze` | 6, a git commit |
 | 8 | `heldout_eval` | A100, 80G, 10h, array | `heldout preflight` + held-out Arm A + primary | `heldout init`, `unlock` |
+| 8b | `heldout_eval_2gpu` | 2 × A100, 160G, 24h, array | the same job file, for the models with `gpus = 2` (the Qwen2.5-72B pair) | as 8 |
 | 9 | `arm_b` | A100, 64G, 8h, array | `<stage> preflight` + `run --experiment armb` | a run |
 | 10 | `h5` | A100, 64G, 6h, array | `<stage> preflight` + `merge arm_a` + `run --experiment h5` | Arm A of the same run |
 | 11 | `final_export` | 8 CPU, 32G, 2h | fertility, analyze, validate | everything |
+
+`arm_b_2gpu` and `h5_2gpu` mirror 9 and 10 on two GPUs. `submit.sh` asks
+`p33.py array-indices --run <RUN> --gpus N` which array indices belong to each GPU
+class. A one-GPU profile never submits the 72B pair, and a `*_2gpu` profile submits
+nothing else. An empty class is refused (exit 2).
 
 **Every job does the same things:**
 
@@ -174,7 +183,7 @@ A resumed run with a different configuration computes different keys, and
 
 | | |
 |---|---|
-| **Input** | model ids (default: the 11 used by the shipped configs) |
+| **Input** | model ids (default: every model of the shipped configs: 21 since D10, about 0.7 TB in all, nearly all of it the 10 large checkpoints) |
 | **Transformation** | `HfApi.model_info` with file metadata → choose patterns (`*.safetensors`, else `*.bin`, plus tokenizer and config files) → `snapshot_download` at the exact revision, 3 retries → size and optional sha256 checks. **Never instantiates a model.** |
 | **Output** | `results/model_pins.json`: revision, `allow_patterns`, snapshot path, tokenizer fingerprint, failures, pairing problems |
 | **Validation** | `--verify-only` re-resolves offline with the **same** `allow_patterns` (huggingface_hub 1.x calls a transformers-populated cache "incomplete" without them). The smoke config pinned `8123ea2e…` and tokenizer `cc349caf…`. Pairing problems for the default set: `[]`. An already-pinned model keeps its revision on a re-run (`kept_existing_pins`); only `--repin` moves it |
@@ -193,7 +202,7 @@ A resumed run with a different configuration computes different keys, and
 | | |
 |---|---|
 | **Input** | the run config, model pins, the run directory |
-| **Transformation** | the checks: scheduler (partition, QOS, account vs `sol.env`) · `nvidia-smi` · torch CUDA · **A100** (waivable only by `allow_non_a100`, which is recorded) · bf16 · free GPU memory · disk space for results and the HF cache · every model resolves offline to its pin · output writable · materials unchanged since the run's first job · split permission |
+| **Transformation** | the checks: scheduler (partition, QOS, account vs `sol.env`) · `nvidia-smi` · torch CUDA · **A100** (waivable only by `allow_non_a100`, which is recorded) · bf16 · free GPU memory · **GPU count and memory for each of the task's models** (D10: `size × 2 × 1.03 + 4` GiB) · disk space for results and the HF cache · every model **of this array task** resolves offline to its pin · output writable · materials unchanged since the run's first job · split permission |
 | **Output** | `manifests/preflight_<utc>.json`; one `[PASS|WARN|FAIL]` line per check |
 | **Validation** | any FAIL → exit 2 before a model is loaded. WARN is informational (not in Slurm; first job of a run) |
 
@@ -306,7 +315,7 @@ Real smoke status files:
 |---|---|
 | **Input** | merged rows and manifests only, never a model |
 | **Transformation** | build the tables; every figure from the CSVs; every report from the CSVs and manifests |
-| **Output** | 19 CSVs, 12 figures × (PNG + SVG), 10 reports |
+| **Output** | 19 CSVs, 12 figures × (PNG + SVG), 10 reports, all listed in `p33/artifacts.py`. `RUN_SUMMARY.md` is written **last** and reports "present of registered" per directory |
 | **Validation** | each table, figure and report carries its stage, split, revision, tokenizer, prompt hashes, cluster counts and bootstrap settings. Missing data is written as `NOT RUN` / `NOT TESTABLE` rows, never as placeholder numbers. Each report starts with a stage banner; a development report cannot call itself confirmatory |
 
 - **CSVs:** `site_inventory · split_exclusion_audit · run_completeness ·
@@ -322,6 +331,22 @@ Real smoke status files:
 - **Reports:** `RUN_SUMMARY · METHODS_AND_PROVENANCE · QUALITY_CONTROL ·
   DEVELOPMENT_RESULTS · HELDOUT_RESULTS · HYPOTHESIS_RESULTS ·
   PLAIN_LANGUAGE_RESULTS · POWER_ANALYSIS · DEVIATIONS · REPRODUCTION`.
+
+**Since 2026-10-07 (D9):**
+
+- AP, precision@k and the PR/ROC curves treat tied scores as one threshold.
+- `power.csv` has one row per (template count, ICC) scenario, each computed with its own ICC.
+- `POWER_ANALYSIS.md` shows every scenario, with the pilot flagged.
+
+An export can be repeated on saved measurements at any time; it never loads a model. When
+the outputs of a real run are regenerated, `scripts/analysis_revision.py` keeps the
+evidence:
+
+1. `snapshot` hashes the 652 measurement files of `dev-20261006a`: shards, markers, merged
+   rows, manifests and logs.
+2. It copies the old `csv/`, `plots/` and `reports/` to `before/`.
+3. After the export, `record` refuses if any input changed. Otherwise it writes the
+   before/after comparison.
 
 ### 4.11 Freeze and unlock (`freeze.py`, `splits.py`)
 
@@ -380,24 +405,29 @@ Real smoke status files:
 
 ## 6. Component status
 
-Laptop smoke column: one model, 12 sites, laptop GPU. Sol: nothing yet.
+The columns are:
 
-| Component | Implemented | Unit-tested | Fake end-to-end | CLI rehearsal | Real model (laptop smoke) |
-|---|:-:|:-:|:-:|:-:|:-:|
-| split, freeze, unlock, drift | ✔ | ✔ | ✔ | ✔ | — (development only) |
-| plan, de-duplication, expected cells | ✔ | ✔ | ✔ | ✔ | ✔ |
-| canonical scorer + fp32 head | ✔ | ✔ | ✔ | ✔ | ✔ |
-| leak-free ladder | ✔ | ✔ | ✔ | ✔ | ✔ |
-| shards, resume, merge | ✔ | ✔ | ✔ | ✔ (real SIGUSR1) | ✔ |
-| `k*`, KM | ✔ | ✔ | ✔ | ✔ | ✔ |
-| rule effect + bootstrap | ✔ | ✔ | ✔ | ✔ | ✔ (no interval for strata < 8 clusters) |
-| fertility (real tokenizer) | ✔ | ✔ | ✔ | ✔ | ✔ |
-| H4 | ✔ | ✔ | ✔ | ✔ | NOT RUN (needs an instruct twin) |
-| Arm B | ✔ | ✔ | ✔ | ✔ | NOT RUN |
-| H5 | ✔ | ✔ | ✔ | ✔ | NOT RUN |
-| H2 | NOT TESTABLE | ✔ | ✔ | ✔ | — |
-| power | ✔ | ✔ | ✔ | ✔ | ✔ (pilot n = 12, uninterpretable) |
-| Slurm jobs, `submit.sh` | ✔ | `bash -n` + text tests | — | commands rehearsed | **never submitted** |
+- **Laptop smoke:** one model, 12 sites, a laptop GPU.
+- **Sol development run:** `dev-20261006a`, four Qwen2.5-Coder checkpoints on A100s, completed
+  2026-10-06 and re-analysed 2026-10-07.
+
+| Component | Implemented | Unit-tested | Fake end-to-end | CLI rehearsal | Laptop smoke | Sol development run |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| split, freeze, unlock, drift | ✔ | ✔ | ✔ | ✔ | — (development only) | split ✔; **no freeze yet** |
+| plan, de-duplication, expected cells | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ (852 sites, 400 primary) |
+| canonical scorer + fp32 head | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ (1 GPU) |
+| two-GPU sharded load (D10) | ✔ | registry, preflight, submit only | — | `submit.sh` with a stand-in `sbatch` | — | **NOT RUN** (needs two GPUs) |
+| leak-free ladder | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| shards, resume, merge | ✔ | ✔ | ✔ | ✔ (real SIGUSR1) | ✔ | ✔ (COMPLETE; `validate` VALID) |
+| `k*`, KM | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| rule effect + bootstrap | ✔ | ✔ | ✔ | ✔ | ✔ (no interval for strata < 8 clusters) | ✔ |
+| fertility (real tokenizer) | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| H4 (tie-grouped AP / P@k since D9) | ✔ | ✔ | ✔ | ✔ | NOT RUN (needs an instruct twin) | ✔ (two pairs, development only) |
+| Arm B | ✔ | ✔ | ✔ | ✔ | NOT RUN | NOT RUN |
+| H5 | ✔ | ✔ | ✔ | ✔ | NOT RUN | NOT RUN |
+| H2 | NOT TESTABLE | ✔ | ✔ | ✔ | — | — |
+| power (per-scenario since D9) | ✔ | ✔ | ✔ | ✔ | ✔ (pilot n = 12, uninterpretable) | ✔ (real pilot) |
+| Slurm jobs, `submit.sh` | ✔ | `bash -n` + text tests + stand-in `sbatch` | — | commands rehearsed | — | `dev_arm_a`, `dev_primary` and `dev_analyze` submitted and complete. Prefetch fetched all 11 original checkpoints (the Llama pair after its approval on 2026-10-07) |
 
 ---
 
@@ -408,11 +438,14 @@ Laptop smoke column: one model, 12 sites, laptop GPU. Sol: nothing yet.
 - [x] Prompt sha on every row; demonstration ids, order sha and set sha on every ladder row.
 - [x] Seeds in the config and in every manifest (bootstrap 20261002, demonstration order
       20261005, H5 random 1–5, power 20261006).
-- [x] Config hash, source hashes (43 files, CLI included), materials hashes
-      and git state per job.
+- [x] Config hash, source hashes (44 files, CLI included; 43 when `dev-20261006a` ran),
+      materials hashes and git state per job.
 - [x] Package, CUDA and driver versions measured per job.
 - [x] Merge byte-deterministic; resumed output equals uninterrupted output.
 - [x] Materials byte-stable under repeated test runs (P33-011).
 - [x] Every figure regenerable from CSVs, every CSV from merged shards (`p33.py export`).
-- [ ] Sol lock file (`requirements.lock.sol.txt`): written by `make_env.sh` on Sol.
+- [x] Re-derivations of a real run recorded with input hashes and before/after values
+      (`scripts/analysis_revision.py`; `r1-2026-10-07-metric-corrections`).
+- [ ] Sol lock file (`requirements.lock.sol.txt`): written by `make_env.sh` on Sol, not in this
+      repository. `env/README.md` records the versions the development jobs measured.
 - [ ] A real held-out run: requires the freeze and the unlock, by you.

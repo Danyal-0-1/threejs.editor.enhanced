@@ -124,3 +124,60 @@ Nothing was committed or pushed.
 | D6 | the identity baseline is constant | C1 ≡ AUROC ≥ 0.60; exploratory `terminal_rate` added |
 | D7 | fp32 head; length-matched control | measurement and control changes, both declared |
 | D8 | development models include the instruct twins | H4 can be developed and calibrated before the freeze |
+
+---
+
+## 5. 2026-10-07 — corrections to the real development analysis (D9) and model scale (D10)
+
+### Defects found in the analysis of `dev-20261006a`
+
+Every claim was reproduced from the saved files before anything changed.
+
+| ID | Defect | Evidence (saved data) | Fix | Guard |
+|---|---|---|---|---|
+| R1 | AP ranked tied scores by input row | 1.5B identity baseline: AP 0.452 forward, 0.492 reversed (correct: prevalence 0.468); `length`, `program_nll`, `terminal_rate` also order-dependent | step-wise AP over distinct scores, tie groups as one threshold | 5 AP tests + the whole H4 path under shuffling |
+| R2 | precision@k broke a boundary tie by input row | identity 1.5B P@10 0.4 → 0.6 reversed; token_count 0.5B 0.5 → 0.1 | expected precision under uniform selection in the boundary tie | 5 P@k tests |
+| R3 | smallest-detectable-AUROC rows: 25 rows, 5 distinct, all with the pilot ICC | `power.csv` | one row per (T, ICC), computed with its own ICC; pilot flagged; T > 80 marked hypothetical | `test_power_scenarios_are_unique_and_each_uses_its_own_icc` |
+| R4 | the power report showed only ICC = 0 for the rule effect (and filtered rows on truthiness) | `reports.py`: `x["icc"] in (rule[0]["icc"],)` | every scenario, the pilot in bold, DE and n_eff explained, zero power kept | report ↔ CSV agreement test; zero-power test |
+| R5 | RUN_SUMMARY counted `reports/` before writing it | Sol's file: "reports/ — 0 files" | counted against a registry (`p33/artifacts.py`) after everything else is written | first-and-repeated-export test |
+| R6 | the power figure lacked the rule-effect sensitivity; footers named one model of a "base\|instruct" pair | figures | a third panel; footers print each model with its own revision (`model@revision`); two sorted lists, the first fix, would have paired 3 of 4 wrongly | figure-series ↔ CSV test; `test_figure_footer_pairs_each_model_with_its_own_revision` |
+| R7 | `REPRODUCTION.md` named commands that do not exist and a missing `env/README.md` | report text | the real commands; the file written | `test_reproduction_report_names_commands_that_exist` |
+| R8 | the test runner used `setdefault` for its results root, so under `sol.env` a CPU-test job writes `dev-status-readonly/` into the REAL results root and briefly swaps the real `model_pins.json` (then restores it). It happened on Sol: `dev-status-readonly/` dates from 2026-10-06, moved to `results/_quarantine/` on 2026-10-07 | the committed tests and `sol.env`; reproduced against a stand-in root; found on Sol | always a fresh temporary root | `test_tests_never_use_the_real_results_root`; a simulated CPU-test job wrote 0 files into a stand-in root |
+
+### Numbers that changed (development, exploratory)
+
+| Quantity | Was | Now |
+|---|---|---|
+| identity baseline AP / P@10 (0.5B pair) | 0.410 / 0.3 | **0.407 / 0.407**, the prevalence |
+| identity baseline AP / P@10 (1.5B pair) | 0.452 / 0.4 | **0.468 / 0.468**, the prevalence |
+| token_count AP (0.5B / 1.5B) | 0.431 / 0.468 | 0.416 / 0.472 |
+| length AP (0.5B / 1.5B) | 0.434 / 0.437 | 0.433 / 0.457 |
+| risk-score AP and P@k | 0.819 / 0.924 | **unchanged**: 852 distinct risk values per pair at full precision (the CSV's 6-digit rounding merges two of the 1.5B values) |
+| AUROC, C1/C2 deltas, bootstrap intervals, Holm p, calibration | — | **unchanged** |
+| rule-effect power shown in the report at 80 templates | 0.994 (ICC = 0 only) | **0.251 at the pilot ICC 0.252**, every scenario shown |
+| smallest detectable AUROC (T = 80) | 0.62, the same five times | 0.62 at the pilot ICC; 0.62–0.63 across scenarios |
+| RUN_SUMMARY reports count | 0 | 10 of 10 |
+
+Unchanged byte for byte: 17 of 19 CSVs. These include Arm A, the rule effect, extinction,
+k\* survival, H4 predictions and fertility.
+
+### Model scale (D10)
+
+- **Ceiling:** 3B → 72B.
+- **10 held-out checkpoints appended**, all base + instruct pairs:
+  - Qwen2.5-Coder 7B, 14B and 32B;
+  - DeepSeek-Coder-33B;
+  - Qwen2.5-72B, on 2 GPUs.
+- **New code:** sharded 2-GPU loading (the 1-GPU path is unchanged); per-task preflight with GPU
+  count and memory checks; `array-indices` and the `*_2gpu` job profiles.
+- **Unchanged:** the development set and the completed run.
+- **Not tested here:** the 2-GPU load itself, which needs two GPUs.
+
+### Files (2026-10-07)
+
+| Change | Files |
+|---|---|
+| corrected | `p33/h4.py`, `p33/power.py`, `p33/reports.py`, `p33/plots.py`, `p33/export.py`, `p33/preflight.py`, `p33/registry.py`, `p33/splits.py`, `p33/scorers.py`, `phase3_2/src/phase3_2/margins.py` (2-GPU branch only), `scripts/p33.py`, `submit.sh`, `configs/heldout.json`, `tests/run_tests.py` |
+| new | `p33/artifacts.py`, `scripts/analysis_revision.py`, `env/README.md`, `tests/test_metric_and_report_corrections.py`, `tests/test_model_scale.py` |
+| appended | `phase3_2/PREREGISTRATION.md` (D9, D10; frozen hash unchanged) |
+| regenerated (not hand-edited) | `phase3_3/sol_results/dev-20261006a/{csv,plots,reports}`; the previous versions are in `analysis_revisions/r1-2026-10-07-metric-corrections/before/` |

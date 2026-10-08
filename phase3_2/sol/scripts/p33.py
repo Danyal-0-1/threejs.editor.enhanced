@@ -159,8 +159,10 @@ def cmd_init(a, stage):
 def cmd_preflight(a, stage):
     from p33 import preflight
     cfg = load_cfg(a.run, stage=stage)
+    task, n = task_args(a)
     rep = preflight.run(cfg, run_dir_of(a.run), pins=load_pins(cfg, a),
-                        require_gpu=not a.no_gpu)
+                        require_gpu=not a.no_gpu,
+                        task_models=PL.assigned_models(cfg.models, task, n))
     for c in rep["checks"]:
         print(f"  [{c['result']:4s}] {c['check']:22s} {c['detail']}")
     print(f"preflight {'OK' if rep['ok'] else 'FAILED'} -> {rep['path']}")
@@ -275,6 +277,20 @@ def cmd_unlock(a):
     return 0
 
 
+def cmd_array_indices(a):
+    """Comma-separated config indices of the run's models that need exactly
+    `--gpus` GPUs: what submit.sh puts in --array for each GPU profile."""
+    from p33 import registry
+    cfg = load_cfg(a.run)
+    unknown = [m for m in cfg.models if m not in registry.REGISTRY]
+    if unknown:
+        print(f"REFUSED: unregistered models {unknown}", file=sys.stderr)
+        return 2
+    print(",".join(str(i) for i, m in enumerate(cfg.models)
+                   if registry.gpus_needed(m) == a.gpus))
+    return 0
+
+
 def cmd_status(a):
     """Read-only. An experiment counts as started once its shard directory
     exists; constructing a ShardStore here created that directory, so a plain
@@ -350,6 +366,9 @@ def main(argv=None):
         p.add_argument("--run", required=True)
         if name == "merge":
             p.add_argument("--experiment")
+    ai = sub.add_parser("array-indices")
+    ai.add_argument("--run", required=True)
+    ai.add_argument("--gpus", type=int, required=True)
     sm = sub.add_parser("smoke")
     sm.add_argument("--config", required=True)
     sm.add_argument("--run", required=True)
@@ -366,6 +385,8 @@ def main(argv=None):
         p = sp.add_parser("preflight")
         p.add_argument("--run", required=True)
         p.add_argument("--no-gpu", action="store_true")
+        p.add_argument("--task", type=int)
+        p.add_argument("--n-tasks", type=int)
         r = sp.add_parser("run")
         r.add_argument("--run", required=True)
         r.add_argument("--experiment", required=True, choices=["arm_a", "primary", "armb", "h5"])
@@ -385,6 +406,8 @@ def main(argv=None):
         return cmd_env_check(a)
     if a.cmd == "prefetch":
         return cmd_prefetch(a)
+    if a.cmd == "array-indices":
+        return cmd_array_indices(a)
     if a.cmd in ("status", "merge", "validate", "export"):
         return {"status": cmd_status, "merge": cmd_merge, "validate": cmd_validate,
                 "export": cmd_export}[a.cmd](a)

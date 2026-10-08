@@ -8,6 +8,15 @@ Selection axes that matter more than size (Phase 3.2 decision):
 
 Repo ids are as known on 2026-10-05 and are VERIFIED, not assumed, by
 `prefetch --dry-run` on Sol, which lists any that do not resolve.
+
+SCALE (deviation D10, 2026-10-07). The registered 3B ceiling is replaced by
+72B. The Qwen2.5-Coder ladder 0.5B -> 32B holds the tokenizer and training
+recipe fixed, so it is the one clean scale contrast; DeepSeek-Coder-33B adds a
+second code family at the large end; Qwen2.5-72B (general, same tokenizer
+family) extends the curve and is the only model that needs two GPUs. All of
+them run in bf16 with the fp32 output head -- never quantized, because the
+outcome is the SIGN of a margin. `gpus` is the number of A100-80GB GPUs one
+checkpoint needs for scoring.
 """
 
 from __future__ import annotations
@@ -22,13 +31,14 @@ class ModelSpec:
     size_b: float
     kind: str                 # base | instruct
     pair: str | None          # the counterpart checkpoint
-    tier: str                 # small | mid | large
+    tier: str                 # small | mid | large | xlarge
     gated: bool = False       # needs an HF token (never stored by this code)
+    gpus: int = 1             # A100-80GB GPUs needed to score it in bf16 + fp32 head
 
 
-def _pair(fam, size, base, inst, tier, gated=False):
-    return [ModelSpec(base, fam, size, "base", inst, tier, gated),
-            ModelSpec(inst, fam, size, "instruct", base, tier, gated)]
+def _pair(fam, size, base, inst, tier, gated=False, gpus=1):
+    return [ModelSpec(base, fam, size, "base", inst, tier, gated, gpus),
+            ModelSpec(inst, fam, size, "instruct", base, tier, gated, gpus)]
 
 
 _SPECS: list[ModelSpec] = [
@@ -40,6 +50,9 @@ _SPECS: list[ModelSpec] = [
     *_pair("qwen2.5-coder", 32.0, "Qwen/Qwen2.5-Coder-32B", "Qwen/Qwen2.5-Coder-32B-Instruct", "large"),
     *_pair("deepseek-coder", 1.3, "deepseek-ai/deepseek-coder-1.3b-base", "deepseek-ai/deepseek-coder-1.3b-instruct", "small"),
     *_pair("deepseek-coder", 6.7, "deepseek-ai/deepseek-coder-6.7b-base", "deepseek-ai/deepseek-coder-6.7b-instruct", "mid"),
+    *_pair("deepseek-coder", 33.0, "deepseek-ai/deepseek-coder-33b-base", "deepseek-ai/deepseek-coder-33b-instruct", "large"),
+    # ~145 GB of bf16 weights + a 5 GB fp32 head: sharded over two A100-80GB
+    *_pair("qwen2.5", 72.0, "Qwen/Qwen2.5-72B", "Qwen/Qwen2.5-72B-Instruct", "xlarge", gpus=2),
     *_pair("llama-3.2", 1.0, "meta-llama/Llama-3.2-1B", "meta-llama/Llama-3.2-1B-Instruct", "small", gated=True),
     *_pair("llama-3.2", 3.0, "meta-llama/Llama-3.2-3B", "meta-llama/Llama-3.2-3B-Instruct", "mid", gated=True),
     *_pair("olmo-2", 7.0, "allenai/OLMo-2-1124-7B", "allenai/OLMo-2-1124-7B-Instruct", "mid"),
@@ -51,7 +64,11 @@ _SPECS: list[ModelSpec] = [
 ]
 
 REGISTRY: dict[str, ModelSpec] = {m.id: m for m in _SPECS}
-TIERS = ("small", "mid", "large")
+TIERS = ("small", "mid", "large", "xlarge")
+
+
+def gpus_needed(model_id: str) -> int:
+    return spec(model_id).gpus
 
 
 def spec(model_id: str) -> ModelSpec:

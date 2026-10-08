@@ -28,7 +28,12 @@ been seen; the mapping has not. A weaker test, never a held-out-grammar test (D1
 **EXPLORATORY-CONTAMINATED**: `blk` with a development lexicon, which was already inspected.
 Refused unless `allow_exploratory` is set, and labelled if allowed.
 
-**FORBIDDEN**: an unregistered family or lexicon, or any model above 3B.
+**FORBIDDEN**: an unregistered family or lexicon, or any model above 72B. The ceiling was 3B
+until deviation D10 (2026-10-07).
+
+**Size ceiling (D10)**: `splits.MAX_SIZE_B = 72.0`. Models above 3B are held-out models
+only and never enter development. *Qwen2.5-Coder 7B/14B/32B, DeepSeek-Coder-33B and
+Qwen2.5-72B, each a base + instruct pair.*
 
 **Freeze (`DEV_FREEZE.json`)**: the immutable record of the development
 analysis. It is written once, mode 444, with a `.sha256` sidecar.
@@ -42,7 +47,8 @@ from the freeze. Checked at unlock and again on every held-out access
 (`splits.frozen_drift`).
 
 **Deviation**: a dated, append-only entry under `## Deviations` in
-`PREREGISTRATION.md`. D1–D8 were written on 2026-10-05. The text above that
+`PREREGISTRATION.md`. D1–D8 were written on 2026-10-05, and D9 (tie-correct metrics, power
+and report corrections) and D10 (models up to 72B) on 2026-10-07. The text above that
 heading is byte-frozen (sha256 `a0146494…`).
 
 **NOT TESTABLE / NOT RUN / NOT ESTIMABLE**: three different statements, never
@@ -132,10 +138,37 @@ Losing it was defect P33-005. *5/3 vs 2.0.*
 **Holm correction**: a step-down multiple-testing adjustment, applied over H4's C1 and C2.
 
 **Design effect (DE)**: `1 + (m − 1)·ICC`, the variance inflation from clustering.
+*Rule effect, development pilot: m = 44.84, ICC 0.252, DE 12.05.*
+
+**Effective sample size (n_eff)**: `T·m / DE`, what T templates of m rows are worth as
+independent observations. *3,587 rows at T = 80 → about 298.*
+
+**ICC scenario**: one assumed ICC in the power tables. Each row is computed with its own
+ICC (D9). *0, 0.05, 0.1, 0.2 and the pilot estimate.*
+
+**Pilot ICC**: the ICC estimated from the development rows, pooled over models and
+lexicons. It is flagged in every power table. *0.252 for the rule effect, 0.073 for the
+H4 label.*
+
+**Hypothetical T**: a template count above the 80-template corpus. It would need new
+materials, and the tables mark it `HYPOTHETICAL` (\*). More models, lexicons or repeated
+sites add rows inside templates, not templates.
+
+**Smallest detectable AUROC**: the lowest true AUROC on the 0.51–0.99 grid for which H4
+criterion 1 is met with 80% power. *0.62 at 80 templates and the pilot ICC.* It cannot fall
+below 0.60, the criterion's own bar.
 
 **ICC**: intra-class correlation, the share of variance that sits between templates.
 
 **Hanley–McNeil variance**: a closed-form variance of an AUROC.
+
+**Threshold group**: all rows sharing one score. AP and the PR/ROC curves treat each group
+as a single threshold (D9), so row order cannot matter. *A constant score is one group,
+and its AP is the prevalence.*
+
+**Expected precision@k**: precision among the k highest scores. When the cut-off falls
+inside a tie, the remaining places are filled uniformly from it:
+`(positives above + (K − a)·p/g) / K`. *(3, 2, 2, 1) with labels (1, 0, 1, 0): P@2 = 0.75.*
 
 **Platt calibration**: `p = σ(a + b·risk)`, fitted on development and frozen.
 
@@ -206,8 +239,9 @@ ones, sort deterministically. Gives COMPLETE / PARTIAL / EMPTY.
 **Config hash**: the sha256 of a run's configuration, excluding `run_id` and
 `note`. A different hash under the same run id is refused.
 
-**Source hashes**: sha256 of 43 files: the 24 `p33` modules plus the CLI, 11
-`phase3_2/src` modules, and 7 `phase3/src` modules.
+**Source hashes**: sha256 of 44 files: the 25 `p33` modules (with `artifacts.py`, added
+2026-10-07) plus the CLI, 11 `phase3_2/src` modules, and 7 `phase3/src` modules. The
+development run `dev-20261006a` recorded the earlier 43.
 
 **Materials hashes**: sha256 of the lexicon files, the terminal table, the
 canonical templates and the `blk` grammar.
@@ -235,13 +269,45 @@ The test runner uses 0 all passed · 1 a failure · 5 only blocked.
 **BLOCKED (test)**: a test that could not run for want of a dependency or a
 device. Never counted as passed.
 
+**Artifact registry**: `p33/artifacts.py`, the files an export must produce: 19 CSVs,
+12 figures × PNG/SVG and 10 reports. `RUN_SUMMARY.md` is written last and reports
+"present of registered" for each directory. Unregistered files are never counted.
+
+**Analysis revision**: a re-derivation of tables, figures and reports from a run's saved
+measurements, with no re-scoring. `scripts/analysis_revision.py` handles it:
+
+- `snapshot` hashes every input and copies the old outputs to `before/`;
+- `record` refuses if any input changed, then writes the before/after comparison.
+
+*`dev-20261006a/analysis_revisions/r1-2026-10-07-metric-corrections/`.*
+
+**Validation pins**: a temporary pins file built from a run's own job manifests. It lets
+`status` and `validate` check a copied run on a machine without Sol's `model_pins.json`.
+It is labelled `TEMPORARY VALIDATION REFERENCE` and is never a substitute for the real pins.
+
 ## Sol and Slurm
 
 **Account / partition / QOS**: who is charged and which queue is used.
 *`grp_tlingego` / `public` / `public`. `general` is rejected for public jobs.*
 
 **GRES / constraint**: the generic resource request and the node feature filter.
-*`gpu:a100:1` / `a100_80`.*
+*`gpu:a100:1` / `a100_80`; `gpu:a100:2` (`P33_GRES_2GPU`) for the two-GPU profiles.*
+
+**GPU class**: how many A100-80GB GPUs one model needs: `registry.gpus_needed`, set by the
+registry's `gpus` field. *2 for the Qwen2.5-72B pair, 1 for every other model.*
+
+**`array-indices`**: `p33.py array-indices --run <RUN> --gpus N` prints the array indices of
+the run's models in GPU class N. `submit.sh` submits only those. *Held-out: 0–18 on one
+GPU, 19,20 on two.*
+
+**`*_2gpu` profile**: `heldout_eval_2gpu`, `arm_b_2gpu` and `h5_2gpu`. They run the same job
+files on two GPUs of one node, with 16 CPUs, 160 GB of memory and 24 h.
+
+**Per-task preflight**: each array task checks only its own models' pins, GPU count and
+memory. A gated model awaiting approval then fails its own task, not every task.
+
+**Sharded load**: a two-GPU model is loaded with `device_map="auto"` and a per-GPU memory
+budget. The last GPU keeps room for the fp32 output head. Not yet run on two GPUs.
 
 **Job array**: one submission with N tasks. Task *i* gets `SLURM_ARRAY_TASK_ID = i`
 and scores model *i* of the run's config.

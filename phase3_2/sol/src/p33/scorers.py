@@ -55,11 +55,13 @@ def load_scorer(model_id: str, *, dtype: str, device: str = "cuda",
                 lm_head_fp32: bool = True, pins: dict | None = None):
     """The canonical TokenScorer, pinned, offline, with identity attached."""
     from phase3_2.margins import TokenScorer
+    from p33 import registry
     pin = (pins or {}).get(model_id, {})
     path, sha = resolve_snapshot(model_id, revision=pin.get("revision"),
                                  allow_patterns=pin.get("allow_patterns"))
+    n_gpus = registry.gpus_needed(model_id) if model_id in registry.REGISTRY else 1
     sc = TokenScorer(model_id, device=device, dtype=dtype, snapshot_path=path,
-                     local_files_only=True, lm_head_fp32=lm_head_fp32)
+                     local_files_only=True, lm_head_fp32=lm_head_fp32, n_gpus=n_gpus)
     sc.revision = sha
     sc.snapshot_path = path
     sc.tokenizer_id = tokenizer_fingerprint(path)

@@ -44,7 +44,7 @@ fixed (AUDIT §2). The following were implemented as specified:
 | "Use survival/Kaplan–Meier summaries" + "`k*=0` when already correct" | Correct, but with ~half the sites already correct the ALL-SITES KM median is often 0 — true, and easily misread as a bug. | Two labelled populations: ALL_SITES and INITIALLY_WRONG (the actionable number). |
 | H4 criterion "ΔAUROC vs identity ≥ 0.10" | The identity baseline is **constant** on the preregistered SEMANTIC-only eligible set, so its AUROC is exactly 0.5 and C1 is really "AUROC ≥ 0.60". | Kept as frozen (it is preregistered), the reduction stated in every report (D6), and a stronger EXPLORATORY `terminal_rate` baseline added. |
 | "AUROC ≥ 0.65 on a valid held-out grammar" | No valid held-out grammar exists. | C3 is emitted as NOT TESTABLE with its reason, in every criteria table. |
-| "do not scale beyond 3B until the required grammar evidence exists" | That evidence cannot exist yet. | Implemented as "no model above 3B in any stage". |
+| "do not scale beyond 3B until the required grammar evidence exists" | That evidence cannot exist yet. | Implemented as "no model above 3B in any stage". Replaced on 2026-10-07 by deviation D10: a 72B ceiling, larger models held-out only. |
 | "statsmodels or the chosen statistical package" | Not installed anywhere locally, and not needed. | Chosen package: numpy + stdlib, every method implemented and tested against hand values; statsmodels not required (pandas/scipy listed as optional extras for interactive work). |
 | "Parquet" | Optional ("JSONL/Parquet/CSV"); no pyarrow in the environment. | JSONL shards (append-safe, stdlib) and CSV exports. |
 | "Prefetch on an appropriate allocated or transfer resource" | Sol's network topology (whether compute nodes reach the Hub) could not be verified from here. | A CPU prefetch job is provided; the README says to run the identical command on the data-transfer node if compute nodes are offline. |
@@ -119,3 +119,58 @@ after the code was otherwise complete. Details, evidence and tests are in
 | `prefetch --config` (default) | The `mid`/`large` tiers include 7B–32B models that no stage may score. |
 | preflight in the H5 job; smoke → dev stage mapping in H5 and final export | H5 is a GPU job and had no preflight. |
 | real-tokenizer fertility in the smoke | That path was otherwise first exercised on Sol. |
+
+---
+
+## 6. Second brief (2026-10-07): analysis corrections, and the request for larger models
+
+Two requests arrived together:
+
+- fix the statistical-analysis and reporting bugs of the real development run and regenerate its
+  results from the saved GPU measurements;
+- add larger models that fit up to two A100s.
+
+Evidence is in `AUDIT.md §7` and
+`results/dev-20261006a/analysis_revisions/r1-2026-10-07-metric-corrections/`.
+
+### Accurate, implemented as written
+
+| Request | Done |
+|---|---|
+| tie-grouped AP | step-wise over distinct scores; bit-identical when scores are distinct |
+| expected precision@k under a boundary tie | `(pos above + (K − a)·p/g)/K`, with K = min(k, n) |
+| one smallest-detectable-AUROC row per scenario, each with its own ICC, the pilot flagged | 25 rows, 25 scenarios; T above 80 marked HYPOTHETICAL |
+| a power report with the full sensitivity, DE and n_eff explained, zero power kept | every T × ICC cell, the pilot in bold |
+| RUN_SUMMARY counts right on a first and a repeated export | counted against a registry, written last |
+| regression tests, isolated results root | 20 new tests; the runner forces a temporary root |
+| regenerate from saved measurements; keep the old outputs; a separate revision record | 652 inputs byte-identical; `before/` kept; `ANALYSIS_REVISION.md` |
+| a temporary validation reference when the global pins file is absent | built from the job manifests' revisions and labelled as such; Sol's real pins file untouched |
+| no re-scoring, no fake mode, no freeze, unlock, submission or commit | none was done |
+
+### Corrected in detail
+
+| Brief | Correction |
+|---|---|
+| implied that only the identity baseline was order-dependent | `length`, `program_nll` and the exploratory `terminal_rate` were too. The risk score was not: it has no ties |
+| "11 checkpoints required; 9 downloaded; Llama awaiting approval" (section 10) | True for the original design when written. The Llama pair was approved and downloaded later the same day. Since D10, held-out needs 21, and the 10 large ones are not downloaded |
+| the larger models were requested as "add to where they need to be" | All 10 go to **held-out only**, not 7B into development as first suggested. The development run is complete, and its stored configuration must not change |
+
+### Missed by the brief, added
+
+| Addition | Why it matters |
+|---|---|
+| test runner forced to a temporary results root | With `sol.env` sourced, the committed suite created `dev-status-readonly/` in the real results root and briefly swapped the real `model_pins.json` (reproduced against a stand-in root) |
+| `REPRODUCTION.md` names real commands; `env/README.md` exists | The report pointed at commands and a file that did not exist |
+| figure footers print every model with its own revision (`model@revision`) | The footers named one model and one revision for a "base\|instruct" pair |
+| per-task preflight; `array-indices`; `*_2gpu` profiles | A gated model awaiting approval would otherwise fail every task. The 72B pair needs two GPUs; nothing else does |
+| models must be pinned before the freeze | `frozen_drift` compares only pins that exist at freeze time; the 10 new checkpoints were not pinned yet (README §8) |
+
+### Deliberately not done
+
+| Item | Why |
+|---|---|
+| prefix KV caching | It would change the scoring path relative to the development run's measurements |
+| changing the sample size after the power result | That decision is the investigator's, before the freeze |
+
+**Superseded:** §5 explains `prefetch --config` by saying the tiers "include 7B–32B models that
+no stage may score". That predates D10, and those models are now held-out.

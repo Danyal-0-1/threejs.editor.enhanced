@@ -272,8 +272,8 @@ Test's hand example:
 | Metric | Definition |
 |---|---|
 | AUROC | Mann–Whitney with average ranks: $\frac{R_1 - n_1(n_1+1)/2}{n_1 n_0}$ |
-| AUPRC | step-wise average precision $\frac1P\sum_{\text{pos } i}\text{precision@rank}(i)$; report it **with** prevalence, its baseline |
-| precision@k | positives among the k highest risks, k ∈ {10, 50} |
+| AUPRC | step-wise average precision over **distinct** scores: $\sum_j (R_j - R_{j-1})\,P_j$, each tie group one threshold (D9); report it **with** prevalence, its baseline |
+| precision@k | expected positives among the k highest risks, a tie at the cut-off shared out evenly (D9), k ∈ {10, 50} |
 | Brier | $\frac1N\sum(p - y)^2$ |
 | ECE | 10 equal-width bins: $\sum_b \frac{n_b}{N}\,\lvert\bar y_b - \bar p_b\rvert$ |
 | calibration slope/intercept | logistic regression of $y$ on $\operatorname{logit}(p)$; perfect is (0, 1) |
@@ -292,6 +292,65 @@ one pseudo-count. It is the real "language-level" competitor: it knows which
 
 **When a metric is NOT ESTIMABLE:** with a single class present, AUROC is undefined. The
 group then reports `NOT ESTIMABLE` instead of crashing or inventing a number.
+
+### Ties (deviation D9, 2026-10-07)
+
+Until 2026-10-07, AP and precision@k sorted the rows by score and walked down the
+list one row at a time. Rows with the *same* score stayed in input order, so
+the answer depended on how the file happened to be sorted. AUROC was never
+affected: average ranks already split a tie evenly.
+
+**AP now treats a tie group as one threshold.** Let the distinct scores, from the highest
+down, be $s_1 > s_2 > \dots$. Group $j$ holds $n_j$ rows, $p_j$ of them positive, and
+$P = \sum_j p_j$. At threshold $s_j$:
+
+$$\text{TP}_j = \sum_{i\le j} p_i,\quad \text{seen}_j = \sum_{i\le j} n_i,\quad
+P_j = \frac{\text{TP}_j}{\text{seen}_j},\quad R_j = \frac{\text{TP}_j}{P},\qquad
+\text{AP} = \sum_j (R_j - R_{j-1})\,P_j = \frac1P\sum_j p_j\,P_j .$$
+
+**Worked example** (`test_auprc_hand_example_five_sixths`): scores (3, 2, 2, 1),
+labels (1, 0, 1, 0).
+
+| threshold | rows seen | TP | precision $P_j$ | recall $R_j$ | adds $(R_j - R_{j-1})P_j$ |
+|---:|---:|---:|---:|---:|---:|
+| 3 | 1 | 1 | 1 | 1/2 | 1/2 |
+| 2 (two rows) | 3 | 2 | 2/3 | 1 | 1/3 |
+| 1 | 4 | 2 | 1/2 | 1 | 0 |
+
+So AP = 5/6. The old code gave 5/6 or 1 depending on which of the two 2s came
+first in the file. With distinct scores every group has one row, and the new
+value is bit-identical to the old one (`test_auprc_unchanged_for_distinct_scores`).
+A constant score is one group, so its AP is exactly the prevalence.
+
+**precision@k is the expected precision when the cut-off splits a tie.** Let $K = \min(k, n)$.
+Suppose $a$ rows score strictly above the boundary score and hold $\text{pos}_{>}$
+positives, and the boundary group has $g$ rows, $p$ of them positive. Choosing $K - a$ of the
+boundary rows uniformly at random gives
+
+$$\text{P@}k = \frac{\text{pos}_{>} + (K - a)\,p/g}{K}.$$
+
+Same example, k = 2: the 3 is in ($a = 1$, one positive). One of the two 2s is
+drawn, which yields ½ an expected positive, so P@2 = (1 + ½)/2 = **0.75**. At
+k = 3 the whole tie fits and P@3 = 2/3 exactly.
+
+Conventions:
+
+- empty input → `None`;
+- k < 1 or a non-integer k → error;
+- a NaN score → error, never sorted silently;
+- `pr_curve` and `roc_curve`, which draw the figures, use the same threshold groups.
+
+**What it changed on the real development run.** These numbers are *exploratory*.
+
+- The identity baseline is one big tie. Its AP and P@10 are now the prevalence: 0.407 for the
+  0.5B pair and 0.468 for the 1.5B pair. Before, they were 0.410/0.3 and 0.452/0.4, and the
+  1.5B AP was 0.492 with the file reversed.
+- `token_count`, `length`, `program_nll` and `terminal_rate` moved slightly.
+- The risk score has effectively no ties, and its AP of 0.819/0.924 is unchanged.
+- AUROC, the C1/C2 differences and their intervals are unchanged.
+
+The full before/after list is in
+[`08 §5`](08_changes_defects_and_superseded_numbers.md#5-2026-10-07--corrections-to-the-real-development-analysis-d9-and-model-scale-d10).
 
 ---
 
@@ -338,6 +397,45 @@ The hurdle shrinks the sample before clustering does.
 
 **Pilot data are development-only.** `pilot_from_rows` raises `HeldoutLeak` on any
 other split label.
+
+### The real development pilot (`dev-20261006a`, 2026-10-07)
+
+The table above is the smoke's arithmetic. The development run measured what it
+only assumed. Each figure below pools over models and lexicons, and **templates** are the
+independent unit. More models, lexicons or repeated sites add rows *inside* a template, not
+templates.
+
+| | rows per template m | pilot ICC ρ | DE = 1 + (m − 1)ρ | n_eff at T = 80 |
+|---|---:|---:|---:|---:|
+| rule effect (mean 0.164 nats, SD 2.19) | 44.84 | **0.252** | 12.05 | 3,587 / 12.05 ≈ **298** |
+| H4 criterion 1 (label) | 22.42 | **0.073** | 2.56 | 1,794 / 2.56 ≈ **700** |
+
+**Rule effect** — power for a positive pooled mean:
+
+| ICC | T = 20 | 40 | 80 | 160\* | 320\* |
+|---|---:|---:|---:|---:|---:|
+| 0 | 0.610 | 0.886 | 0.994 | 1.000 | 1.000 |
+| 0.10 | 0.160 | 0.276 | 0.488 | 0.779 | 0.971 |
+| 0.20 | 0.107 | 0.172 | 0.299 | 0.526 | 0.817 |
+| **0.252 (pilot)** | 0.094 | 0.147 | **0.251** | 0.446 | 0.732 |
+
+\* more templates than the 80-template corpus: new materials, not data in hand.
+
+Before D9 the report printed only the ICC = 0 row (0.994 at T = 80). At the ICC the
+pilot actually shows, the same design has power 0.251. No template count on the grid
+reaches 80%. The per-(model, lexicon) tests in `rule_effect.csv` have fewer rows per
+template than this pooled pilot, so their power is lower still.
+
+**H4 criterion 1** — the smallest true AUROC detected with 80% power:
+
+- **T = 80:** 0.62 at the pilot ICC, and 0.62–0.63 across ICC 0–0.2.
+- **Why it barely moves:** the criterion demands $\hat A \ge 0.60$, so no amount of data can
+  detect a true AUROC below 0.60. Clustering only widens the small margin above that bar.
+- **For comparison:** the pooled development AUROC was 0.899. That is planning information,
+  not a forecast of the held-out value.
+
+Every scenario and the full T × ICC tables are in the run's `reports/POWER_ANALYSIS.md`
+and `csv/power.csv`. Nothing in the registered design was changed in response.
 
 ---
 

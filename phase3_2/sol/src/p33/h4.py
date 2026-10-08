@@ -35,6 +35,7 @@ All metrics are pure Python so CPU tests need nothing beyond the stdlib.
 from __future__ import annotations
 
 import math
+import operator
 import statistics as st
 from collections import defaultdict
 from typing import Sequence
@@ -69,26 +70,143 @@ def auroc(scores: Sequence[float], labels: Sequence[int]) -> float | None:
     return (r1 - n1 * (n1 + 1) / 2) / (n1 * n0)
 
 
+def threshold_groups(scores: Sequence[float], labels: Sequence[int]
+                     ) -> list[tuple[float, int, int]]:
+    """(score, n, positives) for every DISTINCT score, highest first.
+
+    Every metric that thresholds a score is computed on these groups, never on
+    individual observations: no threshold can separate observations with equal
+    scores, so no metric may depend on the order in which they were listed.
+    Raises on a NaN score (it has no place in an ordering; callers drop
+    missing predictions first) and on labels other than 0/1.
+    """
+    if len(scores) != len(labels):
+        raise ValueError(f"{len(scores)} scores but {len(labels)} labels")
+    groups: dict[float, list[int]] = defaultdict(lambda: [0, 0])
+    for s, y in zip(scores, labels):
+        s = float(s)
+        if math.isnan(s):
+            raise ValueError("NaN score: drop missing predictions before thresholding")
+        if y not in (0, 1):
+            raise ValueError(f"labels must be 0 or 1, got {y!r}")
+        g = groups[s]
+        g[0] += 1
+        g[1] += int(y)
+    return [(s, n, p) for s, (n, p) in sorted(groups.items(), key=lambda kv: -kv[0])]
+
+
 def auprc(scores: Sequence[float], labels: Sequence[int]) -> float | None:
-    """Average precision (step-wise). Report WITH prevalence -- it is the baseline."""
-    P = sum(labels)
+    """Average precision, step-wise, with TIED SCORES GROUPED into one threshold.
+
+        AP = sum_j (R_j - R_(j-1)) * P_j
+
+    over the distinct scores j, highest first; R_j and P_j are the recall and
+    precision after admitting EVERY observation that scores >= the j-th
+    distinct score. Since R_j - R_(j-1) = p_j / P, this is computed as
+    sum_j p_j * P_j / P. It is the step-wise "average precision" estimator,
+    not the trapezoidal area under the PR curve (which interpolates linearly
+    between points and is optimistic for PR curves).
+
+      * permutation-invariant: a tied group enters as a whole. The previous
+        version ranked tied rows by input position, so scores [1, 1] gave
+        AP = 1.0 for labels [1, 0] and 0.5 for [0, 1]; both are 0.5 now.
+      * a constant score gives exactly the positive prevalence;
+      * distinct scores give bit-for-bit the previous value (each group is
+        one observation, summed in the same order);
+      * no positive observation (including empty input) -> None, the existing
+        convention: AP is undefined without a positive class.
+    Report it WITH the prevalence, which is its chance level.
+    """
+    groups = threshold_groups(scores, labels)
+    P = sum(p for _s, _n, p in groups)
     if P == 0:
         return None
-    order = sorted(range(len(scores)), key=lambda i: -scores[i])
-    tp = 0
-    ap = 0.0
-    for rank, i in enumerate(order, 1):
-        if labels[i]:
-            tp += 1
-            ap += tp / rank
-    return ap / P
+    acc = 0.0
+    tp = seen = 0
+    for _s, n, p in groups:
+        tp += p
+        seen += n
+        if p:
+            acc += p * (tp / seen)
+    return acc / P
 
 
 def precision_at_k(scores: Sequence[float], labels: Sequence[int], k: int) -> float | None:
-    if not scores:
+    """Expected precision of the top k under UNIFORM selection inside the boundary tie.
+
+    With K = min(k, n): every observation scoring strictly above the boundary
+    score is selected (a of them, with pos_above positives); the remaining
+    K - a places are filled uniformly at random from the boundary tie group
+    (g observations, p positives), which contributes (K - a) * p / g expected
+    positives:
+
+        P@K = (pos_above + (K - a) * p / g) / K
+
+      * permutation-invariant. The previous version broke the boundary tie
+        by input position: on the development data the identity baseline's
+        P@10 moved from 0.4 to 0.6 when the rows were reversed;
+      * identical to plain top-k precision when the boundary is not tied;
+      * a constant score gives the prevalence for every valid k;
+      * k larger than the sample: K = n, i.e. the prevalence of the whole set;
+      * empty input -> None; k < 1 or a non-integer k -> ValueError.
+    """
+    if isinstance(k, bool):
+        raise ValueError(f"k must be an integer >= 1, got {k!r}")
+    try:
+        k = operator.index(k)
+    except TypeError:
+        raise ValueError(f"k must be an integer >= 1, got {k!r}") from None
+    if k < 1:
+        raise ValueError(f"k must be an integer >= 1, got {k!r}")
+    groups = threshold_groups(scores, labels)
+    n = sum(g for _s, g, _p in groups)
+    if n == 0:
         return None
-    order = sorted(range(len(scores)), key=lambda i: -scores[i])[:k]
-    return sum(labels[i] for i in order) / len(order)
+    K = min(k, n)
+    taken, positives = 0, 0.0
+    for _s, g, p in groups:
+        if taken + g <= K:
+            taken += g
+            positives += p
+            if taken == K:
+                break
+        else:
+            positives += (K - taken) * p / g
+            break
+    return positives / K
+
+
+def pr_curve(scores: Sequence[float], labels: Sequence[int]) -> list[tuple[float, float]]:
+    """(recall, precision) after each distinct-score threshold, highest first.
+
+    These are exactly the points whose step-wise sum `auprc` reports; figures
+    draw them, so a plot and its table cannot disagree.
+    """
+    groups = threshold_groups(scores, labels)
+    P = sum(p for _s, _n, p in groups)
+    out, tp, seen = [], 0, 0
+    for _s, n, p in groups:
+        tp += p
+        seen += n
+        out.append((tp / P if P else 0.0, tp / seen))
+    return out
+
+
+def roc_curve(scores: Sequence[float], labels: Sequence[int]) -> list[tuple[float, float]]:
+    """(FPR, TPR) from (0, 0) through each distinct-score threshold.
+
+    A tied group moves diagonally, so the trapezoidal area under these points
+    equals the average-rank AUROC that `auroc` reports.
+    """
+    groups = threshold_groups(scores, labels)
+    P = sum(p for _s, _n, p in groups)
+    N = sum(n - p for _s, n, p in groups)
+    out, tp, fp = [(0.0, 0.0)], 0, 0
+    for _s, n, p in groups:
+        tp += p
+        fp += n - p
+        out.append((fp / N if N else 0.0, tp / P if P else 0.0))
+    return out
 
 
 def brier(probs: Sequence[float], labels: Sequence[int]) -> float:

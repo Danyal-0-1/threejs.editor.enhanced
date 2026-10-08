@@ -167,49 +167,119 @@ def kstar_projection(curves: Sequence[dict], *, target_templates: int,
             "share_median_unreached": 1 - len(finite) / len(meds) if meds else None}
 
 
+GRID_A = [0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85]
+GRID_T = [20, 40, 80, 160, 320]
+GRID_ICC = [0.0, 0.05, 0.10, 0.20]
+SDE_GRID = [x / 100 for x in range(51, 100)]
+POWER_TARGET = 0.8
+
+
+def design_effect(m: float, icc: float) -> float:
+    """Variance inflation from clustering: 1 + (m - 1) * ICC."""
+    return 1 + (m - 1) * icc
+
+
+def effective_n(n_templates: int, m: float, icc: float) -> float:
+    """T * m / design effect: how many independent observations T templates of
+    m rows each are worth. With ICC = 0 it is T * m; as ICC -> 1 it tends to T."""
+    return n_templates * m / design_effect(m, icc)
+
+
+def icc_scenarios(pilot_icc: float, grid=GRID_ICC) -> list[tuple[float, str]]:
+    """Every ICC to evaluate, once: the fixed sensitivity values plus the pilot
+    estimate (rounded to 3 decimals; that rounded value is both reported AND
+    used, so each row's power is computed with the ICC it shows)."""
+    p = round(pilot_icc, 3)
+    out = {g: "sensitivity" for g in grid}
+    out[p] = "pilot estimate" if p not in out else "sensitivity = pilot estimate"
+    return sorted(out.items())
+
+
+def t_status(T: int, corpus_templates: int | None) -> str:
+    if not corpus_templates:
+        return "corpus size unknown"
+    if T < corpus_templates:
+        return "subset of the corpus"
+    if T == corpus_templates:
+        return "the whole corpus"
+    return f"HYPOTHETICAL: exceeds the {corpus_templates}-template corpus (needs new templates)"
+
+
+def _scope(rows: Sequence[dict], unit: str) -> str:
+    n_lex = len({r.get("lexicon") for r in rows if r.get("lexicon")})
+    n_unit = len({r.get(unit) for r in rows if r.get(unit)})
+    return (f"pooled over {n_unit} {unit}(s) x {n_lex} lexicon(s); rows of one template "
+            f"from other {unit}s or lexicons are NOT extra templates")
+
+
 def analyse(h4_table: Sequence[dict], arm_a_rows: Sequence[dict],
-            curves: Sequence[dict], armb_hurdles: Sequence[dict]) -> list[dict]:
-    """All power/precision rows for power.csv. Development data only."""
+            curves: Sequence[dict], armb_hurdles: Sequence[dict], *,
+            corpus_templates: int | None = None) -> list[dict]:
+    """All power/precision rows for power.csv. Development data only.
+
+    Every (template count, ICC) scenario appears ONCE per analysis and is
+    evaluated with the ICC shown in its own row; the pilot estimate is one of
+    the scenarios and is flagged. (Before 2026-10-07 the smallest-detectable
+    AUROC rows sat inside the ICC loop but always used the pilot ICC: 25 rows,
+    5 distinct, each mislabelled.) Template counts above the corpus are
+    labelled HYPOTHETICAL: more templates mean new materials, not repeated
+    sites or re-run models.
+    """
     out = []
-    grid_A = [0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85]
-    grid_T = [20, 40, 80, 160, 320]
-    grid_icc = [0.0, 0.05, 0.10, 0.20]
+    grid_A, grid_T = GRID_A, GRID_T
 
     if h4_table:
         pilot_from_rows(h4_table)
         prev = sum(r["label"] for r in h4_table) / len(h4_table)
-        m = len(h4_table) / max(len({r["template"] for r in h4_table}), 1)
+        prev_c = max(min(prev, .99), .01)
+        n_t = len({r["template"] for r in h4_table})
+        m = len(h4_table) / max(n_t, 1)
         icc = icc_binary(h4_table, value="label")
         from p33.h4 import auroc
         A_pilot = auroc([r["risk"] for r in h4_table], [r["label"] for r in h4_table])
-        pilot_models = "|".join(sorted({r["model"] for r in h4_table}))
-        pilot_revs = "|".join(sorted({r["model_revision"] for r in h4_table}))
+        meta = {"model": "|".join(sorted({r["model"] for r in h4_table})),
+                "model_revision": "|".join(sorted({r["model_revision"] for r in h4_table})),
+                "split": "DEVELOPMENT", "pilot_auroc": A_pilot, "pilot_icc": icc,
+                "pilot_templates": n_t, "corpus_templates": corpus_templates,
+                "sites_per_template": round(m, 2), "rows_per_template": m,
+                "prevalence": round(prev, 3), "pooling": _scope(h4_table, "pair"),
+                "scope": "H4 criterion 1 only (AUROC >= 0.60 with its lower bound above 0.5)"}
         for T in grid_T:
-            for ic in sorted(set(grid_icc + [round(icc, 3)])):
+            ts = t_status(T, corpus_templates)
+            for ic, src in icc_scenarios(icc):
+                scen = {"n_templates": T, "icc": ic, "icc_source": src,
+                        "is_pilot_icc": src != "sensitivity", "t_status": ts,
+                        "design_effect": design_effect(m, ic),
+                        "effective_n": effective_n(T, m, ic)}
                 for A in grid_A:
-                    out.append({"analysis": "h4_criterion1", "n_templates": T,
-                                "sites_per_template": round(m, 2), "prevalence": round(prev, 3),
-                                "icc": ic, "true_auroc": A,
-                                "power": h4_power(A, n_templates=T, m=m, prevalence=max(min(prev, .99), .01), icc=ic),
-                                "pilot_auroc": A_pilot, "pilot_icc": icc,
-                                "model": pilot_models, "model_revision": pilot_revs,
-                                "split": "DEVELOPMENT",
-                                "source": "analytic (Hanley-McNeil x design effect)"})
-                sde = smallest_detectable(lambda a: h4_power(a, n_templates=T, m=m,
-                                          prevalence=max(min(prev, .99), .01), icc=icc),
-                                          [x / 100 for x in range(51, 100)])
-                out.append({"analysis": "h4_smallest_detectable_auroc", "n_templates": T,
-                            "icc": icc, "value": sde, "power_target": 0.8})
+                    out.append({"analysis": "h4_criterion1", **scen, "true_auroc": A,
+                                "power": h4_power(A, n_templates=T, m=m, prevalence=prev_c, icc=ic),
+                                **meta, "source": "analytic (Hanley-McNeil x design effect)"})
+
+                def fn(a, T=T, ic=ic):
+                    return h4_power(a, n_templates=T, m=m, prevalence=prev_c, icc=ic)
+                sde = smallest_detectable(fn, SDE_GRID, POWER_TARGET)
+                out.append({"analysis": "h4_smallest_detectable_auroc", **scen,
+                            "value": sde,
+                            "value_status": ("reached" if sde is not None else
+                                             f"NOT REACHED: no AUROC in {SDE_GRID[0]}-{SDE_GRID[-1]} "
+                                             f"reaches power {POWER_TARGET}"),
+                            "power_at_value": fn(sde) if sde is not None else None,
+                            "power_target": POWER_TARGET, "auroc_grid": "0.51-0.99 step 0.01",
+                            **meta})
         if A_pilot and 0.5 < A_pilot < 1 and 0 < prev < 1:
-            T0 = len({r["template"] for r in h4_table})
+            T0 = n_t
+            ic0 = round(icc, 3)          # the pilot scenario's ICC, as reported
             out.append({"analysis": "h4_simulation_check", "n_templates": T0,
-                        "true_auroc": round(A_pilot, 3), "icc": round(icc, 3),
+                        "true_auroc": round(A_pilot, 3), "icc": ic0,
+                        "icc_source": "pilot estimate", "is_pilot_icc": True,
                         "power_simulated": h4_power_simulated(
                             A_pilot, n_templates=T0, m=max(int(round(m)), 1),
-                            prevalence=prev, icc=icc, R=200),
+                            prevalence=prev, icc=ic0, R=200),
                         "power_analytic": h4_power(A_pilot, n_templates=T0, m=m,
-                                                   prevalence=prev, icc=icc),
-                        "source": "template-clustered binormal simulation, R=200"})
+                                                   prevalence=prev, icc=ic0),
+                        "source": "template-clustered binormal simulation, R=200 "
+                                  "(integer sites per template; the analytic value uses the mean)"})
     else:
         out.append({"analysis": "h4_criterion1", "status": "NOT RUN",
                     "reason": "no development H4 table (needs base AND instruct Arm A rows)"})
@@ -219,18 +289,28 @@ def analyse(h4_table: Sequence[dict], arm_a_rows: Sequence[dict],
         if r.get("status") == "ok" and r["condition"] in ("rule", "norule"):
             idx[(r["model"], r["site_id"])][r["condition"]] = r
     diffs = [{"template": v["rule"]["template"], "d": v["rule"]["m_seq"] - v["norule"]["m_seq"],
-              "split": v["rule"]["split"]} for v in idx.values() if len(v) == 2]
+              "split": v["rule"]["split"], "model": v["rule"]["model"],
+              "lexicon": v["rule"].get("lexicon")} for v in idx.values() if len(v) == 2]
     if len(diffs) > 2:
         pilot_from_rows(diffs)
         d = st.mean(x["d"] for x in diffs)
         sd = st.pstdev(x["d"] for x in diffs) or 1e-9
-        m = len(diffs) / max(len({x["template"] for x in diffs}), 1)
+        n_t = len({x["template"] for x in diffs})
+        m = len(diffs) / max(n_t, 1)
         icc = icc_binary(diffs, value="d")
+        meta = {"pilot_mean": d, "pilot_sd": sd, "pilot_icc": icc, "pilot_templates": n_t,
+                "corpus_templates": corpus_templates, "sites_per_template": round(m, 2),
+                "rows_per_template": m, "pooling": _scope(diffs, "model"),
+                "scope": "mean rule effect M(rule) - M(norule) > 0, one-sample, clustered; "
+                         "not the per-(model, lexicon) tests of rule_effect.csv"}
         for T in grid_T:
-            for ic in sorted(set(grid_icc + [round(icc, 3)])):
+            ts = t_status(T, corpus_templates)
+            for ic, src in icc_scenarios(icc):
                 out.append({"analysis": "rule_effect", "n_templates": T, "icc": ic,
-                            "pilot_mean": d, "pilot_sd": sd, "sites_per_template": round(m, 2),
-                            "power": rule_power(d, sd, n_templates=T, m=m, icc=ic)})
+                            "icc_source": src, "is_pilot_icc": src != "sensitivity",
+                            "t_status": ts, "design_effect": design_effect(m, ic),
+                            "effective_n": effective_n(T, m, ic),
+                            "power": rule_power(d, sd, n_templates=T, m=m, icc=ic), **meta})
     else:
         out.append({"analysis": "rule_effect", "status": "NOT RUN",
                     "reason": "no paired rule/no-rule development rows"})

@@ -31,7 +31,13 @@ SOL = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(SOL, "src"))
 sys.path.insert(0, HERE)
 
-os.environ.setdefault("P33_RESULTS_ROOT", tempfile.mkdtemp(prefix="p33_test_results_"))
+# ALWAYS a fresh temporary results root. `setdefault` was not enough: the Sol
+# CPU-test job sources sol.env, which exports the REAL results root, so a test
+# run (`dev-status-readonly/`) was created there and one test briefly replaced
+# the real model_pins.json, restoring it in a `finally` (reproduced against a
+# stand-in root on 2026-10-07). Tests never touch real data.
+os.environ["P33_RESULTS_ROOT"] = tempfile.mkdtemp(prefix="p33_test_results_")
+os.environ.pop("P33_ARRAY", None)
 
 
 class Blocked(Exception):
