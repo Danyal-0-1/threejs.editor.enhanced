@@ -1,0 +1,109 @@
+{
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": false,
+  "analysis": {
+   "B": 2000,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 64,
+  "dtype": "bfloat16",
+  "families": [
+   "dom",
+   "blk"
+  ],
+  "freeze_path": "/home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a/DEV_FREEZE.json",
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d25s3",
+   "d50s3",
+   "d75s1a",
+   "d75s2a",
+   "d75s3a"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "Qwen/Qwen2.5-Coder-0.5B",
+   "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "Qwen/Qwen2.5-Coder-1.5B",
+   "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "Qwen/Qwen2.5-Coder-3B",
+   "Qwen/Qwen2.5-Coder-3B-Instruct",
+   "deepseek-ai/deepseek-coder-1.3b-base",
+   "deepseek-ai/deepseek-coder-1.3b-instruct",
+   "meta-llama/Llama-3.2-1B",
+   "meta-llama/Llama-3.2-1B-Instruct",
+   "bigcode/starcoder2-3b",
+   "Qwen/Qwen2.5-Coder-7B",
+   "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "Qwen/Qwen2.5-Coder-14B",
+   "Qwen/Qwen2.5-Coder-14B-Instruct",
+   "Qwen/Qwen2.5-Coder-32B",
+   "Qwen/Qwen2.5-Coder-32B-Instruct",
+   "deepseek-ai/deepseek-coder-33b-base",
+   "deepseek-ai/deepseek-coder-33b-instruct",
+   "Qwen/Qwen2.5-72B",
+   "Qwen/Qwen2.5-72B-Instruct"
+  ],
+  "note": "Held-out evaluation. Models 11-20 added 2026-10-07 by deviation D10 (scale: Qwen2.5-Coder 7B/14B/32B, DeepSeek-Coder-33B, Qwen2.5-72B on 2 GPUs). Appended so models 0-10 keep their array indices. Previous note: Held-out mappings x (dev + held-out models <=3B). blk cells are HELDOUT-WEAK-FAMILY (D1); 3B is HELDOUT-WEAKENED (D2). Requires DEV_FREEZE + unlock.",
+  "primary": {
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 400
+  },
+  "run_id": "heldout-20261007a",
+  "schema_version": "p33/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 0,
+  "stage": "heldout"
+ },
+ "config_hash": "d664de71837d9e9a078525b2472f678c79a68138314ac90a2c576a30d95f6a99"
+}

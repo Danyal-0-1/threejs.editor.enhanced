@@ -19,4 +19,4 @@ python scripts/p33.py export   --run dev-20261006a   # CSVs -> plots -> reports
 
 Resume is idempotent: completed cells (marker + sha256 + row count) are skipped; failed, missing and corrupt cells are re-run.
 
-Model pins: `/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase3_3/sol_results/model_pins.json` (written by `p33 prefetch`). Environment lock: `phase3_2/sol/env/` (see `env/README.md`).
+Model pins: `/home/dkhorami/phase3-3_experiment_sol/results/model_pins.json` (written by `p33 prefetch`). Environment lock: `phase3_2/sol/env/` (see `env/README.md`).

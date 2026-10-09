@@ -1,0 +1,273 @@
+{
+ "artifacts": {},
+ "command": [
+  "scripts/p33.py",
+  "heldout",
+  "run",
+  "--run",
+  "heldout-20261007a",
+  "--experiment",
+  "arm_a"
+ ],
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": false,
+  "analysis": {
+   "B": 2000,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 64,
+  "dtype": "bfloat16",
+  "families": [
+   "dom",
+   "blk"
+  ],
+  "freeze_path": "/home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a/DEV_FREEZE.json",
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d25s3",
+   "d50s3",
+   "d75s1a",
+   "d75s2a",
+   "d75s3a"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "Qwen/Qwen2.5-Coder-0.5B",
+   "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "Qwen/Qwen2.5-Coder-1.5B",
+   "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "Qwen/Qwen2.5-Coder-3B",
+   "Qwen/Qwen2.5-Coder-3B-Instruct",
+   "deepseek-ai/deepseek-coder-1.3b-base",
+   "deepseek-ai/deepseek-coder-1.3b-instruct",
+   "meta-llama/Llama-3.2-1B",
+   "meta-llama/Llama-3.2-1B-Instruct",
+   "bigcode/starcoder2-3b",
+   "Qwen/Qwen2.5-Coder-7B",
+   "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "Qwen/Qwen2.5-Coder-14B",
+   "Qwen/Qwen2.5-Coder-14B-Instruct",
+   "Qwen/Qwen2.5-Coder-32B",
+   "Qwen/Qwen2.5-Coder-32B-Instruct",
+   "deepseek-ai/deepseek-coder-33b-base",
+   "deepseek-ai/deepseek-coder-33b-instruct",
+   "Qwen/Qwen2.5-72B",
+   "Qwen/Qwen2.5-72B-Instruct"
+  ],
+  "note": "Held-out evaluation. Models 11-20 added 2026-10-07 by deviation D10 (scale: Qwen2.5-Coder 7B/14B/32B, DeepSeek-Coder-33B, Qwen2.5-72B on 2 GPUs). Appended so models 0-10 keep their array indices. Previous note: Held-out mappings x (dev + held-out models <=3B). blk cells are HELDOUT-WEAK-FAMILY (D1); 3B is HELDOUT-WEAKENED (D2). Requires DEV_FREEZE + unlock.",
+  "primary": {
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 400
+  },
+  "run_id": "heldout-20261007a",
+  "schema_version": "p33/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 0,
+  "stage": "heldout"
+ },
+ "config_hash": "d664de71837d9e9a078525b2472f678c79a68138314ac90a2c576a30d95f6a99",
+ "cwd": "/home/dkhorami/phase3-3_experiment_sol/repo/phase3_2/sol",
+ "disk_free_gb": {
+  "hf_root": 468117.2,
+  "results": 46.8
+ },
+ "dtype": "bfloat16",
+ "end_utc": "2026-10-08T10:06:13+00:00",
+ "experiment": "arm_a",
+ "git_commit": "78b2bcdbf2c3cdd5dbf80fe1598b33d72e340f0a",
+ "git_dirty": true,
+ "gpu": {
+  "bf16_supported": true,
+  "cuda_available": true,
+  "cuda_runtime": "12.6",
+  "device_mem_gb": 79.3,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB",
+  "torch": "2.8.0+cu126"
+ },
+ "hf_env": {
+  "HF_HOME": "/scratch/dkhorami/hf",
+  "HF_HUB_CACHE": "/scratch/dkhorami/hf/hub",
+  "HF_HUB_OFFLINE": "1",
+  "TRANSFORMERS_CACHE": "/scratch/dkhorami/hf/hub",
+  "TRANSFORMERS_OFFLINE": "1"
+ },
+ "job": {
+  "array_task_id": "15",
+  "job_id": "64954786",
+  "node": "sg005",
+  "pid": 1312253
+ },
+ "lm_head_fp32": true,
+ "materials_hashes": {
+  "blk_grammar": "3070a10af2f960c018b72dfbdf4525d42cb2d35e3ce0693c3d17c0535baea4f3",
+  "phi_d25s3.json": "e62d20283c725b6682b80bae60b5ca4f4c85e7fc7a669a33c62aef4d5bf149b7",
+  "phi_d50s3.json": "68baa8b14c9c474b90f5d57050d7f58c5ecb4e189a87510afff5a204fbd6975d",
+  "phi_d75s1a.json": "0c791fb9aab85bfc9a7b8b319a7b5a7560269bc9fd8c560e390424d69b7d3e45",
+  "phi_d75s2a.json": "f798b2eea25b01b76e803e37304a7049f0b1e250893028c71ea4450a173cea18",
+  "phi_d75s3a.json": "f7b2e82e4bd9bf375aca1b34762e1393e4cde5678bd7019800a2828b7a186ff4",
+  "templates": "482a72a7b0e27b2b29e8a6af3001ccaedb2ef8457c2e24b23172cabc84dc8e78",
+  "terminals.json": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5"
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-32B": {
+   "n_cells": 162,
+   "n_todo": 162,
+   "revision": "2e12b5f7bc878d424d222e224ed40aee564ec45f",
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-32B/snapshots/2e12b5f7bc878d424d222e224ed40aee564ec45f",
+   "tokenizer_id": "cc349caf59f0697a"
+  }
+ },
+ "packages": {
+  "accelerate": "1.11.0",
+  "huggingface_hub": "0.36.0",
+  "lark": "1.3.1",
+  "matplotlib": "3.10.7",
+  "numpy": "2.2.6",
+  "platform": "Linux-4.18.0-553.124.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "python": "3.12.3",
+  "safetensors": "0.6.2",
+  "tokenizers": "0.22.1",
+  "transformers": "4.57.1"
+ },
+ "prompt_hashes": {
+  "d25s3/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d25s3/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d25s3/rule": "901d671dc78fc1a8415205ba2b4958892a5ac7fbc596b5d05fb1e18b2f17c21c",
+  "d50s3/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d50s3/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d50s3/rule": "01185e892e6c36374b99c2f09a611558c0d2e66f61fb4f982670029b8e5527f4",
+  "d75s1a/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d75s1a/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d75s1a/rule": "5f017f7fa3498258b0dbc39cd90c87b4dbaadde52a7844101696b832324a10b4",
+  "d75s2a/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d75s2a/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d75s2a/rule": "5914577065610c2f153c0773cc366951b2f87b529faf3052ea8979c1fe568edd",
+  "d75s3a/norule": "ac47da8db750a18bf5c99bbc917559e9d71855ca81b0fdfed54c0f9fe7b76f83",
+  "d75s3a/norule_lenmatched": "a515fc1dbc16b1172912f75bf3ae73f1a0fa95f4dfd4eb15317e66a4991f7b85",
+  "d75s3a/rule": "659adfab0b6e0f72352cc9a161f2a1a63a5e2b366c30cd593e1433c503c80986"
+ },
+ "run_id": "heldout-20261007a",
+ "schema_version": "p33/1",
+ "seeds": {
+  "bootstrap": 20261002,
+  "demo_order": 20261005,
+  "h5_random": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "power": 20261006
+ },
+ "slurm": {
+  "account": "grp_tlingego",
+  "array_job_id": "64943130",
+  "array_task_id": "15",
+  "cpus": "8",
+  "job_id": "64954786",
+  "node": "sg005",
+  "partition": "public",
+  "qos": "public"
+ },
+ "source_hashes": {
+  "phase3/src/phase3/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3/src/phase3/_vendor.py": "ae21d0ceef96c65b9984e3e96b2e0abc6f1fc74b180a5fd8f44c2630f4fb843d",
+  "phase3/src/phase3/linter.py": "6f24ee1d3d600ea3c9fb6cb1f56549271ee4f846cf1955e276ff75f0dcfd8bb5",
+  "phase3/src/phase3/models.py": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62",
+  "phase3/src/phase3/outcomes.py": "4d65ebf704b4c05530703b19fc06d8314389a7f99fd0e80bb652b1bfef8ef7b5",
+  "phase3/src/phase3/scoring.py": "7de5a6aff42b4c7e34629f53f5e03e88bb6bab1314f747de146bdc4b8fb149d6",
+  "phase3/src/phase3/sites.py": "3becc24107e000a89850ab1519c99d77040af22807755dcc3ab12e7166ff4a00",
+  "phase3_2/sol/scripts/p33.py": "4dc49bd89583fc07a35892473309b0920b4cbc16c756e52cb365a32b3863f89e",
+  "phase3_2/sol/src/p33/__init__.py": "9e9ccb9af6e24df7c43f4246bde50d04f609322ba72c5a461e1858957736811c",
+  "phase3_2/sol/src/p33/_paths.py": "30649b9fc8d8a33324c18d417d558f2e12196e5052af54e750d26a77d26b6c9c",
+  "phase3_2/sol/src/p33/armb.py": "c262de4e6d82fddf7df3067d586cd47b3103459a0429ec992135e9c796dd88f1",
+  "phase3_2/sol/src/p33/artifacts.py": "cc56ae2972d3289d1624da0229aba593582da9cdeafefdbf0cb53da4134de320",
+  "phase3_2/sol/src/p33/config.py": "f4c7a60e17b9aa772852b1f6cb45536ec33059ff8dae3d16b5499a8de993557e",
+  "phase3_2/sol/src/p33/demos.py": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c",
+  "phase3_2/sol/src/p33/export.py": "e39e4e6dc61f802e418ae499d8703f81ec6e8aaad52c80bd7c93056b27e8354b",
+  "phase3_2/sol/src/p33/fakes.py": "0173b6a9a98e6681e9f202da0cfb7570084db797fe722154cb48ffe9b340851c",
+  "phase3_2/sol/src/p33/fertility.py": "3497a1e29c10000f7e45a0c85c2b54ea2325608dbdd043010c2407da3c2d72d8",
+  "phase3_2/sol/src/p33/freeze.py": "e826b7fe2681f696bcacb00ebe69b87b76edccd3772236e826939ecf99e791ef",
+  "phase3_2/sol/src/p33/h2.py": "071acee006b7f6c249fbd72f254f5de2cb103d744a19dc2ee8c0c2bf68c185d1",
+  "phase3_2/sol/src/p33/h4.py": "c3faaeb0a9b0c5736c71ab57d450a345247755b9f1f9b66995591405e2957ddd",
+  "phase3_2/sol/src/p33/h5.py": "9e897d9e65767570d2e4985558f83e06b61b6eade997dba42062ccda16fcc31e",
+  "phase3_2/sol/src/p33/kstar.py": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c",
+  "phase3_2/sol/src/p33/pipeline.py": "863675ca81ddff924eb30a8f84af073b7b6dbf0d660e0dcc164f8123db5b4ecc",
+  "phase3_2/sol/src/p33/plots.py": "0617312d245c3cdb3ce6c826440dde7b32f6e17406cc4c6f9945ed093390cdd2",
+  "phase3_2/sol/src/p33/power.py": "d38727932b4bfc62c3fac30c04353b1b840fe8fa4b1d33248135b468b346ad65",
+  "phase3_2/sol/src/p33/prefetch.py": "702316515bbf834166ce6af6c10c1b3b8f5e53ad011526558d369b50d0f4f4a7",
+  "phase3_2/sol/src/p33/preflight.py": "562e73fe922e04efc071e67f651509e7a8e441f79f49c201747faaeb4357d135",
+  "phase3_2/sol/src/p33/provenance.py": "4fee625ed33251b9a5dd99a76d4e473698c4bdc4f23bdaa4e387aa5e0eda3afc",
+  "phase3_2/sol/src/p33/registry.py": "308b3ed6b4d3389a215506c9a1de010806e6310c5422874bfb7796df162507d8",
+  "phase3_2/sol/src/p33/reports.py": "d7a081e77948fd806678117c3b8235aa3eb07a3bc68d0ef32faefc891f777229",
+  "phase3_2/sol/src/p33/scorers.py": "1e40cc1107ba01a657b0a759cde4343802ea6c9a151efcaa3bbceba6f6d85ec0",
+  "phase3_2/sol/src/p33/shards.py": "f496412069bcb061fe632f501484ee9ff60ef3fb68c993e6b09b4843076bdc9e",
+  "phase3_2/sol/src/p33/splits.py": "2918bbe7c54c51d769be5647316772e504d63fa55aa07f5f7cdaf02dd724ace9",
+  "phase3_2/src/phase3_2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3_2/src/phase3_2/_vendor.py": "4988993a46ad290d46486d0299263479f68fa593c601ee4e869d2e18faeb1f81",
+  "phase3_2/src/phase3_2/analysis.py": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246",
+  "phase3_2/src/phase3_2/backends.py": "4634f572050a4bc9c81638c719253a715dd404f79e346783c698dbc613397ad3",
+  "phase3_2/src/phase3_2/deltafam.py": "ad9ee58cebda1a42770448193095880a6d00a45aa9280b7dd2ceff1b5f0274d9",
+  "phase3_2/src/phase3_2/margins.py": "708c77ac0e16b70d717b341cdfb68896da75cb83039d3aa73344747f3bb22733",
+  "phase3_2/src/phase3_2/prompts.py": "e561b526dce1c0a06e8774fbcc181b8af9c0b40a117e3134d6dedf05fd7a4a4d",
+  "phase3_2/src/phase3_2/runmeta.py": "0e988aadc7022d61b80cca20e10e8cf5f9c7e36fd59750e5d74eb95eab0021ee",
+  "phase3_2/src/phase3_2/sampling.py": "a674d2ae65f9ae3cee28d42d0934e9cb25a5880cdcdcbc2a01575df533b7f248",
+  "phase3_2/src/phase3_2/sites2.py": "97f5abbb476d37e723b53fc13acc57396322ff212a94ac4291c1b0d4091f648d",
+  "phase3_2/src/phase3_2/templates.py": "f9c4658f761d948d285438664d1dedcbfb0b9441a360a67efb20bbe33324714f"
+ },
+ "stage": "heldout",
+ "start_utc": "2026-10-08T09:36:07+00:00",
+ "status": "COMPLETE"
+}

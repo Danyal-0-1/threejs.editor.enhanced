@@ -1,0 +1,17 @@
+grammar,cut,initially wrong sites,KM median examples,never switched
+blk,density d25,437,10.19,27%
+blk,density d50,434,5.80,19%
+blk,density d75,1307,6.19,19%
+dom,density d25,429,5.40,18%
+dom,density d50,402,1.57,12%
+dom,density d75,1244,2.15,17%
+blk,role keyword,709,9.02,17%
+blk,role sigil,736,3.21,10%
+blk,role verb,733,11.36,35%
+dom,role keyword,659,2.85,13%
+dom,role sigil,719,1.28,2%
+dom,role verb,697,6.57,34%
+blk,base,1162,5.78,20%
+blk,instruct,1016,7.23,21%
+dom,base,1096,2.37,16%
+dom,instruct,979,3.04,16%

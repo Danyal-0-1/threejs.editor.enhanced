@@ -30,8 +30,28 @@
 | [06 publishability and paper](06_publishability_and_paper.md) | what is publishable and how to structure the paper |
 | [07 knowledge check](07_knowledge_check.md) | questions, no answers |
 | [08 issues and superseded numbers](08_issues_and_superseded_numbers.md) | defects found, and numbers that changed |
+| [09 conclusions, claim strength and venues](09_conclusions_claim_strength_and_venues.md) | the best conclusion, how strong each claim is, three exploratory checks, where to submit |
+| [10 the human mirror](10_humans_and_the_brain.md) | the results as human behaviour, and the brain systems involved |
 
 The method is explained in [`../sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](../sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md).
+
+**Figures.** The publication figures and their tables are in
+`phase3_3/sol_results/heldout-20261007a/analysis_addenda/paper_figures/`; open `CAPTIONS.md`
+there first. Each figure maps to a section below:
+
+| figure | section | shows |
+|---|---|---|
+| `fig2_h4` | §3 | AUROC per pair, with the role-level and length baselines |
+| `fig3_reversion` | §4–5 | reversion with and without the table, and the length-matched control |
+| `fig4_scale` | §7 | reversion and AUROC against size; the ladder intervals equal D11's |
+| `fig5_adaptation` | §6 | Kaplan–Meier curves, medians per checkpoint, first against lasting switch |
+| `fig6_generation` | §8 | reach and reversion given reach, with intervals; by role |
+| `fig7_repair` | §9 | the H5 metric per model; what happens at the repaired sites |
+| `figA1`–`figA4` | §3, §10, §11 | calibration (frozen pairs only), prompt wording, roles, margin distributions |
+
+Wherever the figure script recomputes a number that the frozen export also reports, it refuses
+unless the two agree (eight checks, listed in its `PROVENANCE.md`). The figure intervals are new
+descriptive statistics; for the Qwen2.5-Coder ladder they equal the D11 intervals exactly.
 
 ---
 
@@ -446,7 +466,9 @@ All three are recorded in [08](08_issues_and_superseded_numbers.md) and in devia
 
 ## 14. Where every number lives
 
-All paths are under `phase3_3/sol_results/heldout-20261007a/`:
+All paths are under `phase3_3/sol_results/heldout-20261007a/`. Everything is in git; after
+cloning, run `bash phase3_3/sol_results/restore_large_files.sh heldout-20261007a` once to
+restore the four files stored gzipped (`csv/arm_a_long.csv` and three `merged/*.jsonl`):
 
 | what | file |
 |---|---|
@@ -457,7 +479,8 @@ All paths are under `phase3_3/sol_results/heldout-20261007a/`:
 | Arm B | `csv/arm_b_hurdle.csv`, `csv/arm_b_generations.csv` (every generated program) |
 | H5 | `csv/h5_budget_outcomes.csv`, `csv/h5_ir_proof.csv` |
 | official reports | `reports/HYPOTHESIS_RESULTS.md`, `HELDOUT_RESULTS.md`, `QUALITY_CONTROL.md`, `RUN_SUMMARY.md` |
-| figures | `plots/*.png` and `*.svg` (12 figures) |
+| **paper figures and tables** | `analysis_addenda/paper_figures/`: 10 figures (PDF, SVG, PNG), 16 tables, `CAPTIONS.md`, `PROVENANCE.md` |
+| diagnostic figures (frozen, not for the paper) | `plots/*.png` and `*.svg` (12 figures) |
 | D11 | `analysis_addenda/d11_scale/SCALE_ANALYSIS.md` |
-| summary and exploratory | `analysis_addenda/summary/HELDOUT_SUMMARY.txt`, `analysis_addenda/exploratory/` |
+| summary and exploratory | `analysis_addenda/summary/HELDOUT_SUMMARY.txt`, `analysis_addenda/exploratory/` (`EXPLORATORY_CHECKS.md`: inheritance, role ordering, adaptation cuts, wobble size) |
 | unlock provenance | `HELDOUT_UNLOCK.json`, `UNLOCK_NOTE.md` |

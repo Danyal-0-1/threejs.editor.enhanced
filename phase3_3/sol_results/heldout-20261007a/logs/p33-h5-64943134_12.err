@@ -1,0 +1,5 @@
+/home/dkhorami/.local/lib/python3.12/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/home/dkhorami/.local/lib/python3.12/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.41s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:08,  4.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:12<00:04,  4.20s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:12<00:00,  2.63s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:12<00:00,  3.08s/it]

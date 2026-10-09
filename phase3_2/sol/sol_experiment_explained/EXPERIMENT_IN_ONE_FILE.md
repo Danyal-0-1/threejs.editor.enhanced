@@ -448,6 +448,8 @@ The intervals come from the **template-cluster bootstrap** (§4.8).
 - [`analysis.cluster_bootstrap`](../../src/phase3_2/analysis.py#L103)
 - [`power.py`](../src/p33/power.py)
 - [`scripts/scale_analysis.py`](../scripts/scale_analysis.py) (D11)
+- [`scripts/paper_figures.py`](../scripts/paper_figures.py) (the paper's figures and tables; it
+  reuses the D11 resamples and refuses unless its numbers equal the frozen export)
 
 ---
 

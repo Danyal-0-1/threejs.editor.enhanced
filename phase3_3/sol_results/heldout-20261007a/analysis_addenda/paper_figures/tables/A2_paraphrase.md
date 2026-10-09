@@ -1,0 +1,46 @@
+# Table A2. Reversion rate under three wordings of the rule prompt (extinction subset)
+
+| model | grammar | p0 | p1 | p2 | range |
+|---|---|---|---|---|---|
+| Qwen2.5-Coder-0.5B | dom | 0.533 | 0.554 | 0.549 | 0.021 |
+| Qwen2.5-Coder-0.5B-Instruct | dom | 0.451 | 0.482 | 0.431 | 0.051 |
+| Qwen2.5-Coder-1.5B | dom | 0.513 | 0.544 | 0.533 | 0.031 |
+| Qwen2.5-Coder-1.5B-Instruct | dom | 0.446 | 0.497 | 0.446 | 0.051 |
+| Qwen2.5-Coder-3B | dom | 0.508 | 0.554 | 0.508 | 0.046 |
+| Qwen2.5-Coder-3B-Instruct | dom | 0.508 | 0.559 | 0.508 | 0.051 |
+| Qwen2.5-Coder-7B | dom | 0.528 | 0.585 | 0.569 | 0.056 |
+| Qwen2.5-Coder-7B-Instruct | dom | 0.590 | 0.497 | 0.600 | 0.103 |
+| Qwen2.5-Coder-14B | dom | 0.467 | 0.492 | 0.544 | 0.077 |
+| Qwen2.5-Coder-14B-Instruct | dom | 0.569 | 0.590 | 0.564 | 0.026 |
+| Qwen2.5-Coder-32B | dom | 0.487 | 0.462 | 0.518 | 0.056 |
+| Qwen2.5-Coder-32B-Instruct | dom | 0.441 | 0.451 | 0.462 | 0.021 |
+| Qwen2.5-72B | dom | 0.426 | 0.492 | 0.446 | 0.067 |
+| Qwen2.5-72B-Instruct | dom | 0.456 | 0.472 | 0.467 | 0.015 |
+| deepseek-coder-1.3b-base | dom | 0.544 | 0.554 | 0.544 | 0.010 |
+| deepseek-coder-1.3b-instruct | dom | 0.533 | 0.533 | 0.579 | 0.046 |
+| deepseek-coder-33b-base | dom | 0.472 | 0.528 | 0.497 | 0.056 |
+| deepseek-coder-33b-instruct | dom | 0.503 | 0.451 | 0.538 | 0.087 |
+| Llama-3.2-1B | dom | 0.585 | 0.564 | 0.585 | 0.021 |
+| Llama-3.2-1B-Instruct | dom | 0.523 | 0.523 | 0.569 | 0.046 |
+| starcoder2-3b | dom | 0.559 | 0.579 | 0.544 | 0.036 |
+| Qwen2.5-Coder-0.5B | blk | 0.556 | 0.580 | 0.556 | 0.024 |
+| Qwen2.5-Coder-0.5B-Instruct | blk | 0.498 | 0.498 | 0.473 | 0.024 |
+| Qwen2.5-Coder-1.5B | blk | 0.537 | 0.561 | 0.527 | 0.034 |
+| Qwen2.5-Coder-1.5B-Instruct | blk | 0.502 | 0.498 | 0.473 | 0.029 |
+| Qwen2.5-Coder-3B | blk | 0.522 | 0.507 | 0.541 | 0.034 |
+| Qwen2.5-Coder-3B-Instruct | blk | 0.546 | 0.600 | 0.517 | 0.083 |
+| Qwen2.5-Coder-7B | blk | 0.507 | 0.507 | 0.532 | 0.024 |
+| Qwen2.5-Coder-7B-Instruct | blk | 0.512 | 0.493 | 0.546 | 0.054 |
+| Qwen2.5-Coder-14B | blk | 0.493 | 0.483 | 0.532 | 0.049 |
+| Qwen2.5-Coder-14B-Instruct | blk | 0.498 | 0.512 | 0.527 | 0.029 |
+| Qwen2.5-Coder-32B | blk | 0.522 | 0.498 | 0.502 | 0.024 |
+| Qwen2.5-Coder-32B-Instruct | blk | 0.420 | 0.463 | 0.459 | 0.044 |
+| Qwen2.5-72B | blk | 0.454 | 0.502 | 0.463 | 0.049 |
+| Qwen2.5-72B-Instruct | blk | 0.473 | 0.546 | 0.527 | 0.073 |
+| deepseek-coder-1.3b-base | blk | 0.483 | 0.532 | 0.512 | 0.049 |
+| deepseek-coder-1.3b-instruct | blk | 0.532 | 0.546 | 0.546 | 0.015 |
+| deepseek-coder-33b-base | blk | 0.449 | 0.580 | 0.512 | 0.132 |
+| deepseek-coder-33b-instruct | blk | 0.478 | 0.498 | 0.454 | 0.044 |
+| Llama-3.2-1B | blk | 0.615 | 0.561 | 0.620 | 0.059 |
+| Llama-3.2-1B-Instruct | blk | 0.498 | 0.551 | 0.580 | 0.083 |
+| starcoder2-3b | blk | 0.532 | 0.580 | 0.541 | 0.049 |

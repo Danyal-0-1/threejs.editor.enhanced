@@ -1,0 +1,3 @@
+family,lexicon,tokenizer_id,n_templates,chars,fragmentation,models,rel_fertility_vs_identity,rel_token_count,tok_per_char,tokens
+dom,identity,cc349caf59f0697a,80,7980,1.35714,Qwen/Qwen2.5-Coder-0.5B,1,1,0.366917,2928
+dom,d50s1,cc349caf59f0697a,80,7995,1.35714,Qwen/Qwen2.5-Coder-0.5B,1.07653,1.07855,0.394997,3158

@@ -1,0 +1,20 @@
+[2026-10-09T05:40:10-07:00] p33-h5 job=64943134 task=18 node=sg004 run=heldout-20261007a
+  [PASS] slurm_partition        actual='public' configured='public'
+  [PASS] slurm_qos              actual='public' configured='public'
+  [PASS] slurm_account          actual='grp_tlingego' configured='grp_tlingego'
+  [PASS] nvidia_smi             NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB
+  [PASS] torch_cuda             torch 2.8.0+cu126, CUDA runtime 12.6
+  [PASS] a100                   NVIDIA A100-SXM4-80GB
+  [PASS] bf16                   bfloat16 support
+  [PASS] gpu_memory             free 78.8 GiB of 79.3 GiB
+  [PASS] gpu_count              1 visible, 1 needed by ['deepseek-ai/deepseek-coder-33b-instruct']
+  [PASS] gpu_memory:deepseek-ai/deepseek-coder-33b-instruct ~72 GiB needed, 79 GiB free on 1 GPU(s)
+  [PASS] results_space          46.2 GiB free at /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a (need 2.0)
+  [PASS] hf_cache_space         480047.4 GiB free at /scratch/dkhorami/hf (need 5.0)
+  [PASS] output_writable        /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a
+  [PASS] model:deepseek-ai/deepseek-coder-33b-instruct local 61dc97b922b1 pinned 61dc97b922b1
+  [PASS] materials              materials identical to the run's first job
+  [PASS] split_permission       210 cells allowed for stage heldout: ['HELDOUT', 'HELDOUT-WEAK-FAMILY', 'HELDOUT-WEAKENED']
+preflight OK -> /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/manifests/preflight_2026-10-09T124022+0000.json
+merge arm_a    COMPLETE  rows=190890 done=3402/3402 missing=0 failed=0 corrupt=0 dup_dropped=0
+h5: COMPLETE

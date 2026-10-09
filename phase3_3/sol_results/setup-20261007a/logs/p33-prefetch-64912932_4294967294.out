@@ -1,0 +1,820 @@
+[2026-10-07T16:28:54-07:00] p33-prefetch job=64912932 task=none node=sc104 run=setup-20261007a
+{
+ "mode": "dry-run",
+ "estimated_gb": 40.08,
+ "free_gb_at_hf_root": 479190.80517578125,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {},
+ "kept_existing_pins": [
+  "Qwen/Qwen2.5-Coder-0.5B",
+  "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+  "Qwen/Qwen2.5-Coder-1.5B",
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+ ],
+ "plans": [
+  {
+   "model": "Qwen/Qwen2.5-Coder-0.5B",
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "bytes": 999586167,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+   "bytes": 999586348,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B",
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "bytes": 3098955546,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "bytes": 3098955668,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-3B",
+   "revision": "09d9bc5d376b0cfa0100a0694ea7de7232525803",
+   "bytes": 6183450926,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+   "revision": "488639f1ff808d1d3d0ba301aef8c11461451ec5",
+   "bytes": 6183451107,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "bigcode/starcoder2-3b",
+   "revision": "733247c55e3f73af49ce8e9c7949bf14af205928",
+   "bytes": 12124828705,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "deepseek-ai/deepseek-coder-1.3b-base",
+   "revision": "c919139c3a9b4070729c8b2cca4847ab29ca8d94",
+   "bytes": 2694384825,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.bin"
+   ]
+  },
+  {
+   "model": "deepseek-ai/deepseek-coder-1.3b-instruct",
+   "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+   "bytes": 2694339708,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}
+{
+ "mode": "download",
+ "estimated_gb": 40.08,
+ "free_gb_at_hf_root": 479190.80517578125,
+ "space_ok": true,
+ "failed": {
+  "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B: download failed after 3 tries: 401 Client Error. (Request ID: Root=1-6ac6d649-32209e4b3ccdc3e008e50711;eb58b8b3-186f-4783-8548-7c27d705f823)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/4e20de362430cd3b72f300e6b0f18e50e7166e08/conf",
+  "meta-llama/Llama-3.2-1B-Instruct": "meta-llama/Llama-3.2-1B-Instruct: download failed after 3 tries: 401 Client Error. (Request ID: Root=1-6ac6d667-3e7cb2fa62b53bbd52422788;bfd2d751-652f-402b-94d8-10abc9564c31)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct/resolve/9213176726f574b556790deb657"
+ },
+ "pairing_problems": [],
+ "pins": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 659,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 139,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 988097824,
+     "sha256": "aff8914ec707fcaf9e2d4dc97197cded50b1c63e1d3a7a82e56f54d83ea47f80"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7228,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-0.5B/snapshots/8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-0.5B-Instruct": {
+   "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 659,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 243,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 988097824,
+     "sha256": "f9523886352217ded3aeeef552b381af79d568c6d49a4b9e423288cea56b0a44"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7305,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-0.5B-Instruct/snapshots/ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-1.5B": {
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 660,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 117,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 3087467144,
+     "sha256": "535485b26038ac24f4e8a86e1a73ed417d8992e3192f6305b7fcc4fb92efa210"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7308,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-1.5B/snapshots/df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct": {
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 660,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 242,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 3087467144,
+     "sha256": "c1b9b30e907950516ba3c646bdf570d8084c25a6410a0cdca80cf04b11bc13a8"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7305,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-1.5B-Instruct/snapshots/2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-3B": {
+   "revision": "09d9bc5d376b0cfa0100a0694ea7de7232525803",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 661,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 139,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model-00001-of-00002.safetensors",
+     "size": 4957560304,
+     "sha256": "f4528d2c6caa86a8f922f26675abff773a9b7dd1ccf255eb97255ae76373ada9"
+    },
+    {
+     "name": "model-00002-of-00002.safetensors",
+     "size": 1214366696,
+     "sha256": "007c3310312712a7762fd0d1db92de9be7cedb2e6eb6dc0afff74f143a9dbb23"
+    },
+    {
+     "name": "model.safetensors.index.json",
+     "size": 35581,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7228,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-3B/snapshots/09d9bc5d376b0cfa0100a0694ea7de7232525803",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-3B-Instruct": {
+   "revision": "488639f1ff808d1d3d0ba301aef8c11461451ec5",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 661,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 243,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model-00001-of-00002.safetensors",
+     "size": 4957560304,
+     "sha256": "5b684409377e037e5ed75d680a070126e841dab17e8cb9a818868deadf01ab39"
+    },
+    {
+     "name": "model-00002-of-00002.safetensors",
+     "size": 1214366696,
+     "sha256": "8bc5227aae6174eaf0b589fd4fbeb0de046a1fc951a67f2d2538acad811e1068"
+    },
+    {
+     "name": "model.safetensors.index.json",
+     "size": 35581,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7305,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-3B-Instruct/snapshots/488639f1ff808d1d3d0ba301aef8c11461451ec5",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "bigcode/starcoder2-3b": {
+   "revision": "733247c55e3f73af49ce8e9c7949bf14af205928",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 700,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 441705,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 12121539344,
+     "sha256": "a1217f723be8ee7a03ba085b7af3179f5d60a9183c4b0273c40eb31b9f21f9d6"
+    },
+    {
+     "name": "special_tokens_map.json",
+     "size": 958,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 2060919,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7877,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 777202,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--bigcode--starcoder2-3b/snapshots/733247c55e3f73af49ce8e9c7949bf14af205928",
+   "tokenizer_id": "5845b9a154bd3f0d",
+   "verified_checksums": true
+  },
+  "deepseek-ai/deepseek-coder-1.3b-base": {
+   "revision": "c919139c3a9b4070729c8b2cca4847ab29ca8d94",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.bin"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 631,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 119,
+     "sha256": null
+    },
+    {
+     "name": "pytorch_model.bin",
+     "size": 2693014838,
+     "sha256": "a400155e495b4d6b1cd5b05f04c56032b7dbc6bdff940e046a89ffc1cc2fbdcd"
+    },
+    {
+     "name": "special_tokens_map.json",
+     "size": 482,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 1367962,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 793,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--deepseek-ai--deepseek-coder-1.3b-base/snapshots/c919139c3a9b4070729c8b2cca4847ab29ca8d94",
+   "tokenizer_id": "14807840df2fdd25",
+   "verified_checksums": true
+  },
+  "deepseek-ai/deepseek-coder-1.3b-instruct": {
+   "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 631,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 119,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 2692969128,
+     "sha256": "4ff570bf9a558d23c5cb4171bad00daf663be8282150cdb5769e0f6975b0007a"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 1367962,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 1868,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--deepseek-ai--deepseek-coder-1.3b-instruct/snapshots/e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+   "tokenizer_id": "14807840df2fdd25",
+   "verified_checksums": true
+  }
+ },
+ "kept_existing_pins": [
+  "Qwen/Qwen2.5-Coder-0.5B",
+  "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+  "Qwen/Qwen2.5-Coder-1.5B",
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+ ],
+ "plans": [
+  {
+   "model": "Qwen/Qwen2.5-Coder-0.5B",
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "bytes": 999586167,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25",
+   "bytes": 999586348,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B",
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "bytes": 3098955546,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "bytes": 3098955668,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-3B",
+   "revision": "09d9bc5d376b0cfa0100a0694ea7de7232525803",
+   "bytes": 6183450926,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+   "revision": "488639f1ff808d1d3d0ba301aef8c11461451ec5",
+   "bytes": 6183451107,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "bigcode/starcoder2-3b",
+   "revision": "733247c55e3f73af49ce8e9c7949bf14af205928",
+   "bytes": 12124828705,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "deepseek-ai/deepseek-coder-1.3b-base",
+   "revision": "c919139c3a9b4070729c8b2cca4847ab29ca8d94",
+   "bytes": 2694384825,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.bin"
+   ]
+  },
+  {
+   "model": "deepseek-ai/deepseek-coder-1.3b-instruct",
+   "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+   "bytes": 2694339708,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}

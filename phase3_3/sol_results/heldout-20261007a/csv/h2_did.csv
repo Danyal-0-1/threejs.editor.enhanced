@@ -1,0 +1,2 @@
+status,stage,expected_directions,reason
+NOT TESTABLE,heldout,"{""did_logit"": ""positive"", ""did_margin"": ""negative"", ""did_prob"": ""positive""}",no calibrated prior-strength (T) or local-context (A) levels exist; deriving them from outcome margins would be circular (review section 6.3)

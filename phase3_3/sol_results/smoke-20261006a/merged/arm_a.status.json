@@ -1,0 +1,12 @@
+{
+ "corrupt": [],
+ "done": 9,
+ "duplicates_dropped": 0,
+ "experiment": "arm_a",
+ "failed": [],
+ "missing": [],
+ "n_expected_cells": 9,
+ "n_rows": 36,
+ "sha256": "dc48299bb9aad43603417bcdc1c7cb947b702785db433b29b4d6c3316a3506ce",
+ "status": "COMPLETE"
+}

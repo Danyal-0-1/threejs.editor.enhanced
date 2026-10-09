@@ -41,13 +41,17 @@
 
 | quantity | earlier | now (held-out) | why it changed |
 |---|---|---|---|
-| "examples to switch" | ~6 (Phase 3.3 headline, withdrawn: leaked demonstrations) | KM median 1.4–4.6 (`dom`), 3.3–11.6 (`blk`); first switch ≈ 2, stable ≈ 8 | leak-free ladder, censoring, held-out mappings |
+| "examples to switch" | ~6 (Phase 3.3 headline, withdrawn: leaked demonstrations) | KM median 1.4–4.6 (`dom`), 3.3–11.6 (`blk`); among sites that switch, first switch ≈ 2 and lasting switch ≈ 8 | leak-free ladder, censoring, held-out mappings |
 | development `k*` medians | 3.6–6.2 (4 models, `dom`) | see above | different mappings (incl. `d75`) and more models |
 | rule effect | +0.08…+0.36; 1/32 intervals > 0 (development) | +0.16…+0.62; 263/420 intervals > 0 | larger cells, `d75` lexicons; development power (0.25 pooled) was conservative |
 | H4 AUROC, 0.5B / 1.5B pairs | 0.869 / 0.935 (development) | 0.888 / 0.963 (`dom`), 0.836 / 0.920 (`blk`) | replicated on new mappings |
 | projected compute | ~100 A100 GPU-hours | **40.8** | large models faster than the pessimistic scaling |
 | preview (2026-10-08, frozen code on a scratch copy) | Arm A, extinction, H4, D11 | **identical** in the final export | same inputs, same code |
 | D11 `dom` AUROC p | "Holm p < 0.001" (chat, 2026-10-08) | **p < 0.0005, Holm p < 0.003** | the bootstrap's resolution is 1/2000; the script now prints "< 1/B" |
+| figures for the paper | `plots/` (frozen diagnostics: up to 42 overlapping series, a stamp on each, two figures tens of thousands of pixels tall) | `analysis_addenda/paper_figures/`: 10 figures, 16 tables, draft captions | `plots/` stays as registered output; the new figures restate the frozen numbers and are checked against them |
+| "examples to switch" wording | "the median site switches after about two examples" (06, abstract draft) | "**among sites that switch**, about two; a lasting switch, about eight" | 2.06 and 8 are medians among crossers and holders; the KM medians are the endpoint |
+| role-ordering wording | "the role ordering matches the margins" (06, objections) | "matches the margins **at the same number of worked examples** (4); at 0 examples the roles are about equal" | exploratory check, [09 §3.2](09_conclusions_claim_strength_and_venues.md) |
+| "wobble" wording | "~97% of curves wobble" (06, 05) | "**31% of switched sites fall back later, by a median of −0.76 nats**; 59% of curves drop by > 1 nat at some step" | the frozen `nonmonotone` flag counts any decrease, however small ([09 §3.3](09_conclusions_claim_strength_and_venues.md)) |
 
 ---
 
@@ -59,3 +63,7 @@
 - **Repair proofs:** all 35 IR proofs passed, each over 284 programs.
 - **Local vs Sol:** byte-identical on the merged data, the H4 table and the hypothesis report.
   The D11 slopes, recomputed locally, are identical.
+- **Paper figures:** `scripts/paper_figures.py` recomputes what it draws from the CSVs and
+  refuses unless it equals the frozen export: the 420 per-lexicon rule effects, the 840
+  per-lexicon, per-role reversion counts, the 60 AUROCs, the 42 KM medians, the Arm B counts,
+  the frozen calibration, and the 36 D11 ladder values with their intervals, digit for digit.

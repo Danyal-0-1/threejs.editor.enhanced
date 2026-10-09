@@ -152,8 +152,8 @@ training recipe), DeepSeek-Coder-33B (a second code family) and Qwen2.5-72B
 (general model; two A100-80GB GPUs). All are scored in bf16 with the fp32
 output head and never quantized. The development set and the completed
 development run are unchanged; the new models are appended to the held-out
-configuration. The gated Llama-3.2-1B pair stays in the design while access
-to it is pending.
+configuration. The gated Llama-3.2-1B pair stays in the design; access to it
+was granted on 2026-10-07 and both checkpoints are downloaded and pinned.
 
 **Pre-specified analysis.** Two-sided, no predicted direction: the reversion
 rate and the H4 AUROC as functions of log(parameters) within the

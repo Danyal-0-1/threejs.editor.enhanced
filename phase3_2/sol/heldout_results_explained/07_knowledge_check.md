@@ -84,3 +84,31 @@ No answers are given. Each section names where its answers can be found.
 29. A reviewer says "this is one toy DSL". Write your two-sentence reply.
 30. Which three gaps in the frozen analysis does deviation D12 record? Which numbers do they
     affect, and which do they not?
+
+## I. The paper figures (`06 §8`, `03 §12`, `04 §10`)
+
+31. Why are the Qwen2.5-Coder ladder intervals in `fig4_scale` identical to the D11 intervals,
+    digit for digit? Name one change to `paper_figures.py` that would break that, and say what
+    the script does then.
+32. `fig5_adaptation` (c) stops the dashed curve at 16 examples. Why? What would its last step
+    at 32 wrongly suggest?
+33. ✎ Table 3b gives 2.06 and 8 for the pooled sites, but the abstract may not say "the median
+    site switches after two examples". Why not? Rewrite the sentence correctly.
+34. ⌨ The rule effect in Table C2 averages the five lexicons with equal weight, while the
+    reversion rate in Table C1 pools all sites. Recompute one model's rule effect the other
+    way. Which lexicons pull the two apart, and why?
+35. Why does `figA1_calibration` show only two pairs, when H4 has ten?
+
+## J. The conclusion and the human mirror (`09`, `10`)
+
+36. State the paper's conclusion in one sentence, without "about half" being misread as a
+    general DSL error rate. What design fact makes the 40–56% specific to these sites?
+37. ✎ In `09 §3.1`, the consensus of other-lineage bases reaches a median 46% of the own base's
+    signal. Explain "46% of the signal above chance" with the 32B `blk` case (0.805 vs 0.451).
+    What does a negative share mean?
+38. Why is "92.8–99.5% of curves are non-monotone" a weak argument for instability, and what
+    two numbers in `09 §3.3` make it a strong one?
+39. Map each of these to a brain system and to a measurement in this study: the token table;
+    a margin near zero; a relapse at 8 examples; a silent error.
+40. Name two places where the human analogy breaks, and say which claim each one forbids.
+

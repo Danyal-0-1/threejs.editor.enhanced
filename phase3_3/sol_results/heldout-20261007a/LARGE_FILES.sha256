@@ -1,0 +1,10 @@
+# sha256 of the four files over GitHub's 100 MB limit, stored here gzipped (gzip -9 -n).
+# Restore and verify: bash ../restore_large_files.sh heldout-20261007a
+2d1ef380b2384dee5076441ecf712093ceed08064dd5e4df0b54269d694f56f2  csv/arm_a_long.csv
+4ef9f28f2e4d9acc3376285092b456a1c4e57126a8ac46120492ba26a6455b75  merged/arm_a.jsonl
+6bcf7583f922fbb16fc230657a83b49ec7bee472fad3387d79da35e500500fd0  merged/h5.jsonl
+0ec5113ab05c8882ac3695b99e339abac96d991c01f3887497523501b01960a3  merged/primary.jsonl
+59f0d9fbacadeb063cf58c04428868b0a77e9072dcc36337d5839c2e1a22e037  csv/arm_a_long.csv.gz
+f1bf1c33e0a7ad463a23da52e63e2a8c462d44ec12c174d9cacf9e7d7014674f  merged/arm_a.jsonl.gz
+e444d655c65f84e92c3aa138d8b93f9561e7645834dbe0143fb211dad9b9e51f  merged/h5.jsonl.gz
+fb29ce3406ed8509f440a9179684ee5b17ad1198ef60b0465a0babf4aab0b21d  merged/primary.jsonl.gz

@@ -1,0 +1,41 @@
+[2026-10-09T11:20:04-07:00] postprocess for heldout-20261007a on sc031
+--- completeness
+record_type,status,corrupt,done,duplicates_dropped,experiment,failed,merged_sha256,missing,n_expected_cells
+experiment,COMPLETE,0,3402,0,arm_a,0,4ef9f28f2e4d9acc3376285092b456a1c4e57126a8ac46120492ba26a6455b75,0,3402
+experiment,COMPLETE,0,840,0,primary,0,0ec5113ab05c8882ac3695b99e339abac96d991c01f3887497523501b01960a3,0,840
+experiment,COMPLETE,0,200,0,armb,0,06159a0db9f4972292730273dc7a189058b6f445c4d98280c27ef9697c513992,0,200
+experiment,COMPLETE,0,3780,0,h5,0,6bcf7583f922fbb16fc230657a83b49ec7bee472fad3387d79da35e500500fd0,0,3780
+--- D11 scale analysis (pre-specified, approved 2026-10-08)
+scale analysis: 6 slopes -> /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/analysis_addenda/d11_scale
+--- summary
+exit=0
+--- exploratory (NOT preregistered)
+exit=0
+/home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/analysis_addenda:
+total 200
+drwxr-x---  5 dkhorami grp_tlingego  81 Oct  9 11:20 .
+drwxr-x--- 11 dkhorami grp_tlingego 295 Oct  9 11:20 ..
+drwxr-x---  2 dkhorami grp_tlingego 100 Oct  9 11:20 d11_scale
+drwxr-x---  2 dkhorami grp_tlingego  48 Oct  9 11:20 exploratory
+drwxr-x---  2 dkhorami grp_tlingego  37 Oct  9 11:20 summary
+
+/home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/analysis_addenda/d11_scale:
+total 176
+drwxr-x--- 2 dkhorami grp_tlingego  100 Oct  9 11:20 .
+drwxr-x--- 5 dkhorami grp_tlingego   81 Oct  9 11:20 ..
+-rw-r----- 1 dkhorami grp_tlingego  450 Oct  9 11:20 inputs.json
+-rw-r----- 1 dkhorami grp_tlingego 3260 Oct  9 11:20 scale_analysis.csv
+-rw-r----- 1 dkhorami grp_tlingego 2312 Oct  9 11:20 SCALE_ANALYSIS.md
+
+/home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/analysis_addenda/exploratory:
+total 112
+drwxr-x--- 2 dkhorami grp_tlingego   48 Oct  9 11:20 .
+drwxr-x--- 5 dkhorami grp_tlingego   81 Oct  9 11:20 ..
+-rw-r----- 1 dkhorami grp_tlingego 1273 Oct  9 11:20 adaptation_by_role_density.txt
+
+/home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/analysis_addenda/summary:
+total 112
+drwxr-x--- 2 dkhorami grp_tlingego    37 Oct  9 11:20 .
+drwxr-x--- 5 dkhorami grp_tlingego    81 Oct  9 11:20 ..
+-rw-r----- 1 dkhorami grp_tlingego 18505 Oct  9 11:20 HELDOUT_SUMMARY.txt
+[2026-10-09T11:20:49-07:00] postprocess done

@@ -1,0 +1,221 @@
+grammar,instruct,base,relation,auroc
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-72B,other lineage,0.6234
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-0.5B,other lineage,0.6863
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-1.5B,other lineage,0.6282
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-14B,other lineage,0.6006
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-32B,other lineage,0.5434
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-3B,other lineage,0.6142
+dom,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-7B,other lineage,0.5521
+dom,deepseek-coder-1.3b-instruct,starcoder2-3b,other lineage,0.6895
+dom,deepseek-coder-1.3b-instruct,deepseek-coder-1.3b-base,own,0.8412
+dom,deepseek-coder-1.3b-instruct,deepseek-coder-33b-base,same lineage,0.7328
+dom,deepseek-coder-1.3b-instruct,Llama-3.2-1B,other lineage,0.6423
+dom,deepseek-coder-33b-instruct,Qwen2.5-72B,other lineage,0.5541
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-0.5B,other lineage,0.5155
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-1.5B,other lineage,0.5324
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-14B,other lineage,0.6077
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-32B,other lineage,0.5211
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-3B,other lineage,0.5831
+dom,deepseek-coder-33b-instruct,Qwen2.5-Coder-7B,other lineage,0.5698
+dom,deepseek-coder-33b-instruct,starcoder2-3b,other lineage,0.7440
+dom,deepseek-coder-33b-instruct,deepseek-coder-1.3b-base,same lineage,0.6320
+dom,deepseek-coder-33b-instruct,deepseek-coder-33b-base,own,0.9259
+dom,deepseek-coder-33b-instruct,Llama-3.2-1B,other lineage,0.5167
+dom,Llama-3.2-1B-Instruct,Qwen2.5-72B,other lineage,0.6924
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-0.5B,other lineage,0.8375
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-1.5B,other lineage,0.7435
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-14B,other lineage,0.6702
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-32B,other lineage,0.7423
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-3B,other lineage,0.7091
+dom,Llama-3.2-1B-Instruct,Qwen2.5-Coder-7B,other lineage,0.6991
+dom,Llama-3.2-1B-Instruct,starcoder2-3b,other lineage,0.5884
+dom,Llama-3.2-1B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6650
+dom,Llama-3.2-1B-Instruct,deepseek-coder-33b-base,other lineage,0.5015
+dom,Llama-3.2-1B-Instruct,Llama-3.2-1B,own,0.8927
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-72B,same lineage,0.7470
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-0.5B,own,0.8882
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.7263
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-14B,same lineage,0.6770
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7533
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-3B,same lineage,0.7306
+dom,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-7B,same lineage,0.6695
+dom,Qwen2.5-Coder-0.5B-Instruct,starcoder2-3b,other lineage,0.5748
+dom,Qwen2.5-Coder-0.5B-Instruct,deepseek-coder-1.3b-base,other lineage,0.7143
+dom,Qwen2.5-Coder-0.5B-Instruct,deepseek-coder-33b-base,other lineage,0.5499
+dom,Qwen2.5-Coder-0.5B-Instruct,Llama-3.2-1B,other lineage,0.8786
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-72B,same lineage,0.7489
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.7842
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-1.5B,own,0.9626
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7994
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-32B,same lineage,0.8297
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-3B,same lineage,0.8598
+dom,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-7B,same lineage,0.8398
+dom,Qwen2.5-Coder-1.5B-Instruct,starcoder2-3b,other lineage,0.7465
+dom,Qwen2.5-Coder-1.5B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6706
+dom,Qwen2.5-Coder-1.5B-Instruct,deepseek-coder-33b-base,other lineage,0.6340
+dom,Qwen2.5-Coder-1.5B-Instruct,Llama-3.2-1B,other lineage,0.7848
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-72B,same lineage,0.6994
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.6996
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.8516
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7846
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7880
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-3B,own,0.9489
+dom,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-7B,same lineage,0.8169
+dom,Qwen2.5-Coder-3B-Instruct,starcoder2-3b,other lineage,0.8056
+dom,Qwen2.5-Coder-3B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6328
+dom,Qwen2.5-Coder-3B-Instruct,deepseek-coder-33b-base,other lineage,0.6977
+dom,Qwen2.5-Coder-3B-Instruct,Llama-3.2-1B,other lineage,0.7504
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-72B,same lineage,0.6500
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.5785
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.6400
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7741
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-32B,same lineage,0.6742
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6488
+dom,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-7B,own,0.7601
+dom,Qwen2.5-Coder-7B-Instruct,starcoder2-3b,other lineage,0.7304
+dom,Qwen2.5-Coder-7B-Instruct,deepseek-coder-1.3b-base,other lineage,0.5044
+dom,Qwen2.5-Coder-7B-Instruct,deepseek-coder-33b-base,other lineage,0.5366
+dom,Qwen2.5-Coder-7B-Instruct,Llama-3.2-1B,other lineage,0.5983
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-72B,same lineage,0.6885
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.6077
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.6953
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-14B,own,0.8523
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7285
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6682
+dom,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-7B,same lineage,0.7130
+dom,Qwen2.5-Coder-14B-Instruct,starcoder2-3b,other lineage,0.7864
+dom,Qwen2.5-Coder-14B-Instruct,deepseek-coder-1.3b-base,other lineage,0.5532
+dom,Qwen2.5-Coder-14B-Instruct,deepseek-coder-33b-base,other lineage,0.5603
+dom,Qwen2.5-Coder-14B-Instruct,Llama-3.2-1B,other lineage,0.6005
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-72B,same lineage,0.6894
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.5263
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.7256
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7815
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-32B,own,0.7861
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6949
+dom,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-7B,same lineage,0.7183
+dom,Qwen2.5-Coder-32B-Instruct,starcoder2-3b,other lineage,0.7045
+dom,Qwen2.5-Coder-32B-Instruct,deepseek-coder-1.3b-base,other lineage,0.4477
+dom,Qwen2.5-Coder-32B-Instruct,deepseek-coder-33b-base,other lineage,0.5778
+dom,Qwen2.5-Coder-32B-Instruct,Llama-3.2-1B,other lineage,0.5478
+dom,Qwen2.5-72B-Instruct,Qwen2.5-72B,own,0.8536
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.6036
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.5968
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7084
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-32B,same lineage,0.6432
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-3B,same lineage,0.5932
+dom,Qwen2.5-72B-Instruct,Qwen2.5-Coder-7B,same lineage,0.6207
+dom,Qwen2.5-72B-Instruct,starcoder2-3b,other lineage,0.6389
+dom,Qwen2.5-72B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6079
+dom,Qwen2.5-72B-Instruct,deepseek-coder-33b-base,other lineage,0.5786
+dom,Qwen2.5-72B-Instruct,Llama-3.2-1B,other lineage,0.6223
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-72B,other lineage,0.4627
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-0.5B,other lineage,0.5878
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-1.5B,other lineage,0.5282
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-14B,other lineage,0.5406
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-32B,other lineage,0.4872
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-3B,other lineage,0.5504
+blk,deepseek-coder-1.3b-instruct,Qwen2.5-Coder-7B,other lineage,0.4779
+blk,deepseek-coder-1.3b-instruct,starcoder2-3b,other lineage,0.6461
+blk,deepseek-coder-1.3b-instruct,deepseek-coder-1.3b-base,own,0.7878
+blk,deepseek-coder-1.3b-instruct,deepseek-coder-33b-base,same lineage,0.6746
+blk,deepseek-coder-1.3b-instruct,Llama-3.2-1B,other lineage,0.6076
+blk,deepseek-coder-33b-instruct,Qwen2.5-72B,other lineage,0.5862
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-0.5B,other lineage,0.6131
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-1.5B,other lineage,0.5138
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-14B,other lineage,0.6123
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-32B,other lineage,0.5968
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-3B,other lineage,0.6414
+blk,deepseek-coder-33b-instruct,Qwen2.5-Coder-7B,other lineage,0.5895
+blk,deepseek-coder-33b-instruct,starcoder2-3b,other lineage,0.7295
+blk,deepseek-coder-33b-instruct,deepseek-coder-1.3b-base,same lineage,0.6653
+blk,deepseek-coder-33b-instruct,deepseek-coder-33b-base,own,0.9462
+blk,deepseek-coder-33b-instruct,Llama-3.2-1B,other lineage,0.5595
+blk,Llama-3.2-1B-Instruct,Qwen2.5-72B,other lineage,0.5822
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-0.5B,other lineage,0.7465
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-1.5B,other lineage,0.7127
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-14B,other lineage,0.5993
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-32B,other lineage,0.6396
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-3B,other lineage,0.6685
+blk,Llama-3.2-1B-Instruct,Qwen2.5-Coder-7B,other lineage,0.6193
+blk,Llama-3.2-1B-Instruct,starcoder2-3b,other lineage,0.5585
+blk,Llama-3.2-1B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6617
+blk,Llama-3.2-1B-Instruct,deepseek-coder-33b-base,other lineage,0.6109
+blk,Llama-3.2-1B-Instruct,Llama-3.2-1B,own,0.8395
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-72B,same lineage,0.7215
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-0.5B,own,0.8365
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.6900
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-14B,same lineage,0.6469
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-32B,same lineage,0.6875
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6962
+blk,Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder-7B,same lineage,0.5618
+blk,Qwen2.5-Coder-0.5B-Instruct,starcoder2-3b,other lineage,0.4910
+blk,Qwen2.5-Coder-0.5B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6522
+blk,Qwen2.5-Coder-0.5B-Instruct,deepseek-coder-33b-base,other lineage,0.6120
+blk,Qwen2.5-Coder-0.5B-Instruct,Llama-3.2-1B,other lineage,0.8290
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-72B,same lineage,0.6608
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.6670
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-1.5B,own,0.9199
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7555
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7523
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-3B,same lineage,0.7808
+blk,Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder-7B,same lineage,0.7835
+blk,Qwen2.5-Coder-1.5B-Instruct,starcoder2-3b,other lineage,0.6891
+blk,Qwen2.5-Coder-1.5B-Instruct,deepseek-coder-1.3b-base,other lineage,0.6176
+blk,Qwen2.5-Coder-1.5B-Instruct,deepseek-coder-33b-base,other lineage,0.6399
+blk,Qwen2.5-Coder-1.5B-Instruct,Llama-3.2-1B,other lineage,0.6745
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-72B,same lineage,0.6822
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.6493
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.7948
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7681
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7560
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-3B,own,0.9395
+blk,Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder-7B,same lineage,0.7521
+blk,Qwen2.5-Coder-3B-Instruct,starcoder2-3b,other lineage,0.7129
+blk,Qwen2.5-Coder-3B-Instruct,deepseek-coder-1.3b-base,other lineage,0.5701
+blk,Qwen2.5-Coder-3B-Instruct,deepseek-coder-33b-base,other lineage,0.6958
+blk,Qwen2.5-Coder-3B-Instruct,Llama-3.2-1B,other lineage,0.6734
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-72B,same lineage,0.5968
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.5222
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.7044
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7690
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7318
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6538
+blk,Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder-7B,own,0.7588
+blk,Qwen2.5-Coder-7B-Instruct,starcoder2-3b,other lineage,0.6287
+blk,Qwen2.5-Coder-7B-Instruct,deepseek-coder-1.3b-base,other lineage,0.4954
+blk,Qwen2.5-Coder-7B-Instruct,deepseek-coder-33b-base,other lineage,0.5377
+blk,Qwen2.5-Coder-7B-Instruct,Llama-3.2-1B,other lineage,0.4901
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-72B,same lineage,0.6790
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.5499
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.6846
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-14B,own,0.8748
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-32B,same lineage,0.7441
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6597
+blk,Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder-7B,same lineage,0.6995
+blk,Qwen2.5-Coder-14B-Instruct,starcoder2-3b,other lineage,0.6002
+blk,Qwen2.5-Coder-14B-Instruct,deepseek-coder-1.3b-base,other lineage,0.5161
+blk,Qwen2.5-Coder-14B-Instruct,deepseek-coder-33b-base,other lineage,0.6015
+blk,Qwen2.5-Coder-14B-Instruct,Llama-3.2-1B,other lineage,0.5347
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-72B,same lineage,0.6433
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.4673
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.6644
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7237
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-32B,own,0.8050
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6183
+blk,Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder-7B,same lineage,0.6187
+blk,Qwen2.5-Coder-32B-Instruct,starcoder2-3b,other lineage,0.5809
+blk,Qwen2.5-Coder-32B-Instruct,deepseek-coder-1.3b-base,other lineage,0.3663
+blk,Qwen2.5-Coder-32B-Instruct,deepseek-coder-33b-base,other lineage,0.5293
+blk,Qwen2.5-Coder-32B-Instruct,Llama-3.2-1B,other lineage,0.4224
+blk,Qwen2.5-72B-Instruct,Qwen2.5-72B,own,0.8657
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-0.5B,same lineage,0.5938
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-1.5B,same lineage,0.5906
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-14B,same lineage,0.7020
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-32B,same lineage,0.6594
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-3B,same lineage,0.6333
+blk,Qwen2.5-72B-Instruct,Qwen2.5-Coder-7B,same lineage,0.6205
+blk,Qwen2.5-72B-Instruct,starcoder2-3b,other lineage,0.5422
+blk,Qwen2.5-72B-Instruct,deepseek-coder-1.3b-base,other lineage,0.5293
+blk,Qwen2.5-72B-Instruct,deepseek-coder-33b-base,other lineage,0.5895
+blk,Qwen2.5-72B-Instruct,Llama-3.2-1B,other lineage,0.5725

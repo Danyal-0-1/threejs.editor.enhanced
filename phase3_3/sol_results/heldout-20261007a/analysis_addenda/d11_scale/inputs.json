@@ -1,0 +1,15 @@
+{
+ "run": "heldout-20261007a",
+ "utc": "2026-10-09T18:20:43+00:00",
+ "inputs": {
+  "arm_a_long": {
+   "path": "csv/arm_a_long.csv",
+   "sha256": "2d1ef380b2384dee5076441ecf712093ceed08064dd5e4df0b54269d694f56f2"
+  },
+  "h4_predictions": {
+   "path": "csv/h4_predictions.csv",
+   "sha256": "acbd8d0c6b207ffc7070febc7022ee86333b8a8acbbc076e3dd520055d3807bd"
+  }
+ },
+ "script_sha256": "9d0a30f5254fd559be9071366a4bfbff5caa4d5854136049809a8869ac37e716"
+}

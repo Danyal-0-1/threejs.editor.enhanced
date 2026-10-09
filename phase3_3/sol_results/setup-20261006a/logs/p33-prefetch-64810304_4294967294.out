@@ -1,0 +1,186 @@
+[2026-10-06T17:05:15-07:00] p33-prefetch job=64810304 task=none node=sc006 run=setup-20261006a
+{
+ "mode": "dry-run",
+ "estimated_gb": 5.77,
+ "free_gb_at_hf_root": 487932.32177734375,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {},
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B",
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "bytes": 3098955546,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "bytes": 3098955668,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}
+{
+ "mode": "download",
+ "estimated_gb": 5.77,
+ "free_gb_at_hf_root": 487932.32177734375,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {
+  "Qwen/Qwen2.5-Coder-1.5B": {
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 660,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 117,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 3087467144,
+     "sha256": "535485b26038ac24f4e8a86e1a73ed417d8992e3192f6305b7fcc4fb92efa210"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7308,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-1.5B/snapshots/df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  },
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct": {
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "config.json",
+     "size": 660,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 242,
+     "sha256": null
+    },
+    {
+     "name": "merges.txt",
+     "size": 1671839,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 3087467144,
+     "sha256": "c1b9b30e907950516ba3c646bdf570d8084c25a6410a0cdca80cf04b11bc13a8"
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 7031645,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 7305,
+     "sha256": null
+    },
+    {
+     "name": "vocab.json",
+     "size": 2776833,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-1.5B-Instruct/snapshots/2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "tokenizer_id": "cc349caf59f0697a",
+   "verified_checksums": true
+  }
+ },
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B",
+   "revision": "df3ce67c0e24480f20468b6ef2894622d69eb73b",
+   "bytes": 3098955546,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+   "bytes": 3098955668,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}
