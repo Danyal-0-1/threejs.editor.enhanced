@@ -156,7 +156,7 @@ competitor:  mesh       ← the old spelling the prior pulls toward
 ```
 
 - **Code:** the plan builder renders every template in every (family, lexicon) and lists the
-  sites: [`pipeline.build_plan`](src/p33/pipeline.py#L103).
+  sites: [`pipeline.build_plan`](../src/p33/pipeline.py#L103).
 - **Rendering:** `BACKENDS["dom"].render(ir, phi)`.
 
 ### Step 2 — Is it a real collision?
@@ -167,9 +167,9 @@ to **group objects** in `d50s1` (`competitor_binds_to = T_TYPE_GROUP`). So the s
 **SEMANTIC collision** and is kept. Sites whose competitor fails to parse, or yields the same
 IR, are excluded.
 
-- **Code:** [`phase3_2/sites2.classify`](../src/phase3_2/sites2.py).
+- **Code:** [`phase3_2/sites2.classify`](../../src/phase3_2/sites2.py).
 - **Duplicates:** removed within each (family, lexicon) cell:
-  [`sampling.dedupe_within_cells`](../src/phase3_2/sampling.py#L82).
+  [`sampling.dedupe_within_cells`](../../src/phase3_2/sampling.py#L82).
 
 ### Step 3 — Build what the model sees (three conditions)
 
@@ -202,8 +202,8 @@ change the answer by itself. Comparing against `norule_lenmatched` isolates the 
 
 **Code:**
 
-- [`prompts.bundle`](../src/phase3_2/prompts.py#L254) (rule / norule / norule_lenmatched);
-- [`margins.build_prefix`](../src/phase3_2/margins.py#L332):
+- [`prompts.bundle`](../../src/phase3_2/prompts.py#L254) (rule / norule / norule_lenmatched);
+- [`margins.build_prefix`](../../src/phase3_2/margins.py#L332):
   ```python
   ctx = (rule.rstrip() + "\n\n") if rule else ""
   for ex in shown:                       # worked examples (step 6); none in Arm A
@@ -231,7 +231,7 @@ $M = \log P(\texttt{light}\mid\text{prefix}) - \log P(\texttt{mesh}\mid\text{pre
 **Simple explanation.** M is "how many times more likely" on a log scale:
 $e^{M}$ = P(correct) / P(competitor).
 
-**Code** — [`TokenScorer.score_pair_detailed`](../src/phase3_2/margins.py#L258):
+**Code** — [`TokenScorer.score_pair_detailed`](../../src/phase3_2/margins.py#L258):
 
 ```python
 a = self.ids(prefix + correct)
@@ -250,11 +250,11 @@ PairScore(logp_correct=side(a), logp_competitor=side(b), k_common=k, ...)
 
 **Safeguards.**
 
-- [`check_pair`](../src/phase3_2/margins.py#L137) **refuses** pairs that tokenize identically,
+- [`check_pair`](../../src/phase3_2/margins.py#L137) **refuses** pairs that tokenize identically,
   or where one is a prefix of the other. An unscorable site is recorded with its reason, never
   scored as 0.
 - The output layer is computed in **fp32**
-  ([`_logprobs_rows`](../src/phase3_2/margins.py#L237)), so bf16 rounding cannot decide the
+  ([`_logprobs_rows`](../../src/phase3_2/margins.py#L237)), so bf16 rounding cannot decide the
   sign of a small margin.
 
 **Numbers** (one token each: `light` vs `mesh`):
@@ -285,7 +285,7 @@ averaged over sites, with a template-bootstrap interval (§4.8).
 **In words:** the table multiplied the odds of the new spelling by $e^{1.885} \approx 6.6$.
 That is real help, but not enough to flip the decision.
 
-**Code** — [`analysis.paired_rule_effect`](../src/phase3_2/analysis.py#L176):
+**Code** — [`analysis.paired_rule_effect`](../../src/phase3_2/analysis.py#L176):
 
 ```python
 d = [v["rule"] - v["norule"] for v in idx.values() if "rule" in v and "norule" in v]
@@ -297,8 +297,8 @@ return st.mean(d)
 **Procedure.** Keep the table, and prepend `k` **worked example programs** written in
 `d50s1`, for `k` = 0, 1, 2, 4, 8, 16, 32. Measure M again at each rung.
 
-**The examples are leak-free** ([`demos.for_site`](src/p33/demos.py#L86),
-[`is_leak`](src/p33/demos.py#L74)):
+**The examples are leak-free** ([`demos.for_site`](../src/p33/demos.py#L86),
+[`is_leak`](../src/p33/demos.py#L74)):
 
 - never the site's own template, and never a program that replays the decision;
 - taken in a fixed seeded order, so rung 2 = rung 1 + one more example (nested).
@@ -340,7 +340,7 @@ Adaptation is not smooth, and this is typical: 93–100% of curves wobble.
 - the instruct twin switches at `k*` = 1.00;
 - the 1.5B base needs `k*` = **23.0**. A bigger model is not always faster.
 
-**Code** — [`kstar.compute`](src/p33/kstar.py#L74):
+**Code** — [`kstar.compute`](../src/p33/kstar.py#L74):
 
 ```python
 if margins[0] >= 0:                                   # already correct
@@ -374,7 +374,7 @@ for its instruction-tuned version.
 symbol cause trouble elsewhere" gives this terminal a rate of **0.136**, i.e. low risk. It
 would have missed this site. The site-level score caught it.
 
-**Code** — [`h4.build_table`](src/p33/h4.py#L302) pairs base and instruct on the same site:
+**Code** — [`h4.build_table`](../src/p33/h4.py#L302) pairs base and instruct on the same site:
 
 ```python
 "risk":  -b["m_seq"],                 # base model, rule condition
@@ -390,7 +390,7 @@ would have missed this site. The site-level score caught it.
   and a resubmitted job skips finished blocks.
 - **Row contents.** Every row carries the model revision, tokenizer fingerprint, prompt hash
   and example ids.
-- **Code:** [`shards.ShardStore`](src/p33/shards.py).
+- **Code:** [`shards.ShardStore`](../src/p33/shards.py).
 
 ### Step 9 — From one site to a model-level result
 
@@ -442,12 +442,12 @@ The intervals come from the **template-cluster bootstrap** (§4.8).
 
 **Code:**
 
-- [`kstar.kaplan_meier`](src/p33/kstar.py#L124)
-- [`h4.auroc`](src/p33/h4.py#L52)
-- [`h4.criteria`](src/p33/h4.py#L437)
-- [`analysis.cluster_bootstrap`](../src/phase3_2/analysis.py#L103)
-- [`power.py`](src/p33/power.py)
-- [`scripts/scale_analysis.py`](scripts/scale_analysis.py) (D11)
+- [`kstar.kaplan_meier`](../src/p33/kstar.py#L124)
+- [`h4.auroc`](../src/p33/h4.py#L52)
+- [`h4.criteria`](../src/p33/h4.py#L437)
+- [`analysis.cluster_bootstrap`](../../src/phase3_2/analysis.py#L103)
+- [`power.py`](../src/p33/power.py)
+- [`scripts/scale_analysis.py`](../scripts/scale_analysis.py) (D11)
 
 ---
 
@@ -588,9 +588,9 @@ under 0.08).
 
 | topic | file |
 |---|---|
-| step-by-step commands on Sol | [`README.md`](README.md) |
-| every concept explained in depth | [`sol_experiment_explained/00_complete_guide.md`](sol_experiment_explained/00_complete_guide.md) and 01–08 |
-| all formulas with worked numbers | [`sol_experiment_explained/02_mathematics_and_statistics.md`](sol_experiment_explained/02_mathematics_and_statistics.md) |
-| the preregistration and every deviation (D1–D11) | [`../PREREGISTRATION.md`](../PREREGISTRATION.md) |
-| what was wrong and how it was fixed | [`AUDIT.md`](AUDIT.md) |
+| step-by-step commands on Sol | [`README.md`](../README.md) |
+| every concept explained in depth | [`sol_experiment_explained/00_complete_guide.md`](00_complete_guide.md) and 01–08 |
+| all formulas with worked numbers | [`sol_experiment_explained/02_mathematics_and_statistics.md`](02_mathematics_and_statistics.md) |
+| the preregistration and every deviation (D1–D11) | [`../PREREGISTRATION.md`](../../PREREGISTRATION.md) |
+| what was wrong and how it was fixed | [`AUDIT.md`](../AUDIT.md) |
 | results on Sol | `~/phase3-3_experiment_sol/results/heldout-20261007a/` (official, after the export); `/scratch/dkhorami/p33_preview_20261008/` (the preview used here) |

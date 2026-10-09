@@ -5,31 +5,32 @@ order the code permits.
 
 | For | Read |
 |---|---|
-| **the whole experiment in one file: hypotheses, math, one site traced through every step with its code, results** | [`EXPERIMENT_IN_ONE_FILE.md`](EXPERIMENT_IN_ONE_FILE.md) |
+| **the whole experiment in one file: hypotheses, math, one site traced through every step with its code, results** | [`sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md) |
 | why each step exists | [`sol_experiment_explained/`](sol_experiment_explained/) |
 | what was wrong and how it was verified | [`AUDIT.md`](AUDIT.md) |
 | which parts of the original brief were corrected or not done | [`PROMPT_REVIEW.md`](PROMPT_REVIEW.md) |
 
-> **Where things stand (2026-10-07, 23:10 MST)**
+> **Where things stand (2026-10-09): the experiment is complete.**
 >
-> - **Development run.** `dev-20261006a` is complete: 4 models, 192/192 Arm A and 112/112 primary
->   cells. Its corrected analysis (D9) was re-derived **on Sol** without re-scoring
->   (`analysis_revisions/r1-2026-10-07-metric-corrections`):
->   - 652 inputs are byte-identical and every check passed;
->   - the source digest is `3c3e772c66ecf51e`, the same as the local record (§13).
-> - **Models.** All **21** held-out checkpoints are on `$SCRATCH/hf` (641 GB) and pinned:
->   - the 10 D10 checkpoints came from prefetch job 64939806, with every file's sha256 verified;
->   - the gated Llama-3.2-1B pair was approved on 2026-10-07.
-> - **Freeze.** `results/dev-20261006a/DEV_FREEZE.json` was written by job 64942745 on 2026-10-07:
->   sha256 `b319c3fc…`, commit `78b2bcd`, 21 model pins, 44 source hashes.
-> - **Held-out run `heldout-20261007a`.**
->   - It was unlocked on 2026-10-07 at the investigator's direction (`UNLOCK_NOTE.md` in the run
->     directory).
->   - The whole stage runs as **one chain, one job at a time** (`submit_chain.sh`, §10). The job ids
->     are in `results/heldout-20261007a/logs/submission_chain.env`.
->   - Expect 2–4 days (§15).
-> - **Keep Sol's checkout at `78b2bcd` until the chain finishes.** Every held-out job re-checks the
->   source against the freeze, and a changed source file stops it.
+> - **Results:** start with [`heldout_results_explained/00_complete_results.md`](heldout_results_explained/00_complete_results.md).
+>   The same folder has theory, math, the pipeline, a retype plan, the mental image, and the
+>   paper plan ([`06`](heldout_results_explained/06_publishability_and_paper.md)).
+> - **Held-out run `heldout-20261007a`:** 21 models.
+>   - Arm A 190,890 rows, extinction 84,000, Arm B 7,800 generations, H5 212,100 rows.
+>   - 0 failed cells; `validate` VALID; 40.8 A100 GPU-hours.
+>   - Exported and post-processed on 2026-10-09, including the D11 scale analysis.
+> - **Verdicts:**
+>   - H4 C1/C2 are **met for all 10 pairs in both families** (AUROC 0.76–0.96); C3 is NOT TESTABLE.
+>   - H5 is **not supported**.
+>   - D11: no reversion trend with size.
+>   - Three gaps in the frozen analysis are disclosed in deviation D12.
+> - **Data:** on Sol in `~/phase3-3_experiment_sol/results/heldout-20261007a/`. Locally in
+>   `phase3_3/sol_results/heldout-20261007a/`, byte-identical and not tracked by git (1.6 GB).
+> - **Earlier steps:**
+>   - the D9 re-analysis of `dev-20261006a`, recorded on Sol;
+>   - all 21 checkpoints pinned (641 GB on scratch);
+>   - the freeze (job 64942745), and the unlock on 2026-10-07 at the investigator's direction.
+> - **Sol's checkout** stays on the frozen commit `78b2bcd`.
 
 ---
 

@@ -330,3 +330,31 @@ between sizes remain, so a trend is an association.
 
 **Review.** Approved by the investigator on 2026-10-08, unchanged, before any
 held-out outcome was examined.
+
+### D12 — 2026-10-09 — gaps in the frozen held-out analysis, found after the results
+
+**What happened.** After `heldout-20261007a` was exported, three gaps in the frozen analysis
+code were found.
+
+1. **H4 calibration.** The freeze holds Platt parameters and decision thresholds only for the
+   two development pairs (Qwen2.5-Coder 0.5B and 1.5B). For the eight other pairs, the export
+   wrote uncalibrated probabilities (σ(risk)) labelled `DEV_FREEZE`. It then computed ECE,
+   Brier and the calibration slope after refitting a calibration on the held-out rows
+   themselves: in-sample, with a slope of exactly 1.
+2. **H5.** The registered test (targeted − random reduction per changed symbol, with an
+   interval excluding 0) was not implemented. The export reports per-arm outcomes only. Its
+   per-symbol metric counts every site of a cell, repaired and control alike.
+3. **D10.** The scale analysis was not in the frozen code. It was handled by D11, specified and
+   approved before any held-out outcome was examined.
+
+**Change.** No computed number or verdict changes. The reporting rules are:
+
+- calibration is claimed only for the two frozen pairs, and the eight in-sample values are
+  labelled as such;
+- H5 is reported as not supported on the descriptive evidence (targeted exceeds the mean of the
+  random arms in 43 of 100 cells; mean difference −0.41 reversions per changed symbol), and no
+  post-hoc test is presented as confirmatory.
+
+**Scientific consequence.** Calibration transfer is claimed only for the development pairs
+(held-out ECE 0.036–0.052). H5 is not supported. Every H4 confirmatory conclusion stands,
+because the registered criteria are rank-based and never use calibration.

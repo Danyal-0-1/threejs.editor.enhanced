@@ -1,0 +1,6 @@
+[2026-10-07T23:03:45-07:00] p33-dev_freeze job=64942745 task=none node=sc006 run=dev-20261006a
+merge arm_a    COMPLETE  rows= 10224 done=192/192 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows= 16000 done=112/112 missing=0 failed=0 corrupt=0 dup_dropped=0
+VALID: every expected cell is done and verified
+FROZEN: /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a/DEV_FREEZE.json
+  sha256 b319c3fcba3dd325c871146e4f5e326e45c643dfc67e0e02e413183299b658a8
