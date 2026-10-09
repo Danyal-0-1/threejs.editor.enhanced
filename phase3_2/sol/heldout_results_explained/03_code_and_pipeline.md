@@ -248,6 +248,13 @@ VALID: every expected cell is done and verified
 | **Output** | `phase3_3/sol_results/heldout-20261007a/`: 1.6 GB, 16,710 files |
 | **Validation** | sha256 identical on Sol and locally: `merged/arm_a.jsonl` 4ef9f28f…, `merged/h5.jsonl` 6bcf7583…, `csv/h4_metrics_baselines_calibration.csv` 5c3b0c8c…, `reports/HYPOTHESIS_RESULTS.md` b33708e0… |
 
+**In git since 2026-10-09.** A second file-by-file checksum comparison with Sol found the
+held-out run identical. The dev run differed in 27 exported files, where Sol's later export
+now replaces the laptop's ([`SOL_SYNC_2026-10-09.md`](../../../phase3_3/sol_results/dev-20261006a/SOL_SYNC_2026-10-09.md)).
+Both runs, Sol's setup and smoke runs, its post-processing scripts and its environment lock
+(`env/requirements.lock.sol.txt`) are committed. The four files over 100 MB are committed
+gzipped ([`phase3_3/sol_results/README.md`](../../../phase3_3/sol_results/README.md)).
+
 **Sol's checkout was left on `78b2bcd`.** A `git pull` there refused to overwrite a
 regenerated `.pyc` that a later commit also contains, and Git changed nothing. This is
 harmless: every newer file is on GitHub and on your laptop.
@@ -264,6 +271,8 @@ cd phase3_2/sol
 export P33_RESULTS_ROOT=$PWD/../../phase3_3/sol_results
 PY=../../run/.venv/bin/python
 $PY scripts/scale_analysis.py --run heldout-20261007a      # D11 from the CSVs: works locally
+$PY scripts/paper_figures.py --run heldout-20261007a       # paper figures and tables: works locally (§12)
+$PY scripts/exploratory_checks.py --run heldout-20261007a  # post hoc checks for 09 §3: works locally
 $PY scripts/p33.py --pins $P33_RESULTS_ROOT/model_pins.json status --run heldout-20261007a
 #  -> SplitViolation: unlock refers to an invalid freeze: no DEV_FREEZE at /home/dkhorami/…
 ```
@@ -275,3 +284,41 @@ access. A copy elsewhere is not "the" freeze.
 **On Sol,** `status`, `validate` and `heldout analyze` work as long as the source still
 matches the freeze. It does at `78b2bcd`, and at any later commit that changes only
 non-source files.
+
+---
+
+## 12. Paper figures (local, CPU, 2026-10-09)
+
+| | |
+|---|---|
+| **Input** | 10 of the export's CSVs, `analysis_addenda/d11_scale/scale_analysis.csv`, and the development freeze `dev-20261006a/DEV_FREEZE.json`, accepted only if its sha256 equals the one in `HELDOUT_UNLOCK.json` |
+| **Transformation** | [`scripts/paper_figures.py`](../scripts/paper_figures.py), about 15 s. It recomputes the per-template counts, draws the template bootstrap exactly as the D11 script does (same seeds and streams), draws the figures and writes the tables. It imports the frozen `h4.auroc` and `kstar.kaplan_meier` instead of re-implementing them |
+| **Output** | `analysis_addenda/paper_figures/`: 10 figures (PDF, SVG, PNG), `ALL_FIGURES.pdf` (all ten, for review), 16 tables (CSV + Markdown), `CAPTIONS.md` and `PROVENANCE.md`. **Nothing written inside** `csv/`, `plots/` or `reports/` |
+| **Validation** | 8 checks against the frozen export, all passed; the script refuses on any mismatch (listed below). 4 tests in [`tests/test_paper_figures.py`](../tests/test_paper_figures.py); the suite has 147 tests, all passing |
+
+**The eight checks** (from `PROVENANCE.md`):
+
+1. the development freeze matches the unlock (sha256 `b319c3fc…`);
+2. the per-lexicon mean rule effect equals the export in all 420 model × grammar × lexicon ×
+   control cells;
+3. site counts and reversion rates with the table equal the export in all 840 model ×
+   grammar × lexicon × role cells;
+4. the AUROC of the risk score and of the role-level and length baselines equals the export
+   in all 20 pair × grammar groups;
+5. the 36 Qwen2.5-Coder ladder values and their 95% intervals equal the D11 output exactly;
+6. the Kaplan–Meier medians, recomputed from the site rows, equal the export in all 42
+   model × grammar groups;
+7. the Arm B site, reach, reversion, correct-program and parse-failure counts equal the
+   frozen hurdle table;
+8. `calibrated_p` equals the frozen Platt fit for the two development pairs.
+
+**Why check 5 can be exact.** The D11 script seeds `random.Random(f"20261002/{family}/{outcome}/{kind}")`
+and draws 80 templates with replacement, 2,000 times. `paper_figures.draws` makes the same
+calls in the same order, stores the draws as a 2,000 × 80 matrix of template counts, and
+takes the same order statistics for the interval. The two computations are therefore one
+computation done twice, and any difference would be a bug.
+
+**Why the freeze check works locally when `status` does not.** `load_unlock` binds the
+unlock to the freeze's **Sol path** (§11). The figure script only reads, so it binds to the
+freeze's **content**: the sha256 recorded at unlock time. A copy with the same bytes is accepted;
+any other file is refused.

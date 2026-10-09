@@ -55,12 +55,15 @@ Before each corner, let the driver watch 0, 1, 2, 4, 8, 16 or 32 practice runs.
  typical corner:   ✗     ✗     ✓     ✓     ✗     ✓     ✓      ← switches early, slips, settles
 ```
 
-- **First correct turn:** after about **2** practice runs (median).
-- **Turns correctly *from then on*:** after about **8**.
+- **First correct turn:** after about **2** practice runs (the median among corners that
+  switch).
+- **Turns correctly *from then on*:** after about **8** (among corners whose switch lasts).
 - **Never learned in 32 runs:** **1 corner in 5**.
 - **The familiar country (`dom`)** takes 1.4–4.6 runs to switch; **the strange one (`blk`)**
   takes 3–12.
-- **Almost every driver's learning curve wobbles** (93–100%). Nobody improves smoothly.
+- **The learning curves wobble, and not a little.** 6 in 10 curves drop by more than an odds
+  factor of 2.7 at some step. **1 in 3 corners that switched slips back later**, by a median
+  of −0.76 nats ([09 §3.3](09_conclusions_claim_strength_and_venues.md)).
 
 ---
 
@@ -73,6 +76,9 @@ Every instruction-tuned driver has a twin: the base model it was trained from.
   AUROC 0.76–0.96, all 10 twins, both countries.
 - **It is about the exact corner.** "Left turns are hard in general" (the role-level guess)
   predicts worse than the twin's warning about *this* corner.
+- **It is about *this* driver's history** *(exploratory)*. A twin from another family warns
+  too, but only about half as well (a median 46% of the signal). Some corners trip up
+  everyone; the rest are this driver's own ([09 §3.1](09_conclusions_claim_strength_and_venues.md)).
 
 ```
    twin's hesitation:  low ───────────────────────────────► high
@@ -146,7 +152,7 @@ corners nobody repainted. That shows up as the "per-symbol" gain.
 
 ```
                     THE HABIT                      THE FIX THAT WORKS
-   rule card ──► nudges, rarely steers        practice: switch at ~2, settle at ~8
+   rule card ──► nudges, rarely steers        practice: switch at ~2, settle at ~8 (among switchers)
    bigger engine ──► same habit               repaint EVERYTHING ──► no silent errors
                                               repaint a few ──► no better than random
 
@@ -157,3 +163,6 @@ corners nobody repainted. That shows up as the "per-symbol" gain.
 **In one sentence:** code models lean on familiar spellings at every size; rules and examples
 help, but unevenly and unstably; their failures are predictable from the base model; and in a
 permuted language, only a complete respelling removes the silent errors.
+
+**The same picture with a real driver, and the brain systems involved:**
+[10 — the human mirror](10_humans_and_the_brain.md).

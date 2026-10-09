@@ -24,8 +24,19 @@ order the code permits.
 >   - H5 is **not supported**.
 >   - D11: no reversion trend with size.
 >   - Three gaps in the frozen analysis are disclosed in deviation D12.
+> - **Paper figures and tables:** `analysis_addenda/paper_figures/` of the held-out run (start with
+>   its `CAPTIONS.md`), made by [`scripts/paper_figures.py`](scripts/paper_figures.py) (§12). The 12
+>   figures in `plots/` are the frozen pipeline's diagnostics, not paper figures.
+> - **The paper's conclusion, how strong each claim is, and where to submit:**
+>   [`heldout_results_explained/09`](heldout_results_explained/09_conclusions_claim_strength_and_venues.md).
+>   The human-behaviour and brain picture is in [`10`](heldout_results_explained/10_humans_and_the_brain.md).
+>   Its three exploratory checks (inheritance, role ordering, wobble size) are made by
+>   [`scripts/exploratory_checks.py`](scripts/exploratory_checks.py) and labelled post hoc.
 > - **Data:** on Sol in `~/phase3-3_experiment_sol/results/heldout-20261007a/`. Locally in
->   `phase3_3/sol_results/heldout-20261007a/`, byte-identical and not tracked by git (1.6 GB).
+>   `phase3_3/sol_results/heldout-20261007a/`, byte-identical (checked file by file on
+>   2026-10-09) and **in git**. Four files over GitHub's 100 MB limit are stored gzipped; after
+>   cloning, restore them with `bash phase3_3/sol_results/restore_large_files.sh heldout-20261007a`
+>   ([`phase3_3/sol_results/README.md`](../../phase3_3/sol_results/README.md)).
 > - **Earlier steps:**
 >   - the D9 re-analysis of `dev-20261006a`, recorded on Sol;
 >   - all 21 checkpoints pinned (641 GB on scratch);
@@ -275,6 +286,34 @@ $P33_PY scripts/scale_analysis.py --run $HO   # -> results/$HO/analysis_addenda/
 - **What it computes:** the slope of the reversion rate (base and instruct) and of the H4
   AUROC on log10(size), across the Qwen2.5-Coder ladder, for each grammar family.
 - **Uncertainty:** template-cluster bootstrap intervals and Holm-adjusted two-sided p values.
+
+**Then the paper figures.** The 12 figures in `plots/` are the frozen pipeline's diagnostics:
+every model, family and lexicon at once, with a provenance stamp. They stay unchanged as
+registered outputs. The paper's figures and tables come from a separate script. Like the D11
+script, it is outside the frozen source set, uses no GPU (about 15 s) and reads only the
+export's CSVs, the D11 output and the development freeze:
+
+```bash
+$P33_PY scripts/paper_figures.py --run $HO    # -> results/$HO/analysis_addenda/paper_figures/
+# locally: ../../run/.venv/bin/python scripts/paper_figures.py --run heldout-20261007a --root ../../phase3_3/sol_results
+```
+
+- **What it writes:**
+  - 10 figures, each as PDF (vector, for LaTeX), SVG and 300-dpi PNG, 6.5 in wide, and
+    `ALL_FIGURES.pdf` with all ten, for review;
+  - 16 tables, as CSV and Markdown;
+  - `CAPTIONS.md`: draft captions, and which frozen plot each figure replaces;
+  - `PROVENANCE.md`: the checks, every model@revision and the input hashes.
+- **What it checks first.** It refuses unless what it recomputes equals the frozen export:
+  - the freeze hash;
+  - the 420 per-lexicon rule effects;
+  - the 840 per-lexicon, per-role site counts and reversion rates;
+  - the 60 AUROCs;
+  - the 36 D11 ladder values and their intervals;
+  - the 42 Kaplan–Meier medians;
+  - the Arm B counts (sites, reached, reverted, correct programs, parse failures);
+  - the frozen calibration.
+- **What it never does:** write inside `csv/`, `plots/` or `reports/`, or replace a confirmatory number.
 
 ---
 

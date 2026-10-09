@@ -205,6 +205,57 @@ csv/arm_a_long.csv + csv/h4_predictions.csv ── scale_analysis.analyse ──
 
 ---
 
+## 10. Addendum (2026-10-09): the paper-figure script
+
+[`scripts/paper_figures.py`](../scripts/paper_figures.py) has 1,432 lines and draws every paper
+figure (06 §8). It is **not added to the 2,101-line denominator**. It restates frozen numbers and
+refuses to run unless they agree, so a mistake in it shows up as a refusal, not as a wrong
+result. Most of it is layout. About 100 lines carry statistics, and those are worth retyping:
+
+| function | lines | count | why | invariant | test after |
+|---|---|---:|---|---|---|
+| `draws` | [170–183](../scripts/paper_figures.py#L170) | 14 | the template resample as a B × T count matrix | the same `random.Random` calls, in the same order, as `scale_analysis.analyse` | `test_figure_intervals_are_the_d11_intervals` |
+| `interval` | [186–193](../scripts/paper_figures.py#L186) | 8 | the 95% percentile interval | D11's order statistics: `int(0.025(n−1))` and `ceil(0.975(n−1))` | same |
+| `ratio` | [196–200](../scripts/paper_figures.py#L196) | 5 | every rate: reversion, reach, reversion given reach | one matrix product per numerator and denominator | same |
+| `auroc_w` | [203–219](../scripts/paper_figures.py#L203) | 17 | AUROC for 2,000 resamples at once | weight w = the template drawn w times; ties count ½ | `test_weighted_auroc_equals_auroc_on_replicated_rows` |
+| `lexicon_mean` | [425–436](../scripts/paper_figures.py#L425) | 12 | the rule effect averaged over lexicons, as 00 §5 reports it | each lexicon weighs the same; one resample applies to all five | check 2 (420 cells) |
+| the D11 check | [500–519](../scripts/paper_figures.py#L500) | 20 | ties the figure intervals to D11 | 36 values and intervals, to 1e-9 | check 5 |
+| first against lasting switch | [741–763](../scripts/paper_figures.py#L741) | 23 | Figure 5c and Table 3b | the denominator is **every** initially wrong site; the dashed curve stops at 16 | none (compare with 00 §6) |
+
+**Optional, +61 lines:** the rule-effect and reversion checks
+([442–469](../scripts/paper_figures.py#L442)), the Arm B check
+([818–836](../scripts/paper_figures.py#L818)) and the H5 per-model aggregation
+([904–917](../scripts/paper_figures.py#L904)).
+
+**Ignore:** `rows_layout`, `style_rows`, `dodge`, the `fig.legend` calls, captions and table
+formatting.
+
+**The exploratory companion.** [`scripts/exploratory_checks.py`](../scripts/exploratory_checks.py)
+(346 lines) makes the three post hoc checks in [09 §3](09_conclusions_claim_strength_and_venues.md).
+Two parts are worth reading:
+
+- the cross-family block, [134–210](../scripts/exploratory_checks.py#L134). Its invariant: the
+  own-base AUROC must equal the frozen H4 AUROC, or it refuses.
+- the wobble block, [302–338](../scripts/exploratory_checks.py#L302). It makes the size of a
+  dip explicit, where the frozen `nonmonotone` flag counts any decrease.
+
+`auroc_reps` repeats `paper_figures.auroc_w`, but returns every resample, so that differences
+between two scores can be bootstrapped on the same draws.
+
+**AI-code audit, figure choices:**
+
+| value | where | role | provenance |
+|---|---|---|---|
+| the D11 random streams, reused for the figure intervals | `W_rev`, `draws` | ladder intervals equal D11's | **Design choice**, so that one number never has two intervals |
+| stream `<grammar>/figure/arm_b` | Arm B intervals | a new stream | **Apparently arbitrary** name; any fixed key works |
+| rule effect averaged over lexicons, reversion pooled over sites | `lexicon_mean`, `ratio` | Figure 3, Tables C1 and C2 | **Chosen to match the results documents** (00 §4–5) and D11 |
+| the "holds" curve stops at rung 16 | Figure 5c | a switch first seen at 32 cannot be checked | **Design choice**, stated in the caption |
+| dodge: models within 0.08 dex share a cluster, 0.045 dex apart | `dodge` | Figure 4 | **Apparently arbitrary**, visual only |
+| reliability bins with fewer than 10 sites hidden | Figure A1 | calibration | **Judgment call**, apparently arbitrary |
+| 6.5 in wide, 7–8 pt type, Okabe–Ito colours | `rcParams` | every figure | **Conventional** for two-column papers |
+
+---
+
 ## After retyping
 
 Re-derive three numbers by hand from the CSVs and compare with [02](02_mathematics_and_statistics.md):
