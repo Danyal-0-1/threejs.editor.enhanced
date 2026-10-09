@@ -1,0 +1,55 @@
+[2026-10-06T17:09:33-07:00] p33-smoke job=64809175 task=none node=sg023 run=smoke-20261006a
+{
+ "packages": {
+  "python": "3.12.3",
+  "platform": "Linux-4.18.0-553.124.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "transformers": "4.57.1",
+  "huggingface_hub": "0.36.0",
+  "tokenizers": "0.22.1",
+  "lark": "1.3.1",
+  "numpy": "2.2.6",
+  "matplotlib": "3.10.7",
+  "safetensors": "0.6.2",
+  "accelerate": "1.11.0"
+ },
+ "gpu": {
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "cuda_available": true,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "device_mem_gb": 79.3,
+  "bf16_supported": true
+ },
+ "hf_env": {
+  "HF_HOME": "/scratch/dkhorami/hf",
+  "HF_HUB_CACHE": "/scratch/dkhorami/hf/hub",
+  "TRANSFORMERS_CACHE": "/scratch/dkhorami/hf/hub",
+  "TOKENIZERS_PARALLELISM": "false",
+  "HF_HUB_OFFLINE": "1",
+  "TRANSFORMERS_OFFLINE": "1"
+ },
+ "results_root": "/home/dkhorami/phase3-3_experiment_sol/results",
+ "missing_required": []
+}
+initialised /home/dkhorami/phase3-3_experiment_sol/results/smoke-20261006a (config 6fde06710358)
+  [PASS] slurm_partition        actual='public' configured='public'
+  [PASS] slurm_qos              actual='public' configured='public'
+  [PASS] slurm_account          actual='grp_tlingego' configured='grp_tlingego'
+  [PASS] nvidia_smi             NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB
+  [PASS] torch_cuda             torch 2.8.0+cu126, CUDA runtime 12.6
+  [PASS] a100                   NVIDIA A100-SXM4-80GB
+  [PASS] bf16                   bfloat16 support
+  [PASS] gpu_memory             free 78.8 GiB of 79.3 GiB
+  [PASS] results_space          47.1 GiB free at /home/dkhorami/phase3-3_experiment_sol/results/smoke-20261006a (need 2.0)
+  [PASS] hf_cache_space         487841.7 GiB free at /scratch/dkhorami/hf (need 5.0)
+  [PASS] output_writable        /home/dkhorami/phase3-3_experiment_sol/results/smoke-20261006a
+  [PASS] model:Qwen/Qwen2.5-Coder-0.5B local 8123ea2e9354 pinned 8123ea2e9354
+  [WARN] materials              first job in this run; hashes recorded now
+  [PASS] split_permission       1 cells allowed for stage smoke: ['DEVELOPMENT']
+smoke arm_a: COMPLETE
+smoke primary: COMPLETE
+merge arm_a    COMPLETE  rows=    36 done=9/9 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows=    48 done=8/8 missing=0 failed=0 corrupt=0 dup_dropped=0
+fertility: 2 rows across 1 tokenizer(s) -> /home/dkhorami/phase3-3_experiment_sol/results/smoke-20261006a/manifests/fertility.json
+export: 19 CSVs, 24 plot files, 10 reports -> /home/dkhorami/phase3-3_experiment_sol/results/smoke-20261006a

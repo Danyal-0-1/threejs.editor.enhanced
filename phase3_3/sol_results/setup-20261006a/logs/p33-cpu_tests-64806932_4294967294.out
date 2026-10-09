@@ -1,0 +1,45 @@
+[2026-10-06T16:34:17-07:00] p33-cpu_tests job=64806932 task=none node=sc067 run=setup-20261006a
+
+=== test_analysis.py ===
+
+=== test_e2e.py ===
+
+=== test_prereg_env.py ===
+  BLOCKED test_preflight_fails_on_non_a100_unless_waived: no CUDA device to test the A100 check against
+
+=== test_shards_resume.py ===
+initialised /home/dkhorami/phase3-3_experiment_sol/results/dev-status-readonly (config b3368f29acb0)
+arm_a: COMPLETE
+arm_a    expected=   18 {'done': 18}
+primary  not started
+armb     not started
+h5       not started
+merge arm_a    COMPLETE  rows=   144 done=18/18 missing=0 failed=0 corrupt=0 dup_dropped=0
+VALID: every expected cell is done and verified
+
+=== test_splits_freeze.py ===
+
+=== test_stop_ship.py ===
+
+----------------------------------------------------------
+111 passed, 0 failed, 1 blocked
+  BLOCKED test_prereg_env.py::test_preflight_fails_on_non_a100_unless_waived: no CUDA device to test the A100 check against
+  (1 blocked for want of a GPU: expected with --cpu-node)
+[2026-10-06T16:47:39-07:00] suite 'tests/run_tests.py --cpu-node' exit=0
+
+=== test_phase3_2.py ===
+
+----------------------------------------------------------
+36 passed, 0 failed
+[2026-10-06T16:48:23-07:00] suite '../tests/run_tests.py' exit=0
+
+=== test_pipeline.py ===
+
+=== test_scorer_repair.py ===
+
+=== test_sites.py ===
+
+----------------------------------------------------------
+54 passed, 0 failed
+[2026-10-06T16:48:54-07:00] suite '../../phase3/tests/run_tests.py' exit=0
+cpu_tests: overall exit=0 (0 = every suite passed; anything else = read the FAIL/BLOCKED lines above)

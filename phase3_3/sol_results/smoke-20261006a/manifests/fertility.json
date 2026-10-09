@@ -1,0 +1,28 @@
+[
+ {
+  "tokenizer_id": "cc349caf59f0697a",
+  "models": "Qwen/Qwen2.5-Coder-0.5B",
+  "family": "dom",
+  "lexicon": "identity",
+  "tokens": 2928,
+  "chars": 7980,
+  "tok_per_char": 0.3669172932330827,
+  "rel_fertility_vs_identity": 1.0,
+  "rel_token_count": 1.0,
+  "fragmentation": 1.3571428571428572,
+  "n_templates": 80
+ },
+ {
+  "tokenizer_id": "cc349caf59f0697a",
+  "models": "Qwen/Qwen2.5-Coder-0.5B",
+  "family": "dom",
+  "lexicon": "d50s1",
+  "tokens": 3158,
+  "chars": 7995,
+  "tok_per_char": 0.3949968730456535,
+  "rel_fertility_vs_identity": 1.0765283630137688,
+  "rel_token_count": 1.078551912568306,
+  "fragmentation": 1.3571428571428572,
+  "n_templates": 80
+ }
+]

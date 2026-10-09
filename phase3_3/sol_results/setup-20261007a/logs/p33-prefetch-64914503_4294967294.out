@@ -1,0 +1,186 @@
+[2026-10-07T16:54:52-07:00] p33-prefetch job=64914503 task=none node=sc007 run=setup-20261007a
+{
+ "mode": "dry-run",
+ "estimated_gb": 4.62,
+ "free_gb_at_hf_root": 478310.78564453125,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {},
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}
+{
+ "mode": "download",
+ "estimated_gb": 4.62,
+ "free_gb_at_hf_root": 478301.08642578125,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {
+  "meta-llama/Llama-3.2-1B": {
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "LICENSE.txt",
+     "size": 7712,
+     "sha256": null
+    },
+    {
+     "name": "config.json",
+     "size": 843,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 185,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 2471645608,
+     "sha256": "68a2e4be76fa709455a60272fba8e512c02d81c46e6c671cc9449e374fd6809a"
+    },
+    {
+     "name": "special_tokens_map.json",
+     "size": 301,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 9085657,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 50500,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--meta-llama--Llama-3.2-1B/snapshots/4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "tokenizer_id": "67fafbd7a0a1cb59",
+   "verified_checksums": true
+  },
+  "meta-llama/Llama-3.2-1B-Instruct": {
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ],
+   "files": [
+    {
+     "name": "LICENSE.txt",
+     "size": 7712,
+     "sha256": null
+    },
+    {
+     "name": "config.json",
+     "size": 877,
+     "sha256": null
+    },
+    {
+     "name": "generation_config.json",
+     "size": 189,
+     "sha256": null
+    },
+    {
+     "name": "model.safetensors",
+     "size": 2471645608,
+     "sha256": "1ff795ff6a07e6a68085d206fb84417da2f083f68391c2843cd2b8ac6df8538f"
+    },
+    {
+     "name": "special_tokens_map.json",
+     "size": 296,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer.json",
+     "size": 9085657,
+     "sha256": null
+    },
+    {
+     "name": "tokenizer_config.json",
+     "size": 54528,
+     "sha256": null
+    }
+   ],
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--meta-llama--Llama-3.2-1B-Instruct/snapshots/9213176726f574b556790deb65791e0c5aa438b6",
+   "tokenizer_id": "67fafbd7a0a1cb59",
+   "verified_checksums": true
+  }
+ },
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}

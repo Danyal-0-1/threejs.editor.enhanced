@@ -1,0 +1,84 @@
+[2026-10-07T16:48:12-07:00] p33-prefetch job=64914139 task=none node=sc007 run=setup-20261007a
+{
+ "mode": "dry-run",
+ "estimated_gb": 4.62,
+ "free_gb_at_hf_root": 478544.6318359375,
+ "space_ok": true,
+ "failed": {},
+ "pairing_problems": [],
+ "pins": {},
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}
+{
+ "mode": "download",
+ "estimated_gb": 4.62,
+ "free_gb_at_hf_root": 478544.6318359375,
+ "space_ok": true,
+ "failed": {
+  "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B: download failed after 3 tries: 403 Client Error. (Request ID: Root=1-6ac6da4e-01c4308d4448e5ae10d75452;a00378df-2d47-4c3b-80bc-98e9dbb779f9)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/4e20de362430cd3b72f300e6b0f18e50e7166e08/conf",
+  "meta-llama/Llama-3.2-1B-Instruct": "meta-llama/Llama-3.2-1B-Instruct: download failed after 3 tries: 403 Client Error. (Request ID: Root=1-6ac6da6d-2fda22146fcbf76a4aaf1c68;85b5cd9f-cc92-4b81-856b-ab00a0237e3b)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct/resolve/9213176726f574b556790deb657"
+ },
+ "pairing_problems": [],
+ "pins": {},
+ "kept_existing_pins": [],
+ "plans": [
+  {
+   "model": "meta-llama/Llama-3.2-1B",
+   "revision": "4e20de362430cd3b72f300e6b0f18e50e7166e08",
+   "bytes": 2480790806,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  },
+  {
+   "model": "meta-llama/Llama-3.2-1B-Instruct",
+   "revision": "9213176726f574b556790deb65791e0c5aa438b6",
+   "bytes": 2480794867,
+   "allow_patterns": [
+    "*.json",
+    "*.model",
+    "*.txt",
+    "tokenizer*",
+    "vocab.*",
+    "merges.txt",
+    "*.safetensors"
+   ]
+  }
+ ]
+}

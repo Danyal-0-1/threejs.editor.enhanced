@@ -1,0 +1,18 @@
+=====================================================================
+Loaded: mamba 2.6.2
+
+Usage example:
+$ mamba create -n myenv -c conda-forge python=3 <package_name>
+$ source activate myenv
+
+Only run "pip install" after activating an environment.
+Running pip without activating an environment is known to cause issues.
+
+To list available environments:
+$ mamba info --envs
+
+More info: docs.rc.asu.edu/python
+
+=====================================================================
+     
+/packages/envs/pytorch-gpu-2.3.1-cuda-12.1/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
