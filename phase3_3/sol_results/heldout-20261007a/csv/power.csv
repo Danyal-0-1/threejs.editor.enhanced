@@ -1,0 +1,2 @@
+status,reason
+NOT RUN,power uses development data only; run it in the dev stage

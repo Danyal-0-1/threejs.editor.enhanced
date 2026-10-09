@@ -1,0 +1,4 @@
+grammar,sites,any decrease (frozen flag),a decrease > 0.5 nats,a decrease > 1 nat,switched sites that fall back below 0,"how far they fall: median [IQR], nats",fall below −0.5 nats
+dom,4095,96.8%,81.0%,57.6%,552/1740 (31.7%),"-0.71 [-1.44, -0.34]",64.3%
+blk,4305,97.1%,82.2%,60.0%,537/1729 (31.1%),"-0.83 [-1.49, -0.38]",68.0%
+pooled,8400,96.9%,81.6%,58.8%,1089/3469 (31.4%),"-0.76 [-1.46, -0.36]",66.1%

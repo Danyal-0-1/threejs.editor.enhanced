@@ -1,0 +1,112 @@
+{
+ "utc": "2026-10-09T06:45:21+00:00",
+ "run_id": "heldout-20261007a",
+ "stage": "heldout",
+ "task_models": [
+  "Qwen/Qwen2.5-Coder-3B-Instruct"
+ ],
+ "checks": [
+  {
+   "check": "slurm_partition",
+   "result": "PASS",
+   "detail": "actual='public' configured='public'"
+  },
+  {
+   "check": "slurm_qos",
+   "result": "PASS",
+   "detail": "actual='public' configured='public'"
+  },
+  {
+   "check": "slurm_account",
+   "result": "PASS",
+   "detail": "actual='grp_tlingego' configured='grp_tlingego'"
+  },
+  {
+   "check": "nvidia_smi",
+   "result": "PASS",
+   "detail": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB"
+  },
+  {
+   "check": "torch_cuda",
+   "result": "PASS",
+   "detail": "torch 2.8.0+cu126, CUDA runtime 12.6"
+  },
+  {
+   "check": "a100",
+   "result": "PASS",
+   "detail": "NVIDIA A100-SXM4-80GB"
+  },
+  {
+   "check": "bf16",
+   "result": "PASS",
+   "detail": "bfloat16 support"
+  },
+  {
+   "check": "gpu_memory",
+   "result": "PASS",
+   "detail": "free 78.8 GiB of 79.3 GiB"
+  },
+  {
+   "check": "gpu_count",
+   "result": "PASS",
+   "detail": "1 visible, 1 needed by ['Qwen/Qwen2.5-Coder-3B-Instruct']"
+  },
+  {
+   "check": "gpu_memory:Qwen/Qwen2.5-Coder-3B-Instruct",
+   "result": "PASS",
+   "detail": "~10 GiB needed, 79 GiB free on 1 GPU(s)"
+  },
+  {
+   "check": "results_space",
+   "result": "PASS",
+   "detail": "46.3 GiB free at /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a (need 2.0)"
+  },
+  {
+   "check": "hf_cache_space",
+   "result": "PASS",
+   "detail": "480471.9 GiB free at /scratch/dkhorami/hf (need 5.0)"
+  },
+  {
+   "check": "output_writable",
+   "result": "PASS",
+   "detail": "/home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a"
+  },
+  {
+   "check": "model:Qwen/Qwen2.5-Coder-3B-Instruct",
+   "result": "PASS",
+   "detail": "local 488639f1ff80 pinned 488639f1ff80"
+  },
+  {
+   "check": "materials",
+   "result": "PASS",
+   "detail": "materials identical to the run's first job"
+  },
+  {
+   "check": "split_permission",
+   "result": "PASS",
+   "detail": "210 cells allowed for stage heldout: ['HELDOUT', 'HELDOUT-WEAK-FAMILY', 'HELDOUT-WEAKENED']"
+  }
+ ],
+ "versions": {
+  "python": "3.12.3",
+  "platform": "Linux-4.18.0-553.124.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "transformers": "4.57.1",
+  "huggingface_hub": "0.36.0",
+  "tokenizers": "0.22.1",
+  "lark": "1.3.1",
+  "numpy": "2.2.6",
+  "matplotlib": "3.10.7",
+  "safetensors": "0.6.2",
+  "accelerate": "1.11.0"
+ },
+ "gpu": {
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 80727 MiB",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "cuda_available": true,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "device_mem_gb": 79.3,
+  "bf16_supported": true
+ },
+ "ok": true
+}

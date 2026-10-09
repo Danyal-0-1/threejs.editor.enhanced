@@ -1,0 +1,26 @@
+# Table C3. Arm B: free generation by the instruct models
+
+Reach: the generated program equals the target up to the site (normalized whitespace). 95% template-cluster bootstrap. 63 of the 3006 parse failures keep a same-line 'Request:' continuation in the extracted program, so task accuracy is slightly understated (heldout_results_explained/08); reach and reversion given reach are prefix-based and unaffected.
+
+| model | grammar | reach [95% CI] | reached / sites | old spelling given reached [95% CI] | reverted / reached | correct programs | valid but wrong | parse failures |
+|---|---|---|---|---|---|---|---|---|
+| Qwen2.5-Coder-0.5B-Instruct | dom | 0.029 [0.016, 0.046] | 44/1515 | 0.227 [0.085, 0.429] | 10/44 | 7/390 | 175/390 | 208/390 |
+| Qwen2.5-Coder-0.5B-Instruct | blk | 0.030 [0.017, 0.048] | 46/1515 | 0.174 [0.056, 0.310] | 8/46 | 10/390 | 107/390 | 273/390 |
+| Qwen2.5-Coder-1.5B-Instruct | dom | 0.065 [0.045, 0.089] | 98/1515 | 0.265 [0.179, 0.353] | 26/98 | 14/390 | 163/390 | 213/390 |
+| Qwen2.5-Coder-1.5B-Instruct | blk | 0.074 [0.049, 0.103] | 112/1515 | 0.214 [0.112, 0.350] | 24/112 | 19/390 | 152/390 | 219/390 |
+| Qwen2.5-Coder-3B-Instruct | dom | 0.144 [0.110, 0.178] | 218/1515 | 0.211 [0.155, 0.280] | 46/218 | 36/390 | 219/390 | 135/390 |
+| Qwen2.5-Coder-3B-Instruct | blk | 0.125 [0.097, 0.156] | 190/1515 | 0.237 [0.169, 0.309] | 45/190 | 34/390 | 195/390 | 161/390 |
+| Qwen2.5-Coder-7B-Instruct | dom | 0.146 [0.110, 0.184] | 221/1515 | 0.190 [0.140, 0.250] | 42/221 | 37/390 | 251/390 | 102/390 |
+| Qwen2.5-Coder-7B-Instruct | blk | 0.121 [0.093, 0.153] | 184/1515 | 0.223 [0.159, 0.304] | 41/184 | 35/390 | 246/390 | 109/390 |
+| Qwen2.5-Coder-14B-Instruct | dom | 0.205 [0.169, 0.245] | 311/1515 | 0.212 [0.165, 0.270] | 66/311 | 57/390 | 285/390 | 48/390 |
+| Qwen2.5-Coder-14B-Instruct | blk | 0.194 [0.156, 0.235] | 294/1515 | 0.204 [0.154, 0.261] | 60/294 | 62/390 | 213/390 | 115/390 |
+| Qwen2.5-Coder-32B-Instruct | dom | 0.234 [0.192, 0.280] | 355/1515 | 0.194 [0.153, 0.238] | 69/355 | 60/390 | 244/390 | 86/390 |
+| Qwen2.5-Coder-32B-Instruct | blk | 0.174 [0.136, 0.212] | 263/1515 | 0.221 [0.183, 0.263] | 58/263 | 58/390 | 195/390 | 137/390 |
+| Qwen2.5-72B-Instruct | dom | 0.328 [0.274, 0.381] | 497/1515 | 0.149 [0.115, 0.187] | 74/497 | 107/390 | 232/390 | 51/390 |
+| Qwen2.5-72B-Instruct | blk | 0.277 [0.236, 0.324] | 420/1515 | 0.169 [0.130, 0.218] | 71/420 | 65/390 | 148/390 | 177/390 |
+| deepseek-coder-1.3b-instruct | dom | 0.073 [0.049, 0.100] | 111/1515 | 0.243 [0.162, 0.340] | 27/111 | 20/390 | 216/390 | 154/390 |
+| deepseek-coder-1.3b-instruct | blk | 0.055 [0.037, 0.079] | 84/1515 | 0.167 [0.079, 0.273] | 14/84 | 19/390 | 178/390 | 193/390 |
+| deepseek-coder-33b-instruct | dom | 0.177 [0.141, 0.216] | 268/1515 | 0.168 [0.119, 0.221] | 45/268 | 49/390 | 276/390 | 65/390 |
+| deepseek-coder-33b-instruct | blk | 0.165 [0.133, 0.200] | 250/1515 | 0.220 [0.156, 0.290] | 55/250 | 45/390 | 233/390 | 112/390 |
+| Llama-3.2-1B-Instruct | dom | 0.045 [0.028, 0.065] | 68/1515 | 0.235 [0.137, 0.354] | 16/68 | 8/390 | 211/390 | 171/390 |
+| Llama-3.2-1B-Instruct | blk | 0.046 [0.028, 0.067] | 70/1515 | 0.214 [0.118, 0.357] | 15/70 | 5/390 | 108/390 | 277/390 |

@@ -1,0 +1,12 @@
+[2026-10-09T10:23:59-07:00] p33-final_export job=64943136 task=none node=sc099 run=heldout-20261007a
+fertility: 48 rows across 4 tokenizer(s) -> /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a/manifests/fertility.json
+merge arm_a    COMPLETE  rows=190890 done=3402/3402 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows= 84000 done=840/840 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge armb     COMPLETE  rows=  7800 done=200/200 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge h5       COMPLETE  rows=212100 done=3780/3780 missing=0 failed=0 corrupt=0 dup_dropped=0
+export: 19 CSVs, 24 plot files, 10 reports -> /home/dkhorami/phase3-3_experiment_sol/results/heldout-20261007a
+merge arm_a    COMPLETE  rows=190890 done=3402/3402 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows= 84000 done=840/840 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge armb     COMPLETE  rows=  7800 done=200/200 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge h5       COMPLETE  rows=212100 done=3780/3780 missing=0 failed=0 corrupt=0 dup_dropped=0
+VALID: every expected cell is done and verified

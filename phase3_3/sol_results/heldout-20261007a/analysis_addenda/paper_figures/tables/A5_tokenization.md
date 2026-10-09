@@ -1,0 +1,14 @@
+# Table A5. Tokenization of the remapped programs relative to the standard spellings
+
+Range over the held-out lexicons. Values near 1 mean the remapping does not make programs longer or more fragmented for that tokenizer (frozen export, csv/fertility.csv).
+
+| tokenizer | families | grammar | lexicons | fertility vs identity | token count vs identity |
+|---|---|---|---|---|---|
+| 14807840df2f | DeepSeek-Coder | dom | 5 | 1.047–1.059 | 1.054–1.063 |
+| 14807840df2f | DeepSeek-Coder | blk | 5 | 0.987–0.999 | 0.994–1.003 |
+| 5845b9a154bd | StarCoder2 | dom | 5 | 1.064–1.071 | 1.071–1.071 |
+| 5845b9a154bd | StarCoder2 | blk | 5 | 0.996–1.002 | 1.003–1.003 |
+| 67fafbd7a0a1 | Llama-3.2 | dom | 5 | 1.073–1.080 | 1.080–1.080 |
+| 67fafbd7a0a1 | Llama-3.2 | blk | 5 | 1.002–1.009 | 1.010–1.010 |
+| cc349caf59f0 | Qwen2.5, Qwen2.5-Coder | dom | 5 | 1.072–1.078 | 1.079–1.079 |
+| cc349caf59f0 | Qwen2.5, Qwen2.5-Coder | blk | 5 | 1.002–1.009 | 1.010–1.010 |

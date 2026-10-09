@@ -1,0 +1,20 @@
+EXPLORATORY, not preregistered: adaptation (KM median examples to switch) by role, remap density and model kind.
+By grammar family x share of remapped symbols (lexicon d25/d50/d75):
+  blk / d25              n=  437  KM median 10.19  censored 27%
+  blk / d50              n=  434  KM median  5.80  censored 19%
+  blk / d75              n= 1307  KM median  6.19  censored 19%
+  dom / d25              n=  429  KM median  5.40  censored 18%
+  dom / d50              n=  402  KM median  1.57  censored 12%
+  dom / d75              n= 1244  KM median  2.15  censored 17%
+By grammar family x role (stratum):
+  blk / keyword          n=  709  KM median  9.02  censored 17%
+  blk / sigil            n=  736  KM median  3.21  censored 10%
+  blk / verb             n=  733  KM median 11.36  censored 35%
+  dom / keyword          n=  659  KM median  2.85  censored 13%
+  dom / sigil            n=  719  KM median  1.28  censored 2%
+  dom / verb             n=  697  KM median  6.57  censored 34%
+By grammar family x model kind:
+  blk / base             n= 1162  KM median  5.78  censored 20%
+  blk / instruct         n= 1016  KM median  7.23  censored 21%
+  dom / base             n= 1096  KM median  2.37  censored 16%
+  dom / instruct         n=  979  KM median  3.04  censored 16%

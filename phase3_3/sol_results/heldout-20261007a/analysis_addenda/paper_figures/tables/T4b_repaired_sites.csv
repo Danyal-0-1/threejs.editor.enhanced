@@ -1,0 +1,4 @@
+arm,repaired sites,reverting before,reverting after,silent after
+targeted,4088,2963 (72.5%),2804 (68.6%),2672 (65.4%)
+random,26400,13195 (50.0%),14649 (55.5%),13158 (49.8%)
+global,30300,14459 (47.7%),4696 (15.5%),0 (0.0%)
