@@ -228,3 +228,133 @@ recorded in every job manifest.
 §2 names "Qwen2.5-Coder 0.5B and 1.5B" as non-held-out. H4 needs both
 checkpoints of a pair, so the development set is read as base AND instruct for
 0.5B and 1.5B. No other model is development.
+
+### D9 — 2026-10-07 — tied scores in AP and precision@k; power and report corrections (before the freeze)
+
+**What happened.** The development run `dev-20261006a` (four Qwen2.5-Coder
+checkpoints on A100s; 10,224 Arm A and 16,000 primary rows) was analysed with
+metric code in which AP ordered tied scores by input row, precision@k broke a
+tie at the k boundary by input row, every smallest-detectable-AUROC power row
+used the pilot ICC whatever ICC scenario it belonged to (25 rows, 5 distinct),
+the power report showed only the ICC = 0 rule-effect rows, and the run summary
+counted its report files before writing them. On the development data the
+constant identity baseline's AP was 0.452 or 0.492 depending on row order (its
+correct value is the prevalence, 0.468) and its precision@10 was 0.4 or 0.6.
+
+**Change.** AP is step-wise average precision with every tied score admitted
+as ONE threshold, AP = sum_j (R_j − R_(j−1)) · P_j over the distinct scores.
+Precision@k is the expected precision when the k boundary falls inside a tie
+and the remaining places are filled uniformly from it:
+P@K = (positives above + (K − a) · p / g) / K, with K = min(k, n). Both are
+invariant to row order; a constant score yields the prevalence; distinct scores
+give the previous values bit for bit; with no positive class AP stays undefined.
+Every power scenario (template count × ICC) is computed once, with the ICC it
+reports, the pilot estimate flagged, and template counts above the 80-template
+corpus labelled hypothetical. The power report shows every ICC scenario and the
+design effect and effective sample size behind them.
+
+**Scientific consequence.** No registered criterion changes: C1 and C2 compare
+AUROCs, and the average-rank AUROC was already tie-correct. The risk score has
+852 distinct values per pair, so its AP and precision@k are unchanged; baseline
+AP and precision@k values change. The rule-effect power at the pilot ICC (0.252)
+is 0.251 at 80 templates, not the 0.994 that the report displayed (ICC = 0).
+The registered design is NOT changed in response here; that decision belongs
+to the investigator, before the freeze. All tables were re-derived from the
+saved GPU measurements without re-scoring (analysis revision
+`r1-2026-10-07-metric-corrections` in the run directory).
+
+### D10 — 2026-10-07 — models above 3B, replacing the 3B gate
+
+**What happened.** §6 registered "do not scale beyond 3B until the effect is
+present in `blk`"; D1 showed that `blk` can never supply that evidence, so the
+gate was implemented as "no model above 3B in any stage". The closest prior
+work evaluates 14B–70B open models, and the literature disagrees on the
+direction of scale effects (inverse scaling was reported for identifier swaps),
+so a study capped at 3B cannot say whether its effect survives scale.
+
+**Change.** Decided on 2026-10-07, after the development run `dev-20261006a`
+and before any freeze or held-out access, for external validity and not in
+response to development outcomes: the size ceiling becomes 72B. Ten held-out
+MODEL checkpoints are added, each a base/instruct pair: Qwen2.5-Coder 7B, 14B
+and 32B (with 0.5B, 1.5B and 3B, a six-size ladder at a fixed tokenizer and
+training recipe), DeepSeek-Coder-33B (a second code family) and Qwen2.5-72B
+(general model; two A100-80GB GPUs). All are scored in bf16 with the fp32
+output head and never quantized. The development set and the completed
+development run are unchanged; the new models are appended to the held-out
+configuration. The gated Llama-3.2-1B pair stays in the design; access to it
+was granted on 2026-10-07 and both checkpoints are downloaded and pinned.
+
+**Pre-specified analysis.** Two-sided, no predicted direction: the reversion
+rate and the H4 AUROC as functions of log(parameters) within the
+Qwen2.5-Coder ladder, on held-out mappings, per family and never pooled
+across families. Models of other families test generality, not scale.
+
+**Scientific consequence.** H4 is tested on held-out models up to 72B with a
+calibration frozen on 0.5B and 1.5B, a stronger transfer test: the criteria
+are rank-based, and calibration metrics are reported knowing they may degrade.
+Outside the Qwen2.5-Coder ladder, size remains confounded with everything else
+that differs between checkpoints.
+
+### D11 — 2026-10-08 — specification of the D10 scale analysis (after the freeze, before any held-out outcome was examined)
+
+**What happened.** D10 pre-specified a two-sided scale analysis, but the
+frozen pipeline (`DEV_FREEZE.json` of `dev-20261006a`, 2026-10-07) exports only
+its inputs: the per-model Arm A rows and the per-pair H4 predictions. The
+analysis itself was never implemented, and D10 did not state its statistic.
+This was found on 2026-10-08, while the held-out chain of `heldout-20261007a`
+was running and before any held-out outcome had been examined: only job
+states and cell counts had been read.
+
+**Change.** The analysis is computed by `phase3_2/sol/scripts/scale_analysis.py`
+from the frozen export's CSVs, after the export and outside the frozen code.
+It adds no file to the frozen source set; the analysis-source digest stays
+`3c3e772c66ecf51e`.
+
+- Ladder: Qwen2.5-Coder 0.5B, 1.5B, 3B, 7B, 14B and 32B (registry sizes); x = log10(parameters).
+- Reversion: per model, the share of Arm A rows with M < 0 in the rule condition
+  (status ok), base and instruct models separately.
+- H4: the AUROC of the risk score per base/instruct pair.
+- Data: every lexicon of the held-out run; each grammar family separately, never pooled.
+- Statistic: the OLS slope across the six sizes.
+- Uncertainty: 95% percentile template-cluster bootstrap within the family, with the same
+  template draw for every size; B = 2000, seed 20261002.
+- Tests: two-sided bootstrap p, and Holm over all six slopes.
+
+**Scientific consequence.** The analysis follows D10 wherever D10 is explicit.
+The statistic, interval and multiplicity rule are the project's registered
+defaults, applied to D10's question. It was written by the assistant and is
+pending the investigator's review. Any change made after held-out outcomes are
+seen would be post hoc and must be labelled so. Size is not randomized: within
+the ladder the tokenizer and training recipe are fixed, but other differences
+between sizes remain, so a trend is an association.
+
+**Review.** Approved by the investigator on 2026-10-08, unchanged, before any
+held-out outcome was examined.
+
+### D12 — 2026-10-09 — gaps in the frozen held-out analysis, found after the results
+
+**What happened.** After `heldout-20261007a` was exported, three gaps in the frozen analysis
+code were found.
+
+1. **H4 calibration.** The freeze holds Platt parameters and decision thresholds only for the
+   two development pairs (Qwen2.5-Coder 0.5B and 1.5B). For the eight other pairs, the export
+   wrote uncalibrated probabilities (σ(risk)) labelled `DEV_FREEZE`. It then computed ECE,
+   Brier and the calibration slope after refitting a calibration on the held-out rows
+   themselves: in-sample, with a slope of exactly 1.
+2. **H5.** The registered test (targeted − random reduction per changed symbol, with an
+   interval excluding 0) was not implemented. The export reports per-arm outcomes only. Its
+   per-symbol metric counts every site of a cell, repaired and control alike.
+3. **D10.** The scale analysis was not in the frozen code. It was handled by D11, specified and
+   approved before any held-out outcome was examined.
+
+**Change.** No computed number or verdict changes. The reporting rules are:
+
+- calibration is claimed only for the two frozen pairs, and the eight in-sample values are
+  labelled as such;
+- H5 is reported as not supported on the descriptive evidence (targeted exceeds the mean of the
+  random arms in 43 of 100 cells; mean difference −0.41 reversions per changed symbol), and no
+  post-hoc test is presented as confirmatory.
+
+**Scientific consequence.** Calibration transfer is claimed only for the development pairs
+(held-out ECE 0.036–0.052). H5 is not supported. Every H4 confirmatory conclusion stands,
+because the registered criteria are rank-based and never use calibration.

@@ -9,6 +9,7 @@ transformers>=4.46,<6        # scoring and generation
 huggingface_hub>=0.25        # download-only prefetch + offline snapshot resolution
 tokenizers>=0.19
 safetensors>=0.4
+accelerate>=0.26             # device_map="auto": the two-GPU 72B models (deviation D10)
 numpy>=1.26                  # power simulation
 matplotlib>=3.8              # plots (loaded lazily; scoring never needs it)
 

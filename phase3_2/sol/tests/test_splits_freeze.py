@@ -36,7 +36,7 @@ def test_registered_split_classification():
     assert c("dom", "d50s1", "Qwen/Qwen2.5-Coder-3B").kind == "heldout_model_weakened"
     assert c("blk", "d50s1", H.DEV_BASE).kind == "exploratory_contaminated"
     assert c("blk", "d75s1a", H.DEV_BASE).kind == "heldout_weak_family"
-    assert c("dom", "d50s1", "Qwen/Qwen2.5-Coder-7B").kind == "forbidden"
+    assert c("dom", "d50s1", "Qwen/Qwen2.5-Coder-7B").kind == "heldout_model"   # D10: was forbidden (3B gate)
     assert c("dom", "alpha", H.DEV_BASE).kind == "forbidden"
     assert c("newfam", "d50s1", H.DEV_BASE).kind == "forbidden"
 
@@ -47,10 +47,23 @@ def test_blk_is_never_labelled_a_heldout_grammar():
         assert cc.label != "HELDOUT", (lx, cc)
 
 
-def test_no_model_above_3b_in_any_stage():
-    for stage in ("smoke", "dev", "heldout"):
-        _raises(lambda: splits.check_access(stage, "dom", "d50s1", "Qwen/Qwen2.5-Coder-7B"),
-                splits.SplitViolation, "3B")
+def test_size_ceiling_and_large_models_are_heldout_only():
+    """D10: models up to 72B are held-out MODELS; above 72B is FORBIDDEN everywhere."""
+    from p33 import registry as R
+    for m in ("Qwen/Qwen2.5-Coder-7B", "Qwen/Qwen2.5-Coder-32B-Instruct",
+              "deepseek-ai/deepseek-coder-33b-base", "Qwen/Qwen2.5-72B-Instruct"):
+        assert splits.classify("dom", "d75s1a", m).kind == "heldout_model", m
+        for stage in ("smoke", "dev"):
+            _raises(lambda stage=stage, m=m: splits.check_access(stage, "dom", "d50s1", m),
+                    splits.SplitViolation, "development cells only")
+    big = R.ModelSpec("example/too-big-405B", "x", 405.0, "base", None, "xlarge", gpus=8)
+    R.REGISTRY[big.id] = big
+    try:
+        for stage in ("smoke", "dev", "heldout"):
+            _raises(lambda stage=stage: splits.check_access(stage, "dom", "d75s1a", big.id),
+                    splits.SplitViolation, "72")
+    finally:
+        del R.REGISTRY[big.id]
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,17 @@
+record_type,stage,split,family,model,model_revision,tokenizer_id,condition,n_rows,n_templates,n_mappings,ci_hi,ci_lo,ci_reps,ci_seed,ci_status,ci_unit,mean_m_seq,n_clusters,reversion_range,reversion_rate,variants
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B,8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301,cc349caf59f0697a,p0,400,67,4,0.502427,0.348148,2000,20261002,ok,template,0.00979555,67,,0.4225,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B,8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301,cc349caf59f0697a,p1,400,67,4,0.546729,0.395408,2000,20261002,ok,template,-0.017383,67,,0.47,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B,8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301,cc349caf59f0697a,p2,400,67,4,0.532468,0.379221,2000,20261002,ok,template,-0.00708855,67,,0.455,
+range,dev,,dom,Qwen/Qwen2.5-Coder-0.5B,,,,,,,,,,,,,,,0.0475,,p0|p1|p2
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B-Instruct,ea3f2471cf1b1f0db85067f1ef93848e38e88c25,cc349caf59f0697a,p0,400,67,4,0.497642,0.373596,2000,20261002,ok,template,0.153922,67,,0.4375,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B-Instruct,ea3f2471cf1b1f0db85067f1ef93848e38e88c25,cc349caf59f0697a,p1,400,67,4,0.530026,0.393401,2000,20261002,ok,template,0.0825883,67,,0.4625,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-0.5B-Instruct,ea3f2471cf1b1f0db85067f1ef93848e38e88c25,cc349caf59f0697a,p2,400,67,4,0.514925,0.385246,2000,20261002,ok,template,0.207631,67,,0.4525,
+range,dev,,dom,Qwen/Qwen2.5-Coder-0.5B-Instruct,,,,,,,,,,,,,,,0.025,,p0|p1|p2
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B,df3ce67c0e24480f20468b6ef2894622d69eb73b,cc349caf59f0697a,p0,400,67,4,0.596774,0.436145,2000,20261002,ok,template,0.145846,67,,0.5175,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B,df3ce67c0e24480f20468b6ef2894622d69eb73b,cc349caf59f0697a,p1,400,67,4,0.648294,0.480826,2000,20261002,ok,template,0.0866989,67,,0.5675,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B,df3ce67c0e24480f20468b6ef2894622d69eb73b,cc349caf59f0697a,p2,400,67,4,0.581818,0.418033,2000,20261002,ok,template,0.109884,67,,0.5025,
+range,dev,,dom,Qwen/Qwen2.5-Coder-1.5B,,,,,,,,,,,,,,,0.065,,p0|p1|p2
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B-Instruct,2e1fd397ee46e1388853d2af2c993145b0f1098a,cc349caf59f0697a,p0,400,67,4,0.526582,0.378022,2000,20261002,ok,template,0.31324,67,,0.4525,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B-Instruct,2e1fd397ee46e1388853d2af2c993145b0f1098a,cc349caf59f0697a,p1,400,67,4,0.525701,0.379747,2000,20261002,ok,template,0.288458,67,,0.455,
+variant,dev,DEVELOPMENT,dom,Qwen/Qwen2.5-Coder-1.5B-Instruct,2e1fd397ee46e1388853d2af2c993145b0f1098a,cc349caf59f0697a,p2,400,67,4,0.528061,0.388626,2000,20261002,ok,template,0.312705,67,,0.46,
+range,dev,,dom,Qwen/Qwen2.5-Coder-1.5B-Instruct,,,,,,,,,,,,,,,0.0075,,p0|p1|p2

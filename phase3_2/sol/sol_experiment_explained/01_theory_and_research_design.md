@@ -65,7 +65,9 @@ the old results could not support the claims made from them.
    - `blk × d50s1` is EXPLORATORY.
    - `blk × d75s1a` is HELDOUT-WEAK-FAMILY.
    - `Qwen 3B` is HELDOUT-WEAKENED.
-   - `Qwen 7B` is FORBIDDEN.
+   - `Qwen 7B` is a HELDOUT model since deviation D10 (2026-10-07). It was FORBIDDEN under
+     the old 3B gate.
+   - A model above 72B is FORBIDDEN in every stage.
 4. **Inputs → outputs.** (family, lexicon, model, stage) → a `CellClass`, or
    `SplitViolation`.
 5. **Assumptions.** The registry lists every model with its size and pairing.
@@ -589,6 +591,12 @@ the old results could not support the claims made from them.
    - At real development scale (80 templates × 10.65 sites) with the same effect
      size, the power is **0.97 / 0.78 / 0.61 for an ICC of 0 / 0.1 / 0.2**.
    - The clustering assumption alone moves the answer from "plenty" to "marginal".
+   - **The real development pilot (2026-10-07)** measured the clustering instead of
+     assuming it. The pooled ICC of the rule effect is **0.252**, so power at 80 templates is
+     **0.251**. At an ICC of 0 it would be 0.994, and that ICC = 0 row was the only one the
+     report printed before D9. 80% power is not reached even at a hypothetical 320 templates.
+   - H4 criterion 1 is different. At its pilot ICC of 0.073 it has 80% power for a true AUROC
+     of 0.62 or more ([`02 §8`](02_mathematics_and_statistics.md#8-power-under-clustering)).
 4. **Inputs → outputs.** Development rows → `power.csv` and `POWER_ANALYSIS.md`.
 5. **Assumptions.** The development effect sizes transfer roughly to the held-out
    cells. That is the usual pilot assumption, and it is weak.
@@ -628,7 +636,8 @@ the old results could not support the claims made from them.
 | Claim | Supported if (held-out, after freeze) | Refuted or weakened if |
 |---|---|---|
 | H4 on new **mappings** | C1 and C2 pass after Holm on HELDOUT mapping cells | AUROC CI includes 0.60, or the gain over length is under 0.05 |
-| H4 on new **models** | the same on HELDOUT model cells (not resting on 3B alone) | it passes only on HELDOUT-WEAKENED (3B) cells |
+| H4 on new **models** | the same on HELDOUT model cells (not resting on 3B alone; since D10 these include 7B–72B) | it passes only on HELDOUT-WEAKENED (3B) cells |
+| scale (D10) | no direction is registered: the reversion rate and the H4 AUROC are reported against log(parameters) within the Qwen2.5-Coder ladder (0.5B–32B), per family, with intervals | — (two-sided by design; a flat trend with a wide interval says nothing) |
 | H4 on a new **grammar** | — | **NOT TESTABLE** (no valid family) |
 | extinction | an INITIALLY_WRONG KM median with an interval and a censoring rate, stable across paraphrases | median unreached (> 32), or high censoring |
 | rule-following | rule effect > 0 against **both** controls | effect vanishes against `norule_lenmatched` |
@@ -639,14 +648,22 @@ the old results could not support the claims made from them.
 
 ## 19. Claims to avoid
 
-- **"The model needs ~6 examples."** Withdrawn. No valid `k*` exists yet.
-- **"The rule table helps."** Every interval includes zero. At most: "a small
+- **"The model needs ~6 examples."** Withdrawn. The development run now gives KM medians
+  of 3.6–6.2 shots for initially-wrong sites, with 13–22% censored. That is a development
+  estimate (exploratory); only the held-out run can confirm one.
+- **"The rule table helps."** In development, 31 of 32 intervals include zero. The one that
+  does not is one of 32 comparisons, with no multiplicity correction. At most: "a small
   positive point estimate, not distinguishable from zero".
+- **"The design is well powered."** For H4 criterion 1, yes. For the pooled rule effect,
+  no: power is 0.25 at the pilot ICC, so a held-out null would say little.
+- **"Bigger models revert more."** Development has two sizes. The D10 scale analysis is
+  held-out and two-sided.
 - **"H4 generalises across grammars."** Not testable.
 - **"`blk` confirms …"** `blk` is exploratory or weak-family only.
 - **Any development number described as confirmatory.** The reports refuse this
   by banner.
-- **"Results from Sol show …"** Nothing has run on Sol.
+- **"Results from Sol show …"** Only the development run has run on Sol, and its results are
+  exploratory. Nothing held-out has run.
 
 ---
 

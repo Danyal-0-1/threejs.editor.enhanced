@@ -1,0 +1,20 @@
+[2026-10-06T17:48:12-07:00] p33-dev_primary job=64811906 task=3 node=sg038 run=dev-20261006a
+  [PASS] slurm_partition        actual='public' configured='public'
+  [PASS] slurm_qos              actual='public' configured='public'
+  [PASS] slurm_account          actual='grp_tlingego' configured='grp_tlingego'
+  [PASS] nvidia_smi             NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB
+  [PASS] torch_cuda             torch 2.8.0+cu126, CUDA runtime 12.6
+  [PASS] a100                   NVIDIA A100-SXM4-80GB
+  [PASS] bf16                   bfloat16 support
+  [PASS] gpu_memory             free 78.8 GiB of 79.3 GiB
+  [PASS] results_space          47.1 GiB free at /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a (need 2.0)
+  [PASS] hf_cache_space         487342.1 GiB free at /scratch/dkhorami/hf (need 5.0)
+  [PASS] output_writable        /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a
+  [PASS] model:Qwen/Qwen2.5-Coder-0.5B local 8123ea2e9354 pinned 8123ea2e9354
+  [PASS] model:Qwen/Qwen2.5-Coder-0.5B-Instruct local ea3f2471cf1b pinned ea3f2471cf1b
+  [PASS] model:Qwen/Qwen2.5-Coder-1.5B local df3ce67c0e24 pinned df3ce67c0e24
+  [PASS] model:Qwen/Qwen2.5-Coder-1.5B-Instruct local 2e1fd397ee46 pinned 2e1fd397ee46
+  [PASS] materials              materials identical to the run's first job
+  [PASS] split_permission       16 cells allowed for stage dev: ['DEVELOPMENT']
+preflight OK -> /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a/manifests/preflight_2026-10-07T004816+0000.json
+primary: COMPLETE

@@ -195,16 +195,31 @@ stays crossed.
 
 ---
 
-## 5. Where things stand
+## 5. Where things stand (2026-10-07)
 
 | | |
 |---|---|
-| the machine | built, tested and rehearsed end to end on the fake scorer |
-| the one real-model run | 12 intersections, one small model, one lexicon. It **works**; its numbers mean nothing yet |
+| the machine | built and tested: all 139 Sol-pipeline tests pass **locally** (not yet re-run on Sol since the 2026-10-07 changes). Rehearsed end to end on the fake scorer |
+| the practice season on Sol (`dev-20261006a`) | **done**. Four drivers (Qwen2.5-Coder 0.5B and 1.5B, base and instruct) ran on A100s: 10,224 + 16,000 readings in about 17 GPU-minutes. Practice roads only, so everything below is *exploratory* |
+| the old habit | even with the rulebook on the dashboard, the drivers take the old turn at **39–58%** of intersections |
+| the rulebook | helps a little on average (+0.08 to +0.36 nats), but only **1 of 32** error bars clears zero |
+| breaking the habit | for intersections first taken wrongly, the median is **3.6–6.2** practice trips. 13–22% never turned within 32, and about 98% of needles wobble |
+| spotting the risky intersections (H4) | AUROC **0.87 / 0.94**. It beats both simple guesses (criteria C1 and C2), on practice roads only |
+| the scorekeeping | corrected on 2026-10-07: tied scores no longer depend on the order of the file (D9). Only the simple guesses' AP and precision@k moved; every headline number stayed |
+| is the exam big enough? | for the rulebook question, **no**. Siblings agree (ICC 0.252), so 80 families give about **25%** power, not the 99% the old report printed. For H4, yes: an AUROC of 0.62 or more is detected 80% of the time |
+| bigger drivers | 10 drivers from 7B to 72B were added, for the exam only (D10). All are downloaded and pinned; the 72B pair drives with two GPUs |
+| model access | all 11 original checkpoints are downloaded and pinned; the Llama-3.2-1B pair was approved on 2026-10-07 |
 | old "~6 examples" headline | **withdrawn** (leakage plus two definition errors) |
-| "the rulebook barely helps" | still the best guess, but **every interval includes zero** |
 | "works on a new grammar" | **not testable** with these materials |
-| Sol | **nothing has run there**; the exam envelope is still sealed |
+| the grading rules | **in ink** since 2026-10-07: `DEV_FREEZE.json`, written by job 64942745 |
+| the exam envelope | **opened** on 2026-10-07 at the investigator's direction. The exam (`heldout-20261007a`) runs one driver at a time: about 2–4 days |
+
+Still to come, in order:
+
+1. the exam for all 21 drivers;
+2. Arm B and H5;
+3. the final export;
+4. the interpretation.
 
 ---
 

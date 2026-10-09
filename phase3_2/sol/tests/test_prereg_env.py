@@ -27,6 +27,9 @@ def test_deviations_are_appended_and_dated():
     dev = t[t.index("## Deviations"):]
     for d in ("D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"):
         assert f"### {d} — 2026-10-05" in dev, d
+    for d in ("D9", "D10"):
+        assert f"### {d} — 2026-10-07" in dev, d
+    assert dev.index("### D8") < dev.index("### D9") < dev.index("### D10")   # appended in order
     assert "- none yet" in dev            # the original line was not edited away
 
 
@@ -219,3 +222,12 @@ def test_test_mode_cannot_leak_into_a_real_job():
             assert body.index("export P33_FAKE=1") > body.index("sol.env")
         else:
             assert "P33_FAKE" not in body, f
+
+
+def test_tests_never_use_the_real_results_root():
+    """sol.env exports the real P33_RESULTS_ROOT for jobs; the runner must override it."""
+    import tempfile
+    root = CFG.results_root()
+    assert os.path.basename(root).startswith("p33_test_results_"), root
+    assert os.path.commonpath([os.path.realpath(root), os.path.realpath(tempfile.gettempdir())]) \
+        == os.path.realpath(tempfile.gettempdir())

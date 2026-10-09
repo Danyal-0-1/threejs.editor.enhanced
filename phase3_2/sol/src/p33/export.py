@@ -25,12 +25,7 @@ from phase3_2 import analysis as AN
 from p33 import config as CFG, h2, h4, kstar, power, splits
 from p33.armb import hurdle
 
-CSV_NAMES = (
-    "site_inventory", "split_exclusion_audit", "run_completeness", "failed_cells",
-    "job_provenance", "fertility", "arm_a_long", "rule_effect", "paraphrase",
-    "extinction_rung_long", "kstar_survival", "h4_predictions",
-    "h4_metrics_baselines_calibration", "arm_b_generations", "arm_b_hurdle",
-    "h5_budget_outcomes", "h5_ir_proof", "h2_did", "power")
+from p33.artifacts import CSV_NAMES  # noqa: E402  (the one registry of outputs)
 
 PREFERRED = ["record_type", "status", "stage", "split", "family", "lexicon", "model",
              "model_revision", "tokenizer_id", "stratum", "condition", "n_rows",
@@ -406,7 +401,9 @@ def export_all(run_dir: str, cfg) -> dict[str, str]:
     if cfg.stage == "heldout":
         W("power", [{"status": "NOT RUN", "reason": "power uses development data only; run it in the dev stage"}])
     else:
-        W("power", power.analyse(dev_table, dev_a, dev_curves, dev_h))
+        from phase3_2 import templates as TM
+        W("power", power.analyse(dev_table, dev_a, dev_curves, dev_h,
+                                 corpus_templates=len(TM.build_templates())))
 
     missing = [n for n in CSV_NAMES if n not in paths]
     if missing:

@@ -31,9 +31,10 @@ Qwen2.5-Coder-3B (base and instruct) was observed under a superseded protocol
 before the freeze (dom only, no rule table). It remains a held-out model but is
 labelled HELDOUT_MODEL_WEAKENED (deviation D2).
 
-Models above 3B are refused in every stage: the preregistered gate is "do not
-scale beyond 3B until the required grammar evidence exists", and with no valid
-held-out grammar that evidence cannot currently exist.
+Model size (deviation D10, 2026-10-07): the registered "do not scale beyond
+3B until the grammar evidence exists" gate could never be met (D1), so it is
+replaced by a 72B ceiling. Every model above the development sizes is a
+held-out MODEL; nothing above 72B may be scored in any stage.
 """
 
 from __future__ import annotations
@@ -63,7 +64,11 @@ PREVIOUSLY_OBSERVED_MODELS = {
     "Qwen/Qwen2.5-Coder-3B-Instruct": "as above"}
 APPROVED_NEW_FAMILIES: frozenset[str] = frozenset()   # none approved; none invented
 KNOWN_FAMILIES = frozenset({"dom", "blk"})
-MAX_SIZE_B = 3.0
+# Deviation D10 (2026-10-07): the registered "no model above 3B" gate could
+# never be met (it waited on blk evidence, which D1 made impossible) and kept
+# the study at a scale reviewers would dismiss. Replaced, before any freeze or
+# held-out access, by a 72B ceiling: every model above 3B is a HELD-OUT model.
+MAX_SIZE_B = 72.0
 
 
 class SplitViolation(PermissionError):
@@ -94,9 +99,8 @@ def classify(family: str, lexicon: str, model: str) -> CellClass:
         return CellClass("forbidden", "FORBIDDEN", str(exc))
     if ms.size_b > MAX_SIZE_B:
         return CellClass("forbidden", "FORBIDDEN",
-                         f"{model} is {ms.size_b}B > {MAX_SIZE_B}B: the "
-                         f"preregistered gate forbids scaling past 3B until valid "
-                         f"held-out grammar evidence exists, and none can exist yet")
+                         f"{model} is {ms.size_b}B > {MAX_SIZE_B}B, the size ceiling "
+                         f"registered by deviation D10")
 
     if family in CONTAMINATED_FAMILIES:
         if lexicon in HELDOUT_LEXICONS:

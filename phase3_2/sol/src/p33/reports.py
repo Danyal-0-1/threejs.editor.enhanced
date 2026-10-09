@@ -19,9 +19,9 @@ import os
 
 from p33 import config as CFG
 
-REPORTS = ("RUN_SUMMARY", "METHODS_AND_PROVENANCE", "QUALITY_CONTROL",
-           "DEVELOPMENT_RESULTS", "HELDOUT_RESULTS", "HYPOTHESIS_RESULTS",
-           "PLAIN_LANGUAGE_RESULTS", "POWER_ANALYSIS", "DEVIATIONS", "REPRODUCTION")
+from p33 import artifacts  # noqa: E402
+
+REPORTS = artifacts.REPORT_NAMES
 
 
 def _read(d, n):
@@ -112,9 +112,14 @@ def run_summary(r: R) -> str:
     s += _table(r.comp, ["experiment", "status", "n_expected_cells", "done", "missing", "failed", "corrupt", "duplicates_dropped"])
     s += "\n" + _headline(r)
     s += "\n## Artifacts\n\n"
-    for sub in ("csv", "plots", "reports"):
-        files = sorted(glob.glob(os.path.join(r.run_dir, sub, "*")))
-        s += f"- **{sub}/** — {len(files)} files\n"
+    what = {"csv": "tables", "plots": f"{len(artifacts.PLOT_NAMES)} figures x "
+                                      f"{'/'.join(artifacts.PLOT_FORMATS).upper()}",
+            "reports": "Markdown reports"}
+    for sub, (present, registered) in artifacts.counts(r.run_dir).items():
+        flag = "" if present == registered else " — **INCOMPLETE**"
+        s += f"- **{sub}/** — {present} of {registered} registered files present ({what[sub]}){flag}\n"
+    s += ("\nCounted against the pipeline's registry (`p33/artifacts.py`) after every other "
+          "artifact of this export was written; unregistered files are not counted.\n")
     return s
 
 
@@ -189,8 +194,15 @@ def dev_results(r: R) -> str:
     s += _headline(r)
     h4 = [x for x in _read(r.csv, "h4_metrics_baselines_calibration") if x.get("record_type") == "metric" and x.get("role") in ("score", "baseline", "exploratory_baseline")]
     s += "\n## H4 on development data (calibration fitted here — becomes the frozen calibration)\n\n"
-    s += _table([{**x, "auroc": _fmt(x.get("auroc")), "auprc": _fmt(x.get("auprc")), "prev": _fmt(x.get("prevalence"))} for x in h4],
-                ["pair", "family", "predictor", "role", "auroc", "auprc", "prev", "n_rows"]) if h4 else "_NOT RUN_\n"
+    s += _table([{**x, "auroc": _fmt(x.get("auroc")), "auprc": _fmt(x.get("auprc")), "prev": _fmt(x.get("prevalence")),
+                  "p@10": _fmt(x.get("p_at_10")), "p@50": _fmt(x.get("p_at_50"))} for x in h4],
+                ["pair", "family", "predictor", "role", "auroc", "auprc", "prev", "p@10", "p@50", "n_rows"]) if h4 else "_NOT RUN_\n"
+    if h4:
+        s += ("\n*Tied scores.* AP (`auprc`) is step-wise average precision with every tied score "
+              "admitted as ONE threshold; precision@k is the expected precision when the top-k boundary "
+              "falls inside a tie and places are filled uniformly from that tie. Both are therefore "
+              "independent of row order, and a constant score (the identity baseline) scores exactly "
+              "the prevalence. Corrected 2026-10-07 (deviation D9).\n")
     return s
 
 
@@ -256,31 +268,138 @@ def plain(r: R) -> str:
     return s
 
 
+def _pivot(rows: list[dict], value: str, *, fmt=None, mark_pilot=True) -> str:
+    """Rows = ICC scenarios, columns = template counts; hypothetical counts marked *."""
+    fmt = fmt or (lambda x: _fmt(x.get(value)))
+    Ts = sorted({int(_f(x["n_templates"])) for x in rows})
+    iccs = sorted({_f(x["icc"]) for x in rows})
+    hyp = {int(_f(x["n_templates"])) for x in rows if str(x.get("t_status", "")).startswith("HYPOTHETICAL")}
+    head = ["ICC", "ICC source"] + [f"T={T}{'*' if T in hyp else ''}" for T in Ts]
+    out = "| " + " | ".join(head) + " |\n|" + "---|" * len(head) + "\n"
+    for ic in iccs:
+        g = {int(_f(x["n_templates"])): x for x in rows if _f(x["icc"]) == ic}
+        any_row = next(iter(g.values()))
+        src = any_row.get("icc_source") or ""
+        label = f"**{src}**" if mark_pilot and src and src != "sensitivity" else src
+        out += f"| {_fmt(ic, 3)} | {label} | " + " | ".join(fmt(g[T]) if T in g else "—" for T in Ts) + " |\n"
+    if hyp:
+        out += (f"\n\\* hypothetical: more templates than the {next(iter(rows)).get('corpus_templates')}-template "
+                f"corpus, i.e. new materials would have to be written; not an observed sample.\n")
+    return out
+
+
+def _first_reaching(rows: list[dict], target: float = 0.8):
+    for x in sorted(rows, key=lambda x: _f(x["n_templates"])):
+        if (_f(x.get("power")) or 0.0) >= target:
+            return x
+    return None
+
+
 def power_report(r: R) -> str:
+    """The FULL ICC sensitivity, the pilot scenario flagged, scope stated.
+
+    Before 2026-10-07 this showed only the rule-effect rows of the FIRST ICC
+    (zero, the most optimistic) and repeated one smallest-detectable row five
+    times per template count. Zero-power rows are kept: no truthiness filters.
+    """
     p = _read(r.csv, "power")
     s = f"# Power analysis — `{r.cfg.run_id}`\n\n" + r.banner()
     if _not_run(p):
         return s + f"**NOT RUN** — {p[0].get('reason') if p else 'no data'}\n"
-    s += ("Development pilot estimates only (`power.pilot_from_rows` refuses any non-DEVELOPMENT row). "
-          "Clustering by template is modelled through the design effect 1 + (m − 1)·ICC, with the ICC "
-          "estimated from the pilot AND swept for sensitivity.\n\n")
+    h4 = [x for x in p if x.get("analysis") == "h4_criterion1" and _f(x.get("power")) is not None]
     sde = [x for x in p if x.get("analysis") == "h4_smallest_detectable_auroc"]
-    s += "## H4 criterion 1 — smallest AUROC detectable with 80% power\n\n" + _table(sde, ["n_templates", "icc", "value"])
+    rule = [x for x in p if x.get("analysis") == "rule_effect" and _f(x.get("power")) is not None]
+
+    s += ("## What this is — and what it is not\n\n"
+          "- **Planning estimates from the development pilot only.** `power.pilot_from_rows` refuses any "
+          "non-DEVELOPMENT row; no held-out result was used, and nothing here changed the registered design "
+          "or sample size.\n"
+          "- **H4:** the power of **criterion 1 only** (AUROC ≥ 0.60 with its lower bound above 0.5). "
+          "It says nothing about criterion 2, about criterion 3 (NOT TESTABLE, deviation D1), or about any "
+          "other hypothesis.\n"
+          "- **Rule effect:** a one-sample, template-clustered test of the POOLED mean rule effect "
+          "M(rule) − M(norule) > 0. The registered `rule_effect.csv` tests are per (model, lexicon), with "
+          "far fewer rows per template than this pooled pilot, so each of those has less power than shown here.\n"
+          "- **Approximate.** Normal approximations; a binormal score model for H4; one ICC standing in for a "
+          "nested design (sites within templates, models and lexicons within sites).\n"
+          "- **Templates are the independent unit.** Scoring the same templates under more models or lexicons, "
+          "or repeating sites, adds rows *within* templates; it does not add templates. Template counts above "
+          "the corpus (marked *) are hypothetical projections, not data already collected.\n\n")
+
+    s += "## Clustering, in plain language\n\n"
+    s += ("Rows from one template are siblings: they share a program, so they tend to agree. The **ICC** "
+          "(intra-class correlation) is the share of all variation that lies *between* templates; 0 means "
+          "sibling rows are as different as strangers, 1 means they are copies. With m rows per template:\n\n"
+          "    design effect          DE    = 1 + (m − 1) · ICC\n"
+          "    effective sample size  n_eff = T · m / DE\n\n")
+    for name, rows in (("rule effect", rule), ("H4 criterion 1", h4)):
+        piv = [x for x in rows if str(x.get("is_pilot_icc")) in ("True", "true")
+               and int(_f(x["n_templates"])) == 80]
+        if piv:
+            x = piv[0]
+            T, m = int(_f(x["n_templates"])), _f(x.get("rows_per_template"))
+            s += (f"- **{name}** — m = {_fmt(m, 2)} rows per template ({x.get('pooling')}); pilot ICC = "
+                  f"{_fmt(x.get('pilot_icc'))}, so DE = {_fmt(x.get('design_effect'), 2)} and at T = {T} the "
+                  f"{_fmt(T * m, 0)} rows are worth about **{_fmt(x.get('effective_n'), 0)}** independent "
+                  f"observations.\n")
+    s += "\n"
+
+    if rule:
+        s += ("## Rule effect — power for a positive pooled mean\n\n"
+              f"Pilot mean {_fmt(rule[0].get('pilot_mean'))} nats, SD {_fmt(rule[0].get('pilot_sd'))}. "
+              "Every ICC scenario is shown; the pilot estimate is in bold.\n\n" + _pivot(rule, "power"))
+        pil = [x for x in rule if str(x.get("is_pilot_icc")) in ("True", "true")]
+        if pil:
+            hit = _first_reaching(pil)
+            at80 = [x for x in pil if int(_f(x["n_templates"])) == 80]
+            best = max(pil, key=lambda x: _f(x["power"]))
+            s += ("\n**Reading it.** At the pilot ICC the power at 80 templates is "
+                  f"**{_fmt(at80[0]['power']) if at80 else '—'}**; ")
+            s += (f"80% power is first reached at {hit['n_templates']} templates ({hit.get('t_status')}).\n"
+                  if hit else
+                  f"80% power is **not reached** anywhere on this grid (best: {_fmt(best['power'])} at "
+                  f"{best['n_templates']} templates, {best.get('t_status')}).\n")
+            zero = [x for x in rule if str(x.get("icc_source")) == "sensitivity" and _f(x["icc"]) == 0.0
+                    and int(_f(x["n_templates"])) == 80]
+            if zero:
+                s += (f"The ICC = 0 column ({_fmt(zero[0]['power'])} at 80 templates) assumes rows within a "
+                      "template are independent; the pilot says they are not, so ICC = 0 is the most "
+                      "optimistic row, not the expected one.\n")
+    if sde:
+        def _sde_cell(x):
+            return _fmt(x.get("value"), 2) if _f(x.get("value")) is not None else "not reached"
+        s += ("\n## H4 criterion 1 — smallest true AUROC detected with 80% power\n\n"
+              "One row per (ICC scenario, template count); each computed with the ICC in its own row. "
+              "'not reached' = no AUROC on the 0.51–0.99 grid reaches 80% power.\n\n"
+              + _pivot(sde, "value", fmt=_sde_cell))
+        pil = [x for x in sde if str(x.get("is_pilot_icc")) in ("True", "true") and int(_f(x["n_templates"])) == 80]
+        if pil and _f(pil[0].get("pilot_auroc")) is not None:
+            s += (f"\n**Reading it.** At the pilot ICC and 80 templates, criterion 1 has 80% power for a true "
+                  f"AUROC of {_sde_cell(pil[0])} or more; the pooled development AUROC was "
+                  f"{_fmt(pil[0]['pilot_auroc'])}. That is planning information about criterion 1 only — "
+                  "it is not evidence that the held-out AUROC will be similar.\n")
+    if h4:
+        pil = [x for x in h4 if str(x.get("is_pilot_icc")) in ("True", "true")]
+        if pil:
+            Ts = sorted({int(_f(x["n_templates"])) for x in pil})
+            hyp = {int(_f(x["n_templates"])) for x in pil if str(x.get("t_status", "")).startswith("HYPOTHETICAL")}
+            s += ("\n### H4 power at the pilot ICC, by true AUROC\n\n| true AUROC | "
+                  + " | ".join(f"T={T}{'*' if T in hyp else ''}" for T in Ts) + " |\n|---|" + "---|" * len(Ts) + "\n")
+            for A in sorted({_f(x["true_auroc"]) for x in pil}):
+                g = {int(_f(x["n_templates"])): x for x in pil if _f(x["true_auroc"]) == A}
+                s += f"| {_fmt(A, 2)} | " + " | ".join(_fmt(g[T]["power"]) if T in g else "—" for T in Ts) + " |\n"
     chk = [x for x in p if x.get("analysis") == "h4_simulation_check"]
     if chk:
         s += "\n## Simulation check of the analytic curve\n\n" + _table(chk, ["n_templates", "true_auroc", "icc", "power_analytic", "power_simulated", "source"])
-    rule = [x for x in p if x.get("analysis") == "rule_effect" and x.get("power")]
-    if rule:
-        s += "\n## Rule effect\n\n" + _table([{**x, "power": _fmt(x["power"])} for x in rule if x["icc"] in (rule[0]["icc"],)], ["n_templates", "icc", "pilot_mean", "pilot_sd", "power"])
-    other = [x for x in p if x.get("status") == "NOT RUN"]
-    if other:
-        s += "\n## Not computed\n\n" + _table(other, ["analysis", "status", "reason"])
     ks = [x for x in p if x.get("analysis") == "kstar_km_median_precision"]
     if ks and ks[0].get("status") == "OK":
         s += "\n## KM median precision by template count (pilot resampling)\n\n" + _table(ks, ["n_templates", "median_of_medians", "lo", "hi", "share_median_unreached"])
-    s += ("\n**Assumptions.** Binormal score model; template random intercept; two-sided 95%; "
-          "the identity baseline is constant on the eligible set (D6), so criterion 1 is AUROC ≥ 0.60 with an interval above 0.5. "
-          "Held-out results were never used to tune any sample size.\n")
+    other = [x for x in p if x.get("status") == "NOT RUN"]
+    if other:
+        s += "\n## Not computed\n\n" + _table(other, ["analysis", "status", "reason"])
+    s += ("\n**Assumptions.** Binormal score model (H4); template random intercept; two-sided 95%; the "
+          "identity baseline is constant on the eligible set (D6), so criterion 1 is AUROC ≥ 0.60 with an "
+          "interval above 0.5. Held-out results were never used to tune any sample size.\n")
     return s
 
 
@@ -305,9 +424,12 @@ def deviations(r: R) -> str:
 def reproduction(r: R) -> str:
     s = f"# Reproduction — `{r.cfg.run_id}`\n\n" + r.banner()
     s += f"Config hash `{r.cfg.config_hash()}` — a resume under any other config is refused.\n\n"
-    s += "```bash\n# from $P33_CODE_ROOT/phase3_2/sol\n"
-    s += f"python scripts/p33.py {r.cfg.stage if r.cfg.stage != 'smoke' else 'dev'} arm-a   --run {r.cfg.run_id}\n"
-    s += f"python scripts/p33.py {r.cfg.stage if r.cfg.stage != 'smoke' else 'dev'} primary --run {r.cfg.run_id}\n"
+    grp = r.cfg.stage if r.cfg.stage != "smoke" else "dev"
+    s += "```bash\n# from $P33_CODE_ROOT/phase3_2/sol, after `source sol.env && source env/activate.sh`\n"
+    s += "# scoring (GPU; on Sol through submit.sh, one array task per model)\n"
+    s += f"python scripts/p33.py {grp} run --run {r.cfg.run_id} --experiment arm_a\n"
+    s += f"python scripts/p33.py {grp} run --run {r.cfg.run_id} --experiment primary\n"
+    s += "# analysis (CPU; re-derives every table, plot and report from the saved measurements)\n"
     s += f"python scripts/p33.py merge    --run {r.cfg.run_id}\n"
     s += f"python scripts/p33.py validate --run {r.cfg.run_id}\n"
     s += f"python scripts/p33.py export   --run {r.cfg.run_id}   # CSVs -> plots -> reports\n```\n\n"
@@ -325,5 +447,14 @@ BUILDERS = {"RUN_SUMMARY": run_summary, "METHODS_AND_PROVENANCE": methods,
 
 
 def make_all(run_dir: str, cfg) -> dict[str, str]:
+    """Every report; RUN_SUMMARY last, because it counts the other artifacts.
+
+    On a fresh directory RUN_SUMMARY cannot count itself before it exists, so
+    it is written once more at the end: the final file always describes the
+    completed export (first export and repeated export alike).
+    """
     r = R(run_dir, cfg)
-    return {name: r.write(name, BUILDERS[name](r)) for name in REPORTS}
+    out = {name: r.write(name, BUILDERS[name](r)) for name in REPORTS if name != "RUN_SUMMARY"}
+    r.write("RUN_SUMMARY", BUILDERS["RUN_SUMMARY"](r))
+    out["RUN_SUMMARY"] = r.write("RUN_SUMMARY", BUILDERS["RUN_SUMMARY"](r))
+    return {name: out[name] for name in REPORTS}

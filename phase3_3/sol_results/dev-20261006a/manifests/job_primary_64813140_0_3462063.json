@@ -1,0 +1,253 @@
+{
+ "artifacts": {},
+ "command": [
+  "scripts/p33.py",
+  "dev",
+  "run",
+  "--run",
+  "dev-20261006a",
+  "--experiment",
+  "primary"
+ ],
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": false,
+  "analysis": {
+   "B": 2000,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 64,
+  "dtype": "bfloat16",
+  "families": [
+   "dom"
+  ],
+  "freeze_path": null,
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d25s1",
+   "d25s2",
+   "d50s1",
+   "d50s2"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "Qwen/Qwen2.5-Coder-0.5B",
+   "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "Qwen/Qwen2.5-Coder-1.5B",
+   "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+  ],
+  "note": "Registered development cells only (PREREGISTRATION \u00a72 + D8).",
+  "primary": {
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 400
+  },
+  "run_id": "dev-20261006a",
+  "schema_version": "p33/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 0,
+  "stage": "dev"
+ },
+ "config_hash": "80a2d30e93d3b8aa3e7f2a398d9354601530ccb9093bf23bc04c4de28658a49b",
+ "cwd": "/home/dkhorami/phase3-3_experiment_sol/repo/phase3_2/sol",
+ "disk_free_gb": {
+  "hf_root": 487484.5,
+  "results": 47.1
+ },
+ "dtype": "bfloat16",
+ "end_utc": "2026-10-07T00:42:37+00:00",
+ "experiment": "primary",
+ "git_commit": "8650df5252429578b989649154dac2840961b623",
+ "git_dirty": true,
+ "gpu": {
+  "bf16_supported": true,
+  "cuda_available": true,
+  "cuda_runtime": "12.6",
+  "device_mem_gb": 79.3,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB",
+  "torch": "2.8.0+cu126"
+ },
+ "hf_env": {
+  "HF_HOME": "/scratch/dkhorami/hf",
+  "HF_HUB_CACHE": "/scratch/dkhorami/hf/hub",
+  "HF_HUB_OFFLINE": "1",
+  "TRANSFORMERS_CACHE": "/scratch/dkhorami/hf/hub",
+  "TRANSFORMERS_OFFLINE": "1"
+ },
+ "job": {
+  "array_task_id": "0",
+  "job_id": "64813140",
+  "node": "sg038",
+  "pid": 3462063
+ },
+ "lm_head_fp32": true,
+ "materials_hashes": {
+  "blk_grammar": "3070a10af2f960c018b72dfbdf4525d42cb2d35e3ce0693c3d17c0535baea4f3",
+  "phi_d25s1.json": "16a2e9b3a6ad2998ea152fbb6de454c4fb4c3ea50b36db5d789059bb3ca7cbd8",
+  "phi_d25s2.json": "c35af4593551f8e452908ed28458a8628af4db6f47c8dbf934b08863a9a00f65",
+  "phi_d50s1.json": "b6fc5fdb764d85578b7f381e3e0d8182ea105919b4a8e12ed62e020916284b0b",
+  "phi_d50s2.json": "5e4101448086a47e2aa8f0bd24ce76e8b5e7610448c8d35b70b2e3ecd6401ccd",
+  "templates": "482a72a7b0e27b2b29e8a6af3001ccaedb2ef8457c2e24b23172cabc84dc8e78",
+  "terminals.json": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5"
+ },
+ "models": {
+  "Qwen/Qwen2.5-Coder-0.5B": {
+   "n_cells": 28,
+   "n_todo": 28,
+   "revision": "8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "snapshot_path": "/scratch/dkhorami/hf/hub/models--Qwen--Qwen2.5-Coder-0.5B/snapshots/8123ea2e9354afb7ffcc6c8641d1b2f5ecf18301",
+   "tokenizer_id": "cc349caf59f0697a"
+  }
+ },
+ "packages": {
+  "accelerate": "1.11.0",
+  "huggingface_hub": "0.36.0",
+  "lark": "1.3.1",
+  "matplotlib": "3.10.7",
+  "numpy": "2.2.6",
+  "platform": "Linux-4.18.0-553.124.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "python": "3.12.3",
+  "safetensors": "0.6.2",
+  "tokenizers": "0.22.1",
+  "transformers": "4.57.1"
+ },
+ "prompt_hashes": {
+  "d25s1/p0": "e9b4d8d13dab5779675199d45c6ddf8c3f9302bd895896e7e8c3ca308827af16",
+  "d25s1/p1": "49cc26190741c7e26267dd6c09301851fa68d7905d8e27cb3bbe73db6c5b1d19",
+  "d25s1/p2": "5f1cc78a57a39c77254865ca7175787b60d7cbf87b6bff2c3e23e9b12a086b4f",
+  "d25s1/rule": "e9b4d8d13dab5779675199d45c6ddf8c3f9302bd895896e7e8c3ca308827af16",
+  "d25s2/p0": "f38300b008d62bffb229d2e0d50e314dbbacc2b0cbb08b703c5bd604abd5aeef",
+  "d25s2/p1": "3442cb1f63cedf4416b811219cb2580b0757cec0bd8c0cb5b66902303a402442",
+  "d25s2/p2": "a77770dd58b854a2814a74454df7d5b3c6df498618c883bf99aefdb0bee64488",
+  "d25s2/rule": "f38300b008d62bffb229d2e0d50e314dbbacc2b0cbb08b703c5bd604abd5aeef",
+  "d50s1/p0": "9668e9c3a58c94ac3fc1b1db7eede01ec995c8a80fac2ed143b7e0b8b40b6c92",
+  "d50s1/p1": "89bc648f0f460f86ca5aeda836222e78e206ac3fd9d83854068cf54c793d2bc8",
+  "d50s1/p2": "cdd8d1c5a4e83bf88908885b3b353e13a6556b9b7b89a342c7d42bebe89fe313",
+  "d50s1/rule": "9668e9c3a58c94ac3fc1b1db7eede01ec995c8a80fac2ed143b7e0b8b40b6c92",
+  "d50s2/p0": "d59668db2615f4478912de736a46fa57d65c1bdbc9dfef092ea72221d4836de9",
+  "d50s2/p1": "b49b125e6aa942459551fcb9fb0e5a07398d4b7deba6329d5c1041cad1b2501c",
+  "d50s2/p2": "694c61f17b5e8274689d17ccc8ce1c26edb1dd0c7999d24f9117f8b05090bc05",
+  "d50s2/rule": "d59668db2615f4478912de736a46fa57d65c1bdbc9dfef092ea72221d4836de9"
+ },
+ "run_id": "dev-20261006a",
+ "schema_version": "p33/1",
+ "seeds": {
+  "bootstrap": 20261002,
+  "demo_order": 20261005,
+  "h5_random": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "power": 20261006
+ },
+ "slurm": {
+  "account": "grp_tlingego",
+  "array_job_id": "64811906",
+  "array_task_id": "0",
+  "cpus": "8",
+  "job_id": "64813140",
+  "node": "sg038",
+  "partition": "public",
+  "qos": "public"
+ },
+ "source_hashes": {
+  "phase3/src/phase3/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3/src/phase3/_vendor.py": "ae21d0ceef96c65b9984e3e96b2e0abc6f1fc74b180a5fd8f44c2630f4fb843d",
+  "phase3/src/phase3/linter.py": "6f24ee1d3d600ea3c9fb6cb1f56549271ee4f846cf1955e276ff75f0dcfd8bb5",
+  "phase3/src/phase3/models.py": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62",
+  "phase3/src/phase3/outcomes.py": "4d65ebf704b4c05530703b19fc06d8314389a7f99fd0e80bb652b1bfef8ef7b5",
+  "phase3/src/phase3/scoring.py": "7de5a6aff42b4c7e34629f53f5e03e88bb6bab1314f747de146bdc4b8fb149d6",
+  "phase3/src/phase3/sites.py": "3becc24107e000a89850ab1519c99d77040af22807755dcc3ab12e7166ff4a00",
+  "phase3_2/sol/scripts/p33.py": "3faa89731183f7edc665a80d9f32ac2d5760031c17b24459d391bccf2baa6fee",
+  "phase3_2/sol/src/p33/__init__.py": "9e9ccb9af6e24df7c43f4246bde50d04f609322ba72c5a461e1858957736811c",
+  "phase3_2/sol/src/p33/_paths.py": "30649b9fc8d8a33324c18d417d558f2e12196e5052af54e750d26a77d26b6c9c",
+  "phase3_2/sol/src/p33/armb.py": "c262de4e6d82fddf7df3067d586cd47b3103459a0429ec992135e9c796dd88f1",
+  "phase3_2/sol/src/p33/config.py": "f4c7a60e17b9aa772852b1f6cb45536ec33059ff8dae3d16b5499a8de993557e",
+  "phase3_2/sol/src/p33/demos.py": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c",
+  "phase3_2/sol/src/p33/export.py": "f9c3fedceb099b71fd3bcdc0ba11e5a0134cbf3dd4ffa16a41c6cdf4f426533b",
+  "phase3_2/sol/src/p33/fakes.py": "0173b6a9a98e6681e9f202da0cfb7570084db797fe722154cb48ffe9b340851c",
+  "phase3_2/sol/src/p33/fertility.py": "3497a1e29c10000f7e45a0c85c2b54ea2325608dbdd043010c2407da3c2d72d8",
+  "phase3_2/sol/src/p33/freeze.py": "e826b7fe2681f696bcacb00ebe69b87b76edccd3772236e826939ecf99e791ef",
+  "phase3_2/sol/src/p33/h2.py": "071acee006b7f6c249fbd72f254f5de2cb103d744a19dc2ee8c0c2bf68c185d1",
+  "phase3_2/sol/src/p33/h4.py": "00e6a9ac6a5db2a0ff4234e2946772eaca6aeaeaf65f2461475e36e32de6db05",
+  "phase3_2/sol/src/p33/h5.py": "9e897d9e65767570d2e4985558f83e06b61b6eade997dba42062ccda16fcc31e",
+  "phase3_2/sol/src/p33/kstar.py": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c",
+  "phase3_2/sol/src/p33/pipeline.py": "863675ca81ddff924eb30a8f84af073b7b6dbf0d660e0dcc164f8123db5b4ecc",
+  "phase3_2/sol/src/p33/plots.py": "f6dea1f46024feb1016bff506fc4ffaf518b880e1db89e1ae448acd17a004f6e",
+  "phase3_2/sol/src/p33/power.py": "7cbae01e347391014333a7cc8150a5f3a38e4e704c95e950fd23da0b07dfb43d",
+  "phase3_2/sol/src/p33/prefetch.py": "702316515bbf834166ce6af6c10c1b3b8f5e53ad011526558d369b50d0f4f4a7",
+  "phase3_2/sol/src/p33/preflight.py": "e09a90f099de75b243047549975c0242bf3b930502f448a8cbedd11fe2e49ef9",
+  "phase3_2/sol/src/p33/provenance.py": "4fee625ed33251b9a5dd99a76d4e473698c4bdc4f23bdaa4e387aa5e0eda3afc",
+  "phase3_2/sol/src/p33/registry.py": "b96a461bb2db2ee2e50754b7aeb88a76e5cdee15dbac2fc3c4d21f8d80bde363",
+  "phase3_2/sol/src/p33/reports.py": "dbdd80ee2960a93c316e7fba9c0db51a475e2586e20a2792299a57a1cd85cb49",
+  "phase3_2/sol/src/p33/scorers.py": "abff183b32e08f5157b217796b1a91977aaf437dedc9bfce57a1ae707e420ff9",
+  "phase3_2/sol/src/p33/shards.py": "f496412069bcb061fe632f501484ee9ff60ef3fb68c993e6b09b4843076bdc9e",
+  "phase3_2/sol/src/p33/splits.py": "e47a5de38f2226b177b5bb8c87ad7562849c0f66fd2aabcbc6373d3d86f8134a",
+  "phase3_2/src/phase3_2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "phase3_2/src/phase3_2/_vendor.py": "4988993a46ad290d46486d0299263479f68fa593c601ee4e869d2e18faeb1f81",
+  "phase3_2/src/phase3_2/analysis.py": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246",
+  "phase3_2/src/phase3_2/backends.py": "4634f572050a4bc9c81638c719253a715dd404f79e346783c698dbc613397ad3",
+  "phase3_2/src/phase3_2/deltafam.py": "ad9ee58cebda1a42770448193095880a6d00a45aa9280b7dd2ceff1b5f0274d9",
+  "phase3_2/src/phase3_2/margins.py": "3ecdbeb79a0a55f9878eed6bb07bc4db8c45f1e13836b692cd3dfa6ba80bb52d",
+  "phase3_2/src/phase3_2/prompts.py": "e561b526dce1c0a06e8774fbcc181b8af9c0b40a117e3134d6dedf05fd7a4a4d",
+  "phase3_2/src/phase3_2/runmeta.py": "0e988aadc7022d61b80cca20e10e8cf5f9c7e36fd59750e5d74eb95eab0021ee",
+  "phase3_2/src/phase3_2/sampling.py": "a674d2ae65f9ae3cee28d42d0934e9cb25a5880cdcdcbc2a01575df533b7f248",
+  "phase3_2/src/phase3_2/sites2.py": "97f5abbb476d37e723b53fc13acc57396322ff212a94ac4291c1b0d4091f648d",
+  "phase3_2/src/phase3_2/templates.py": "f9c4658f761d948d285438664d1dedcbfb0b9441a360a67efb20bbe33324714f"
+ },
+ "stage": "dev",
+ "start_utc": "2026-10-07T00:40:32+00:00",
+ "status": "COMPLETE"
+}

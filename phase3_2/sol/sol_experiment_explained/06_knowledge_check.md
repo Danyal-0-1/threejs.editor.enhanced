@@ -25,6 +25,13 @@ Questions marked ✎ need pen and paper; ⌨ means run something.
 7. ⌨ In a scratch results root, freeze a fake development run, then run
    `heldout run` before and after `heldout unlock`. Which exit code does each give,
    and what does each message say?
+8. Under deviation D10, which stage may score `Qwen/Qwen2.5-72B-Instruct`, on how many GPUs,
+   and through which `submit.sh` profile? What does plain `heldout_eval` do with it?
+9. A held-out model is first pinned *after* the freeze. What does `frozen_drift` report
+   for it? Why does README §8 ask for every held-out model to be prefetched before
+   freezing, and which models did that concern on 2026-10-07?
+10. D10 was decided after the development run. What makes it legitimate as a deviation,
+    and what would have made it illegitimate?
 
 ## B. Demonstrations (`01 §5`, `demos.py`)
 
@@ -69,6 +76,19 @@ Questions marked ✎ need pen and paper; ⌨ means run something.
 5. Why must the power pilot use development rows only? What would go wrong if
    the held-out sample size were chosen with held-out data?
 6. ✎ Holm with p = {C1: 0.012, C2: 0.030}. Which criteria pass at α = 0.05?
+7. ✎ Scores (5, 4, 4, 4, 1) with labels (1, 1, 0, 0, 1). Compute AP with tie groups.
+   Compute the lowest and highest AP the pre-D9 code could return, depending on row order.
+   Then compute the expected precision@2 and precision@4.
+8. ✎ Is the tie-grouped AP the *average* of the old AP over all orders of the tied rows?
+   Check on scores (3, 2, 2, 1), labels (1, 0, 1, 0). Is the new precision@k such an average?
+9. ✎ The rule-effect pilot has m = 44.84 rows per template and an ICC of 0.252. Compute the DE
+   and n_eff at T = 80 and at T = 320. Show that n_eff can never exceed T / ICC however many
+   rows a template has. What does that say about adding lexicons or models, compared with
+   adding templates?
+10. Before D9 the power report said 0.994 for the rule effect at 80 templates. Which
+    assumption produced that number? What does the pilot say about it?
+11. H4 criterion 1's smallest detectable AUROC at T = 80 is 0.62–0.63 for every ICC from
+    0 to 0.2. Explain why clustering barely moves it, using the criterion's definition.
 
 ## E. Measurement (`02 §1–2`, `margins.py`)
 
@@ -106,6 +126,13 @@ Questions marked ✎ need pen and paper; ⌨ means run something.
 10. You get Llama access after the freeze and re-run prefetch. Under the old
     behaviour, what could happen to the *other* ten models' pins, and what would
     every held-out command then do? What does `--repin` exist for?
+11. An analysis revision regenerated `csv/`, `plots/` and `reports/` from saved
+    measurements. Which files must be byte-identical before and after? How does
+    `analysis_revision.py record` show that no measurement changed?
+12. The Sol CPU-test job sourced `sol.env`, and the runner used `setdefault` for its
+    results root. Trace what the tests then wrote, and where. Why did no test fail?
+13. `RUN_SUMMARY.md` on Sol said "reports/ — 0 files". Why? Why is counting against a
+    registry better than counting whatever is in the directory?
 
 ## G. Hypotheses (`01 §12–15`, `h4.py`, `h5.py`, `armb.py`, `h2.py`)
 
@@ -135,3 +162,9 @@ Questions marked ✎ need pen and paper; ⌨ means run something.
    options? Why is "edit the code and re-run held-out" not one of them?
 5. Name three things this pipeline could still get wrong that no test here
    would catch.
+6. After D9, which development numbers changed and which did not? Why did the risk
+   score's AP stay exactly the same while the identity baseline's moved?
+7. D10 tests H4 on models up to 72B with a calibration frozen on 0.5B and 1.5B. Which H4
+   quantities should transfer, and which may degrade? Why are C1 and C2 still fair tests?
+8. The development rule effect has 1 interval of 32 that excludes zero. Write the
+   strongest sentence you are entitled to write about the rule effect, and one you are not.

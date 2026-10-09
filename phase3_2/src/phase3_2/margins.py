@@ -164,20 +164,26 @@ class TokenScorer:
     def __init__(self, model_id: str, device: str = "cuda",
                  dtype: str = "float16", *, snapshot_path: str | None = None,
                  revision: str | None = None, local_files_only: bool = False,
-                 lm_head_fp32: bool = True):
+                 lm_head_fp32: bool = True, n_gpus: int = 1):
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
         self.name = model_id
         self.revision = revision
         self.device = device
         self.dtype = dtype
+        self.n_gpus = n_gpus
         src = snapshot_path or model_id
         kw = {"local_files_only": local_files_only}
         if revision and not snapshot_path:
             kw["revision"] = revision
         self.tok = AutoTokenizer.from_pretrained(src, **kw)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            src, dtype=getattr(torch, dtype), **kw).to(device).eval()
+        if n_gpus <= 1:
+            # the path every development measurement was scored with -- unchanged
+            self.model = AutoModelForCausalLM.from_pretrained(
+                src, dtype=getattr(torch, dtype), **kw).to(device).eval()
+        else:
+            self.model = self._load_sharded(src, kw, dtype, n_gpus, lm_head_fp32)
+            self.device = self.model.get_input_embeddings().weight.device
 
         cfg = self.model.config
         exotic = any(getattr(cfg, a, None) for a in
@@ -193,6 +199,32 @@ class TokenScorer:
                        if getattr(head, "bias", None) is not None else None)
         self._decoder = (self.model.get_decoder()
                          if hasattr(self.model, "get_decoder") else None)
+
+    @staticmethod
+    def _load_sharded(src: str, kw: dict, dtype: str, n_gpus: int, lm_head_fp32: bool):
+        """A model too large for one GPU, layers spread over `n_gpus` (deviation D10).
+
+        Needs `accelerate` (device_map="auto"). The bf16 arithmetic is the
+        same as on one GPU; only where each layer lives changes. The LAST GPU
+        keeps room for the fp32 copy of the output matrix (vocab x hidden x 4
+        bytes, ~5 GiB for a 72B model) plus 2 GiB for activations, because
+        device_map="auto" does not know about that copy.
+        """
+        import torch
+        from transformers import AutoConfig, AutoModelForCausalLM
+        have = torch.cuda.device_count()
+        if have < n_gpus:
+            raise RuntimeError(f"{src}: needs {n_gpus} GPUs, {have} visible; submit it with "
+                               f"the 2-GPU job profile (submit.sh <job>_2gpu)")
+        mc = AutoConfig.from_pretrained(src, **kw)
+        head_gib = (getattr(mc, "vocab_size", 0) * getattr(mc, "hidden_size", 0) * 4 / 2**30
+                    if lm_head_fp32 else 0.0)
+        free = [torch.cuda.mem_get_info(i)[0] / 2**30 for i in range(n_gpus)]
+        budget = {i: f"{max(int(free[i] - 2 - (head_gib if i == n_gpus - 1 else 0)), 1)}GiB"
+                  for i in range(n_gpus)}
+        return AutoModelForCausalLM.from_pretrained(
+            src, dtype=getattr(torch, dtype), device_map="auto", max_memory=budget,
+            **kw).eval()
 
     # -- tokenisation ------------------------------------------------------
     def ids(self, text: str) -> list[int]:
@@ -214,6 +246,9 @@ class TokenScorer:
         with torch.no_grad():
             if self.lm_head_fp32 and self._decoder is not None:
                 h = self._decoder(input_ids=t).last_hidden_state[0, start:end]
+                # sharded models: the final norm and the head can sit on
+                # different GPUs; on one GPU this is a no-op
+                h = h.to(self._W.device)
                 logits = torch.nn.functional.linear(h.float(), self._W, self._b)
             else:
                 logits = self.model(t).logits[0, start:end].float()

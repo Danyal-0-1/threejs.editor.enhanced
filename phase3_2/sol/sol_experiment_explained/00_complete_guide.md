@@ -18,6 +18,63 @@ What the brief got right or wrong: [`../PROMPT_REVIEW.md`](../PROMPT_REVIEW.md).
 
 ---
 
+## Update — 2026-10-07: the first real development run
+
+**What ran.** `dev-20261006a` ran on Sol's A100s. Four Qwen2.5-Coder checkpoints (0.5B and 1.5B, each
+base and instruct) scored 10,224 Arm A rows and 16,000 extinction rows. No cell failed or went
+missing, and the whole run used about 17 minutes of A100 time.
+
+**What was corrected afterwards.** These are analysis corrections, made before the freeze
+(deviation D9):
+
+- tied scores in AP and precision@k;
+- the power table and report;
+- the run summary's counts.
+
+All of them were re-derived from the saved measurements without re-scoring. Every measurement
+file is byte-identical; see `08 §5` and the run's `analysis_revisions/`.
+
+**What it says.** Development only, so exploratory and not confirmatory:
+
+| Model | Reversion with the table | Extinction: KM median shots, initially-wrong sites |
+|---|---|---|
+| 0.5B base | 0.41–0.43 | 6.2 [2.4, 7.8], 13% censored |
+| 0.5B instruct | 0.39–0.44 | 5.9 [2.6, 11.5], 18% censored |
+| 1.5B base | **0.50–0.58** | 5.7 [3.1, 10.1], 22% censored |
+| 1.5B instruct | 0.45–0.51 | 3.6 [2.3, 6.7], 20% censored |
+
+- **Reversion, by lexicon.** In development, the 1.5B models revert more than the 0.5B ones.
+  Two sizes cannot establish a trend. D10's larger held-out models were chosen for external
+  validity, following prior work at 14B–70B, and their scale analysis is two-sided: it does
+  not rest on this pattern.
+- **Rule effect.** Small and positive, +0.08 to +0.36 nats; 31 of 32 intervals include zero.
+- **H4.** The base model's margin predicts the instruct model's reversions:
+  - AUROC 0.869 (0.5B pair) and 0.935 (1.5B pair);
+  - AP 0.819 and 0.924, against prevalences of 0.41 and 0.47;
+  - C1 and C2 are met *in development*. Against identity the gain is +0.37 [0.33, 0.40] and
+    +0.43 [0.41, 0.46]. Against length it is +0.32 [0.25, 0.40] and +0.45 [0.39, 0.51].
+    Holm p = 0.001 for each;
+  - it also beats the exploratory `terminal_rate` baseline, the instruct model's reversion
+    rate for the same terminal in other templates: +0.072 [0.009, 0.140] and
+    +0.145 [0.097, 0.199].
+- **Power.** At the clustering measured in development (ICC 0.252), the pooled rule effect has
+  power 0.25 at the 80-template corpus. The report used to show 0.99, from the ICC = 0 row.
+  H4 criterion 1 is well powered for a true AUROC of 0.62 or more.
+
+**What happened next (2026-10-07, on Sol):**
+
+1. **Corrected analysis on Sol:** recorded (`r1-2026-10-07-metric-corrections`). The 652 inputs
+   are byte-identical and every check passed.
+2. **Power and design:** frozen as registered, at the investigator's direction.
+3. **Model downloads:** all 21 checkpoints downloaded and pinned (641 GB on scratch).
+4. **Freeze:** `DEV_FREEZE.json` written by job 64942745.
+5. **Held-out evaluation:** run `heldout-20261007a`, unlocked and running as one chain, one job
+   at a time.
+6. **Arm B and H5:** queued in that chain.
+7. **Final analysis:** the chain's last job (`final_export`), then interpretation.
+
+---
+
 ## 1. What this phase is
 
 Phase 3.3 produced the first extinction curves and rule-effect intervals on a
@@ -43,7 +100,7 @@ repairs them. Extinction curves are the scientific result. H2 is secondary.
 | margin precision | bf16 | fp32 output head |
 | controls | `norule` | + `norule_lenmatched` |
 | Sol readiness | scripts that would not have run | 11 jobs, a submit wrapper, safe environment activation, preflight, pinned offline models |
-| tests | Phase 3 (54) + Phase 3.2 (36) | **+ 112 Sol tests**, and a full CLI rehearsal |
+| tests | Phase 3 (54) + Phase 3.2 (36) | **+ 139 Sol tests** (112 before 2026-10-07), and a full CLI rehearsal |
 
 ---
 
@@ -73,11 +130,11 @@ Each stage, with its inputs, outputs and checks, is in [`03 §4`](03_code_and_pi
 
 | Output | Status |
 |---|---|
-| corrected pipeline (`src/p33`, CLI, 11 jobs) | **built and tested**: 112 tests pass (venv); 110 + 2 dependency-blocked (bare python); the CPU-tests job, run as Slurm would on CPU only, exits 0 |
+| corrected pipeline (`src/p33`, CLI, 11 jobs) | **built and tested** (2026-10-07, locally): 139 tests pass (venv); 135 + 4 dependency-blocked (bare python); the CPU-tests job, run as Slurm would on CPU only, exits 0 and writes nothing into the results root |
 | full CLI rehearsal of the runbook, fake scorer | **passed** end to end, including a real SIGUSR1 interrupt and a single-index resume (`AUDIT.md` §6) |
 | development smoke, one real model, 12 sites | **ran** on the laptop GPU (A100 check waived and recorded). 19 CSVs, 24 plot files, 10 reports |
-| development sweep | **not run** (Sol) |
-| freeze, unlock, held-out evaluation | **not run**. Your decision; nothing is automatic |
+| development sweep | **ran on Sol** (`dev-20261006a`, complete); analysis corrected and re-derived (D9) |
+| freeze, unlock, held-out evaluation | **frozen and unlocked on 2026-10-07** at the investigator's direction. `heldout-20261007a` is running as one chain |
 | H4, Arm B, H5 on a real model | **not run**. H4 needs an instruct twin, which the smoke does not include |
 | H2; H4 criterion C3 | **NOT TESTABLE** with these materials |
 
@@ -202,11 +259,13 @@ changed a published number.
 |---|---|
 | ten brief defects | **fixed**, each with a test that reproduces the old behaviour |
 | nine further defects (P33-002, P33-011 … P33-018) | **fixed and tested** |
-| Phase 3.3 `k*` | **withdrawn**; no valid estimate exists |
+| 2026-10-07 analysis corrections (D9) | **fixed, tested and applied** to `dev-20261006a`; 652 measurement files unchanged |
+| Phase 3.3 `k*` | **withdrawn**. The first valid, leakage-free estimate is development-only: KM medians 3.6–6.2 shots for initially-wrong sites |
 | Phase 3.3 rule-effect intervals | **corrected**; all include zero |
 | runbook | **rehearsed** locally with the fake scorer, in order |
-| Sol | **nothing run**. Every Sol fact is your verification, used as an overridable default |
-| real-model scoring | **one** development smoke on a laptop GPU. No held-out cell has been scored by a real model |
+| Sol | the development run **completed** (A100, 2026-10-07); held-out **not started** |
+| real-model scoring | the laptop smoke plus the Sol development run. No held-out cell has been scored by a real model |
 | held-out outcomes | **none inspected**; no full sweep submitted |
 | H4 C3, H2 | **NOT TESTABLE** |
-| power for the held-out size | **pending**: needs the development run's ICC and effect sizes |
+| power for the held-out size | **computed from the development pilot**; the rule effect is under-powered at the measured clustering, a design decision for you before the freeze |
+| models | 21 held-out checkpoints (D10); the original 11 downloaded and pinned (Llama approved 2026-10-07); 10 large checkpoints not yet fetched |

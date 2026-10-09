@@ -49,7 +49,14 @@ def scheduler_checks(d: "CFG.SolDefaults") -> list[dict]:
     return out
 
 
-def gpu_checks(cfg) -> list[dict]:
+def model_memory_gib(model_id: str) -> float | None:
+    """Rough bf16 footprint + fp32 head + activations, from the registry size."""
+    from p33 import registry
+    s = registry.REGISTRY.get(model_id)
+    return None if s is None else s.size_b * 2 * 1.03 + 4.0
+
+
+def gpu_checks(cfg, task_models=None) -> list[dict]:
     out = []
     smi = shutil.which("nvidia-smi")
     if smi:
@@ -72,6 +79,22 @@ def gpu_checks(cfg) -> list[dict]:
             free, total = torch.cuda.mem_get_info()
             out.append(_check("gpu_memory", free > 2 * 2**30,
                               f"free {free/2**30:.1f} GiB of {total/2**30:.1f} GiB"))
+            if task_models:
+                from p33 import registry
+                need = max((registry.REGISTRY[m].gpus for m in task_models
+                            if m in registry.REGISTRY), default=1)
+                have = torch.cuda.device_count()
+                out.append(_check("gpu_count", have >= need,
+                                  f"{have} visible, {need} needed by {sorted(task_models)}"
+                                  + ("" if have >= need else
+                                     " -- submit with the 2-GPU profile (<job>_2gpu)")))
+                pool = sum(torch.cuda.mem_get_info(i)[0] for i in range(min(have, need))) / 2**30
+                for m in task_models:
+                    est = model_memory_gib(m)
+                    if est is not None:
+                        out.append(_check(f"gpu_memory:{m}", pool >= est,
+                                          f"~{est:.0f} GiB needed, {pool:.0f} GiB free on "
+                                          f"{min(have, need)} GPU(s)"))
     except Exception as exc:
         out.append(_check("torch_cuda", False, f"torch import failed: {exc}"))
     return out
@@ -139,16 +162,23 @@ def split_checks(cfg, run_dir: str) -> list[dict]:
         return [_check("split_permission", False, str(exc))]
 
 
-def run(cfg, run_dir: str, *, pins: dict, require_gpu: bool = True) -> dict:
+def run(cfg, run_dir: str, *, pins: dict, require_gpu: bool = True,
+        task_models: list[str] | None = None) -> dict:
+    """`task_models`: the models THIS array task scores (default: all of them).
+
+    Only those are checked, so a model whose download is still pending (e.g.
+    a gated checkpoint awaiting approval) fails its own task, not every task.
+    """
     d = CFG.SolDefaults()
+    models = list(task_models) if task_models else list(cfg.models)
     checks = scheduler_checks(d)
     if require_gpu:
-        checks += gpu_checks(cfg)
+        checks += gpu_checks(cfg, models)
     checks += space_checks(run_dir) + output_checks(run_dir)
-    checks += model_checks(cfg.models, pins) + materials_checks(run_dir, cfg)
+    checks += model_checks(models, pins) + materials_checks(run_dir, cfg)
     checks += split_checks(cfg, run_dir)
     rep = {"utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-           "run_id": cfg.run_id, "stage": cfg.stage, "checks": checks,
+           "run_id": cfg.run_id, "stage": cfg.stage, "task_models": models, "checks": checks,
            "versions": provenance.package_versions(), "gpu": provenance.gpu_info(),
            "ok": all(c["result"] != "FAIL" for c in checks)}
     os.makedirs(os.path.join(run_dir, "manifests"), exist_ok=True)

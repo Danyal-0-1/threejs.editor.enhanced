@@ -107,7 +107,7 @@ end to end (§6). The unit tests did not find them.
 | environment + lock | `env/make_env.sh`, `requirements.in`, `activate.sh` | `bash -n` on every script | `requirements.lock.sol.txt` (written on Sol), `requirements.lock.laptop.txt` |
 | 11 jobs + submit wrapper | `jobs/*.slurm`, `submit.sh` | `bash -n`; no `partition=general`; no `P33_FAKE` outside `cpu_tests`; `submit.sh` against a stand-in `sbatch`; `cpu_tests.slurm` against a stand-in `srun` | `results/<run>/logs/` |
 
-## 4. Test results (exact, final code)
+## 4. Test results (exact; the 2026-10-05 code; for 2026-10-07 see §7.5)
 
 | Suite | Interpreter / setting | Result |
 |---|---|---|
@@ -231,3 +231,152 @@ Earlier in the session:
 - the network download in `prefetch`;
 - any real model beyond the one development smoke;
 - Sol's filesystems.
+
+---
+
+## 7. 2026-10-07 — analysis corrections on the real development run, and model scale
+
+### 7.1 The run
+
+`dev-20261006a` was downloaded to `phase3_3/sol_results/`.
+
+**Contents:**
+
+| | |
+|---|---|
+| Arm A | 192/192 cells, 10,224 rows |
+| primary | 112/112 cells, 16,000 rows |
+| models | 4 |
+| hardware | A100-SXM4-80GB, bf16, fp32 head |
+
+**What its job manifests record:**
+
+- commit `8650df5`;
+- source hashes identical to the local tree (0 differing files);
+- materials identical;
+- revisions `8123ea2e…` / `ea3f2471…` / `df3ce67c…` / `2e1fd397…`, all with tokenizer `cc349caf…`.
+
+There is no `DEV_FREEZE.json` and no unlock.
+
+### 7.2 Confirmed before changing anything
+
+Every claim in the brief was reproduced from the saved files or measurements:
+
+| Claim | Verified |
+|---|---|
+| risk AP 0.81887449 / 0.92397474 with 852 distinct scores | yes; invariant to row order |
+| 1.5B identity AP 0.45232430, reversed 0.49245557, prevalence 0.46830986 | yes |
+| P@10 identity 1.5B 0.4 → 0.6 reversed; token_count 0.5B 0.5 → 0.1 | yes |
+| power.csv: 25 smallest-detectable rows, 5 distinct, all with the pilot ICC | yes |
+| power report shows only ICC = 0 for the rule effect | yes (`x["icc"] in (rule[0]["icc"],)`) |
+| RUN_SUMMARY says 0 report files | yes on Sol; a repeated export counted 10, and would count stale files too |
+
+**Also found:**
+
+- Tied scores also made the `length`, `program_nll` and exploratory `terminal_rate` baselines
+  order-dependent.
+- The plot footer showed one model and one revision for "base|instruct" rows. The first fix
+  listed the models and the revisions as two separately sorted lists, which pairs them wrongly
+  by position: 3 of the 4 development models. Footers now print each model with its own
+  revision (`model@revision`), and `test_figure_footer_pairs_each_model_with_its_own_revision`
+  guards it.
+- `REPRODUCTION.md` named non-existent commands (`dev arm-a`) and a missing `env/README.md`.
+- The test runner used `setdefault` for its results root, so under `sol.env` a CPU-test job
+  writes `dev-status-readonly/` into the real results root and briefly swaps the real
+  `model_pins.json` (then restores it). It did happen on Sol: `results/dev-status-readonly/`
+  (fake 0.5B pair, `d50s1`, 24 sites) dates from 2026-10-06. It was moved to
+  `results/_quarantine/` on 2026-10-07, and the pins file's development revisions match the
+  job manifests.
+
+**Baseline reproduction:** re-exporting with the ORIGINAL code locally reproduced 18 of Sol's 19
+CSVs byte for byte. The nineteenth differed only in `cal_intercept`: −8.5e-17 against −7.9e-17,
+floating-point noise.
+
+### 7.3 Corrections and their evidence
+
+The record is in `dev-20261006a/analysis_revisions/r1-2026-10-07-metric-corrections/`
+(`ANALYSIS_REVISION.md`, `analysis_revision.json`, `before/`).
+
+**Inputs.** All 652 measurement inputs are byte-identical before and after: raw shards,
+checkpoints, merged JSONL and status files, manifests and logs.
+
+**Validation:**
+
+- `p33 status` reports 192/192 and 112/112 done, before and after.
+- `p33 validate` on a scratch copy reports VALID, with the re-merge byte-identical.
+
+**Outputs:**
+
+- **17 of 19 CSVs are byte-identical.**
+- **H4 table:** 23 cells changed, all baseline AP or P@k; 0 unexpected changes.
+- **Power:** all 200 shared scenarios have unchanged values. The 25 smallest-detectable rows are
+  now one per (T, ICC) scenario.
+- **Figures:** they differ in metadata (date, matplotlib version) and, for the H4 and power
+  figures, in content.
+
+**Corrected values** (old → new):
+
+| Pair | Predictor | AP | P@10 |
+|---|---|---|---|
+| 1.5B | identity | 0.452 → **0.468** (= prevalence) | 0.4 → 0.468 |
+| 0.5B | identity | 0.410 → **0.407** (= prevalence) | 0.3 → 0.407 |
+| 0.5B | token_count | 0.431 → 0.416 | 0.5 → 0.435 |
+| 1.5B | token_count | 0.468 → 0.472 | 0.4 → 0.491 |
+| 0.5B / 1.5B | risk | **unchanged** (0.818874 / 0.923975) | unchanged (1.0 / 1.0) |
+
+AUROC, the C1/C2 deltas, their bootstrap intervals, the Holm p-values and the calibration are
+all unchanged.
+
+**Power, corrected:** at the pilot ICC the rule-effect power is 0.094 / 0.147 / **0.251** /
+0.446 / 0.732 at 20 / 40 / 80 / 160* / 320* templates (* hypothetical). The ICC = 0 row
+shows 0.994 at 80 templates and is the most optimistic one. For H4 criterion 1, the smallest
+detectable AUROC at the pilot ICC is 0.62 at 80 templates.
+
+### 7.4 Model scale (deviation D10)
+
+| Change | Where |
+|---|---|
+| ceiling 3B → 72B | `splits.MAX_SIZE_B` |
+| DeepSeek-Coder-33B and Qwen2.5-72B pairs | registry |
+| `gpus` per checkpoint | registry |
+| 10 checkpoints appended to `configs/heldout.json` | indices 0–10 unchanged |
+| sharded 2-GPU loading | `TokenScorer._load_sharded`; the 1-GPU path is unchanged |
+| per-task preflight with GPU count and memory checks | `preflight.py` |
+| `p33.py array-indices` and the `*_2gpu` job profiles | `scripts/p33.py`, `submit.sh` |
+
+**Tested without a GPU:**
+
+- `submit.sh` against a stand-in `sbatch`;
+- the array split (0–18 / 19,20);
+- per-task preflight.
+
+**Not tested:** the 2-GPU load itself, which needs two GPUs.
+
+### 7.5 Tests
+
+| Suite | Result |
+|---|---|
+| Sol-pipeline suite, local project venv | 139 passed |
+| Sol-pipeline suite, local bare python | 135 passed + 4 blocked (dependencies) |
+| Phase 3.2 | 36 |
+| Phase 3 | 54 |
+| simulated `cpu_tests.slurm` | Sol 138 + 1 hardware-blocked, 36, 54; exit 0; 0 files in the stand-in results root |
+
+**New test modules:**
+
+- `test_metric_and_report_corrections.py` (20);
+- `test_model_scale.py` (6);
+- plus a test that the runner never uses the real results root.
+
+### 7.6 Execution on Sol (2026-10-07)
+
+| Step | Evidence |
+|---|---|
+| pushed and pulled | commit `78b2bcd` on branch `sol-d9-d10`; Sol's checkout on that commit (only tracked `__pycache__` files and the untracked Sol lock file differ) |
+| test artifact quarantined | `results/dev-status-readonly/` (fake rows, 2026-10-06) moved to `results/_quarantine/` |
+| CPU tests (job 64939805) | Sol 138 passed + 1 hardware-blocked; Phase 3.2 36; Phase 3 54; exit 0; the results root untouched |
+| D9 re-analysis on Sol | `r1-2026-10-07-metric-corrections`: 652 inputs byte-identical, all checks passed, digest `3c3e772c66ecf51e`. Against the local record, 18/19 CSVs are byte-identical; the 19th differs in one `cal_intercept` cell by 6e-18 |
+| prefetch (job 64939806) | the 10 D10 checkpoints, 600.6 GiB, every file sha256-verified, 36 min; `model_pins.json`: 21 pins, no failures |
+| freeze (job 64942745) | `DEV_FREEZE.json` sha256 `b319c3fc…`; 44 source hashes; 21 model pins; drift `[]` |
+| unlock | `heldout-20261007a`, phrase entered at the investigator's direction (`UNLOCK_NOTE.md`) |
+| held-out chain | jobs 64943130–64943136, one at a time (`logs/submission_chain.env`); first task's preflight OK (one informational WARN: materials recorded by the first job), 210 cells permitted |

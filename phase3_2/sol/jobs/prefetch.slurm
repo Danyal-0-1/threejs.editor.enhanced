@@ -9,9 +9,11 @@ source "${P33_SOL:?submit through submit.sh}/sol.env"
 source "$P33_SOL/env/activate.sh"
 cd "$P33_SOL"
 echo "[$(date -Is)] $SLURM_JOB_NAME job=$SLURM_JOB_ID task=${SLURM_ARRAY_TASK_ID:-none} node=$SLURMD_NODENAME run=$RUN_ID"
-# Default: exactly the models the shipped configs use (smoke + dev + held-out,
-# 11 models, none above 3B). The `mid`/`large` tiers also hold 7B-32B models
-# that no stage may score (MAX_SIZE_B = 3.0) -- do not prefetch them for this study.
+# Default: exactly the models the shipped configs use (smoke + dev + held-out:
+# 21 models since deviation D10, up to the 72B pair; about 0.7 TB in all).
+# Already-pinned models keep their revision but are re-planned against the Hub,
+# so a gated model needs HF_TOKEN even when it is already downloaded; to fetch
+# only some models, list them.
 # Overrides: P33_MODELS="id1 id2"  or  P33_TIER=small|mid|large|all
 if [ -n "${P33_MODELS:-}" ]; then
   # shellcheck disable=SC2206

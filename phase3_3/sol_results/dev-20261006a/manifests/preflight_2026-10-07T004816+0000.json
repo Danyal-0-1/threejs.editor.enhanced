@@ -1,0 +1,114 @@
+{
+ "utc": "2026-10-07T00:48:16+00:00",
+ "run_id": "dev-20261006a",
+ "stage": "dev",
+ "checks": [
+  {
+   "check": "slurm_partition",
+   "result": "PASS",
+   "detail": "actual='public' configured='public'"
+  },
+  {
+   "check": "slurm_qos",
+   "result": "PASS",
+   "detail": "actual='public' configured='public'"
+  },
+  {
+   "check": "slurm_account",
+   "result": "PASS",
+   "detail": "actual='grp_tlingego' configured='grp_tlingego'"
+  },
+  {
+   "check": "nvidia_smi",
+   "result": "PASS",
+   "detail": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 81153 MiB"
+  },
+  {
+   "check": "torch_cuda",
+   "result": "PASS",
+   "detail": "torch 2.8.0+cu126, CUDA runtime 12.6"
+  },
+  {
+   "check": "a100",
+   "result": "PASS",
+   "detail": "NVIDIA A100-SXM4-80GB"
+  },
+  {
+   "check": "bf16",
+   "result": "PASS",
+   "detail": "bfloat16 support"
+  },
+  {
+   "check": "gpu_memory",
+   "result": "PASS",
+   "detail": "free 78.8 GiB of 79.3 GiB"
+  },
+  {
+   "check": "results_space",
+   "result": "PASS",
+   "detail": "47.1 GiB free at /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a (need 2.0)"
+  },
+  {
+   "check": "hf_cache_space",
+   "result": "PASS",
+   "detail": "487342.1 GiB free at /scratch/dkhorami/hf (need 5.0)"
+  },
+  {
+   "check": "output_writable",
+   "result": "PASS",
+   "detail": "/home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a"
+  },
+  {
+   "check": "model:Qwen/Qwen2.5-Coder-0.5B",
+   "result": "PASS",
+   "detail": "local 8123ea2e9354 pinned 8123ea2e9354"
+  },
+  {
+   "check": "model:Qwen/Qwen2.5-Coder-0.5B-Instruct",
+   "result": "PASS",
+   "detail": "local ea3f2471cf1b pinned ea3f2471cf1b"
+  },
+  {
+   "check": "model:Qwen/Qwen2.5-Coder-1.5B",
+   "result": "PASS",
+   "detail": "local df3ce67c0e24 pinned df3ce67c0e24"
+  },
+  {
+   "check": "model:Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "result": "PASS",
+   "detail": "local 2e1fd397ee46 pinned 2e1fd397ee46"
+  },
+  {
+   "check": "materials",
+   "result": "PASS",
+   "detail": "materials identical to the run's first job"
+  },
+  {
+   "check": "split_permission",
+   "result": "PASS",
+   "detail": "16 cells allowed for stage dev: ['DEVELOPMENT']"
+  }
+ ],
+ "versions": {
+  "python": "3.12.3",
+  "platform": "Linux-4.18.0-553.124.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "transformers": "4.57.1",
+  "huggingface_hub": "0.36.0",
+  "tokenizers": "0.22.1",
+  "lark": "1.3.1",
+  "numpy": "2.2.6",
+  "matplotlib": "3.10.7",
+  "safetensors": "0.6.2",
+  "accelerate": "1.11.0"
+ },
+ "gpu": {
+  "nvidia_smi": "NVIDIA A100-SXM4-80GB, 595.71.05, 81920 MiB, 80727 MiB",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "cuda_available": true,
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "device_mem_gb": 79.3,
+  "bf16_supported": true
+ },
+ "ok": true
+}

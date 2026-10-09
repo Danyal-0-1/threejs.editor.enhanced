@@ -24,11 +24,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-PLOTS = ("margin_reversion_distributions", "rule_effect_forest",
-         "family_mapping_model_stratum", "fertility_tokenization",
-         "extinction_trajectories_km", "paraphrase_sensitivity",
-         "model_size_tokenizer", "h2_three_scale", "h4_roc_pr_calibration",
-         "h5_benefit_per_symbol", "armb_hurdle_outcomes", "power_curves")
+from p33.artifacts import PLOT_FORMATS, PLOT_NAMES  # noqa: E402
+
+PLOTS = PLOT_NAMES
 
 
 def _read(csv_dir: str, name: str) -> list[dict]:
@@ -41,6 +39,29 @@ def _f(x):
         return float(x)
     except (TypeError, ValueError):
         return None
+
+
+def model_revisions(rows: list[dict], max_pairs: int = 6) -> str:
+    """The footer's model field: each model WITH its own resolved revision.
+
+    H4 and power rows carry "base|instruct" pairs or "|"-joined lists in
+    `model` and `model_revision`, position by position. Printing the two as
+    separately sorted lists pairs them by position, wrongly, so they are
+    zipped row by row. Past `max_pairs` the line would overflow the figure;
+    it then gives the count and where every pair is recorded.
+    """
+    pairs = set()
+    for r in rows:
+        ms = [m for m in str(r.get("model") or "").split("|") if m]
+        vs = [v for v in str(r.get("model_revision") or "").split("|") if v]
+        if len(vs) != len(ms):
+            vs = ["n/a"] * len(ms)
+        pairs.update((m.split("/")[-1], v[:10]) for m, v in zip(ms, vs))
+    if not pairs:
+        return "model@revision=n/a"
+    if len(pairs) > max_pairs:
+        return f"models={len(pairs)} (each model@revision: csv/job_provenance.csv)"
+    return "model@revision=" + ", ".join(f"{m}@{v}" for m, v in sorted(pairs))
 
 
 def _not_run(rows):
@@ -61,8 +82,6 @@ class Ctx:
 
     def stamp(self, fig, rows: list[dict], *, extra: str = "", ci=True):
         fams = sorted({r.get("family") for r in rows if r.get("family")})
-        models = sorted({r.get("model") for r in rows if r.get("model")})
-        revs = sorted({(r.get("model_revision") or "")[:10] for r in rows if r.get("model_revision")})
         toks = sorted({(r.get("tokenizer_id") or "")[:10] for r in rows if r.get("tokenizer_id")})
         splits = sorted({r.get("split") for r in rows if r.get("split")})
         temps = {r.get("template") for r in rows if r.get("template")}
@@ -70,8 +89,9 @@ class Ctx:
         a = self.cfg.analysis
         lines = [
             f"stage={self.cfg.stage}  split={'|'.join(splits) or 'n/a'}  family={'|'.join(fams) or 'n/a'}",
-            f"model={'|'.join(m.split('/')[-1] for m in models) or 'n/a'}  rev={'|'.join(revs) or 'n/a'}  tokenizer={'|'.join(toks) or 'n/a'}",
-            f"rows={len(rows)}  templates={len(temps)}  mappings={len(maps)}  excluded rows={self.excluded}  failed cells={self.failed}  missing cells={self.missing}",
+            f"{model_revisions(rows)}  tokenizer={'|'.join(toks) or 'n/a'}",
+            f"rows={len(rows)}  templates={len(temps) if temps else 'n/a'}  mappings={len(maps) if maps else 'n/a'}  "
+            f"excluded rows={self.excluded}  failed cells={self.failed}  missing cells={self.missing}",
         ]
         if ci:
             lines.append(f"CI: {a['unit']}-cluster bootstrap, B={a['B']}, seed={self.cfg.seeds['bootstrap']}, 95% percentile")
@@ -83,7 +103,7 @@ class Ctx:
     def save(self, fig, name: str) -> list[str]:
         fig.subplots_adjust(bottom=0.27, wspace=0.32)
         paths = []
-        for ext in ("png", "svg"):
+        for ext in PLOT_FORMATS:
             p = os.path.join(self.out, f"{name}.{ext}")
             fig.savefig(p, dpi=130)
             paths.append(p)
@@ -307,16 +327,11 @@ def h4_plot(c: Ctx):
         P, N = sum(y), len(y) - sum(y)
         lab = f"{pair.split('|')[0].split('/')[-1]}/{fam}/{split}"
         if P and N:
-            order = sorted(range(len(s)), key=lambda i: -s[i])
-            tp = fp = 0
-            roc, pr = [(0, 0)], []
-            for i in order:
-                tp += y[i]
-                fp += 1 - y[i]
-                roc.append((fp / N, tp / P))
-                pr.append((tp / P, tp / (tp + fp)))
-            axes[0].plot(*zip(*roc), label=lab)
-            axes[1].plot(*zip(*pr), label=f"{lab} (prev={P/len(y):.2f})")
+            from p33 import h4 as H4      # the same tie-grouped thresholds as the table
+            roc, pr = H4.roc_curve(s, y), H4.pr_curve(s, y)
+            axes[0].plot(*zip(*roc), label=f"{lab} (AUROC={H4.auroc(s, y):.3f})")
+            axes[1].step(*zip(*pr), where="post",
+                         label=f"{lab} (AP={H4.auprc(s, y):.3f}, prev={P/len(y):.2f})")
             axes[1].axhline(P / len(y), ls=":", lw=0.8)
         p = [_f(r["calibrated_p"]) for r in g]
         bins = defaultdict(list)
@@ -386,33 +401,96 @@ def armb_plot(c: Ctx):
     return c.save(fig, name)
 
 
+def _is_pilot(r) -> bool:
+    return str(r.get("is_pilot_icc")) in ("True", "true")
+
+
+def power_series(rows: list[dict]) -> dict:
+    """The exact numbers power_curves draws, straight from power.csv rows.
+
+    Pure (no matplotlib), so tests can check figure == table. Zero power is a
+    value, never dropped: rows are kept when `power` parses, not when truthy.
+    """
+    num = lambda r, k: _f(r.get(k))  # noqa: E731
+    h4 = [r for r in rows if r.get("analysis") == "h4_criterion1" and num(r, "power") is not None]
+    rule = [r for r in rows if r.get("analysis") == "rule_effect" and num(r, "power") is not None]
+    out = {"h4_pilot": {}, "h4_icc": {}, "rule": {}, "pilot_icc": None, "rule_pilot_icc": None,
+           "corpus_templates": None, "hypothetical_T": set()}
+    for r in h4 + rule:
+        if r.get("corpus_templates"):
+            out["corpus_templates"] = int(num(r, "corpus_templates"))
+        if str(r.get("t_status", "")).startswith("HYPOTHETICAL"):
+            out["hypothetical_T"].add(int(num(r, "n_templates")))
+    Ts = sorted({int(num(r, "n_templates")) for r in h4})
+    target_T = (out["corpus_templates"] if out["corpus_templates"] in Ts else
+                80 if 80 in Ts else (Ts[-1] if Ts else None))
+    out["icc_panel_T"] = target_T
+    for r in sorted(h4, key=lambda r: num(r, "true_auroc")):
+        T = int(num(r, "n_templates"))
+        if _is_pilot(r):
+            out["pilot_icc"] = num(r, "icc")
+            out["h4_pilot"].setdefault(T, []).append((num(r, "true_auroc"), num(r, "power")))
+        if T == target_T:
+            out["h4_icc"].setdefault(num(r, "icc"), []).append((num(r, "true_auroc"), num(r, "power")))
+    for r in sorted(rule, key=lambda r: num(r, "n_templates")):
+        ic = num(r, "icc")
+        if _is_pilot(r):
+            out["rule_pilot_icc"] = ic
+        out["rule"].setdefault(ic, []).append((int(num(r, "n_templates")), num(r, "power")))
+    return out
+
+
 def power_plot(c: Ctx):
-    rows = [r for r in _read(c.csv, "power") if r.get("analysis") == "h4_criterion1" and r.get("power")]
+    rows = _read(c.csv, "power")
+    ser = power_series(rows)
     name = "power_curves"
-    if not rows:
+    if not ser["h4_pilot"] and not ser["rule"]:
         return c.placeholder(name, "Power", "NOT RUN")
-    pilot_icc = _f(rows[0].get("pilot_icc"))
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-    for T in sorted({int(_f(r["n_templates"])) for r in rows}):
-        g = sorted([r for r in rows if int(_f(r["n_templates"])) == T and abs(_f(r["icc"]) - round(pilot_icc or 0, 3)) < 1e-9],
-                   key=lambda r: _f(r["true_auroc"]))
-        if g:
-            axes[0].plot([_f(r["true_auroc"]) for r in g], [_f(r["power"]) for r in g], marker="o", label=f"{T} templates")
-    axes[0].axhline(0.8, color="r", ls="--", lw=0.8)
-    axes[0].set_xlabel("true AUROC")
-    axes[0].set_ylabel("P(criterion 1 met)")
-    axes[0].set_title(f"H4 power at pilot ICC={pilot_icc:.3f}" if pilot_icc is not None else "H4 power")
-    axes[0].legend(fontsize=7)
-    T0 = sorted({int(_f(r["n_templates"])) for r in rows})[-2] if len({r["n_templates"] for r in rows}) > 1 else None
-    for icc in sorted({_f(r["icc"]) for r in rows}):
-        g = sorted([r for r in rows if _f(r["icc"]) == icc and int(_f(r["n_templates"])) == T0], key=lambda r: _f(r["true_auroc"]))
-        if g:
-            axes[1].plot([_f(r["true_auroc"]) for r in g], [_f(r["power"]) for r in g], marker=".", label=f"ICC={icc}")
-    axes[1].axhline(0.8, color="r", ls="--", lw=0.8)
-    axes[1].set_title(f"ICC sensitivity at {T0} templates")
-    axes[1].legend(fontsize=7)
-    fig.suptitle("Power (development pilot estimates only; Hanley-McNeil x design effect)")
-    c.stamp(fig, rows, ci=False, extra="assumptions: binormal scores, template random intercept, two-sided 95%")
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.2))
+    hyp = ser["hypothetical_T"]
+    for T, pts in sorted(ser["h4_pilot"].items()):
+        axes[0].plot(*zip(*pts), marker="o", ls="--" if T in hyp else "-",
+                     label=f"{T} templates" + (" (hypothetical)" if T in hyp else ""))
+    axes[0].set_title(f"H4 criterion 1 at the pilot ICC={ser['pilot_icc']:.3f}"
+                      if ser["pilot_icc"] is not None else "H4 criterion 1")
+    T0 = ser["icc_panel_T"]
+    for ic, pts in sorted(ser["h4_icc"].items()):
+        lw = 2.6 if ic == ser["pilot_icc"] else 1.0
+        axes[1].plot(*zip(*pts), marker=".", lw=lw,
+                     label=f"ICC={ic:g}" + (" (pilot)" if ic == ser["pilot_icc"] else ""))
+    axes[1].set_title(f"H4 ICC sensitivity at {T0} templates"
+                      + (" (the corpus)" if T0 == ser["corpus_templates"] else "") if T0 else "H4 ICC sensitivity")
+    for ax in axes[:2]:
+        ax.set_xlabel("true AUROC")
+        ax.set_ylabel("P(criterion 1 met)")
+    for ic, pts in sorted(ser["rule"].items()):
+        pilot = ic == ser["rule_pilot_icc"]
+        axes[2].plot(*zip(*pts), marker="o", lw=2.6 if pilot else 1.0,
+                     label=f"ICC={ic:g}" + (" (pilot estimate)" if pilot else ""))
+    if hyp and ser["rule"]:
+        axes[2].axvspan(min(hyp) * 0.9, max(hyp) * 1.1, color="0.9", zorder=0,
+                        label="hypothetical: beyond the corpus")
+    axes[2].set_xscale("log", base=2)
+    Tr = sorted({T for pts in ser["rule"].values() for T, _p in pts})
+    axes[2].set_xticks(Tr)
+    axes[2].set_xticklabels([str(T) for T in Tr])
+    axes[2].minorticks_off()
+    axes[2].set_xlabel("templates (log scale)")
+    axes[2].set_ylabel("power")
+    axes[2].set_title("Rule effect (pooled mean > 0), every ICC")
+    for ax in axes:
+        ax.axhline(0.8, color="r", ls="--", lw=0.8)
+        ax.set_ylim(-0.02, 1.02)
+    axes[0].legend(fontsize=6.5, loc="lower right")
+    axes[1].legend(fontsize=6.5, loc="lower right")
+    axes[2].legend(fontsize=6.5, loc="upper left", bbox_to_anchor=(1.02, 1.0), borderaxespad=0)
+    fig.subplots_adjust(right=0.87)
+    fig.suptitle("Power — development pilot planning estimates (scenario table: POWER_ANALYSIS.md, power.csv)")
+    pil = [r for r in rows if r.get("analysis") in ("h4_criterion1", "rule_effect") and r.get("pilot_templates")]
+    c.stamp(fig, [r for r in rows if r.get("analysis") in ("h4_criterion1", "rule_effect")], ci=False,
+            extra=(f"pilot templates={'|'.join(sorted({str(r['pilot_templates']) for r in pil})) or 'n/a'}  corpus templates="
+                   f"{ser['corpus_templates']}  assumptions: binormal scores (H4), template random "
+                   "intercept, two-sided 95%; dashed / shaded = hypothetical template counts"))
     return c.save(fig, name)
 
 
