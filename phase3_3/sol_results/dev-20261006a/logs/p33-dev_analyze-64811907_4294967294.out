@@ -1,0 +1,8 @@
+[2026-10-06T17:51:25-07:00] p33-dev_analyze job=64811907 task=none node=sc076 run=dev-20261006a
+fertility: 5 rows across 1 tokenizer(s) -> /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a/manifests/fertility.json
+merge arm_a    COMPLETE  rows= 10224 done=192/192 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows= 16000 done=112/112 missing=0 failed=0 corrupt=0 dup_dropped=0
+export: 19 CSVs, 24 plot files, 10 reports -> /home/dkhorami/phase3-3_experiment_sol/results/dev-20261006a
+merge arm_a    COMPLETE  rows= 10224 done=192/192 missing=0 failed=0 corrupt=0 dup_dropped=0
+merge primary  COMPLETE  rows= 16000 done=112/112 missing=0 failed=0 corrupt=0 dup_dropped=0
+VALID: every expected cell is done and verified

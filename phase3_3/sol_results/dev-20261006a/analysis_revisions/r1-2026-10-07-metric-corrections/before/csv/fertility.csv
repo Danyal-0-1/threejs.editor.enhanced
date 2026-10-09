@@ -1,0 +1,6 @@
+family,lexicon,tokenizer_id,n_templates,chars,fragmentation,models,rel_fertility_vs_identity,rel_token_count,tok_per_char,tokens
+dom,identity,cc349caf59f0697a,80,7980,1.35714,Qwen/Qwen2.5-Coder-0.5B|Qwen/Qwen2.5-Coder-0.5B-Instruct|Qwen/Qwen2.5-Coder-1.5B|Qwen/Qwen2.5-Coder-1.5B-Instruct,1,1,0.366917,2928
+dom,d25s1,cc349caf59f0697a,80,7985,1.35714,Qwen/Qwen2.5-Coder-0.5B|Qwen/Qwen2.5-Coder-0.5B-Instruct|Qwen/Qwen2.5-Coder-1.5B|Qwen/Qwen2.5-Coder-1.5B-Instruct,1.07788,1.07855,0.395492,3158
+dom,d25s2,cc349caf59f0697a,80,8015,1.35714,Qwen/Qwen2.5-Coder-0.5B|Qwen/Qwen2.5-Coder-0.5B-Instruct|Qwen/Qwen2.5-Coder-1.5B|Qwen/Qwen2.5-Coder-1.5B-Instruct,0.995633,1,0.365315,2928
+dom,d50s1,cc349caf59f0697a,80,7995,1.35714,Qwen/Qwen2.5-Coder-0.5B|Qwen/Qwen2.5-Coder-0.5B-Instruct|Qwen/Qwen2.5-Coder-1.5B|Qwen/Qwen2.5-Coder-1.5B-Instruct,1.07653,1.07855,0.394997,3158
+dom,d50s2,cc349caf59f0697a,80,8015,1.35714,Qwen/Qwen2.5-Coder-0.5B|Qwen/Qwen2.5-Coder-0.5B-Instruct|Qwen/Qwen2.5-Coder-1.5B|Qwen/Qwen2.5-Coder-1.5B-Instruct,1.07384,1.07855,0.394011,3158
