@@ -1,6 +1,6 @@
 # Phase 4 fixes of the held-out run's open problems — `heldout-20261007a`
 
-> **Post hoc.** Computed on 2026-10-21, after the held-out outcomes were known, outside the frozen code. Nothing here is confirmatory, and no registered verdict changes (deviation D13 in `phase3_2/PREREGISTRATION.md`). Made by `phase4/scripts/fix_heldout_problems.py`; the explanation is in `phase4/fixes_before_phase4/`.
+> **Post hoc.** Computed on 2026-10-22, after the held-out outcomes were known, outside the frozen code. Nothing here is confirmatory, and no registered verdict changes (deviation D13 in `phase3_2/PREREGISTRATION.md`). Made by `phase4/scripts/fix_heldout_problems.py`; the explanation is in `explanations/phase4/fixes_before_phase4/`.
 
 ## F1 — H4 calibration, out of sample
 
@@ -208,7 +208,7 @@ Reversion at the repaired sites themselves, pooled over models and lexicons (ran
 
 ## Provenance
 
-- script `phase4/scripts/fix_heldout_problems.py`, sha256 `51f794535c907c03…`
+- script `phase4/scripts/fix_heldout_problems.py`, sha256 `4b249d0a9d2a6687…`
 - frozen analysis `DEV_FREEZE.json` sha256 `b319c3fcba3dd325…`
 - intervals: template-cluster bootstrap, B = 2000, seed 20261002, streams `<grammar>/phase4/{h5_registered, h4_per_role}`; calibration folds `<grammar>/phase4/calibration_folds` (5 folds)
 - `csv/h4_predictions.csv` sha256 `acbd8d0c6b207ffc…`

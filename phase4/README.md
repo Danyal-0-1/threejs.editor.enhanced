@@ -2,14 +2,14 @@
 
 Phase 3.3 ended with a complete, validated held-out run on ASU Sol (`heldout-20261007a`: 21
 models, 0 failed cells). Its results and its open problems are explained in
-[`phase3_2/sol/heldout_results_explained/`](../phase3_2/sol/heldout_results_explained/00_complete_results.md).
+[`explanations/phase3_3/heldout_results_explained/`](../explanations/phase3_3/heldout_results_explained/00_complete_results.md).
 
 Phase 4 starts by closing every open problem that can be closed with the data already in hand.
 Only then does it take on new questions.
 
 | step | status | what |
 |---|---|---|
-| **0. Fix what Phase 3.3 left open** | **done, 2026-10-21** | five post-hoc corrections of the held-out analysis and one open analysis item, with every doc fixed and every change explained ([`fixes_before_phase4/`](fixes_before_phase4/README.md)) |
+| **0. Fix what Phase 3.3 left open** | **done, 2026-10-21** | five post-hoc corrections of the held-out analysis and one open analysis item, with every doc fixed and every change explained ([`explanations/phase4/fixes_before_phase4/`](../explanations/phase4/fixes_before_phase4/README.md)) |
 | 1. Plan and preregister Phase 4 | to discuss | the candidate studies below |
 
 ---
@@ -18,9 +18,13 @@ Only then does it take on new questions.
 
 | path | what |
 |---|---|
-| [`fixes_before_phase4/`](fixes_before_phase4/README.md) | **every fix made before Phase 4 proper, explained in detail:** step 0 of Phase 4, and the full history of fixes during Phase 3.3 |
 | [`scripts/fix_heldout_problems.py`](scripts/fix_heldout_problems.py) | step 0's analysis: the post-hoc corrections F1–F6 (CPU only, about 40 s) |
 | [`tests/`](tests/) | 6 tests for it, run by the Phase 3.3 test runner |
+
+**Explanations** are kept with every other phase's, in
+[`explanations/phase4/fixes_before_phase4/`](../explanations/phase4/fixes_before_phase4/README.md): every fix made
+before Phase 4 proper, explained in detail (step 0 of Phase 4, and the full history of fixes during
+Phase 3.3). It was moved there from `phase4/fixes_before_phase4/` on 2026-10-22 ([`MOVES.md`](../MOVES.md)).
 
 **Outputs** go next to the run they analyse:
 `phase3_3/sol_results/heldout-20261007a/analysis_addenda/phase4_fixes/` (`PHASE4_FIXES.md`
@@ -52,7 +56,7 @@ changed.**
 | F6 | open item: does one role carry H4? | no: AUROC 0.63–0.98 within each role, 60/60 intervals above 0.5 |
 
 The details, with every number, check and changed sentence, are in
-[`fixes_before_phase4/01_phase4_step0_fixes.md`](fixes_before_phase4/01_phase4_step0_fixes.md).
+[`explanations/phase4/fixes_before_phase4/01_phase4_step0_fixes.md`](../explanations/phase4/fixes_before_phase4/01_phase4_step0_fixes.md).
 
 ---
 
@@ -66,10 +70,10 @@ Each needs new model runs on Sol, so each needs its own preregistration first, a
 | 2 | **A second DSL, or natural respellings** | Do the findings hold beyond one permuted 3D-scene language? This is the biggest gap a reviewer will name | 09 §5 #4 |
 | 3 | **Frontier API models in free generation (Arm B)** | Do closed models revert at reached sites too? H4 is impossible there (no base models) | 09 §5 #3 |
 | 4 | **The spelling-risk linter** | Turn H4 into a tool: score a DSL's planned spellings with an open base model, and flag the risky ones before release | H4; the standing "platform first" recommendation |
-| 5 | **A small human comparison** | Do programmers slip at the same collision sites? It makes a CogSci paper possible | 09 §5 #5; [10](../phase3_2/sol/heldout_results_explained/10_humans_and_the_brain.md) |
+| 5 | **A small human comparison** | Do programmers slip at the same collision sites? It makes a CogSci paper possible | 09 §5 #5; [10](../explanations/phase3_3/heldout_results_explained/10_humans_and_the_brain.md) |
 | 6 | **Mechanism** | Does attention to the token table predict the margin shift? | 09 §5 #6 |
 
 **Before any of these:** write up Phase 3.3. The paper plan is in
-[`06`](../phase3_2/sol/heldout_results_explained/06_publishability_and_paper.md) and
-[`09`](../phase3_2/sol/heldout_results_explained/09_conclusions_claim_strength_and_venues.md).
+[`06`](../explanations/phase3_3/heldout_results_explained/06_publishability_and_paper.md) and
+[`09`](../explanations/phase3_3/heldout_results_explained/09_conclusions_claim_strength_and_venues.md).
 The main target is ACL 2027, through the January 2027 ARR cycle.

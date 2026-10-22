@@ -4,7 +4,7 @@ The audit was done on 2026-10-05, before any change. Every defect claim in the b
 **verified by computation or by reading the code**, not taken on trust.
 
 - Where the brief was wrong or incomplete: [`PROMPT_REVIEW.md`](PROMPT_REVIEW.md).
-- The plain explanation of every defect: [`sol_experiment_explained/08`](sol_experiment_explained/08_changes_defects_and_superseded_numbers.md).
+- The plain explanation of every defect: [`sol_experiment_explained/08`](../../explanations/phase3_3/sol_experiment_explained/08_changes_defects_and_superseded_numbers.md).
 
 ---
 

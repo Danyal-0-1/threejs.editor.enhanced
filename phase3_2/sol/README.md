@@ -5,16 +5,16 @@ order the code permits.
 
 | For | Read |
 |---|---|
-| **the whole experiment in one file: hypotheses, math, one site traced through every step with its code, results** | [`sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md) |
-| why each step exists | [`sol_experiment_explained/`](sol_experiment_explained/) |
+| **the whole experiment in one file: hypotheses, math, one site traced through every step with its code, results** | [`explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](../../explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md) |
+| why each step exists | [`explanations/phase3_3/sol_experiment_explained/`](../../explanations/phase3_3/sol_experiment_explained/) |
 | what was wrong and how it was verified | [`AUDIT.md`](AUDIT.md) |
 | which parts of the original brief were corrected or not done | [`PROMPT_REVIEW.md`](PROMPT_REVIEW.md) |
 
 > **Where things stand (2026-10-09): the experiment is complete.**
 >
-> - **Results:** start with [`heldout_results_explained/00_complete_results.md`](heldout_results_explained/00_complete_results.md).
+> - **Results:** start with [`explanations/phase3_3/heldout_results_explained/00_complete_results.md`](../../explanations/phase3_3/heldout_results_explained/00_complete_results.md).
 >   The same folder has theory, math, the pipeline, a retype plan, the mental image, and the
->   paper plan ([`06`](heldout_results_explained/06_publishability_and_paper.md)).
+>   paper plan ([`06`](../../explanations/phase3_3/heldout_results_explained/06_publishability_and_paper.md)).
 > - **Held-out run `heldout-20261007a`:** 21 models.
 >   - Arm A 190,890 rows, extinction 84,000, Arm B 7,800 generations, H5 212,100 rows.
 >   - 0 failed cells; `validate` VALID; 40.8 A100 GPU-hours.
@@ -28,8 +28,8 @@ order the code permits.
 >   its `CAPTIONS.md`), made by [`scripts/paper_figures.py`](scripts/paper_figures.py) (§12). The 12
 >   figures in `plots/` are the frozen pipeline's diagnostics, not paper figures.
 > - **The paper's conclusion, how strong each claim is, and where to submit:**
->   [`heldout_results_explained/09`](heldout_results_explained/09_conclusions_claim_strength_and_venues.md).
->   The human-behaviour and brain picture is in [`10`](heldout_results_explained/10_humans_and_the_brain.md).
+>   [`explanations/phase3_3/heldout_results_explained/09`](../../explanations/phase3_3/heldout_results_explained/09_conclusions_claim_strength_and_venues.md).
+>   The human-behaviour and brain picture is in [`10`](../../explanations/phase3_3/heldout_results_explained/10_humans_and_the_brain.md).
 >   Its three exploratory checks (inheritance, role ordering, wobble size) are made by
 >   [`scripts/exploratory_checks.py`](scripts/exploratory_checks.py) and labelled post hoc.
 > - **Phase 4 started on 2026-10-21** ([`../../phase4/`](../../phase4/README.md)). Its first step

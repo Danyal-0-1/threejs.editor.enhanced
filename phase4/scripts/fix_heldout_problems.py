@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """fix_heldout_problems.py — Phase 4, step 0: post-hoc fixes for the open problems of
-the Phase 3.3 held-out run, listed in phase3_2/sol/heldout_results_explained/08 and 06 §10.
+the Phase 3.3 held-out run, listed in explanations/phase3_3/heldout_results_explained/08 and 06 §10.
 
     python3 phase4/scripts/fix_heldout_problems.py [--run heldout-20261007a] [--root DIR]
 
@@ -242,7 +242,7 @@ def main(argv=None) -> int:
         f"{datetime.date.today().isoformat()}, after the held-out outcomes were known, outside the "
         "frozen code. Nothing here is confirmatory, and no registered verdict changes (deviation "
         "D13 in `phase3_2/PREREGISTRATION.md`). Made by `phase4/scripts/fix_heldout_problems.py`; "
-        "the explanation is in `phase4/fixes_before_phase4/`.", ""]
+        "the explanation is in `explanations/phase4/fixes_before_phase4/`.", ""]
 
     # =========================================================================
     # F1 — H4 calibration out of sample

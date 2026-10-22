@@ -1,14 +1,15 @@
 # Phase 3 — surface-collision detection, prediction and repair
 
 Phase 3 implements the research direction that survived the literature review,
-in the ordering chosen in `project_status/hypothesis_strength_and_compute_analysis.md`:
+in the ordering chosen in [`explanations/background/hypothesis_strength_and_compute_analysis.md`](../explanations/background/hypothesis_strength_and_compute_analysis.md):
 
 > **Linter first, extinction primary.** Site inventory → risk prediction (H4) →
 > minimal semantics-preserving repair (H5) is the headline track. The primary
 > *scientific* estimand is the extinction threshold `k*`. The A×T
 > difference-in-differences is a **secondary** contrast.
 
-Nothing outside `phase3/` and `phase3_explained/` is modified. Everything
+Nothing outside `phase3/` and `phase3_explained/` is modified (the teaching documents are now in
+[`explanations/phase3/phase3_explained/`](../explanations/phase3/phase3_explained/)). Everything
 Phase 3 borrows is **copied** into `vendor/` with provenance recorded in
 [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md).
 
@@ -199,7 +200,8 @@ Honest labels, per the brief. Nothing here is reported as measured unless it was
 
 ## What is deliberately not here yet
 
-- `phase3_explained/` — the teaching documents. Delivery order was code+tests
+- `phase3_explained/` — the teaching documents, written since and now in
+  [`explanations/phase3/phase3_explained/`](../explanations/phase3/phase3_explained/). Delivery order was code+tests
   first so the docs describe code that actually runs.
 - The A-level (local context) construction. Finding 4 says the corpus is too
   templated to support prefix-conditioned contrasts at scale; template

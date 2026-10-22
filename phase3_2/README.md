@@ -5,7 +5,7 @@ prefix-distinct semantic sites in one grammar family.** Phase 3.2 fixes the
 materials, adds a real second grammar family, and runs the cheap real-model
 check that the rebuild made worth running.
 
-**Teaching documents:** [`phase3_2_explained/`](phase3_2_explained/) — start
+**Teaching documents:** [`explanations/phase3_2/phase3_2_explained/`](../explanations/phase3_2/phase3_2_explained/) — start
 with `00_complete_phase3_2_guide.md`.
 **What changed and what is superseded:** [`CHANGES_FROM_PHASE3.md`](CHANGES_FROM_PHASE3.md).
 
@@ -77,7 +77,7 @@ confidence intervals.*
 ```
 phase3_2/
 ├── README.md · CHANGES_FROM_PHASE3.md
-├── phase3_2_explained/      00–06, the teaching set
+├── (phase3_2_explained/)    the teaching set; now in explanations/phase3_2/
 ├── src/phase3_2/
 │   ├── _vendor.py           declared dependency on phase3/ + two guards
 │   ├── backends.py          Backend protocol · DomBackend · BlkBackend  ← new family
@@ -120,7 +120,7 @@ pinning.
 scores · any external DSL · 7B+ checkpoints (3B already warned on a 16 GB
 laptop GPU — that is what Sol is for).
 
-**Next:** see [`phase3_2_explained/07_next_steps.md`](phase3_2_explained/07_next_steps.md).
+**Next:** see [`explanations/phase3_2/phase3_2_explained/07_next_steps.md`](../explanations/phase3_2/phase3_2_explained/07_next_steps.md).
 In order: preregister the splits and success criteria, re-analyse the strata
 length-matched, check prompt-paraphrase robustness, then run extinction curves
 on `blk`. Scale to Sol only if the effect survives there with intervals.
