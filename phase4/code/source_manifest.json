@@ -1,0 +1,1561 @@
+{
+ "source_commit": "3da4511dd3dcb6beec9a3e1e45110fe9dff9ef11",
+ "files": [
+  {
+   "path": "p4/runtime/config.py",
+   "origin": "phase3_2/sol/src/p33/config.py",
+   "origin_sha256": "f4c7a60e17b9aa772852b1f6cb45536ec33059ff8dae3d16b5499a8de993557e",
+   "kind": "module",
+   "import_lines": [
+    35,
+    261,
+    262,
+    271
+   ],
+   "edits": [
+    {
+     "old": "    roots = [os.path.join(_paths.P33_SRC, \"p33\"),\n             os.path.join(_paths.PHASE3_2_SRC, \"phase3_2\"),\n             os.path.join(_paths.REPO_ROOT, \"phase3\", \"src\", \"phase3\")]",
+     "new": "    roots = [_paths.PACKAGE]   # phase4/code/p4. Phase 3.3 hashed three trees here (p33,\n    #                            phase3_2/src/phase3_2, phase3/src/phase3); in this copy they\n    #                            are one package, so the frozen source set is all of p4/",
+     "reason": "source_hashes(): hash the one p4 package instead of the three Phase 3.3 trees",
+     "count": 1
+    },
+    {
+     "old": "    cli = os.path.join(_paths.SOL_ROOT, \"scripts\", \"p33.py\")    # it picks the scorer",
+     "new": "    cli = _paths.CLI                                            # it picks the scorer",
+     "reason": "source_hashes(): the command-line entry point is run.py",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "ce6c0cc0c6c4c8b9fe4aeac0b5bdf21d0286ca78a3edce03290687496623f914"
+  },
+  {
+   "path": "p4/runtime/shards.py",
+   "origin": "phase3_2/sol/src/p33/shards.py",
+   "origin_sha256": "f496412069bcb061fe632f501484ee9ff60ef3fb68c993e6b09b4843076bdc9e",
+   "kind": "module",
+   "import_lines": [
+    39
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "f5006cda07144ff1a57df8f0c4e714099f8df72ea4da946a8e195b050b52fa3a"
+  },
+  {
+   "path": "p4/runtime/preflight.py",
+   "origin": "phase3_2/sol/src/p33/preflight.py",
+   "origin_sha256": "562e73fe922e04efc071e67f651509e7a8e441f79f49c201747faaeb4357d135",
+   "kind": "module",
+   "import_lines": [
+    29,
+    30,
+    54,
+    83,
+    115
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "14c89ca091e870df85ba95748560ba906c98112c8e18fe5cb07c5f02ded24010"
+  },
+  {
+   "path": "p4/runtime/prefetch.py",
+   "origin": "phase3_2/sol/src/p33/prefetch.py",
+   "origin_sha256": "702316515bbf834166ce6af6c10c1b3b8f5e53ad011526558d369b50d0f4f4a7",
+   "kind": "module",
+   "import_lines": [
+    39,
+    40,
+    109,
+    115
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "17c47b0a5fa467b147c3ca6b387ee665c583d58ba91d96c852f067997d8ecfd2"
+  },
+  {
+   "path": "p4/governance/registry.py",
+   "origin": "phase3_2/sol/src/p33/registry.py",
+   "origin_sha256": "308b3ed6b4d3389a215506c9a1de010806e6310c5422874bfb7796df162507d8",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "308b3ed6b4d3389a215506c9a1de010806e6310c5422874bfb7796df162507d8"
+  },
+  {
+   "path": "p4/governance/splits.py",
+   "origin": "phase3_2/sol/src/p33/splits.py",
+   "origin_sha256": "2918bbe7c54c51d769be5647316772e504d63fa55aa07f5f7cdaf02dd724ace9",
+   "kind": "module",
+   "import_lines": [
+    48,
+    49
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "c0bab922b0c8e910ee66b5653c24bf1a680ab96a786ff0d2a316a1f425815bbc"
+  },
+  {
+   "path": "p4/governance/freeze.py",
+   "origin": "phase3_2/sol/src/p33/freeze.py",
+   "origin_sha256": "e826b7fe2681f696bcacb00ebe69b87b76edccd3772236e826939ecf99e791ef",
+   "kind": "module",
+   "import_lines": [
+    31,
+    33,
+    34,
+    35
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "b49ac9190457ed5b6f9dac90ee230ba7f22061de8042d101b25d047ae0b26328"
+  },
+  {
+   "path": "p4/governance/provenance.py",
+   "origin": "phase3_2/sol/src/p33/provenance.py",
+   "origin_sha256": "4fee625ed33251b9a5dd99a76d4e473698c4bdc4f23bdaa4e387aa5e0eda3afc",
+   "kind": "module",
+   "import_lines": [
+    21,
+    22
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "2bd62a16d7cae667aaae7bfb52cb57af3ad2f649ed139dc569f01ca46e892ac9"
+  },
+  {
+   "path": "p4/experiments/pipeline.py",
+   "origin": "phase3_2/sol/src/p33/pipeline.py",
+   "origin_sha256": "863675ca81ddff924eb30a8f84af073b7b6dbf0d660e0dcc164f8123db5b4ecc",
+   "kind": "module",
+   "import_lines": [
+    30,
+    31,
+    32,
+    34,
+    35,
+    36,
+    37
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "62dada1e626efe16a84a3c8df886bc57aec17422f0dfb346b63669919a0010b8"
+  },
+  {
+   "path": "p4/experiments/armb.py",
+   "origin": "phase3_2/sol/src/p33/armb.py",
+   "origin_sha256": "c262de4e6d82fddf7df3067d586cd47b3103459a0429ec992135e9c796dd88f1",
+   "kind": "module",
+   "import_lines": [
+    40,
+    41,
+    43,
+    44,
+    45,
+    46
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "c06ea82c2e6866824cd42097bf74a3eb129a5c4642508c6156a367ab6f392ec6"
+  },
+  {
+   "path": "p4/experiments/h5.py",
+   "origin": "phase3_2/sol/src/p33/h5.py",
+   "origin_sha256": "9e897d9e65767570d2e4985558f83e06b61b6eade997dba42062ccda16fcc31e",
+   "kind": "module",
+   "import_lines": [
+    46,
+    47,
+    48,
+    50,
+    51,
+    52,
+    60,
+    86
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "0aeed3ad192577ff7176a520eb18af9fc797a534779511db60964f3114ca5007"
+  },
+  {
+   "path": "p4/analysis/h4.py",
+   "origin": "phase3_2/sol/src/p33/h4.py",
+   "origin_sha256": "c3faaeb0a9b0c5736c71ab57d450a345247755b9f1f9b66995591405e2957ddd",
+   "kind": "module",
+   "import_lines": [
+    292,
+    367,
+    439
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "cabe96004fca7140223e8cbe8693ef28aa78c1b9a0d5d98ebda19e4e34eec23c"
+  },
+  {
+   "path": "p4/analysis/kstar.py",
+   "origin": "phase3_2/sol/src/p33/kstar.py",
+   "origin_sha256": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c"
+  },
+  {
+   "path": "p4/analysis/h2.py",
+   "origin": "phase3_2/sol/src/p33/h2.py",
+   "origin_sha256": "071acee006b7f6c249fbd72f254f5de2cb103d744a19dc2ee8c0c2bf68c185d1",
+   "kind": "module",
+   "import_lines": [
+    35
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "29dca5512d2710442be3b088d8f41c8f2d5805ffe89e4873b406f63ae10bddd5"
+  },
+  {
+   "path": "p4/analysis/power.py",
+   "origin": "phase3_2/sol/src/p33/power.py",
+   "origin_sha256": "d38727932b4bfc62c3fac30c04353b1b840fe8fa4b1d33248135b468b346ad65",
+   "kind": "module",
+   "import_lines": [
+    92,
+    144,
+    238
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "3449f29e05b62847c27d93d97bb51a6fc2843f2f037f7fdb9f02f2f95863a146"
+  },
+  {
+   "path": "p4/reporting/export.py",
+   "origin": "phase3_2/sol/src/p33/export.py",
+   "origin_sha256": "e39e4e6dc61f802e418ae499d8703f81ec6e8aaad52c80bd7c93056b27e8354b",
+   "kind": "module",
+   "import_lines": [
+    23,
+    25,
+    26,
+    28,
+    404
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "8ac0b19dde6790f3541d9df5c055e2bd6951293a7dabe0ad26d130006f5c5cdf"
+  },
+  {
+   "path": "p4/reporting/plots.py",
+   "origin": "phase3_2/sol/src/p33/plots.py",
+   "origin_sha256": "0617312d245c3cdb3ce6c826440dde7b32f6e17406cc4c6f9945ed093390cdd2",
+   "kind": "module",
+   "import_lines": [
+    27,
+    225,
+    330
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "cf0a4028b470812c2b79ee9d9071341cd8edd4410ba85c33d2045430cd3cc48d"
+  },
+  {
+   "path": "p4/reporting/reports.py",
+   "origin": "phase3_2/sol/src/p33/reports.py",
+   "origin_sha256": "d7a081e77948fd806678117c3b8235aa3eb07a3bc68d0ef32faefc891f777229",
+   "kind": "module",
+   "import_lines": [
+    20,
+    22,
+    407
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "9c07df900af6f3ca3439559cfbe9de7d574c6abd9c0a6771e73aceb768aa0f2e"
+  },
+  {
+   "path": "p4/reporting/artifacts.py",
+   "origin": "phase3_2/sol/src/p33/artifacts.py",
+   "origin_sha256": "cc56ae2972d3289d1624da0229aba593582da9cdeafefdbf0cb53da4134de320",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "cc56ae2972d3289d1624da0229aba593582da9cdeafefdbf0cb53da4134de320"
+  },
+  {
+   "path": "p4/prompts/demos.py",
+   "origin": "phase3_2/sol/src/p33/demos.py",
+   "origin_sha256": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c"
+  },
+  {
+   "path": "p4/scoring/scorers.py",
+   "origin": "phase3_2/sol/src/p33/scorers.py",
+   "origin_sha256": "1e40cc1107ba01a657b0a759cde4343802ea6c9a151efcaa3bbceba6f6d85ec0",
+   "kind": "module",
+   "import_lines": [
+    57,
+    58
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "9c1f34129a68ac25d85bf70e33926362855ce8a0c96f7479a7b6cb9b490ce677"
+  },
+  {
+   "path": "p4/scoring/fakes.py",
+   "origin": "phase3_2/sol/src/p33/fakes.py",
+   "origin_sha256": "0173b6a9a98e6681e9f202da0cfb7570084db797fe722154cb48ffe9b340851c",
+   "kind": "module",
+   "import_lines": [
+    27
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "e1186c472a8187150489ff03e98bee0c6d2cac2044244332df0ee79ef4ec4403"
+  },
+  {
+   "path": "p4/scoring/fertility.py",
+   "origin": "phase3_2/sol/src/p33/fertility.py",
+   "origin_sha256": "3497a1e29c10000f7e45a0c85c2b54ea2325608dbdd043010c2407da3c2d72d8",
+   "kind": "module",
+   "import_lines": [
+    26,
+    27,
+    33
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "d88e4c6d505ae0930be4bf61445ad73fb36d075fae1d033fd5c6ad0c971f850e"
+  },
+  {
+   "path": "p4/language/backends.py",
+   "origin": "phase3_2/src/phase3_2/backends.py",
+   "origin_sha256": "4634f572050a4bc9c81638c719253a715dd404f79e346783c698dbc613397ad3",
+   "kind": "module",
+   "import_lines": [
+    68
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "c3e72678fabac55c368042bb09757ca82e0d199c1d21601e255264ce5e6b94c0"
+  },
+  {
+   "path": "p4/language/templates.py",
+   "origin": "phase3_2/src/phase3_2/templates.py",
+   "origin_sha256": "f9c4658f761d948d285438664d1dedcbfb0b9441a360a67efb20bbe33324714f",
+   "kind": "module",
+   "import_lines": [
+    54
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "e838312e6e6d582c3360687cee7f6baba5d7a697244a88d6f65f2c27ee704801"
+  },
+  {
+   "path": "p4/language/deltafam.py",
+   "origin": "phase3_2/src/phase3_2/deltafam.py",
+   "origin_sha256": "ad9ee58cebda1a42770448193095880a6d00a45aa9280b7dd2ceff1b5f0274d9",
+   "kind": "module",
+   "import_lines": [
+    67
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "d32a59a7d187f12d5d1c438f65383d0633aa87c930e0e75199d2cc8c2ac42299"
+  },
+  {
+   "path": "p4/sites/sites2.py",
+   "origin": "phase3_2/src/phase3_2/sites2.py",
+   "origin_sha256": "97f5abbb476d37e723b53fc13acc57396322ff212a94ac4291c1b0d4091f648d",
+   "kind": "module",
+   "import_lines": [
+    31,
+    37
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "6c28ba58b40899183e468d8b143c4684fe5964b35da1a5e21db79b9f79ab8acd"
+  },
+  {
+   "path": "p4/sites/sampling.py",
+   "origin": "phase3_2/src/phase3_2/sampling.py",
+   "origin_sha256": "a674d2ae65f9ae3cee28d42d0934e9cb25a5880cdcdcbc2a01575df533b7f248",
+   "kind": "module",
+   "import_lines": [
+    53,
+    55
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "6b3cd559281f4b4bfe3348a955b9f165eac635996f3d3528f8aea0f52bd2734f"
+  },
+  {
+   "path": "p4/prompts/prompts.py",
+   "origin": "phase3_2/src/phase3_2/prompts.py",
+   "origin_sha256": "e561b526dce1c0a06e8774fbcc181b8af9c0b40a117e3134d6dedf05fd7a4a4d",
+   "kind": "module",
+   "import_lines": [
+    47
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "a537de131a777ffe32fce7165edeb9f3eb1a4f8851346992a9364364c1628389"
+  },
+  {
+   "path": "p4/scoring/margins.py",
+   "origin": "phase3_2/src/phase3_2/margins.py",
+   "origin_sha256": "708c77ac0e16b70d717b341cdfb68896da75cb83039d3aa73344747f3bb22733",
+   "kind": "module",
+   "import_lines": [
+    60,
+    62
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "d0745572c1298b966626b7492a212722173b29425543eec09b7f42579bea81d1"
+  },
+  {
+   "path": "p4/analysis/analysis.py",
+   "origin": "phase3_2/src/phase3_2/analysis.py",
+   "origin_sha256": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246"
+  },
+  {
+   "path": "p4/sites/sites.py",
+   "origin": "phase3/src/phase3/sites.py",
+   "origin_sha256": "3becc24107e000a89850ab1519c99d77040af22807755dcc3ab12e7166ff4a00",
+   "kind": "module",
+   "import_lines": [
+    73
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "0b260480f91e2e25d050a4e555e814f8ac8b62e93d5e5abdc72a1326b4f982f7"
+  },
+  {
+   "path": "p4/scoring/scoring.py",
+   "origin": "phase3/src/phase3/scoring.py",
+   "origin_sha256": "7de5a6aff42b4c7e34629f53f5e03e88bb6bab1314f747de146bdc4b8fb149d6",
+   "kind": "module",
+   "import_lines": [
+    50,
+    51
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "7731767258bccf746f457af2ff3312d7e8e4f6b2f64204d509a4b387e6c23dda"
+  },
+  {
+   "path": "p4/scoring/models.py",
+   "origin": "phase3/src/phase3/models.py",
+   "origin_sha256": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62",
+   "kind": "module",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62"
+  },
+  {
+   "path": "run.py",
+   "origin": "phase3_2/sol/scripts/p33.py",
+   "origin_sha256": "4dc49bd89583fc07a35892473309b0920b4cbc16c756e52cb365a32b3863f89e",
+   "kind": "script",
+   "import_lines": [
+    49,
+    50,
+    51,
+    53,
+    82,
+    88,
+    90,
+    111,
+    122,
+    160,
+    190,
+    195,
+    243,
+    258,
+    283,
+    329
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # phase4/code, where the p4 package is",
+     "reason": "put phase4/code on sys.path",
+     "count": 1
+    },
+    {
+     "old": "\"\"\"p33.py \u2014 the one command-line entry point for the Phase 3.3 pipeline.",
+     "new": "\"\"\"run.py \u2014 the one command-line entry point (copied from Phase 3.3's scripts/p33.py).",
+     "reason": "docstring: the file's new name",
+     "count": 1
+    },
+    {
+     "old": "p33.py ",
+     "new": "run.py ",
+     "reason": "docstring usage lines: the file's new name",
+     "count": 17
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "f7f677c7687f297ffc09d37600331cfd5eaebdfa7fee363ff91e667fa47a496b"
+  },
+  {
+   "path": "tools/build_materials.py",
+   "origin": "phase3_2/scripts/build_materials.py",
+   "origin_sha256": "9e5eb70f581a461fc44a6e0a13b1f69b944c34663c8f68d46181da253b4455dd",
+   "kind": "script",
+   "import_lines": [
+    22,
+    26,
+    27
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(\n    os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.dirname(  # phase4/code: where p4 is\n    os.path.abspath(__file__))))",
+     "reason": "put phase4/code (the folder holding p4/) on sys.path instead of a phase's src/",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "3c23d33db4f773b7d5b47320578cbab221caf9042fcb577bfc221cd2ce1061cd"
+  },
+  {
+   "path": "tools/analysis_revision.py",
+   "origin": "phase3_2/sol/scripts/analysis_revision.py",
+   "origin_sha256": "33cb358b37567674c57d43d1740906b7a23fa362ca075d7e4b43b36c30a843a8",
+   "kind": "script",
+   "import_lines": [
+    43,
+    44,
+    96,
+    224
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(HERE), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(HERE))          # phase4/code, where the p4 package is",
+     "reason": "put phase4/code on sys.path",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "0ed8591e824a7866292e34c21a65cb2ac12ef9f13e6118808c8fabb7e9ca3b11"
+  },
+  {
+   "path": "tests/run_tests.py",
+   "origin": "phase3_2/sol/tests/run_tests.py",
+   "origin_sha256": "e989d9b5209aadcb8cc7d1fa48246d84b468fd2ba0026f83cb5f1bea49bd817d",
+   "kind": "test",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(SOL, \"src\"))",
+     "new": "sys.path.insert(0, SOL)                           # here SOL is phase4/code, where p4 is",
+     "reason": "put phase4/code on sys.path",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "b7b557c1655f0e8bd448cc03b303e8b54b254cf2009b5e96db5fd3f173a2fe24"
+  },
+  {
+   "path": "tests/_helpers.py",
+   "origin": "phase3_2/sol/tests/_helpers.py",
+   "origin_sha256": "b7a9b4188185ad6da756ed79c6fa5a19d9fc968dd28261ac00194a9b3c384606",
+   "kind": "test",
+   "import_lines": [
+    8,
+    9,
+    35
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "7f76ab8593208ed422d010ea6fe1a66b5edc7f9fb97c793b77801b9b5073300a"
+  },
+  {
+   "path": "tests/test_analysis.py",
+   "origin": "phase3_2/sol/tests/test_analysis.py",
+   "origin_sha256": "70aa60196c64b6aafd64e9dbb4f4cedb4b7428556344abbb1d7cdf39dc5ea949",
+   "kind": "test",
+   "import_lines": [
+    9,
+    10,
+    12,
+    121,
+    191
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "10a30216f7d850c8f3fd85672533a1fdcf9a0e3a564e3c65b605483c34378f55"
+  },
+  {
+   "path": "tests/test_e2e.py",
+   "origin": "phase3_2/sol/tests/test_e2e.py",
+   "origin_sha256": "14985cdb226fe112f75a8bc10c0d28de2051d38cd1291f64c81169eb59f79126",
+   "kind": "test",
+   "import_lines": [
+    17,
+    18,
+    19,
+    103,
+    117
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "4988304b29604ccc8b86c4625feb69f94066a2d94aff99e82232cc86c9c015ad"
+  },
+  {
+   "path": "tests/test_metric_and_report_corrections.py",
+   "origin": "phase3_2/sol/tests/test_metric_and_report_corrections.py",
+   "origin_sha256": "653cc5d4e55792a1c0565a7b34c81d049c9597344863c10805329664400443cf",
+   "kind": "test",
+   "import_lines": [
+    24,
+    25,
+    403,
+    426,
+    440
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "deaa796a0d89ecce4b1f9df1390e2abc32fbd5227594e92577ca8cad9e177319"
+  },
+  {
+   "path": "tests/test_model_scale.py",
+   "origin": "phase3_2/sol/tests/test_model_scale.py",
+   "origin_sha256": "69fc286e155b4fba2438dedeaaf980ae7da3e73d83991a2fffbb19336798fccd",
+   "kind": "test",
+   "import_lines": [
+    17
+   ],
+   "edits": [
+    {
+     "old": "open(os.path.join(_paths.SOL_ROOT, \"configs\", \"heldout.json\"))",
+     "new": "open(os.path.join(_paths.CONFIGS, \"heldout.json\"))",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 1
+    },
+    {
+     "old": "open(os.path.join(_paths.SOL_ROOT, \"configs\", \"dev.json\"))",
+     "new": "open(os.path.join(_paths.CONFIGS, \"dev.json\"))",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 1
+    },
+    {
+     "old": "\"p33cli_scale\", os.path.join(_paths.SOL_ROOT, \"scripts\", \"p33.py\"))",
+     "new": "\"p33cli_scale\", _paths.CLI)",
+     "reason": "the entry point is run.py",
+     "count": 1
+    },
+    {
+     "old": "open(os.path.join(_paths.SOL_ROOT, \"configs\", cfg_file))",
+     "new": "open(os.path.join(_paths.CONFIGS, cfg_file))",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "6d2da9b45d83249ef45cd5ce91a89fcdddce825b1b97533b297181998c086598"
+  },
+  {
+   "path": "tests/test_prereg_env.py",
+   "origin": "phase3_2/sol/tests/test_prereg_env.py",
+   "origin_sha256": "d00c468790854865105731996ba306c8a5a4aaf07f3a4fbf692bb77101c34dd1",
+   "kind": "test",
+   "import_lines": [
+    10,
+    91,
+    98,
+    121,
+    133,
+    142,
+    153,
+    194,
+    195
+   ],
+   "edits": [
+    {
+     "old": "    root = os.path.join(_paths.SOL_ROOT, \"configs\")",
+     "new": "    root = _paths.CONFIGS",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "fec9441578ba38b6ba070be50c1a7ae6aa5c1860b6b88e47ebb319517d718090"
+  },
+  {
+   "path": "tests/test_shards_resume.py",
+   "origin": "phase3_2/sol/tests/test_shards_resume.py",
+   "origin_sha256": "1c61723a4e57af52768b0f821b2c6673f763c88f43f82dbc26ccfb1bd56f626b",
+   "kind": "test",
+   "import_lines": [
+    13,
+    14,
+    15,
+    45,
+    200
+   ],
+   "edits": [
+    {
+     "old": "                        \"scripts\", \"p33.py\")",
+     "new": "                        \"run.py\")",
+     "reason": "the entry point is phase4/code/run.py",
+     "count": 2
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "fd7bc8670994e14a93b1b7b44a1f13c98474a25a161d765708fc8b9606530d30"
+  },
+  {
+   "path": "tests/test_splits_freeze.py",
+   "origin": "phase3_2/sol/tests/test_splits_freeze.py",
+   "origin_sha256": "c94896625fb82ef51f8424f4c936294a7a644b02785ba60915c7fc98a0efbd4e",
+   "kind": "test",
+   "import_lines": [
+    11,
+    12,
+    13,
+    52,
+    104
+   ],
+   "edits": [
+    {
+     "old": "\"phase3_2/sol/src/p33/h4.py\"",
+     "new": "\"phase4/code/p4/analysis/h4.py\"",
+     "reason": "a frozen file's key, as source_hashes() now names it",
+     "count": 1
+    },
+    {
+     "old": "\"phase3_2/sol/src/p33/kstar.py\"",
+     "new": "\"phase4/code/p4/analysis/kstar.py\"",
+     "reason": "a frozen file's key, as source_hashes() now names it",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "b8a6fc0d937b1beaf4947acf3ea2dbfc85d24991a999eb4b519eb8b2ce8f243c"
+  },
+  {
+   "path": "tests/test_stop_ship.py",
+   "origin": "phase3_2/sol/tests/test_stop_ship.py",
+   "origin_sha256": "6e36d13e8617bf4c3d8319b6d3a7581ce7cca6025faa9dd1c2ef478119a1b6ca",
+   "kind": "test",
+   "import_lines": [
+    11,
+    12,
+    13,
+    14,
+    17,
+    18,
+    19,
+    292,
+    338,
+    346
+   ],
+   "edits": [],
+   "change": "imports",
+   "sha256": "3591760ce07212609bbec12450d3cfa2c78e28fd712c09eaf18f95cf93a7f4b0"
+  },
+  {
+   "path": "tests/test_phase3_2.py",
+   "origin": "phase3_2/tests/test_phase3_2.py",
+   "origin_sha256": "8466cd60dc550f5595d0a51cb7af74f45e2812917094a59208037cf1ee4a31e3",
+   "kind": "test",
+   "import_lines": [
+    15,
+    21,
+    22,
+    302,
+    314,
+    330,
+    339,
+    354,
+    371,
+    387,
+    397,
+    415,
+    424,
+    435
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(\n    os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.dirname(  # phase4/code: where p4 is\n    os.path.abspath(__file__))))",
+     "reason": "put phase4/code (the folder holding p4/) on sys.path instead of a phase's src/",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "359c738cba4e2a88e9bd33a45f8f7e91fa5bcee175ef208001e5544c91347fb2"
+  },
+  {
+   "path": "tests/test_sites.py",
+   "origin": "phase3/tests/test_sites.py",
+   "origin_sha256": "c8ebcc4669fced297a1a4b382c49fdee3f2e2dc8f60b09383683a37004c18300",
+   "kind": "test",
+   "import_lines": [
+    23,
+    30
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(\n    os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.dirname(  # phase4/code: where p4 is\n    os.path.abspath(__file__))))",
+     "reason": "put phase4/code (the folder holding p4/) on sys.path instead of a phase's src/",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "40c2d12a3addd7234bfe36bdfb2fc9ec2fa63640642a95b8ef188e8dd0b028e0"
+  },
+  {
+   "path": "tests/test_scorer_repair.py",
+   "origin": "phase3/tests/test_scorer_repair.py",
+   "origin_sha256": "1d87309e803d58b21998fc1362e2b3d8a5709b297ce1281119fd70c1be5dca61",
+   "kind": "test",
+   "import_lines": [
+    20
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(\n    os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.dirname(  # phase4/code: where p4 is\n    os.path.abspath(__file__))))",
+     "reason": "put phase4/code (the folder holding p4/) on sys.path instead of a phase's src/",
+     "count": 1
+    }
+   ],
+   "change": "imports and paths",
+   "sha256": "78f4c9721655da7b91a28300138c8a5fc818872783dd60140f9651dd16cdae37"
+  },
+  {
+   "path": "tests/test_phase3_scoring.py",
+   "origin": "phase3/tests/test_pipeline.py",
+   "origin_sha256": "018ff87eb3272e246a391e9a12e3de3f65b85cc6e1d26ec4c40a8914b2721acf",
+   "kind": "test-subset",
+   "import_lines": [
+    17,
+    24,
+    25
+   ],
+   "edits": [
+    {
+     "old": "sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(\n    os.path.abspath(__file__))), \"src\"))",
+     "new": "sys.path.insert(0, os.path.dirname(os.path.dirname(  # phase4/code: where p4 is\n    os.path.abspath(__file__))))",
+     "reason": "put phase4/code (the folder holding p4/) on sys.path instead of a phase's src/",
+     "count": 1
+    },
+    {
+     "old": "\"\"\"Tests for scoring, outcomes, the linter, and the end-to-end pipeline.",
+     "new": "\"\"\"Tests for scoring.py: the subset of phase3/tests/test_pipeline.py for code the pipeline uses.",
+     "reason": "docstring: this file is a subset",
+     "count": 1
+    }
+   ],
+   "change": "subset",
+   "sha256": "f9bf064ed91afb842fb279df05503f58b4dd47da5d2d3e4b23d1029cce787344"
+  },
+  {
+   "path": "dsl/alien_syntax/src/canonicalize.py",
+   "origin": "phase3/vendor/alien_syntax/src/canonicalize.py",
+   "origin_sha256": "bd5d60071f04aea38cc67fe37a5e38edc30eeb904672834ed272498c91254ce3",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "bd5d60071f04aea38cc67fe37a5e38edc30eeb904672834ed272498c91254ce3"
+  },
+  {
+   "path": "dsl/alien_syntax/src/generate_corpus.py",
+   "origin": "phase3/vendor/alien_syntax/src/generate_corpus.py",
+   "origin_sha256": "1d2ceca17b600b5675087863413408094578227aea24f2d39453b2468d841047",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "1d2ceca17b600b5675087863413408094578227aea24f2d39453b2468d841047"
+  },
+  {
+   "path": "dsl/alien_syntax/src/heuristics_ir.py",
+   "origin": "phase3/vendor/alien_syntax/src/heuristics_ir.py",
+   "origin_sha256": "a91bc9a6274f0537eb3e87aeae6b4b67ea2a3ec82af485e252e79a036f70617b",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "a91bc9a6274f0537eb3e87aeae6b4b67ea2a3ec82af485e252e79a036f70617b"
+  },
+  {
+   "path": "dsl/alien_syntax/src/phi.py",
+   "origin": "phase3/vendor/alien_syntax/src/phi.py",
+   "origin_sha256": "1a7c117b20be9c9081debeedc4ecfe48f694fbe754679923b1553c1948404d72",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "1a7c117b20be9c9081debeedc4ecfe48f694fbe754679923b1553c1948404d72"
+  },
+  {
+   "path": "dsl/alien_syntax/src/transpiler.py",
+   "origin": "phase3/vendor/alien_syntax/src/transpiler.py",
+   "origin_sha256": "2010e641424d7e3e9a66c9c874d8f0b7f59a96b2ab53b8cf0cd555253aff0927",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "2010e641424d7e3e9a66c9c874d8f0b7f59a96b2ab53b8cf0cd555253aff0927"
+  },
+  {
+   "path": "dsl/alien_syntax/grammar/render_grammar.py",
+   "origin": "phase3/vendor/alien_syntax/grammar/render_grammar.py",
+   "origin_sha256": "3544a82a39feafcd5aecb301e65cecd68f3007eb54439d35817bad718bb2620b",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "3544a82a39feafcd5aecb301e65cecd68f3007eb54439d35817bad718bb2620b"
+  },
+  {
+   "path": "dsl/alien_syntax/grammar/templates/grammar.iso.template.ebnf",
+   "origin": "phase3/vendor/alien_syntax/grammar/templates/grammar.iso.template.ebnf",
+   "origin_sha256": "9b97d722ec0982ec1e3e91423014e4d2b4680452609e8ccb02abd0820777601f",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "9b97d722ec0982ec1e3e91423014e4d2b4680452609e8ccb02abd0820777601f"
+  },
+  {
+   "path": "dsl/alien_syntax/grammar/templates/grammar.lark.template",
+   "origin": "phase3/vendor/alien_syntax/grammar/templates/grammar.lark.template",
+   "origin_sha256": "903e69b142006b3b9a7bd1d6db51ae483363a0611b422f7a289f0500f0e8903f",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "903e69b142006b3b9a7bd1d6db51ae483363a0611b422f7a289f0500f0e8903f"
+  },
+  {
+   "path": "dsl/alien_syntax/grammar/templates/grammar.w3c.template.ebnf",
+   "origin": "phase3/vendor/alien_syntax/grammar/templates/grammar.w3c.template.ebnf",
+   "origin_sha256": "1d47795e45bb102c1ac7d358ba4915313e0e038b8deaeae9c3565a5e914384da",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "1d47795e45bb102c1ac7d358ba4915313e0e038b8deaeae9c3565a5e914384da"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_alpha.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_alpha.json",
+   "origin_sha256": "eb126919a758dcc1ca53c64bff3de350306b76c9e5ac2e10f90f4cdd16e2d1bb",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "eb126919a758dcc1ca53c64bff3de350306b76c9e5ac2e10f90f4cdd16e2d1bb"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_beta.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_beta.json",
+   "origin_sha256": "ea4f08369de2ffa885904a04b0fd54356bfea166c85e81ec837396ff3e6cd08a",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "ea4f08369de2ffa885904a04b0fd54356bfea166c85e81ec837396ff3e6cd08a"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d25s1.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d25s1.json",
+   "origin_sha256": "16a2e9b3a6ad2998ea152fbb6de454c4fb4c3ea50b36db5d789059bb3ca7cbd8",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "16a2e9b3a6ad2998ea152fbb6de454c4fb4c3ea50b36db5d789059bb3ca7cbd8"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d25s2.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d25s2.json",
+   "origin_sha256": "c35af4593551f8e452908ed28458a8628af4db6f47c8dbf934b08863a9a00f65",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "c35af4593551f8e452908ed28458a8628af4db6f47c8dbf934b08863a9a00f65"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d25s3.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d25s3.json",
+   "origin_sha256": "e62d20283c725b6682b80bae60b5ca4f4c85e7fc7a669a33c62aef4d5bf149b7",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "e62d20283c725b6682b80bae60b5ca4f4c85e7fc7a669a33c62aef4d5bf149b7"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d50s1.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d50s1.json",
+   "origin_sha256": "b6fc5fdb764d85578b7f381e3e0d8182ea105919b4a8e12ed62e020916284b0b",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "b6fc5fdb764d85578b7f381e3e0d8182ea105919b4a8e12ed62e020916284b0b"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d50s2.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d50s2.json",
+   "origin_sha256": "5e4101448086a47e2aa8f0bd24ce76e8b5e7610448c8d35b70b2e3ecd6401ccd",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "5e4101448086a47e2aa8f0bd24ce76e8b5e7610448c8d35b70b2e3ecd6401ccd"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d50s3.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d50s3.json",
+   "origin_sha256": "68baa8b14c9c474b90f5d57050d7f58c5ecb4e189a87510afff5a204fbd6975d",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "68baa8b14c9c474b90f5d57050d7f58c5ecb4e189a87510afff5a204fbd6975d"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d75s1a.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d75s1a.json",
+   "origin_sha256": "0c791fb9aab85bfc9a7b8b319a7b5a7560269bc9fd8c560e390424d69b7d3e45",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "0c791fb9aab85bfc9a7b8b319a7b5a7560269bc9fd8c560e390424d69b7d3e45"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d75s2a.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d75s2a.json",
+   "origin_sha256": "f798b2eea25b01b76e803e37304a7049f0b1e250893028c71ea4450a173cea18",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "f798b2eea25b01b76e803e37304a7049f0b1e250893028c71ea4450a173cea18"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_d75s3a.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_d75s3a.json",
+   "origin_sha256": "f7b2e82e4bd9bf375aca1b34762e1393e4cde5678bd7019800a2828b7a186ff4",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "f7b2e82e4bd9bf375aca1b34762e1393e4cde5678bd7019800a2828b7a186ff4"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_delta.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_delta.json",
+   "origin_sha256": "5f33b7ab4f2c86d4c60e7b03ca7cc516fc39ee2e4a18d92c277cf986a1a5f3a4",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "5f33b7ab4f2c86d4c60e7b03ca7cc516fc39ee2e4a18d92c277cf986a1a5f3a4"
+  },
+  {
+   "path": "dsl/alien_syntax/candidates/phi_gamma.json",
+   "origin": "phase3/vendor/alien_syntax/candidates/phi_gamma.json",
+   "origin_sha256": "c674772dff08ce7ac2aacba34d1423c1d807e5b68b9065445f99a62a2fb15e5e",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "c674772dff08ce7ac2aacba34d1423c1d807e5b68b9065445f99a62a2fb15e5e"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/3dom_grammar.iso.ebnf",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/3dom_grammar.iso.ebnf",
+   "origin_sha256": "eb72e243f71a7bcc0f479400e6c81a8ceb951e82053d6fe86b64276bcf071583",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "eb72e243f71a7bcc0f479400e6c81a8ceb951e82053d6fe86b64276bcf071583"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/3dom_grammar.w3c.ebnf",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/3dom_grammar.w3c.ebnf",
+   "origin_sha256": "d154bf227895371369e22ed2082841c4a089f61bcd8116a8b363d5521c024ebf",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "d154bf227895371369e22ed2082841c4a089f61bcd8116a8b363d5521c024ebf"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/fixture_scene.py",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/fixture_scene.py",
+   "origin_sha256": "fc98305b7ff2126a92fbc5a67afede8412f8c3319b535f29e90a710d5df53c90",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "fc98305b7ff2126a92fbc5a67afede8412f8c3319b535f29e90a710d5df53c90"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/ir_schema.json",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/ir_schema.json",
+   "origin_sha256": "81cadc4cb090d54e769e1a7c06c67d203479988813cc3c6cb4107614d715cdac",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "81cadc4cb090d54e769e1a7c06c67d203479988813cc3c6cb4107614d715cdac"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/tasks.py",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/tasks.py",
+   "origin_sha256": "2cef9d73c267163bb4243331e221c94773df749a3936aad0ca889ed1657c6c49",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "2cef9d73c267163bb4243331e221c94773df749a3936aad0ca889ed1657c6c49"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/terminals.json",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/terminals.json",
+   "origin_sha256": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/conformance/negative.txt",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/conformance/negative.txt",
+   "origin_sha256": "92accab701bb3134ffa5445056f37f1486f794173b868b805eaf8d23e8d98ce6",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "92accab701bb3134ffa5445056f37f1486f794173b868b805eaf8d23e8d98ce6"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/conformance/positive.txt",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/conformance/positive.txt",
+   "origin_sha256": "a6483d3b4572af34fca65f9fa9c324aad31962e1365478e4759e890e1275f17c",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "a6483d3b4572af34fca65f9fa9c324aad31962e1365478e4759e890e1275f17c"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/conformance/refgrammar.py",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/conformance/refgrammar.py",
+   "origin_sha256": "de4f577cca1eb01c615e6581648e2a0a0a4ed20842c72c89b61d0890672164c5",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "de4f577cca1eb01c615e6581648e2a0a0a4ed20842c72c89b61d0890672164c5"
+  },
+  {
+   "path": "dsl/grammar_and_3DOM_client/conformance/vacuous.txt",
+   "origin": "phase3/vendor/grammar_and_3DOM_client/conformance/vacuous.txt",
+   "origin_sha256": "d089c420a55f397d180676946bfb912a7ba0c0723c2142c6399f3be136dcf742",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "d089c420a55f397d180676946bfb912a7ba0c0723c2142c6399f3be136dcf742"
+  },
+  {
+   "path": "dsl/PATCHES/tasks.op_selection.md",
+   "origin": "phase3/PATCHES/tasks.op_selection.md",
+   "origin_sha256": "0e3aa96ee551b6d17068326002fb6327bc2fcf8fb6126d7155593fc04676ed36",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "0e3aa96ee551b6d17068326002fb6327bc2fcf8fb6126d7155593fc04676ed36"
+  },
+  {
+   "path": "configs/dev.json",
+   "origin": "phase3_2/sol/configs/dev.json",
+   "origin_sha256": "c74166c5619c7067d8dd6edf162f80512f3d49c17c0dc049af8150ac207ee47e",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "c74166c5619c7067d8dd6edf162f80512f3d49c17c0dc049af8150ac207ee47e"
+  },
+  {
+   "path": "configs/heldout.json",
+   "origin": "phase3_2/sol/configs/heldout.json",
+   "origin_sha256": "2c8b1b4d3cf701554ac97a8be9f6157a7368c8610f83227b5224a4a9ff6e6fb9",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "2c8b1b4d3cf701554ac97a8be9f6157a7368c8610f83227b5224a4a9ff6e6fb9"
+  },
+  {
+   "path": "configs/local_smoke.json",
+   "origin": "phase3_2/sol/configs/local_smoke.json",
+   "origin_sha256": "ec67165e0ef3b62d5ceb2d8a0f04df56ac79d8acab3b7c446f7c951b7f7d92eb",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "ec67165e0ef3b62d5ceb2d8a0f04df56ac79d8acab3b7c446f7c951b7f7d92eb"
+  },
+  {
+   "path": "configs/smoke.json",
+   "origin": "phase3_2/sol/configs/smoke.json",
+   "origin_sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c"
+  },
+  {
+   "path": "sol/env/README.md",
+   "origin": "phase3_2/sol/env/README.md",
+   "origin_sha256": "396c0bbb6b478692c277109725b76a9274c6b28d98d99f1f7a051aa0cc985e5b",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "396c0bbb6b478692c277109725b76a9274c6b28d98d99f1f7a051aa0cc985e5b"
+  },
+  {
+   "path": "sol/env/activate.sh",
+   "origin": "phase3_2/sol/env/activate.sh",
+   "origin_sha256": "a58640fa259db187d36900fd115eeb8a215a6b3b02720ad922ba32c46c845825",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "a58640fa259db187d36900fd115eeb8a215a6b3b02720ad922ba32c46c845825"
+  },
+  {
+   "path": "sol/env/make_env.sh",
+   "origin": "phase3_2/sol/env/make_env.sh",
+   "origin_sha256": "35270e5a6a23075be3bf27edb36cf55596c8f944143d8374ec725f2508d971df",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "35270e5a6a23075be3bf27edb36cf55596c8f944143d8374ec725f2508d971df"
+  },
+  {
+   "path": "sol/env/requirements.in",
+   "origin": "phase3_2/sol/env/requirements.in",
+   "origin_sha256": "c3bc98be6d8411639692b58cea19cb7c9722eac3a9d4aaae7ad5a90e96b63505",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "c3bc98be6d8411639692b58cea19cb7c9722eac3a9d4aaae7ad5a90e96b63505"
+  },
+  {
+   "path": "sol/env/requirements.lock.laptop.txt",
+   "origin": "phase3_2/sol/env/requirements.lock.laptop.txt",
+   "origin_sha256": "64af0c6c2eaeb266a38952fa7b3f0b0e9ae7a7ffbb40c3b1139d27e785737f71",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "64af0c6c2eaeb266a38952fa7b3f0b0e9ae7a7ffbb40c3b1139d27e785737f71"
+  },
+  {
+   "path": "sol/env/requirements.lock.sol.txt",
+   "origin": "phase3_2/sol/env/requirements.lock.sol.txt",
+   "origin_sha256": "fabef0b74207b891a1a9811d5ddd07603225cf1b2a5668332577d81549a4d112",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "fabef0b74207b891a1a9811d5ddd07603225cf1b2a5668332577d81549a4d112"
+  },
+  {
+   "path": "sol/jobs/arm_b.slurm",
+   "origin": "phase3_2/sol/jobs/arm_b.slurm",
+   "origin_sha256": "a07c0ead17eb44aa8f7cc2db7dd6353014964e654d55a5482f7d367bb13c3c86",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    }
+   ],
+   "change": "paths",
+   "sha256": "4cd671e0de789dc4b0d68b06cbd35d68e1555b11981f83dbd814e0f82370d634"
+  },
+  {
+   "path": "sol/jobs/cpu_tests.slurm",
+   "origin": "phase3_2/sol/jobs/cpu_tests.slurm",
+   "origin_sha256": "e2ad63f79bb562450d4e6c3bd4b5e1457e21d66b4f84e1d36e17021844f7bfd3",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "for suite in \"tests/run_tests.py --cpu-node\" \"../tests/run_tests.py\" \"../../phase3/tests/run_tests.py\"; do",
+     "new": "for suite in \"../tests/run_tests.py --cpu-node\"; do",
+     "reason": "one suite here: phase4/code/tests holds the tests of all three Phase 3 folders",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "27345fa8bf8d728ff8ee4d236a4fee60bf205ae41f299a56313e8b482915b729"
+  },
+  {
+   "path": "sol/jobs/dev_analyze.slurm",
+   "origin": "phase3_2/sol/jobs/dev_analyze.slurm",
+   "origin_sha256": "33ff7acb4b78c173ab751ce9acad12f2b7c3f4aea2742b6ac9d856b48c554dbb",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 3
+    }
+   ],
+   "change": "paths",
+   "sha256": "f7a145acfae422c25e1a72e49e4abdc3fe81ba0682ce0391978f0dd86d9593fa"
+  },
+  {
+   "path": "sol/jobs/dev_arm_a.slurm",
+   "origin": "phase3_2/sol/jobs/dev_arm_a.slurm",
+   "origin_sha256": "6d9e33911470b5fa843de19333d9fd57ae0ec15cd8596baa5db6a5be94b89138",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    }
+   ],
+   "change": "paths",
+   "sha256": "421fe00ee35d69315ae818641f64b50115c3a53e7a26905b6bdb0e8e5305a03f"
+  },
+  {
+   "path": "sol/jobs/dev_freeze.slurm",
+   "origin": "phase3_2/sol/jobs/dev_freeze.slurm",
+   "origin_sha256": "f048e1edf9d43ef31577ed17011158d74576ef3755f27ab72785986441f6cb4e",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    }
+   ],
+   "change": "paths",
+   "sha256": "237a1daa32aa2e922e7aa110e6ffd3195aaa69e0577de925bd39dee281e0557b"
+  },
+  {
+   "path": "sol/jobs/dev_primary.slurm",
+   "origin": "phase3_2/sol/jobs/dev_primary.slurm",
+   "origin_sha256": "54c3adc3765a70b0af17a3dd2ff27518992b05a7794755db19d5389954c43003",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    }
+   ],
+   "change": "paths",
+   "sha256": "3e6ae014ecfc0993990fa69595bd161115b01bbd12b27a5394d8b89eb592e7b8"
+  },
+  {
+   "path": "sol/jobs/final_export.slurm",
+   "origin": "phase3_2/sol/jobs/final_export.slurm",
+   "origin_sha256": "55c41774448de7c7e90f2fea4fbeeb0b5a7ff74e395534b858537bb0cb23d2a5",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 3
+    }
+   ],
+   "change": "paths",
+   "sha256": "a8e2f37de55b730ed727a79fbdb83192ab0e3fdaebc4e0e92bb82f38bd0279a3"
+  },
+  {
+   "path": "sol/jobs/h5.slurm",
+   "origin": "phase3_2/sol/jobs/h5.slurm",
+   "origin_sha256": "233dda453113e7065de3afbbbe249d0c57603ece387e24b2efa5c237ade87c8a",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 3
+    }
+   ],
+   "change": "paths",
+   "sha256": "e6574a698eed3df1e507c038c6cc279cace910a0ed41df444a174e56ecec006a"
+  },
+  {
+   "path": "sol/jobs/heldout_eval.slurm",
+   "origin": "phase3_2/sol/jobs/heldout_eval.slurm",
+   "origin_sha256": "59e30159bbb28e58370adf6b5b6db2abb898b85e9fe702276faabdc9546f576f",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 3
+    }
+   ],
+   "change": "paths",
+   "sha256": "b87c30bced2d30c31b745e133fb23becf1ccdc8c6c7bf4a2900c3092b35d7d50"
+  },
+  {
+   "path": "sol/jobs/prefetch.slurm",
+   "origin": "phase3_2/sol/jobs/prefetch.slurm",
+   "origin_sha256": "f323234f25c188e1c73c41ab5b73b3a43884d1b3b142b27c462ab429dbd89616",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    },
+    {
+     "old": " configs/",
+     "new": " ../configs/",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 3
+    }
+   ],
+   "change": "paths",
+   "sha256": "0a51c8b5679130567cb4369d4ad504e9fde7610b8b6c3d319bf4420738b92094"
+  },
+  {
+   "path": "sol/jobs/smoke.slurm",
+   "origin": "phase3_2/sol/jobs/smoke.slurm",
+   "origin_sha256": "9a5a4babc06b5f2a7c12108d60d3a138736954a52da47fe7cfc9336320c0f6bc",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    },
+    {
+     "old": " configs/",
+     "new": " ../configs/",
+     "reason": "configs/ is at phase4/code/configs",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "ca8e888e95ca4634bb1187eab29517e703fc96e4a185d1bb637ce2cedaecb953"
+  },
+  {
+   "path": "sol/sol.env",
+   "origin": "phase3_2/sol/sol.env",
+   "origin_sha256": "942d931fb747152198c13928963c008830996b2a39673d7be283f0fe8050effe",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "$P33_CODE_ROOT/phase3_2/sol}\"",
+     "new": "$P33_CODE_ROOT/phase4/code/sol}\"",
+     "reason": "the Sol folder is phase4/code/sol",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "df821fe9863fd43039348b2f5f10723d7d8f9f858977d9308e3b0c9a4782adbe"
+  },
+  {
+   "path": "sol/submit.sh",
+   "origin": "phase3_2/sol/submit.sh",
+   "origin_sha256": "2dbcef664400b82c806f95003f7aa92dcd1fc0cfe63c529f4f4e0a5928824261",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "\"$HERE/scripts/p33.py\"",
+     "new": "\"$HERE/../run.py\"",
+     "reason": "the entry point is ../run.py",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "ccd4ad13a3171071e09f1a2e019d394a07f88b6a0b8865c8912b2eee9224b0b2"
+  },
+  {
+   "path": "sol/submit_chain.sh",
+   "origin": "phase3_2/sol/submit_chain.sh",
+   "origin_sha256": "a715da195f3d9f7bbd81633bc98052552fb14688146f96455d19fba0000feb74",
+   "kind": "shell",
+   "import_lines": [],
+   "edits": [
+    {
+     "old": "scripts/p33.py",
+     "new": "../run.py",
+     "reason": "the entry point is ../run.py",
+     "count": 2
+    },
+    {
+     "old": "sys.path.insert(0, \"src\")",
+     "new": "sys.path.insert(0, \"..\")",
+     "reason": "phase4/code holds the p4 package",
+     "count": 1
+    },
+    {
+     "old": "from p33 import registry",
+     "new": "from p4.governance import registry",
+     "reason": "the module's new place",
+     "count": 1
+    }
+   ],
+   "change": "paths",
+   "sha256": "dd793ed5511db53c12b3ee377cd7d4aa6a3ccba1a68faf8b8f36f2c76c160875"
+  }
+ ]
+}

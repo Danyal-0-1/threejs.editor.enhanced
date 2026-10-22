@@ -15,7 +15,7 @@ This repository holds two things.
 | kind | where | what you find there |
 |---|---|---|
 | **Explanations** | [`explanations/`](explanations/README.md) | every explanation of every phase: theory, mathematics, code walk-throughs, retype plans, glossaries, knowledge checks, results. The README gives a reading order and an index by topic |
-| **Code** | [`phase3/`](phase3/README.md), [`phase3_2/`](phase3_2/README.md), [`phase3_2/sol/`](phase3_2/sol/README.md), [`phase4/`](phase4/README.md); the Phase 1 and 2 originals in [`grammar_and_3DOM_client/`](grammar_and_3DOM_client/) and [`alien_syntax/`](alien_syntax/) | everything needed to run the experiment: source, materials, configs, Slurm jobs, tests. **Pinned:** never move it (below) |
+| **Code** | [`phase3/`](phase3/README.md), [`phase3_2/`](phase3_2/README.md), [`phase3_2/sol/`](phase3_2/sol/README.md), [`phase4/code/`](phase4/code/README.md) (the pipeline for the next experiment, a verified copy organized by stage); the Phase 1 and 2 originals in [`grammar_and_3DOM_client/`](grammar_and_3DOM_client/) and [`alien_syntax/`](alien_syntax/) | everything needed to run the experiment: source, materials, configs, Slurm jobs, tests. **Pinned:** never move it (below) |
 | **Results** | [`phase3_3/sol_results/`](phase3_3/sol_results/README.md) | every run on ASU Sol (development, held-out, setup, smoke), with the later analyses in each run's `analysis_addenda/` (scale analysis, paper figures, exploratory checks, Phase 4 fixes) |
 | | [`run/experiments/`](run/experiments/README.md) | the Phase 2 experiments |
 | | `phase3/outputs/`, `phase3_2/outputs/` | the laptop runs of Phases 3 and 3.2, cited as evidence in the audit |
@@ -37,7 +37,7 @@ This repository holds two things.
 | 3 | Find the collision sites, score them, predict risk, repair | `phase3/` | [phase3](explanations/phase3/phase3_explained/00_complete_phase3_guide.md) | `phase3/outputs/` | done; its scorer is reused, frozen, by 3.3 |
 | 3.2 | New materials, a second grammar, a better margin; the preregistration | `phase3_2/` | [phase3_2](explanations/phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | `phase3_2/outputs/` | done; preregistered 2026-10-02 |
 | 3.3 | The preregistered study on ASU Sol: 21 models, held-out mappings | `phase3_2/sol/` | [design](explanations/phase3_3/sol_experiment_explained/00_complete_guide.md), [results](explanations/phase3_3/heldout_results_explained/00_complete_results.md) | `phase3_3/sol_results/` | complete, 2026-10-09 |
-| 4 | Fix what 3.3 left open, then plan new studies | `phase4/` | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21 |
+| 4 | Fix what 3.3 left open, then plan new studies | `phase4/code/` (the pipeline), `phase4/scripts/` (step 0) | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21 |
 
 **If you only read one thing about the current experiment:**
 [`explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md),

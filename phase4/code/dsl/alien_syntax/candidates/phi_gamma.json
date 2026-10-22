@@ -1,0 +1,147 @@
+{
+  "phi_id": "gamma",
+  "targets_grammar": "3dom-grammar/1.1.0",
+  "generated": "2026-08-28T18:40:24+00:00",
+  "construct": "SURFACE DISTANCE — maximal, at deliberately unmatched fertility",
+  "map": {
+    "T_SELECTOR_ENTRY": {
+      "from": "$S",
+      "to": "⟠⟠"
+    },
+    "T_FUNCTION": {
+      "from": "function",
+      "to": "⍤"
+    },
+    "T_CHAIN_OP": {
+      "from": ".",
+      "to": "◈"
+    },
+    "T_CLASS_SIGIL": {
+      "from": ".",
+      "to": "◈"
+    },
+    "T_ID_SIGIL": {
+      "from": "#",
+      "to": "⍟"
+    },
+    "T_PSEUDO_SIGIL": {
+      "from": ":",
+      "to": "⍜"
+    },
+    "T_CHILD": {
+      "from": ">",
+      "to": "⊳"
+    },
+    "T_WILDCARD": {
+      "from": "*",
+      "to": "⌾"
+    },
+    "T_VERB_RECOLOR": {
+      "from": "recolor",
+      "to": "⏦"
+    },
+    "T_VERB_SCALE": {
+      "from": "scale",
+      "to": "⏥"
+    },
+    "T_VERB_MOVE": {
+      "from": "move",
+      "to": "⏢"
+    },
+    "T_VERB_ROTATE": {
+      "from": "rotate",
+      "to": "⏣"
+    },
+    "T_VERB_DELETE": {
+      "from": "delete",
+      "to": "⏧"
+    },
+    "T_VERB_SPIN": {
+      "from": "spin",
+      "to": "⌇"
+    },
+    "T_VERB_DUPLICATE": {
+      "from": "duplicate",
+      "to": "⌌"
+    },
+    "T_VERB_SETMATERIAL": {
+      "from": "setMaterial",
+      "to": "⌍"
+    },
+    "T_VERB_SETOPACITY": {
+      "from": "setOpacity",
+      "to": "⌎"
+    },
+    "T_VERB_SETVISIBLE": {
+      "from": "setVisible",
+      "to": "⌏"
+    },
+    "T_VERB_WIREFRAME": {
+      "from": "wireframe",
+      "to": "⌐"
+    },
+    "T_VERB_METALNESS": {
+      "from": "metalness",
+      "to": "⌙"
+    },
+    "T_VERB_ROUGHNESS": {
+      "from": "roughness",
+      "to": "⌜"
+    },
+    "T_VERB_CASTSHADOW": {
+      "from": "castShadow",
+      "to": "⌟"
+    },
+    "T_VERB_RECEIVESHADOW": {
+      "from": "receiveShadow",
+      "to": "⌞"
+    },
+    "T_TYPE_MESH": {
+      "from": "mesh",
+      "to": "⍇"
+    },
+    "T_TYPE_GROUP": {
+      "from": "group",
+      "to": "⍈"
+    },
+    "T_TYPE_LIGHT": {
+      "from": "light",
+      "to": "⍉"
+    },
+    "T_TYPE_CAMERA": {
+      "from": "camera",
+      "to": "⍊"
+    },
+    "T_PSEUDO_SELECTED": {
+      "from": "selected",
+      "to": "⍋"
+    },
+    "T_PSEUDO_LASSO": {
+      "from": "lasso",
+      "to": "⍌"
+    }
+  },
+  "overload_groups": [
+    [
+      "T_CHAIN_OP",
+      "T_CLASS_SIGIL"
+    ]
+  ],
+  "frozen": [
+    "T_LPAREN",
+    "T_RPAREN",
+    "T_LBRACE",
+    "T_RBRACE",
+    "T_SEMI",
+    "T_COMMA",
+    "T_QUOTE_S",
+    "T_QUOTE_D",
+    "T_SIGN_PLUS",
+    "T_SIGN_MINUS",
+    "T_IDENT",
+    "T_NUMBER",
+    "T_STRING_BODY",
+    "T_WS"
+  ],
+  "notes": "Glyph lexicon. Non-ASCII symbols, three UTF-8 bytes each, chosen from blocks that are sparse in code pretraining. Its role in this study is a FERTILITY-STRESS CONTROL, not a primary experimental language: it is expected to fail CONSTRAINT 1 of the pre-committed selection rule, and it provably cannot satisfy lexical-class parity (see reports/CANDIDATE_SELECTION.md, check (g)), because its word-class spellings are disjoint from the frozen ASCII identifier charset. Both facts are findings, not defects to be patched away."
+}

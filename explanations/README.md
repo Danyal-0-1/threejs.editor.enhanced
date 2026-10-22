@@ -42,7 +42,7 @@ stays where it runs (the last table below).
 | 3.2 | [`phase3_2/phase3_2_explained/`](phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | new materials, a second grammar, first-divergent-token margins | [`phase3_2/src/phase3_2/`](../phase3_2/src/phase3_2/) |
 | 3.3, design | [`phase3_3/sol_experiment_explained/`](phase3_3/sol_experiment_explained/00_complete_guide.md) | the preregistered pipeline built for ASU Sol | [`phase3_2/sol/`](../phase3_2/sol/) |
 | 3.3, results | [`phase3_3/heldout_results_explained/`](phase3_3/heldout_results_explained/00_complete_results.md) | the held-out results: 21 models, two grammars | [`phase3_2/sol/scripts/`](../phase3_2/sol/scripts/) (analysis) |
-| 4 | [`phase4/fixes_before_phase4/`](phase4/fixes_before_phase4/README.md) | every fix made before Phase 4's new work | [`phase4/scripts/`](../phase4/scripts/) |
+| 4 | [`phase4/fixes_before_phase4/`](phase4/fixes_before_phase4/README.md) | every fix made before Phase 4's new work | [`phase4/code/`](../phase4/code/README.md) (the pipeline), [`phase4/scripts/`](../phase4/scripts/) |
 
 Each phase folder from 3 onward follows the same numbering, so you can read one topic across
 phases (next table).
@@ -93,7 +93,7 @@ The explanations link to the code by file and line. These are the folders they p
 | 3 | [`phase3/src/phase3/`](../phase3/src/phase3/) (frozen), [`phase3/vendor/`](../phase3/vendor/) (materials) | [`phase3/tests/`](../phase3/tests/) (54) | [`phase3/README.md`](../phase3/README.md) |
 | 3.2 | [`phase3_2/src/phase3_2/`](../phase3_2/src/phase3_2/) (frozen) | [`phase3_2/tests/`](../phase3_2/tests/) (36) | [`phase3_2/README.md`](../phase3_2/README.md) |
 | 3.3 | [`phase3_2/sol/src/p33/`](../phase3_2/sol/src/p33/) (frozen), [`phase3_2/sol/scripts/`](../phase3_2/sol/scripts/) | [`phase3_2/sol/tests/`](../phase3_2/sol/tests/) (147) | [`phase3_2/sol/README.md`](../phase3_2/sol/README.md) (the Sol runbook) |
-| 4 | [`phase4/scripts/`](../phase4/scripts/) | [`phase4/tests/`](../phase4/tests/) (6) | [`phase4/README.md`](../phase4/README.md) |
+| 4 | [`phase4/code/p4/`](../phase4/code/p4/__init__.py) (a verified copy of all of the above, one folder per stage), [`phase4/scripts/`](../phase4/scripts/) | [`phase4/code/tests/`](../phase4/code/tests/), [`phase4/tests/`](../phase4/tests/) (6) | [`phase4/code/README.md`](../phase4/code/README.md) |
 
 "Frozen" means the development freeze of 2026-10-07 records the file by its path: it is never
 edited or moved ([`../START_HERE.md`](../START_HERE.md) explains why).

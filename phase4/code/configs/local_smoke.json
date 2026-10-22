@@ -1,0 +1,77 @@
+{
+ "allow_exploratory": false,
+ "allow_non_a100": false,
+ "analysis": {
+  "B": 200,
+  "alpha": 0.05,
+  "ece_bins": 10,
+  "min_clusters": 8,
+  "precision_at_k": [
+   10,
+   50
+  ],
+  "unit": "template"
+ },
+ "arm_a": {
+  "conditions": [
+   "rule",
+   "norule",
+   "norule_lenmatched"
+  ],
+  "program_nll": true
+ },
+ "armb": {
+  "do_sample": false,
+  "max_new_tokens": 192,
+  "n_demos": 4,
+  "num_beams": 1,
+  "template_limit": 0
+ },
+ "chunk_size": 4,
+ "dtype": "bfloat16",
+ "families": [
+  "dom"
+ ],
+ "h5": {
+  "budget": 3,
+  "low_risk_tolerance": 0.02
+ },
+ "lexicons": [
+  "d50s1"
+ ],
+ "lm_head_fp32": true,
+ "models": [
+  "Qwen/Qwen2.5-Coder-0.5B"
+ ],
+ "note": "Laptop smoke (RTX 3080 Ti): identical to smoke.json; A100 check waived and recorded.",
+ "primary": {
+  "ladder": [
+   0,
+   1,
+   2,
+   4,
+   8
+  ],
+  "paraphrases": [
+   "p0",
+   "p1",
+   "p2"
+  ],
+  "site_limit": 6
+ },
+ "run_id": "set-by-init",
+ "seeds": {
+  "bootstrap": 20261002,
+  "demo_order": 20261005,
+  "h5_random": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "power": 20261006
+ },
+ "site_limit": 12,
+ "stage": "set-by-init"
+}

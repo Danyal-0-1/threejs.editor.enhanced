@@ -1,0 +1,20 @@
+# 3dom-grammar/1.1.0 — VALID-BUT-VACUOUS corpus (D5)
+# Every non-comment line is a SYNTACTICALLY VALID program whose chain contains
+# ZERO operations (a pure query). CI asserts each PARSES (parse-count == 1) AND
+# yields zero operations (zero VERB tokens -> the IR builder will emit an empty
+# op list). Per SCORING_POLICY.md these are a PARSE SUCCESS but a TASK FAILURE on
+# any task whose target IR has >=1 operation. They are neither positive (they add
+# no production coverage the positives lack) nor negative (they do not raise).
+#
+(function(){ $S('.wheel'); })();
+(function(){ $S('#dump-bed'); })();
+(function(){ $S('.car .wheel'); })();
+(function(){ $S('.car > .wheel'); })();
+(function(){ $S('.wheel.front'); })();
+(function(){ $S('*'); })();
+(function(){ $S('mesh'); })();
+(function(){ $S('group'); })();
+(function(){ $S(':selected'); })();
+(function(){ $S(':lasso'); })();
+(function(){ $S('.wheel'); $S('.body'); })();
+(function(){ $S('.robot .arm.left'); })();

@@ -18,7 +18,8 @@ Only then does it take on new questions.
 
 | path | what |
 |---|---|
-| [`scripts/fix_heldout_problems.py`](scripts/fix_heldout_problems.py) | step 0's analysis: the post-hoc corrections F1–F6 (CPU only, about 40 s) |
+| [`code/`](code/README.md) | **the pipeline for the next experiment:** a verified copy of the Phase 3.3 pipeline, organized by stage, with the language files, configs, Sol jobs and tests. Phase 4's changes go here |
+| [`scripts/fix_heldout_problems.py`](scripts/fix_heldout_problems.py) | step 0's analysis: the post-hoc corrections F1–F6 (CPU only, about 40 s). It imports the frozen Phase 3.3 code on purpose |
 | [`tests/`](tests/) | 6 tests for it, run by the Phase 3.3 test runner |
 
 **Explanations** are kept with every other phase's, in

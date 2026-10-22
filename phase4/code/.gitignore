@@ -1,0 +1,7 @@
+# Compiled caches from running the pipeline and its tests.
+__pycache__/
+*.pyc
+# Never commit an environment, weights or a Hugging Face cache.
+sol/env/*/
+*.safetensors
+*.bin
