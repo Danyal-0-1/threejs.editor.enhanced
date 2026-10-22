@@ -1,0 +1,64 @@
+model,grammar,lexicon,template,frozen bucket,corrected bucket,corrected program
+Qwen2.5-72B-Instruct,blk,d25s3,t002,PARSE_FAIL,VALID_CORRECT,"$S 'mesh' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t006,PARSE_FAIL,VALID_WRONG,"$S '.roof#lamp' { move 1, 0, 0; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t011,PARSE_FAIL,VALID_WRONG,$S '#panel>#frame>mesh' { metalness 0.8; }
+Qwen2.5-72B-Instruct,blk,d25s3,t017,PARSE_FAIL,VALID_CORRECT,"$S 'mesh.seat#axle' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t020,PARSE_FAIL,VALID_CORRECT,"$S '#wheel' { spin 'y', 2, 4; } $S '.door' { move 1, 0, 0; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t026,PARSE_FAIL,VALID_WRONG,"$S '.bus #lamp.roof' { duplicate 1, 2, 3; } $S '.bus>#door' { rotate 'y', 90; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t028,PARSE_FAIL,VALID_CORRECT,"$S '#bus>#door' { move 1, 0, 0; } $S '.axle>#hood' { setMaterial 'matte'; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t035,PARSE_FAIL,VALID_CORRECT,"$S '*>#wheel' { spin 'y', 2, 4; } $S 'mesh .roof' { move 1, 0, 0; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t040,PARSE_FAIL,VALID_CORRECT,"$S '#wheel' { recolor '#111111'; } $S '.door' { scale 2, 'x'; } $S 'mesh' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t046,PARSE_FAIL,VALID_WRONG,"$S '.roof#lamp' { rotate 'y', 90; } $S '.bus #door' { delete; } $S '.bus>#door' { spin 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t047,PARSE_FAIL,VALID_WRONG,"$S '.bus>#door' { move 1, 0, 0; } $S '.bus>#door' { setMaterial 'matte'; } $S '.axle>#hood' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t050,PARSE_FAIL,VALID_WRONG,"$S '.bus group #seat' { recolor '#111111'; } $S '.panel>#frame>mesh' { scale 2, 'x'; } $S 'light #glass>.tyre' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t052,PARSE_FAIL,VALID_CORRECT,"$S 'light #glass>.tyre' { move 1, 0, 0; } $S 'camera' { setMaterial 'matte'; } $S ':selected' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t057,PARSE_FAIL,VALID_WRONG,"$S 'mesh.seat#axle' { move 1, 0, 0; } $S '.frame *' { setMaterial 'matte'; } $S '.lamp>group.panel' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t061,PARSE_FAIL,VALID_CORRECT,"$S '.door' { delete; } $S 'mesh' { spin 'y', 2, 4; } $S '*' { move 1, 0, 0; } $S ':lasso' { setMaterial 'matte'; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t071,PARSE_FAIL,PARSE_FAIL,"$S '.panel>#frame>mesh' { receiveShadow false; } $S 'light #glass>.tyre' { recolor '#111111'; } $S 'camera' { scale 2, 'x'; } $S ':selected' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t075,PARSE_FAIL,VALID_CORRECT,"$S '*>#wheel' { recolor '#111111'; } $S 'mesh .roof' { scale 2, 'x'; } $S 'mesh.seat#axle' { duplicate 1, 2, 3; } $S '.frame *' { rotate 'y', 90; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t076,PARSE_FAIL,VALID_WRONG,"$S 'mesh .roof' { delete; } $S 'mesh.seat#axle' { spin 'y', 2, 4; } $S '.frame>*' { move 1, 0, 0; } $S '.lamp>group.panel' { setMaterial 'matte'; }"
+Qwen2.5-72B-Instruct,blk,d25s3,t079,PARSE_FAIL,VALID_WRONG,"$S '.lamp>group.panel' { scale 2, 'x'; } $S '#wheel' { duplicate 1, 2, 3; } $S '.door' { rotate 'y', 90; } $S 'mesh' { delete; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t005,PARSE_FAIL,VALID_WRONG,"$S 'mesh.bus' { spin 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t006,PARSE_FAIL,VALID_CORRECT,"$S '.lamp#roof' { move 1, 0, 0; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t007,PARSE_FAIL,VALID_CORRECT,$S '#bus #door' { setMaterial 'matte'; }
+Qwen2.5-72B-Instruct,blk,d50s3,t008,PARSE_FAIL,VALID_WRONG,$S '#bus>mesh#door' { setOpacity 0.5; }
+Qwen2.5-72B-Instruct,blk,d50s3,t011,PARSE_FAIL,VALID_CORRECT,$S '.panel>#frame>camera' { metalness 0.8; }
+Qwen2.5-72B-Instruct,blk,d50s3,t012,PARSE_FAIL,VALID_CORRECT,$S 'group #glass>.tyre' { roughness 0.3; }
+Qwen2.5-72B-Instruct,blk,d50s3,t016,PARSE_FAIL,VALID_CORRECT,"$S 'camera .roof' { scale 2, 'x'; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t027,PARSE_FAIL,VALID_WRONG,"$S '#bus #door' { delete; } $S '#bus>mesh#door' { spin 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t031,PARSE_FAIL,VALID_CORRECT,$S '.panel>#frame>camera' { roughness 0.3; } $S 'group #glass>.tyre' { receiveShadow 1; }
+Qwen2.5-72B-Instruct,blk,d50s3,t038,PARSE_FAIL,VALID_CORRECT,$S '.frame *' { metalness 0.8; } $S '#lamp>mesh#panel' { roughness 0.3; }
+Qwen2.5-72B-Instruct,blk,d50s3,t044,PARSE_FAIL,VALID_WRONG,$S ':lasso' { roughness 0.3; } $S '#bus' { receiveShadow 1; } $S '.lamp#roof' { wireframe 0; }
+Qwen2.5-72B-Instruct,blk,d50s3,t053,PARSE_FAIL,VALID_CORRECT,$S 'light' { setVisible 1; } $S ':selected' { castShadow 1; } $S '*>#wheel' { metalness 0.8; }
+Qwen2.5-72B-Instruct,blk,d50s3,t057,PARSE_FAIL,VALID_CORRECT,"$S 'camera.seat#axle' { move 1, 0, 0; } $S '.frame *' { setMaterial 'matte'; } $S '#lamp>mesh#panel' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t058,PARSE_FAIL,VALID_CORRECT,$S '.frame *' { setVisible 1; } $S '#lamp>mesh#panel' { castShadow 1; } $S '#wheel' { metalness 0.8; }
+Qwen2.5-72B-Instruct,blk,d50s3,t065,PARSE_FAIL,VALID_WRONG,"$S 'mesh.bus' { spin 'y', 2, 4; } $S '#lamp.roof' { move 1, 0, 0; } $S '#bus #door' { setMaterial 'matte'; } $S '#bus>#door' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t066,PARSE_FAIL,VALID_WRONG,$S '.roof#lamp' { setVisible 1; } $S '#bus #door' { castShadow 1; } $S '#bus>#door' { metalness 0.8; } $S '.axle>#hood' { roughness 0.3; }
+Qwen2.5-72B-Instruct,blk,d50s3,t068,PARSE_FAIL,VALID_WRONG,"$S '#bus>mesh#door' { move 1, 2, 3; } $S '.axle>#hood' { rotate 'y', 90; } $S '#bus mesh #seat' { delete; } $S '.panel>#frame>camera' { spin 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d50s3,t073,PARSE_FAIL,VALID_CORRECT,$S 'light' { setMaterial 'matte'; } $S ':selected' { setOpacity 0.5; } $S '*>#wheel' { setVisible 1; } $S 'camera .roof' { castShadow 1; }
+Qwen2.5-72B-Instruct,blk,d75s1a,t005,PARSE_FAIL,VALID_CORRECT,"$S 'mesh#bus' { move 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t006,PARSE_FAIL,VALID_WRONG,"$S '.roof#lamp' { duplicate 1, 0, 0; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t026,PARSE_FAIL,VALID_WRONG,"$S '.roof.lamp' { duplicate 1, 2, 3; } $S '#bus #door' { rotate 90, 'y'; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t033,PARSE_FAIL,VALID_CORRECT,"$S 'light' { rotate 2, 'x'; } $S ':selected' { duplicate 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t041,PARSE_FAIL,VALID_WRONG,"$S '.door' { scale 90, 'y'; } $S 'camera' { delete; } $S '*' { move 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t047,PARSE_FAIL,VALID_WRONG,"$S '#bus #door' { duplicate 1, 0, 0; } $S '#bus>#door' { wireframe; } $S '.axle>#hood' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d75s1a,t056,PARSE_FAIL,VALID_WRONG,"$S 'mesh .roof' { scale 90, 'y'; } $S 'mesh .seat#axle' { delete; } $S '#frame *' { move 'y', 2, 4; }"
+Qwen2.5-72B-Instruct,blk,d75s2a,t018,PARSE_FAIL,VALID_WRONG,"$S '.frame *' { rotate 90, 'y'; }"
+Qwen2.5-72B-Instruct,blk,d75s2a,t025,PARSE_FAIL,VALID_WRONG,"$S 'camera#bus' { recolor '#111111'; } $S '.lamp#roof' { scale 2, 1, 1; }"
+Qwen2.5-72B-Instruct,blk,d75s2a,t047,PARSE_FAIL,VALID_WRONG,"$S '#bus #door' { move 1, 0, 0; } $S '#bus>#door' { receiveShadow 'matte'; } $S '.axle>#hood' { setOpacity 0.5; }"
+Qwen2.5-72B-Instruct,blk,d75s2a,t071,PARSE_FAIL,VALID_WRONG,"$S '.panel>#frame>mesh' { castShadow 0; } $S '.glass * #tyre' { roughness '#111111'; } $S 'camera' { rotate 2, 'x'; } $S ':selected' { spin 1, 2, 3; }"
+Qwen2.5-72B-Instruct,blk,d75s3a,t008,PARSE_FAIL,VALID_WRONG,$S '#bus>#door' { setOpacity 0.5; }
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t005,PARSE_FAIL,VALID_WRONG,"(function(){ $S('group#bus')#spin(2, 'y', 4); })();"
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t022,PARSE_FAIL,VALID_CORRECT,(function(){ $S('mesh')#setVisible(1); $S('*')#castShadow(1); })();
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t023,PARSE_FAIL,VALID_CORRECT,(function(){ $S('*')#metalness(0.8); $S(':lasso')#roughness(0.3); })();
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t032,PARSE_FAIL,PARSE_FAIL,(function(){ $S('light *.glass>#tyre')#receiveShadow(0); $S('camera')#recolor('#111111'); })();
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t037,PARSE_FAIL,PARSE_FAIL,(function(){ $S('mesh#seat#axle')#setVisible(1); $S('.frame *')#castShadow(1); })(); Your
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t039,PARSE_FAIL,VALID_WRONG,(function(){ $S('#lamp>#panel')#receiveShadow(1); $S('#wheel')#wireframe(0); })();
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t058,PARSE_FAIL,PARSE_FAIL,(function(){ $S('.frame *')#setVisible(1); $S('.lamp>#panel.group')#castShadow(1); $S('#wheel')#metalness(0.8); })(); Your
+Qwen2.5-Coder-32B-Instruct,dom,d25s3,t077,PARSE_FAIL,PARSE_FAIL,(function(){ $S('mesh#seat#axle')#setOpacity(0.5); $S('#frame *')#setVisible(1); $S('.lamp>#panel.group')#castShadow(1); $S('#wheel')#metalness(0.8); })(); Your
+Qwen2.5-72B-Instruct,dom,d75s2a,t013,PARSE_FAIL,VALID_WRONG,(function(){ $S('camera')#wireframe(1); })();
+Qwen2.5-72B-Instruct,dom,d75s2a,t014,PARSE_FAIL,VALID_CORRECT,(function(){ $S(':selected')#setVisible(0); })();
+Qwen2.5-72B-Instruct,dom,d75s2a,t031,PARSE_FAIL,VALID_CORRECT,(function(){ $S('.panel>#frame>group')#setMaterial(0.3); $S('mesh #glass>.tyre')#wireframe(1); })();
+Qwen2.5-72B-Instruct,dom,d75s3a,t055,PARSE_FAIL,VALID_CORRECT,"(function(){ $S('*>#wheel')#setMaterial('#111111'); $S('camera .roof')#rotate(2,'x'); $S('camera.seat#axle')#spin(1,2,3); })();"
+Qwen2.5-Coder-32B-Instruct,dom,d75s3a,t073,PARSE_FAIL,VALID_WRONG,(function(){ $S('camera')#metalness('matte'); $S(':lasso')#receiveShadow(0.5); $S('*>#wheel')#setVisible(1); $S('camera .roof')#roughness(1); })();
+Qwen2.5-Coder-32B-Instruct,dom,d75s3a,t078,PARSE_FAIL,VALID_WRONG,(function(){ $S('.frame *')#roughness(0.3); $S('.lamp>.panel')#castShadow(1); $S('#wheel')#receiveShadow(0); $S('.door')#setMaterial('#111111'); })();

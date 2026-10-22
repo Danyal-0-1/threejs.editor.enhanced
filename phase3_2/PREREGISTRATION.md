@@ -358,3 +358,47 @@ code were found.
 **Scientific consequence.** Calibration transfer is claimed only for the development pairs
 (held-out ECE 0.036–0.052). H5 is not supported. Every H4 confirmatory conclusion stands,
 because the registered criteria are rank-based and never use calibration.
+
+### D13 — 2026-10-21 — post-hoc corrections of the held-out gaps (Phase 4, step 0)
+
+**What happened.** The gaps disclosed in D12, and two further problems listed in
+`sol/heldout_results_explained/08`, were corrected after the held-out outcomes were known. The
+corrections were made by `phase4/scripts/fix_heldout_problems.py`, outside the frozen code, from
+the run's saved data, with no model re-run. Before correcting anything, each fix reproduces the
+frozen numbers it corrects with the frozen functions, and the script refuses if it cannot. The
+output is in `heldout-20261007a/analysis_addenda/phase4_fixes/`.
+
+**Change.**
+
+1. **H4 calibration (D12 item 1).** Out-of-sample estimates for all ten pairs:
+   template-grouped 5-fold cross-fitting and cross-family transfer.
+   - The eight pairs without frozen parameters, cross-fitted: ECE 0.016–0.105, slopes 0.97–0.99.
+   - Transfer from the other grammar family: ECE 0.026–0.137, slopes 0.75–1.33.
+2. **H5's registered test (D12 item 2).** Implemented exactly as §3 states it: targeted minus
+   random per changed symbol, with a 95% template-cluster interval (B = 2000), and control
+   degradation ≤ 0.02, for each family separately.
+   - `dom` −0.77 [−1.96, +0.40] and `blk` −0.04 [−1.19, +1.12] per changed symbol.
+   - Control degradation −0.06 and −0.05 (within the tolerance).
+3. **The H5 metric's mixing (D12 item 2, second sentence).** The metric was split exactly into
+   repaired-site and control-site parts.
+   - At the repaired sites, targeted beats random: `dom` +0.79 [+0.06, +1.53], `blk` +2.21
+     [+1.39, +3.02].
+   - The registered difference is negative because unrepaired sites improved more under random
+     repair: `dom` −1.57, `blk` −2.25.
+4. **Arm B extraction.** A same-line "Request:" continuation was cut, and the result
+   re-evaluated with the frozen evaluator.
+   - 63 of 7,800 generations change.
+   - Task accuracy goes from 9.6% to 9.9%.
+   - No site's reach or reversion changes (205 sites re-observed).
+5. **H4 per role (an open item).** The AUROC within each role is 0.63–0.98, and its interval lies
+   above 0.5 in all 60 pair × grammar × role groups.
+
+**Scientific consequence.** No registered verdict changes.
+
+- H4's criteria are rank-based and untouched. The calibration-transfer claim stays limited to
+  the two frozen pairs; the cross-fitted values are a post-hoc statement about calibratability.
+- **H5 is not supported by its own registered test**, in either family. That confirms the
+  descriptive verdict of D12, now with the registered interval.
+- The repaired-site advantage of targeting is post hoc. It is a hypothesis for a preregistered
+  follow-up with a repaired-site metric, not a finding.
+- The corrected Arm B accuracy is reported beside the frozen 9.6%, never instead of it.

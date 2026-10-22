@@ -1,0 +1,21 @@
+pair,grammar,sites,export's source,export ECE,export slope,cross-fitted ECE,cross-fitted Brier,cross-fitted slope,cross-fitted intercept,other-grammar ECE,other-grammar slope
+deepseek-coder-1.3b-base,dom,1515,in-sample (the gap),0.054,1.00,0.053,0.165,0.99,+0.01,0.062,1.27
+deepseek-coder-1.3b-base,blk,1515,in-sample (the gap),0.074,1.00,0.070,0.187,0.98,+0.01,0.083,0.78
+deepseek-coder-33b-base,dom,1515,in-sample (the gap),0.040,1.00,0.040,0.112,0.98,+0.03,0.046,0.83
+deepseek-coder-33b-base,blk,1515,in-sample (the gap),0.022,1.00,0.017,0.094,0.99,+0.00,0.034,1.20
+Llama-3.2-1B,dom,1515,in-sample (the gap),0.040,1.00,0.041,0.133,0.99,+0.00,0.067,1.33
+Llama-3.2-1B,blk,1515,in-sample (the gap),0.033,1.00,0.035,0.165,0.98,+0.01,0.066,0.75
+Qwen2.5-72B,dom,1515,in-sample (the gap),0.036,1.00,0.041,0.157,0.98,+0.00,0.051,0.84
+Qwen2.5-72B,blk,1515,in-sample (the gap),0.017,1.00,0.016,0.150,0.98,-0.00,0.036,1.19
+Qwen2.5-Coder-0.5B,dom,1515,frozen (development),0.047,1.08,0.046,0.135,0.98,-0.00,0.043,1.29
+Qwen2.5-Coder-0.5B,blk,1515,frozen (development),0.051,0.84,0.040,0.165,0.99,+0.00,0.055,0.77
+Qwen2.5-Coder-1.5B,dom,1515,frozen (development),0.036,1.18,0.030,0.074,0.98,+0.01,0.059,1.43
+Qwen2.5-Coder-1.5B,blk,1515,frozen (development),0.052,0.83,0.024,0.114,0.98,+0.01,0.052,0.70
+Qwen2.5-Coder-3B,dom,1515,in-sample (the gap),0.031,1.00,0.031,0.090,0.98,+0.01,0.031,1.05
+Qwen2.5-Coder-3B,blk,1515,in-sample (the gap),0.026,1.00,0.030,0.101,0.99,+0.01,0.026,0.95
+Qwen2.5-Coder-7B,dom,1515,in-sample (the gap),0.111,1.00,0.105,0.194,0.97,+0.01,0.137,0.96
+Qwen2.5-Coder-7B,blk,1515,in-sample (the gap),0.095,1.00,0.089,0.195,0.99,-0.00,0.105,1.04
+Qwen2.5-Coder-14B,dom,1515,in-sample (the gap),0.056,1.00,0.054,0.158,0.99,+0.00,0.071,0.85
+Qwen2.5-Coder-14B,blk,1515,in-sample (the gap),0.038,1.00,0.036,0.145,0.99,+0.00,0.058,1.18
+Qwen2.5-Coder-32B,dom,1515,in-sample (the gap),0.067,1.00,0.069,0.183,0.99,+0.00,0.068,0.79
+Qwen2.5-Coder-32B,blk,1515,in-sample (the gap),0.038,1.00,0.033,0.179,0.99,-0.00,0.063,1.27

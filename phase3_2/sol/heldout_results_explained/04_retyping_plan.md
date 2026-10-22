@@ -242,6 +242,18 @@ Two parts are worth reading:
 `auroc_reps` repeats `paper_figures.auroc_w`, but returns every resample, so that differences
 between two scores can be bootstrapped on the same draws.
 
+**The Phase 4 fix script** ([`phase4/scripts/fix_heldout_problems.py`](../../../phase4/scripts/fix_heldout_problems.py),
+679 lines) corrects the open gaps post hoc (D13). Read four short functions:
+
+- `template_folds` ([147–151](../../../phase4/scripts/fix_heldout_problems.py#L147)) and
+  `cross_fitted_probs` ([164–176](../../../phase4/scripts/fix_heldout_problems.py#L164)). Their
+  invariant is that a site's probability never sees its own template; it is tested by flipping
+  that template's labels.
+- `h5_parts` ([183–193](../../../phase4/scripts/fix_heldout_problems.py#L183)). The registered
+  metric is the sum of its repaired and control parts, under any template weights.
+- `extract_corrected` ([200–202](../../../phase4/scripts/fix_heldout_problems.py#L200)). It is the
+  frozen extraction plus one cut.
+
 **AI-code audit, figure choices:**
 
 | value | where | role | provenance |

@@ -194,14 +194,18 @@ Every result of the study is one moment of Alex's week.
 
 ### Moment 9 — Fixing the car (H5)
 
-- **Alex, option 1:** stickers on the three stalks Alex confuses most. It helps little: the
-  other swapped controls still trap Alex.
+- **Alex, option 1:** stickers on the three stalks Alex confuses most. They help with *those*
+  stalks more than stickers on three random stalks would. But the registered score counts
+  every control in the car, and random stickers happened to help more with the stalks they were
+  *not* on. By that score, the three stickers do no better.
 - **Alex, option 2:** a vehicle with *completely* new controls, such as a joystick. There is
   no familiar action to fall into. Alex is slow and careful, but never *silently* does the
   old thing.
 - **The model:**
-  - respelling the 3 riskiest roles is no better than respelling 3 at random (43 of 100
-    cells);
+  - on the registered measure, respelling the 3 riskiest roles is no better than respelling
+    3 at random (43 of 100 cells; the registered test, run post hoc, agrees);
+  - at the repaired sites themselves, targeting does better than random (post hoc), mostly
+    because respelling random, low-risk roles makes those sites worse;
   - respelling *every* reassigned role into an unfamiliar alphabet cuts reversion at those
     sites from **48% to 16%**, and leaves **no silent errors**.
 - **The name for it:** *Osgood's similarity paradox*. Interference is greatest when the

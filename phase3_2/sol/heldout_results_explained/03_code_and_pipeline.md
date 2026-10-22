@@ -273,6 +273,7 @@ PY=../../run/.venv/bin/python
 $PY scripts/scale_analysis.py --run heldout-20261007a      # D11 from the CSVs: works locally
 $PY scripts/paper_figures.py --run heldout-20261007a       # paper figures and tables: works locally (§12)
 $PY scripts/exploratory_checks.py --run heldout-20261007a  # post hoc checks for 09 §3: works locally
+$PY ../../phase4/scripts/fix_heldout_problems.py           # Phase 4 post-hoc fixes (D13): works locally (§13)
 $PY scripts/p33.py --pins $P33_RESULTS_ROOT/model_pins.json status --run heldout-20261007a
 #  -> SplitViolation: unlock refers to an invalid freeze: no DEV_FREEZE at /home/dkhorami/…
 ```
@@ -322,3 +323,15 @@ computation done twice, and any difference would be a bug.
 unlock to the freeze's **Sol path** (§11). The figure script only reads, so it binds to the
 freeze's **content**: the sha256 recorded at unlock time. A copy with the same bytes is accepted;
 any other file is refused.
+
+---
+
+## 13. Phase 4 fixes (local, CPU, 2026-10-21)
+
+| | |
+|---|---|
+| **Input** | 5 frozen CSVs, `merged/h5.jsonl` (restore it first with `restore_large_files.sh` after a clone), the run config, and the development freeze (its sha256 is checked against the unlock) |
+| **Transformation** | [`phase4/scripts/fix_heldout_problems.py`](../../../phase4/scripts/fix_heldout_problems.py), about 40 s. It reuses the frozen functions (`p33.h4`, `p33.armb`, `phase3_2.sites2`) and the D11-identical bootstrap |
+| **Output** | `analysis_addenda/phase4_fixes/`: `PHASE4_FIXES.md` and the F1–F6 CSVs. **Nothing written inside** `csv/`, `plots/` or `reports/` |
+| **Validation** | Before correcting anything, it reproduces the frozen numbers it corrects: 20 calibration groups, 700 H5 arm rows, 7,800 Arm B extractions and buckets, 60 per-role AUROCs. 205 sites are re-observed after the Arm B cut, with 0 changes. There are 6 tests in `phase4/tests/` |
+

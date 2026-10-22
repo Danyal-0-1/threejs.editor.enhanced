@@ -45,8 +45,9 @@ No answers are given. Each section names where its answers can be found.
 
 13. ✎ Build the Kaplan–Meier curve for 5 sites: switches at 0.4, 1.2 and 2.0, and two sites
     censored at 32. What is the median? What is the "median among crossers"?
-14. Explain the difference between `k*` (median ≈ 2) and `sustained_k` (median ≈ 8) to someone
-    who has never seen an extinction curve.
+14. Explain the difference between `k*` (median ≈ 2 among the sites that switch) and
+    `sustained_k` (median ≈ 8 among the sites whose switch lasts) to someone who has never seen
+    an extinction curve. Why must both medians carry "among …"?
 15. Why is `k*` sometimes below 1? Give the interpolation for a site with M = −0.1 at k = 0 and
     M = +2.0 at k = 1.
 16. Non-informative censoring is an assumption of KM. Why is it doubtful here, and how should
@@ -111,4 +112,19 @@ No answers are given. Each section names where its answers can be found.
 39. Map each of these to a brain system and to a measurement in this study: the token table;
     a margin near zero; a relapse at 8 examples; a silent error.
 40. Name two places where the human analogy breaks, and say which claim each one forbids.
+
+## K. The Phase 4 fixes (`08 §5`, `phase4/fixes_before_phase4/`)
+
+41. ✎ For one cell, the targeted arm removes 13.67 reversions per changed symbol: −2.33 at the
+    repaired sites and +16.00 at the control sites. Why can a repair remove reversions at sites
+    it did not touch?
+42. The registered H5 test is negative in both families, yet at the repaired sites targeting
+    beats random. Write the two sentences you would put in the paper, and say which one is
+    confirmatory.
+43. Why is cross-fitted calibration (ECE 0.016–0.105 for the 8 pairs) still *not* evidence of
+    calibration transfer, while the 0.5B and 1.5B values are?
+44. ⌨ In `analysis_addenda/phase4_fixes/F5_armb_changed_generations.csv`, find one generation
+    that became VALID_WRONG after the cut. What did the model get wrong?
+45. Every Phase 4 fix first reproduces the frozen number it corrects. Why does that matter more
+    for a post-hoc fix than for the original analysis?
 

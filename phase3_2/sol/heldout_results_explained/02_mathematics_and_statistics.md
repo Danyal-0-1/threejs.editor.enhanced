@@ -223,6 +223,51 @@ $$
 4. **Over 100 cells,** targeted beat the random mean in only 43; the mean difference is −0.41.
    H5 is not supported.
 
+### 6b. The registered test and the repaired/control split (Phase 4, post hoc, 2026-10-21)
+
+**The registered test.** For each cell c, the difference compares the targeted arm with the
+mean of the 5 random seeds:
+
+$$
+D_c = R_{\text{targeted},c} - \tfrac{1}{5}\textstyle\sum_s R_{\text{random},s,c},
+\qquad R = \frac{\text{reversions before} - \text{reversions after}}{\text{changed roles}}
+$$
+
+For each grammar family, the statistic is the mean of D over its 50 cells. Its 95% interval
+comes from resampling the 80 templates 2,000 times, with the same draw for every cell and arm.
+H5 needs the interval above 0 in *both* families, and control degradation ≤ 0.02.
+
+| family | mean D [95% CI] | control degradation (targeted) | H5 as registered |
+|---|---|---|---|
+| `dom` | −0.77 [−1.96, +0.40] | −0.06 | not supported |
+| `blk` | −0.04 [−1.19, +1.12] | −0.05 | not supported |
+
+**The split.** R is the sum of a repaired-site part and a control-site part, exactly:
+
+$$
+R = \underbrace{\frac{b_{\text{rep}} - a_{\text{rep}}}{n}}_{\text{repaired sites}}
+  + \underbrace{\frac{b_{\text{ctl}} - a_{\text{ctl}}}{n}}_{\text{control sites}}
+$$
+
+Here b and a are the reversions before and after, and n is the number of changed roles.
+
+**The worked cell.** For the targeted arm, 13.67 = (29 − 36)/3 + (61 − 13)/3 = −2.33 + 16.00.
+The random mean is 9.27 = +5.87 + 3.40. So D = +4.40 [+1.27, +7.67], made of −8.20 at the
+repaired sites and +12.60 at the control sites. **This cell is atypical:** targeted wins here only
+through its control sites.
+
+**Over each family it is the other way round:**
+
+| family | repaired-site part of mean D | control-site part |
+|---|---|---|
+| `dom` | +0.79 [+0.06, +1.53] | −1.57 [−2.51, −0.65] |
+| `blk` | +2.21 [+1.39, +3.02] | −2.25 [−3.34, −1.23] |
+
+**Reading.** At the sites a repair touches, targeting beats random. That is mostly because
+respelling random, low-risk roles makes their own sites worse (50.5% → 54.6% reverting in `dom`).
+The registered sum is negative because of the control sites. All of this is post hoc
+(deviation D13), and the registered verdict stands.
+
 ---
 
 ## 7. Calibration: what the frozen parameters do, and the gap
@@ -260,6 +305,16 @@ export fits the logistic calibration *on the same held-out rows*. Logistic regre
 equations force the calibration intercept to 0 and the slope to 1 on its own training data
 (`test_calibration_of_a_fitted_model_is_identity`). Their ECE and Brier are therefore
 in-sample. They are not evidence of transfer ([08](08_issues_and_superseded_numbers.md)).
+
+**The out-of-sample replacement (Phase 4, post hoc).** For each pair and family, the templates
+are split into 5 folds. Each site's probability comes from a Platt fit on the *other* four folds,
+p̂ᵢ = σ(â₋f + b̂₋f · riskᵢ), and ECE, Brier and the slope are computed on those predictions.
+
+- **The 8 pairs:** ECE 0.016–0.105, slopes 0.97–0.99.
+- **Fitted on the other grammar family instead:** ECE 0.026–0.137, slopes 0.75–1.33.
+
+With 2 parameters, the in-sample fit hardly overfits, which is why the cross-fitted ECE is close
+to the in-sample one.
 
 ---
 

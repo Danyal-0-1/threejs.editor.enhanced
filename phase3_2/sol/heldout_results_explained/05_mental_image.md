@@ -146,6 +146,18 @@ wordings.
 **A side effect.** Repainting signs changes the dictionary, and drivers then also improved at
 corners nobody repainted. That shows up as the "per-symbol" gain.
 
+**Looking only at the repainted corners** *(Phase 4, post hoc)*:
+
+- Repainting the 3 most dangerous signs does **better** than repainting 3 random ones.
+- That is mostly because repainting random, safe signs makes *those* corners worse.
+- The registered score still says "no better", because random repainting helped more at the
+  corners nobody repainted.
+
+```
+   at the repainted corners (dom):  "most dangerous" 70.9% → 70.5% wrong   random 50.5% → 54.6% wrong
+   registered test (post hoc):   dom −0.77 [−1.96, +0.40]   blk −0.04 [−1.19, +1.12]   → not supported
+```
+
 ---
 
 ## 🧠 The one picture to keep

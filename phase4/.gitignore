@@ -1,0 +1,6 @@
+# Compiled caches from running the scripts and their tests. Scoped to phase4 only.
+__pycache__/
+*.pyc
+# Never commit an environment, weights or a Hugging Face cache.
+*.safetensors
+*.bin

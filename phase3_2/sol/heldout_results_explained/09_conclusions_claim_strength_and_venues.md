@@ -50,9 +50,10 @@
 > each instruction-tuned model's reversions were predictable from its base model's margins at
 > the same sites (AUROC 0.76–0.96, all 20 pair × grammar groups), beyond length and identity
 > baselines and, in most groups, beyond role-level difficulty. In free generation, about one
-> in five reached sites reverted. Respelling only the predicted-riskiest symbols was no
-> better than respelling random ones. Respelling every reassigned symbol into an unfamiliar
-> alphabet cut reversion at the repaired sites from 48% to 16% and left no silent errors.
+> in five reached sites reverted. On the registered measure, respelling only the
+> predicted-riskiest symbols was no better than respelling random ones. Respelling every
+> reassigned symbol into an unfamiliar alphabet cut reversion at the repaired sites from 48% to
+> 16% and left no silent errors.
 
 **Recommended title:** *Inherited Habits: Code Language Models Fall Back to Familiar Syntax
 Where Their Base Models Lean — A Preregistered Study of Redefined DSLs from 0.5B to 72B.*
@@ -71,7 +72,7 @@ Alternatives are in [06 §5](06_publishability_and_paper.md).
 
 | # | claim (as you may write it) | evidence | strength | the reviewer's attack | your defence |
 |---|---|---|---|---|---|
-| A | An instruct model's reversions are predictable, site by site, from its base model | preregistered H4: C1 and C2 met in 20/20; AUROC 0.76–0.96; within-lexicon AUROC 0.76–0.96; Δ vs role-level > 0 in 20/20 (CI > 0 in 16) | **Strong** | "Trivial: it is fine-tuned from the base" | It holds *with the rules in context*, where tuning should help most. And see A′ |
+| A | An instruct model's reversions are predictable, site by site, from its base model | preregistered H4: C1 and C2 met in 20/20; AUROC 0.76–0.96; within-lexicon AUROC 0.76–0.96; Δ vs role-level > 0 in 20/20 (CI > 0 in 16); *post hoc (Phase 4):* within each single role, AUROC 0.63–0.98, interval above 0.5 in 60/60 | **Strong** | "Trivial: it is fine-tuned from the base" | It holds *with the rules in context*, where tuning should help most. And see A′ |
 | A′ | …and much of the prediction is **inherited** from the model's own base, not just "some sites are hard for everyone" | own base beats a consensus of other-lineage bases in **20/20** groups, by +0.12 to +0.35 AUROC, all intervals > 0; the consensus reaches only 46% (median) of the own base's signal (§3.1) | **Moderate** (exploratory) | "Post hoc" | Say so; it uses only data that already existed; it is the obvious control a reviewer asks for |
 | B | Reversion persists with the table and does not fall with scale | 21 checkpoints: 0.400–0.558 with the table vs 0.461–0.655 without; the table lowers it in 41/42; D11 reversion slopes all non-significant | **Strong** for *these* sites | "Your 50% depends on how you built the sites" | Yes: every site is a designed **collision**. Claim the *relative* findings (table, scale), not a general error rate |
 | B′ | Scale does not fix it | D11: instruct slope per tenfold size −0.014 [−0.044, +0.017] (dom) and −0.013 [−0.044, +0.017] (blk) | **Moderate** | "One family; sizes not randomized" | The intervals rule out a fall of more than ~4.4 points per tenfold; say "association", show all points (`fig4_scale`) |
@@ -79,10 +80,10 @@ Alternatives are in [06 §5](06_publishability_and_paper.md).
 | D | Examples switch most sites quickly but unstably | registered `k*`: KM medians 1.4–4.6 (dom) and 3.3–11.6 (blk); 18% censored; among switchers 2.06 first vs 8 lasting; **31% of switched sites fall back below zero, by a median of −0.76 nats** (§3.3) | **Moderate–strong** | "Ladder design decides the numbers; the wobble may be noise near M = 0" | Keep the KM medians as the endpoint. The dips are large: 59% of curves drop by more than 1 nat at some step (§3.3). Do **not** cite the frozen "92.8–99.5% non-monotone" alone: it counts any decrease, however small |
 | E | Predictability declines with size in `dom` | D11: −0.081 [−0.111, −0.050] per tenfold, Holm p < 0.003; `blk` −0.037, Holm 0.055 | **Moderate** | "Non-monotone: the 7B dip carries it" | Specified before outcomes (D11); show the six points; frame as an association |
 | F | In generation, ~1 in 5 reached sites revert; verbs most | Arm B: reach 13.5%, revert given reach 19.8%; verb > keyword > sigil in both grammars, the same ordering as the margins at 4 examples (§3.2) | **Moderate** (levels) / **Suggestive** (roles) | "Reach is 13.5%: the reached sites are a selected, easier subset" | Never multiply the two rates; claim the *ordering* agreement, not equal levels |
-| G | Targeting the riskiest symbols does not beat random repair | H5 not supported: targeted > random in 43/100 cells | **Not supported** (honest negative) | "The interval test was not run, and the metric counts all sites" | Disclosed (D12, [08](08_issues_and_superseded_numbers.md)); report it as descriptive |
+| G | Targeting the riskiest symbols does not beat random repair (registered metric) | targeted > random in 43/100 cells. The registered test, run post hoc in Phase 4: `dom` −0.77 [−1.96, +0.40], `blk` −0.04 [−1.19, +1.12] | **Not supported** (honest negative, now by its own test) | "The metric counts all sites" | Split (Phase 4, post hoc): at the repaired sites targeted *beats* random (`dom` +0.79, `blk` +2.21; intervals above 0), and the control sites decide the sign. Report it as a hypothesis for a preregistered follow-up |
 | G′ | Complete respelling into an unfamiliar alphabet removes silent errors | repaired sites: 47.7% → 15.5% reverting; 0 silent after | **Strong** but partly by construction | "Zero silent errors is guaranteed by design" | True for the *zero*: an invalid spelling cannot be silent. The *drop from 48% to 16%* is the empirical finding |
 | H | Robust to the wording of the rule prompt | three framings: reversion stays within 0.42–0.62; per-model range 0.010–0.132 | **Moderate** | "13 points is not nothing" | Report the range, never the best wording |
-| I | Calibration transfers | only the 2 development pairs: ECE 0.036–0.052 | **Weak–moderate** | "Two pairs" | Claim it for those two only (D12) |
+| I | Calibration transfers | only the 2 development pairs: ECE 0.036–0.052. The other 8, cross-fitted (Phase 4, post hoc): ECE 0.016–0.105, slopes 0.97–0.99 | **Weak–moderate** | "Two pairs" | Claim *transfer* for those two only (D12); the cross-fitted values show each pair can be calibrated |
 | J | Partly changed languages are harder; base models adapt faster than instruct; punctuation is fixed faster than words | KM by density, kind and role | **Suggestive** | "Confounded; one lexicon per density" | Label them exploratory, in the discussion only |
 
 **What you must *not* claim:**
@@ -212,6 +213,7 @@ one, so "97% of curves wobble" alone would invite the reply "that's noise".
 |---|---|---|---|
 | 1 | Report the inheritance check (§3.1) as exploratory | **done**, 0 GPU-hours | answers "trivial?" |
 | 2 | Report the size of the non-monotone dips (are they noise near M = 0?) | **done** (§3.3), CSV only | answers "the wobble is noise": it is not |
+| 2b | Fix the frozen analysis's open gaps: calibration, H5's registered test, the H5 split, Arm B extraction, H4 per role | **done** (Phase 4 step 0, post hoc, D13; `phase4/`) | answers "the analysis has holes": each one is closed and disclosed |
 | 3 | Run frontier API models in generation (Arm B) on the same tasks | API cost; days | answers "only small open models"; no H4 (no base models) |
 | 4 | A second language, or natural respellings, preregistered like this study | weeks; about 40 GPU-hours | answers "one toy DSL": the biggest gap |
 | 5 | A small human study (programmers, same collision sites) | IRB plus weeks | makes the CogSci version strong; gives a striking comparison figure |

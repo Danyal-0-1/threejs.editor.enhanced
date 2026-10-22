@@ -1,0 +1,21 @@
+model,grammar,targeted − random per symbol [95% CI],two-sided p,Holm p (20 tests)
+Qwen2.5-72B-Instruct,dom,"-2.28 [-4.47, -0.32]",0.027,0.338
+Qwen2.5-Coder-0.5B-Instruct,dom,"+0.35 [-1.25, +1.96]",0.722,1.000
+Qwen2.5-Coder-1.5B-Instruct,dom,"-2.07 [-3.61, -0.45]",0.009,0.153
+Qwen2.5-Coder-14B-Instruct,dom,"-2.08 [-3.87, -0.23]",0.026,0.338
+Qwen2.5-Coder-32B-Instruct,dom,"-0.92 [-3.23, +1.33]",0.415,1.000
+Qwen2.5-Coder-3B-Instruct,dom,"-2.52 [-4.52, -0.52]",0.009,0.153
+Qwen2.5-Coder-7B-Instruct,dom,"-0.12 [-2.15, +2.11]",0.868,1.000
+deepseek-coder-1.3b-instruct,dom,"-1.76 [-3.44, -0.03]",0.047,0.517
+deepseek-coder-33b-instruct,dom,"+1.76 [-0.16, +3.77]",0.078,0.780
+Llama-3.2-1B-Instruct,dom,"+1.92 [+0.48, +3.40]",0.016,0.224
+Qwen2.5-72B-Instruct,blk,"-1.32 [-3.21, +0.51]",0.154,1.000
+Qwen2.5-Coder-0.5B-Instruct,blk,"+2.55 [+0.52, +4.59]",0.012,0.180
+Qwen2.5-Coder-1.5B-Instruct,blk,"+0.05 [-1.69, +1.77]",0.968,1.000
+Qwen2.5-Coder-14B-Instruct,blk,"-1.33 [-3.89, +1.04]",0.304,1.000
+Qwen2.5-Coder-32B-Instruct,blk,"+0.08 [-2.15, +2.35]",0.961,1.000
+Qwen2.5-Coder-3B-Instruct,blk,"-3.47 [-5.68, -1.45]",< 0.0005,< 0.010
+Qwen2.5-Coder-7B-Instruct,blk,"-2.68 [-4.57, -0.79]",0.004,0.072
+deepseek-coder-1.3b-instruct,blk,"+1.01 [-0.44, +2.53]",0.178,1.000
+deepseek-coder-33b-instruct,blk,"+0.64 [-1.29, +2.68]",0.501,1.000
+Llama-3.2-1B-Instruct,blk,"+4.05 [+2.19, +5.88]",< 0.0005,< 0.010

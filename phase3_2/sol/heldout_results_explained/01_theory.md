@@ -166,7 +166,10 @@
 3. **Example.**
    - The median first switch is **2.06** examples (3,469 crossers).
    - The median rung where the switch starts holding is **8** (2,912 sites).
-   - 92.8–99.5% of curves wobble.
+   - 92.8–99.5% of curves dip at least once, but that frozen flag counts any decrease, however
+     small. The dips that matter: 31% of the sites that switch later fall back below zero, by a
+     median of −0.76 nats, and 59% of curves drop by more than 1 nat at some step
+     ([09 §3.3](09_conclusions_claim_strength_and_venues.md)).
 4. **In → out.** 7 margins per site give `k*`, `sustained_k` and non-monotone flags.
 5. **Assumptions.**
    - Demonstrations are leak-free and nested, so rung 4 contains rung 2.
@@ -182,8 +185,9 @@
    - `test_no_demonstration_leaks_in_any_ladder_row`
 9. **Where.** `p33/kstar.py: compute`; `p33/demos.py: for_site, audit`.
 10. **Why it matters.** Adaptation is **fast but fragile**: models flip early and then slip
-    back. That is a finding about in-context learning, not just about DSLs, and the gap
-    between 2 and 8 examples is a crisp, quotable number.
+    back. That is a finding about in-context learning, not just about DSLs. The gap between
+    about 2 and about 8 examples is a crisp, quotable number, as long as it is stated as
+    medians *among the sites that switch* (and among those whose switch lasts).
 
 ---
 
@@ -312,6 +316,11 @@
    - Global repair cut reversions at repaired sites from 14,459 to 4,696 and silent errors to
      **0**.
    - Partial repairs left most errors silent: 2,672 of 2,804 for targeted.
+   - **The registered test** was run post hoc in Phase 4. Targeted − random per changed symbol
+     is `dom` −0.77 [−1.96, +0.40] and `blk` −0.04 [−1.19, +1.12]: not supported.
+   - **Split into repaired and control sites** (Phase 4, post hoc): at the repaired sites
+     targeted beats random (`dom` +0.79, `blk` +2.21, intervals above 0). The control sites
+     decide the negative sign.
 4. **In → out.** A repaired lexicon re-scores every site; counts by arm.
 5. **Assumptions.**
    - Role risk transfers from the base model, which is H4.
@@ -369,6 +378,9 @@
      transferred.
    - The 8 other pairs had **no** frozen parameters. The export fitted calibration on held-out
      rows (in-sample, slope exactly 1.00) and labelled it `DEV_FREEZE`.
+   - **Out of sample** (Phase 4, post hoc): template-grouped cross-fitting gives ECE
+     0.016–0.105 with slopes 0.97–0.99 for those 8 pairs. Fitting on the other grammar gives
+     ECE 0.026–0.137 with slopes 0.75–1.33.
 4. **In → out.** A risk gives a probability, and binned agreement with outcomes.
 5. **Assumptions.** Transfer is only claimable where parameters were frozen.
 6. **Silent failure.** Mislabelled in-sample calibration presented as frozen transfer. This
@@ -377,8 +389,10 @@
 8. **Test.** `test_calibration_of_a_fitted_model_is_identity` (which explains the 1.00).
    There is no test that the label matches the source, which is the gap.
 9. **Where.** `p33/export.py`, the H4 section, around the `calibration_source` assignment.
-10. **Why it matters.** Report calibration only for the 0.5B and 1.5B pairs. AUROC and the
-    criteria are rank-based and unaffected. See [08](08_issues_and_superseded_numbers.md).
+10. **Why it matters.** Claim calibration *transfer* only for the 0.5B and 1.5B pairs. The
+    post-hoc cross-fitted values show that each pair *can* be calibrated, which is a weaker
+    statement. AUROC and the criteria are rank-based and unaffected. See
+    [08](08_issues_and_superseded_numbers.md).
 
 ---
 
@@ -388,8 +402,9 @@
 
 - Code models follow a redefined language only partially, at every scale from 0.5B to 72B.
 - Telling them the rules shifts their preferences reliably, but by too little.
-- Showing them examples flips most preferences after about 2 examples, but the flip is
-  unstable until about 8, and 1 in 5 hard sites never flips within 32.
+- Showing them examples flips most preferences. Among sites that flip, the first flip comes
+  after about 2 examples, but a flip that lasts takes about 8, and 1 in 5 hard sites never flips
+  within 32.
 
 **Where they fail is predictable.**
 

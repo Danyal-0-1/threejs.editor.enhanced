@@ -17,7 +17,9 @@
 >   endpoint and the H5 direction.
 > - **D11** = specified after the freeze but before any held-out outcome was seen.
 > - **Exploratory** = everything else, and labelled so.
-> - Two gaps in the frozen analysis are disclosed in §13.
+> - Three gaps in the frozen analysis are disclosed in §13. On 2026-10-21 they, and two further
+>   problems, were corrected **post hoc** in Phase 4 (deviation D13). No registered verdict
+>   changed (§13 and [`phase4/`](../../../phase4/README.md)).
 
 | doc | for |
 |---|---|
@@ -107,11 +109,11 @@ Details are in [03](03_code_and_pipeline.md).
 
 | question | registered criterion | result | status |
 |---|---|---|---|
-| **H4**: does the base model's margin predict where the instruct model reverts? | C1: AUROC − identity ≥ 0.10, CI > 0; C2: AUROC − length ≥ 0.05, CI > 0; Holm; each family separately | AUROC 0.76–0.96; C1 deltas +0.26…+0.46; C2 deltas +0.14…+0.49; all CIs > 0; Holm p = 0.001 | **MET in 20/20** (10 pairs × 2 families) |
+| **H4**: does the base model's margin predict where the instruct model reverts? | C1: AUROC − identity ≥ 0.10, CI > 0; C2: AUROC − length ≥ 0.05, CI > 0; Holm; each family separately | AUROC 0.76–0.96; C1 deltas +0.26…+0.46; C2 deltas +0.14…+0.49; all CIs > 0; Holm p ≤ 0.001 (the bootstrap floor, 0.0009995) | **MET in 20/20** (10 pairs × 2 families) |
 | H4 C3: AUROC ≥ 0.65 on a held-out *grammar* | — | `blk` AUROCs are 0.76–0.95, but `blk` was seen in development | **NOT TESTABLE** (D1) |
 | H4 refutation clause: separates lexicons but not sites | within-lexicon AUROC | 0.758–0.963, as high as overall | **not triggered** |
 | **Primary endpoint `k*`**: how many examples to switch | KM median with censoring | median 1.4–4.6 examples (`dom`), 3.3–11.6 (`blk`); 6–29% censored | **estimated** |
-| **H5**: targeted repair beats random per changed symbol | interval excluding 0; control sites worsen ≤ 0.02 | targeted beats the mean of random in **43/100** cells; mean difference **−0.41** per symbol | **NOT SUPPORTED** (descriptive; the interval test was never implemented, §13) |
+| **H5**: targeted repair beats random per changed symbol | interval excluding 0; control sites worsen ≤ 0.02 | targeted beats the mean of random in **43/100** cells; mean difference **−0.41** per symbol | **NOT SUPPORTED**. The frozen export gave this descriptively. The registered interval test, run post hoc in Phase 4, gives `dom` −0.77 [−1.96, +0.40] and `blk` −0.04 [−1.19, +1.12] (§13) |
 | H2: prior × context | — | — | **NOT TESTABLE** |
 | **D11**: scale trend within Qwen2.5-Coder (0.5–32B) | slope on log₁₀ size; bootstrap; Holm | reversion: no trend. H4 AUROC: −0.081 per 10× in `dom` (Holm p < 0.003) | reported |
 | Arm B (generation) | descriptive hurdle | reach 13.5%; reversion given reach 19.8%; task accuracy 9.6% | reported |
@@ -177,8 +179,13 @@ prediction is about the exact place, not just about which symbol is hard.
 
 - **Frozen transfer, the 0.5B and 1.5B pairs only.** ECE was 0.036–0.052, with calibration
   slopes of 0.83–1.18: the development calibration transferred to new mappings and to `blk`.
-- **The other 8 pairs have no frozen calibration.** Their ECE (0.017–0.111) and Brier
+- **The other 8 pairs have no frozen calibration.** Their exported ECE (0.017–0.111) and Brier
   (0.089–0.194) were fitted on the held-out rows themselves, so they are in-sample (§13).
+- **Out of sample (Phase 4, post hoc).** Template-grouped cross-fitting gives ECE 0.016–0.105,
+  with slopes 0.97–0.99, for those 8 pairs. Fitting on the other grammar family instead gives ECE
+  0.026–0.137, with slopes 0.75–1.33. Within a pair, the calibration carries over to new templates;
+  across grammars, less well. The registered transfer claim stays limited to the two frozen
+  pairs.
 
 ---
 
@@ -358,14 +365,21 @@ The full per-model list is in `analysis_addenda/summary/HELDOUT_SUMMARY.txt`.
   examples in the prompt.
 - **Verbs revert most,** the same ordering as in the extinction curves (§11). Two
   independent methods agree.
+- **Extraction correction (Phase 4, post hoc).** In 63 generations, the frozen extractor
+  kept a same-line "Request:" continuation, so they counted as parse failures. Cutting it makes
+  27 correct and 31 valid but wrong. Task accuracy rises from 747 to **774 / 7,800 (9.9%)**. The
+  change is mostly in Qwen2.5-72B-I `blk`, which goes from 65 to 87 correct programs. Reach and
+  reversion given reach are unchanged.
 
 ---
 
 ## 9. H5: repairing risky spellings
 
-- **The arms.** Each cell is one instruct model × family × lexicon; there are 100. In each, 3
-  roles were respelled using the targeted choice (the highest base-model risk), 3 random
-  seeds' worth of random choices, or all remapped roles (global).
+- **The arms.** Each cell is one instruct model × family × lexicon; there are 100. In each, the
+  repair respelled one of:
+  - **targeted:** the 3 roles with the highest base-model risk;
+  - **random:** 3 roles chosen at random, repeated with 5 seeds;
+  - **global:** all remapped roles.
 - **Proof.** All 35 repairs were proven meaning-preserving on 284 programs.
 
 | | value |
@@ -379,7 +393,16 @@ The full per-model list is in `analysis_addenda/summary/HELDOUT_SUMMARY.txt`.
 
 **What it means.**
 
-- **H5 fails.** Choosing the riskiest roles does not beat random choice.
+- **H5 fails.** Choosing the riskiest roles does not beat random choice on the registered
+  metric. The registered interval test, run post hoc in Phase 4, confirms it in both families
+  (§2).
+- **But at the repaired sites themselves, targeting beats random** (Phase 4, post hoc):
+  `dom` +0.79 [+0.06, +1.53] and `blk` +2.21 [+1.39, +3.02] per changed symbol.
+  - This is mostly because respelling random, low-risk roles makes their own sites *worse*
+    (50.5% → 54.6% in `dom`, 49.5% → 56.3% in `blk`).
+  - The registered difference is negative because the *unrepaired* sites improved more under
+    random repair.
+  - This is a hypothesis for a preregistered follow-up, not a finding.
 - **Why.** These lexicons *permute* familiar spellings, so the old spelling of a repaired role
   usually still means another role. A partial repair therefore leaves the error silent.
 - **Only renaming everything works.** Moving every reassigned role to an unfamiliar alphabet
@@ -442,25 +465,28 @@ The full per-model list is in `analysis_addenda/summary/HELDOUT_SUMMARY.txt`.
 
 ---
 
-## 13. Gaps in the frozen analysis (disclosed, not corrected post hoc)
+## 13. Gaps in the frozen analysis: disclosed, then corrected post hoc in Phase 4
 
-1. **H4 calibration labels.** For the 8 pairs without frozen Platt parameters (everything
-   but 0.5B and 1.5B), the frozen export does two things wrong:
-   - **The probability.** It writes `calibrated_p = σ(risk)`, i.e. uncalibrated, but labels
-     it `DEV_FREEZE`.
-   - **The calibration metrics.** It computes ECE, Brier and the calibration slope after
-     fitting a calibration on the held-out rows themselves, so the slope is exactly 1.00.
-   - **Unaffected:** AUROC, AP, the C1/C2 criteria and every other rank-based number.
-   - **The only genuine calibration-transfer claims are for the 0.5B and 1.5B pairs.**
-2. **The H5 interval test was never implemented.** The frozen export lists each arm's
-   per-symbol reduction but not the registered test (targeted − random with an interval). The
-   descriptive result (43/100 cells; mean −0.41) already contradicts H5. No post-hoc test is
-   offered as confirmatory.
-3. **The D10 scale analysis** was likewise missing from the frozen code. It was specified
-   (D11) and approved before outcomes were examined, and was run after the export.
+The frozen numbers above stay as they are. On 2026-10-21, the gaps below were corrected **after**
+the outcomes were known, outside the frozen code (deviation D13). The correcting script first
+reproduces each frozen number it corrects, and refuses otherwise. The full report is
+`analysis_addenda/phase4_fixes/PHASE4_FIXES.md`, and the explanation is in
+[`phase4/fixes_before_phase4/`](../../../phase4/fixes_before_phase4/README.md).
 
-All three are recorded in [08](08_issues_and_superseded_numbers.md) and in deviation D12 of
-`phase3_2/PREREGISTRATION.md`.
+| # | gap in the frozen export | Phase 4 correction (post hoc) | effect on a registered verdict |
+|---|---|---|---|
+| 1 | **H4 calibration** for the 8 pairs without frozen Platt parameters: `calibrated_p = σ(risk)` labelled `DEV_FREEZE`, and ECE, Brier and slope computed in-sample (slope exactly 1.00) | template-grouped 5-fold cross-fitting: ECE 0.016–0.105, slopes 0.97–0.99; other-grammar transfer: ECE 0.026–0.137, slopes 0.75–1.33 | none: the criteria are rank-based. The transfer claim stays limited to the 0.5B and 1.5B pairs |
+| 2 | **H5's registered interval test was never implemented** | the test as registered: `dom` −0.77 [−1.96, +0.40], `blk` −0.04 [−1.19, +1.12] per changed symbol; control sites within tolerance | none: H5 stays **not supported**, now by its own test |
+| 3 | **the D10 scale analysis** was not in the frozen code | fixed before Phase 4 by D11, specified and approved before outcomes were seen | — |
+| 4 | **H5's per-symbol metric mixes** repaired and control sites | exact split: at the repaired sites, targeted beats random (`dom` +0.79, `blk` +2.21; intervals above 0). The control sites decide the sign | none. It is a hypothesis for a preregistered follow-up |
+| 5 | **Arm B extraction** kept a same-line "Request:" continuation | cut and re-evaluated with the frozen evaluator: 63 generations change; task accuracy 9.6% → 9.9%; reach unchanged | none (Arm B is descriptive) |
+
+Also done in Phase 4: H4 **per role**, an open item from [06 §10](06_publishability_and_paper.md).
+The AUROC within each role is 0.63–0.98, with the interval above 0.5 in all 60 groups, so the
+prediction does not depend on one role.
+
+These items are recorded in [08](08_issues_and_superseded_numbers.md) and in deviations D12 and
+D13 of `phase3_2/PREREGISTRATION.md`.
 
 ---
 
@@ -482,5 +508,6 @@ restore the four files stored gzipped (`csv/arm_a_long.csv` and three `merged/*.
 | **paper figures and tables** | `analysis_addenda/paper_figures/`: 10 figures (PDF, SVG, PNG), 16 tables, `CAPTIONS.md`, `PROVENANCE.md` |
 | diagnostic figures (frozen, not for the paper) | `plots/*.png` and `*.svg` (12 figures) |
 | D11 | `analysis_addenda/d11_scale/SCALE_ANALYSIS.md` |
+| **Phase 4 post-hoc fixes** | `analysis_addenda/phase4_fixes/` (`PHASE4_FIXES.md`, F1–F6 CSVs) |
 | summary and exploratory | `analysis_addenda/summary/HELDOUT_SUMMARY.txt`, `analysis_addenda/exploratory/` (`EXPLORATORY_CHECKS.md`: inheritance, role ordering, adaptation cuts, wobble size) |
 | unlock provenance | `HELDOUT_UNLOCK.json`, `UNLOCK_NOTE.md` |

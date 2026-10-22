@@ -31,7 +31,7 @@
 | 3 | **Rules help, but too little** | descriptive, length-controlled | +0.16…+0.62 nats; reversion falls only ~5–6 points |
 | 4 | **In-context adaptation is fast but fragile** | primary endpoint (KM) | KM median to the first switch 1.4–4.6 (`dom`) and 3.3–11.6 (`blk`) examples; among sites that switch, ~2 to the first switch and ~8 to one that lasts; 18% never switch within 32; 31% of switches fall back later, by a median of −0.76 nats ([09 §3.3](09_conclusions_claim_strength_and_venues.md)) |
 | 5 | **Behavioural confirmation in generation** | descriptive (Arm B) | 1 in 5 reached sites revert; verbs most (29–43%) |
-| 6 | **Targeted repair fails, and why** | preregistered H5, not supported, with a mechanism | targeted beats random in 43/100 cells; global respelling → 0 silent errors |
+| 6 | **Targeted repair fails on the registered metric, and why** | preregistered H5, not supported, now by its own registered test (run post hoc) | targeted beats random in 43/100 cells; registered test `dom` −0.77 [−1.96, +0.40], `blk` −0.04 [−1.19, +1.12]; at the repaired sites alone targeted wins (post hoc); global respelling → 0 silent errors |
 | 7 | **A reusable rigorous protocol** | methods | code-hash-enforced freeze/unlock, leak-free demonstrations, cluster bootstrap, KM with censoring |
 
 **Exploratory, for the discussion section and a follow-up study:**
@@ -62,7 +62,7 @@
 | "Isn't H4 trivial: the instruct model is fine-tuned from the base?" | That *is* the hypothesis: the prior survives tuning. Non-trivial because the score beats a role-level baseline in 20/20 groups and holds within lexicons. *Exploratory:* the model's own base also beats a consensus of other-lineage bases in 20/20 groups (+0.12 to +0.35 AUROC), so the prediction is inherited, not just shared site difficulty ([09 §3.1](09_conclusions_claim_strength_and_venues.md)). |
 | "Log-prob margins aren't behaviour." | Arm B: in real generation, about 20% of reached sites revert. The role ordering (verb > keyword > sigil) matches the margins at the same number of worked examples (4) in both grammars; levels differ, because reached sites are a selected subset ([09 §3.2](09_conclusions_claim_strength_and_venues.md)). |
 | "Why should we care about permuted spellings?" | They produce *silent* wrong programs: the code runs but does the wrong thing. That is the dangerous failure mode in DSL deployment. |
-| "H5 failed, so is the repair story weak?" | The failure has a mechanism (permutations keep old spellings meaningful) and a positive counterpart: global respelling eliminates silent errors. |
+| "H5 failed, so is the repair story weak?" | The failure has a mechanism (permutations keep old spellings meaningful) and a positive counterpart: global respelling eliminates silent errors. Splitting the metric (post hoc) shows that targeting *does* win at the sites it repairs; the registered sum is decided by unrepaired sites, which is a precise hypothesis for a follow-up. |
 | "Calibration claims?" | Only for the two pairs with frozen parameters (ECE 0.036–0.052). The other eight are disclosed as in-sample (D12). |
 | "Was anything tuned on test data?" | No. Frozen code hashes were re-verified on every held-out job. D11 was approved before outcomes were seen, with a git timestamp. |
 
@@ -77,7 +77,7 @@
 | the token table shifts preferences consistently but modestly | that models "ignore" the rules (they don't; the shift is real) |
 | KM median to the first switch 1.4–4.6 (`dom`), 3.3–11.6 (`blk`); among switchers ≈ 2 to the first switch and ≈ 8 to a lasting one; 18% never within 32 | a single "number of examples" without censoring and wobble; "≈ 2" or "≈ 8" without "among the sites that switch" |
 | about 1 in 5 reached sites revert in generation | an overall generation "error rate" from multiplying the hurdle |
-| targeted repair ≤ random; global respelling removes silent errors | that targeting by risk can never work (only this rule, with this metric) |
+| targeted repair ≤ random on the registered metric; global respelling removes silent errors | that targeting by risk can never work (only this rule, with this metric; at the repaired sites it won, post hoc) |
 | *(exploratory)* verbs are stickiest; partial remaps are harder | the exploratory patterns as findings without a "exploratory" label |
 | calibration transfers for the two frozen pairs | calibration for the other eight pairs |
 
@@ -112,9 +112,9 @@
 > A base model's margin predicts which sites its instruction-tuned twin gets wrong (AUROC
 > 0.76–0.96), meeting both preregistered criteria for all ten model pairs in both grammar
 > families and exceeding a role-level difficulty baseline. In free generation, one in five
-> reached sites reverts, verbs most often. Respelling the predicted-riskiest symbols is no
-> better than random, whereas respelling all reassigned symbols eliminates silent errors:
-> in a permuted language every familiar spelling remains meaningful.
+> reached sites reverts, verbs most often. On the registered measure, respelling the
+> predicted-riskiest symbols is no better than random, whereas respelling all reassigned symbols
+> eliminates silent errors: in a permuted language every familiar spelling remains meaningful.
 
 ---
 
@@ -295,9 +295,11 @@ set, like the D11 script.
 
 **Must:**
 
-- [ ] Report calibration only for the 0.5B and 1.5B pairs; footnote the in-sample values (08, D12).
-      The figure is ready: `P/figA1_calibration`.
-- [ ] State that H5's registered interval test was not implemented; give the descriptive result.
+- [ ] Report calibration *transfer* only for the 0.5B and 1.5B pairs; the figure is ready
+      (`P/figA1_calibration`). For the other 8, report the out-of-sample (cross-fitted) values from
+      Phase 4 and label them post hoc (D13).
+- [x] H5's registered interval test: run post hoc in Phase 4 (`dom` −0.77 [−1.96, +0.40],
+      `blk` −0.04 [−1.19, +1.12]). State that it was implemented after the outcomes were known.
 - [x] Redraw the scale figure from the D11 output (log axis, intervals): `P/fig4_scale`.
 - [x] Redraw every figure for publication, with the numbers in tables: `P/` (§8).
 - [ ] Release the benchmark (templates, lexicons, prompts), the frozen code (`78b2bcd`) and the
@@ -306,8 +308,12 @@ set, like the D11 script.
 **Should:**
 
 - [ ] An exploratory, frequency-aware H5 re-analysis (rank roles by risk × site count), labelled
-      post hoc.
-- [ ] An exploratory per-role H4 table, to show the prediction is not driven by verbs alone.
+      post hoc. It needs new GPU scoring, so it moves to the Phase 4 plan, together with a
+      preregistered repaired-site H5 metric.
+- [x] An exploratory per-role H4 table: done in Phase 4 (`analysis_addenda/phase4_fixes/F6_h4_per_role.csv`);
+      AUROC 0.63–0.98 within each role.
+- [x] Footnote the Arm B extraction effect with the corrected numbers: task accuracy 9.6% → 9.9%
+      (Phase 4, F5).
 - [x] Confidence intervals on the Arm B rates, with a template bootstrap: `P/tables/C3_generation`.
 
 **Could:**

@@ -32,6 +32,15 @@ order the code permits.
 >   The human-behaviour and brain picture is in [`10`](heldout_results_explained/10_humans_and_the_brain.md).
 >   Its three exploratory checks (inheritance, role ordering, wobble size) are made by
 >   [`scripts/exploratory_checks.py`](scripts/exploratory_checks.py) and labelled post hoc.
+> - **Phase 4 started on 2026-10-21** ([`../../phase4/`](../../phase4/README.md)). Its first step
+>   corrected every open gap of the held-out analysis post hoc (deviation D13):
+>   - out-of-sample calibration;
+>   - H5's registered test, which is not supported in either family;
+>   - the H5 repaired/control split;
+>   - the Arm B extraction, with task accuracy 9.6% → 9.9%;
+>   - H4 per role.
+>
+>   No registered verdict changed.
 > - **Data:** on Sol in `~/phase3-3_experiment_sol/results/heldout-20261007a/`. Locally in
 >   `phase3_3/sol_results/heldout-20261007a/`, byte-identical (checked file by file on
 >   2026-10-09) and **in git**. Four files over GitHub's 100 MB limit are stored gzipped; after

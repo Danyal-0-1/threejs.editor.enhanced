@@ -1,0 +1,7 @@
+grammar,arm,repaired sites,reverting before → after,silent after
+dom,targeted,2133,70.9% → 70.5%,67.7%
+dom,random,13200,50.5% → 54.6%,49.4%
+dom,global,15150,47.4% → 15.3%,0.0%
+blk,targeted,1955,74.2% → 66.5%,62.8%
+blk,random,13200,49.5% → 56.3%,50.2%
+blk,global,15150,48.1% → 15.7%,0.0%
