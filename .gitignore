@@ -2,3 +2,7 @@
 .vscode/*
 .DS_Store
 progress_summare/
+
+# Compiled Python caches (untracked on 2026-10-22; they are rebuilt automatically)
+__pycache__/
+*.pyc
