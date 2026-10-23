@@ -356,7 +356,7 @@ gives it a role. A development run naming one is refused.
 
 | check | result |
 |---|---|
-| the tests | **238 passed**, 0 failed: among them 9 for the scorer and its plumbing against a stand-in vLLM server (`tests/test_api_scorer.py`), 5 for the probe, and one that every experiment's rows carry `p4/1` |
+| the tests | **238 passed**, 0 failed: among them 10 for the scorer and its plumbing against a stand-in vLLM server (`tests/test_api_scorer.py`), 5 for the probe, and one that every experiment's rows carry `p4/1` |
 | the scorer, live, on neutral text | qwen3-coder-30b-a3b-instruct: margins, the merged flag at a `('#` / `('.` contrast, program NLL and greedy generation all as expected; about 0.9 s per pair at 200 tokens |
 | `run.py prefetch`, live | pinned `olmo3-7b-instruct@vllm-0.26.0-9c8d2749` and `beam-1-0@vllm-0.28.1rc1…`; the key is not in the pins file |
 | `run.py dev init` with a served model | `REFUSED: … is HELDOUT_MODEL and stage 'dev' may touch development cells only` |
