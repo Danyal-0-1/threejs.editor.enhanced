@@ -1,5 +1,5 @@
 #!/bin/bash
-# submit.sh — the ONLY way to submit a Phase 3.3 job.
+# submit.sh — the ONLY way to submit a Phase 4 job.
 #
 #   bash submit.sh <job> <RUN_ID> [extra sbatch args...]
 #
@@ -72,7 +72,7 @@ esac
 
 set -x
 sbatch --account="$P4_ACCOUNT" --partition="$P4_PARTITION" --qos="$P4_QOS" \
-  "${RES[@]}" --job-name="p33-$JOB" \
+  "${RES[@]}" --job-name="p4-$JOB" \
   --output="$LOG/%x-%A_%a.out" --error="$LOG/%x-%A_%a.err" \
   --export=ALL,RUN_ID="$RUN_ID",P4_SOL="$HERE" \
   "$@" "$HERE/jobs/$JOBFILE.slurm"

@@ -136,3 +136,10 @@ def test_phase4s_configs_only_touch_cells_their_stage_allows():
                         assert kind in splits._ALLOWED[stage], (f, fam, lx, m, kind)
             found += 1
         assert found >= 1
+
+
+def test_phase4s_jobs_and_their_logs_are_named_p4():
+    """squeue, `scancel --name` and the log files (%x) must never mix the two phases."""
+    submit = open(os.path.join(paths.SOL_ROOT, "submit.sh"), encoding="utf-8").read()
+    assert '--job-name="p4-$JOB"' in submit
+    assert "p33-" not in submit

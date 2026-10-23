@@ -243,13 +243,14 @@ Phase 4 run can never touch Phase 3.3's folders, design or labels:
 | **split** | everything Phase 3.3 scored (both families, nine lexicons, 21 models) is **development**; **nothing is held out** until the preregistration registers it; a model not scored in Phase 3.3 is classified held-out, so it cannot be scored in a development run by accident | `p4/governance/splits.py` |
 | **configs** | Phase 3.3's configs moved to `configs/phase3_3/` as a record; `configs/smoke.json` stays as Phase 4's smoke test | `configs/README.md` |
 | **label** | `SCHEMA_VERSION = "p4/1"` on every row and run (Phase 3.3 wrote `p33/1`) | `p4/__init__.py` |
+| **job names** | `p4-<job>` (Phase 3.3's were `p33-<job>`), so `squeue`, `scancel --name` and the log file names never mix the two phases | `sol/submit.sh` |
 | **what a freeze covers** | `p4/`, `run.py` **and the language code in `dsl/`**. Phase 3.3 froze only the language's data, through the materials hash | `p4/runtime/config.py` (`source_hashes`) |
 
 **Checked after the settings changed** (2026-10-22):
 
 | check | result |
 |---|---|
-| **the tests** | **225 passed**, 0 failed, 0 blocked: the 212 copied tests, 9 on Phase 4's own settings (`tests/test_phase4_design.py`) and 4 on the API tool (`tests/test_voyager_models.py`) |
+| **the tests** | **226 passed**, 0 failed, 0 blocked: the 212 copied tests, 10 on Phase 4's own settings (`tests/test_phase4_design.py`) and 4 on the API tool (`tests/test_voyager_models.py`) |
 | **both pipelines side by side**, with Phase 3.3's design installed in the copy | the fake experiment: 36 of 36 CSVs identical; the real development run: 19 of 19 identical. **The settings changed no measurement** |
 | **every file against its origin** | 0 problems. The 27 files changed since the copy are exactly the ones these settings touch |
 | **Phase 3.3** | the frozen code's drift check is still empty |
