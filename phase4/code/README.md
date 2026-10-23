@@ -200,13 +200,61 @@ run/.venv/bin/python phase4/code/tools/compare_with_phase3_3.py     # both pipel
 
 - **A run on the laptop, with the fake scorer:** set `P4_RESULTS_ROOT` to a scratch folder and
   `P4_FAKE=1`, then use `run.py` as in the table above.
-- **On Sol:** follow Phase 3.3's runbook, [`phase3_2/sol/README.md`](../../phase3_2/sol/README.md),
-  with these substitutions:
+- **On Sol:** set it up once, as below. After that, follow Phase 3.3's runbook,
+  [`phase3_2/sol/README.md`](../../phase3_2/sol/README.md), with these substitutions:
   - `~/phase4_experiment_sol` for `~/phase3-3_experiment_sol`;
   - `phase4/code/sol/` for `phase3_2/sol/`;
   - `../run.py` for `scripts/p33.py`;
-  - `P4_` for `P33_`.
+  - `P4_` for `P33_`;
+  - `p4-<job>` for `p33-<job>` in job and log names.
 - **The ASU RC API models:** [`VOYAGER.md`](VOYAGER.md).
+
+### On Sol, the first time
+
+Phase 4 gets its own folder on Sol, `~/phase4_experiment_sol`. Phase 3.3's checkout,
+`~/phase3-3_experiment_sol/repo`, stays on its frozen commit `78b2bcd`: never pull there.
+
+```bash
+# 1. the code, at the same commit as the laptop
+mkdir -p ~/phase4_experiment_sol && cd ~/phase4_experiment_sol
+git clone --branch reorganize-2026-10-22 https://github.com/Danyal-0-1/threejs.editor.enhanced.git repo
+git -C repo log -1 --format='%h %s'          # must match `git log -1` on the laptop
+
+# 2. the environment: Phase 3.3's, so every package version is the one it ran
+ln -s ~/phase3-3_experiment_sol/env env
+
+# 3. the results folder, starting from Phase 3.3's pins
+mkdir -p results
+cp -p ~/phase3-3_experiment_sol/results/model_pins.json results/
+sha256sum ~/phase3-3_experiment_sol/results/model_pins.json results/model_pins.json   # the same twice
+
+# 4. checks on the login node, then the tests as a CPU job
+cd repo/phase4/code/sol
+source sol.env && source env/activate.sh
+$P4_PY ../run.py env-check                   # "missing_required": []
+$P4_PY ../tools/verify_copy.py | tail -1     # problems: 0
+bash submit.sh cpu_tests setup-$(date +%Y%m%d)
+```
+
+**Why steps 2 and 3 start from Phase 3.3's:**
+
+- **The pins.** Prefetch keeps an already-pinned model at its pinned revision. With no
+  `model_pins.json`, the first prefetch would pin every model to the Hub's *current* commit:
+  new weights, a new download, and no longer the models Phase 3.3 scored. The copy keeps every
+  model it lists at Phase 3.3's revision. The weights stay where they are, in
+  `/scratch/$USER/hf`.
+- **The environment.** `env/make_env.sh` installs from version ranges (`requirements.in`), so a
+  new environment can resolve newer packages; it also writes its lock file into the checkout.
+  The link reuses the environment Phase 3.3 ran. If Phase 4 ever needs a package that
+  environment lacks, build Phase 4 its own instead: `rm ~/phase4_experiment_sol/env` (no
+  trailing slash: that removes only the link), then `bash env/make_env.sh`. Never `pip install`
+  through the link, because that would change Phase 3.3's environment.
+
+**The check:** the job log `~/phase4_experiment_sol/results/setup-<date>/logs/p4-cpu_tests-*.out`
+ends with `cpu_tests: overall exit=0`. The only BLOCKED test is the A100 one, because a CPU node
+has no GPU.
+
+**Later updates:** `git -C ~/phase4_experiment_sol/repo pull --ff-only`.
 
 ---
 

@@ -114,8 +114,11 @@ refuses a key file that others can read.
 ### Step 3 — Get the list of models
 
 ```bash
-# from the repository root (the tool needs only Python 3, no extra packages)
+# on the laptop, from the repository root (the tool needs only Python 3, no extra packages)
 run/.venv/bin/python phase4/code/tools/voyager_models.py list
+
+# on Sol, from ~/phase4_experiment_sol/repo, with the environment's Python (the one every job uses)
+../env/bin/python phase4/code/tools/voyager_models.py list
 ```
 
 This writes two files to `phase4/code/configs/voyager/`:
@@ -165,7 +168,9 @@ held-out, so they cannot be scored by accident.
 
 **Both work, because the API is reachable from anywhere.**
 
-- **The list and the probe** take minutes: run them wherever is convenient.
+- **The list and the probe** take minutes. The laptop is simplest: the tables land in the
+  checkout you commit from. They hold no key, so they can be committed as the record of what was
+  served that day, and Sol gets them with `git pull`.
 - **Long experiment runs** belong in a Sol CPU job, so the laptop can sleep and the results sit
   next to the other Sol results. That needs the key in `~/.config/asu-rc/` on Sol too (step 2,
   done on Sol).
