@@ -103,7 +103,7 @@ def _packages() -> dict:
 def _rev_dir(run: str, rev: str) -> tuple[str, str]:
     rd = CFG.run_dir(run)
     if not os.path.isdir(rd):
-        sys.exit(f"no run directory {rd} (is P33_RESULTS_ROOT set?)")
+        sys.exit(f"no run directory {rd} (is P4_RESULTS_ROOT set?)")
     return rd, os.path.join(rd, "analysis_revisions", rev)
 
 

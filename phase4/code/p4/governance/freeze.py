@@ -42,7 +42,13 @@ EXCLUSION_RULES = [
 ]
 
 
+DRAFT_MARKER = b"**Status: DRAFT"     # in the preregistration until it is registered
+
+
 def build_payload(run_dir: str, cfg) -> dict:
+    if DRAFT_MARKER in open(_paths.PREREGISTRATION, "rb").read():
+        raise splits.FreezeError(f"{_paths.PREREGISTRATION} is still a draft. Register it first "
+                                 f"(its status line says DRAFT): a freeze needs a registered design")
     status = json.load(open(os.path.join(run_dir, "merged", "arm_a.status.json")))
     if status["status"] != "COMPLETE":
         raise splits.FreezeError(f"development Arm A is {status['status']}; a freeze "
@@ -68,7 +74,7 @@ def build_payload(run_dir: str, cfg) -> dict:
         L = P.load_candidate(lx)
         for cond in ("rule", "norule") + prompts.PARAPHRASES:
             rendered[f"{lx}/{cond}"] = prompts.bundle(cond, L).sha
-    pre = open(os.path.join(_paths.PHASE3_2_ROOT, "PREREGISTRATION.md"), "rb").read()
+    pre = open(_paths.PREREGISTRATION, "rb").read()
     pins_path = os.path.join(CFG.results_root(), "model_pins.json")
     pins = json.load(open(pins_path))["pins"] if os.path.exists(pins_path) else {}
     return {

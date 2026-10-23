@@ -21,24 +21,24 @@ JOB="${1:?usage: submit.sh <job> <RUN_ID> [sbatch args]}"
 RUN_ID="${2:?usage: submit.sh <job> <RUN_ID> [sbatch args]}"
 shift 2
 
-LOG="$P33_RESULTS_ROOT/$RUN_ID/logs"
+LOG="$P4_RESULTS_ROOT/$RUN_ID/logs"
 mkdir -p "$LOG"
 
-GPU=(--gres="$P33_GRES" --constraint="$P33_CONSTRAINT")                       # one A100-80GB
-GPU2=(--gres="${P33_GRES_2GPU:-gpu:a100:2}" --constraint="$P33_CONSTRAINT")    # two, same node
+GPU=(--gres="$P4_GRES" --constraint="$P4_CONSTRAINT")                       # one A100-80GB
+GPU2=(--gres="${P4_GRES_2GPU:-gpu:a100:2}" --constraint="$P4_CONSTRAINT")    # two, same node
 
 # The project interpreter reads the run's model list and the registry.
-if [ -z "${P33_PY:-}" ]; then
+if [ -z "${P4_PY:-}" ]; then
   # shellcheck disable=SC1091
   source "$HERE/env/activate.sh"
 fi
 # Array task i scores model i of run_config.json. A profile only submits the
 # models of ITS GPU class (registry `gpus`): the 1-GPU profiles skip the 72B
 # pair, the *_2gpu profiles take only it. To resubmit some models:
-#   P33_ARRAY=2 bash submit.sh dev_arm_a <RUN_ID>        (or P33_ARRAY=1,3)
+#   P4_ARRAY=2 bash submit.sh dev_arm_a <RUN_ID>        (or P4_ARRAY=1,3)
 need_array() {
   local a
-  a="${P33_ARRAY:-$("$P33_PY" "$HERE/../run.py" array-indices --run "$RUN_ID" --gpus "$1")}"
+  a="${P4_ARRAY:-$("$P4_PY" "$HERE/../run.py" array-indices --run "$RUN_ID" --gpus "$1")}"
   if [ -z "$a" ]; then
     echo "submit.sh: no model in $RUN_ID needs $1 GPU(s) -- nothing to submit for '$JOB'" >&2
     exit 2
@@ -71,8 +71,8 @@ case "$JOB" in
 esac
 
 set -x
-sbatch --account="$P33_ACCOUNT" --partition="$P33_PARTITION" --qos="$P33_QOS" \
+sbatch --account="$P4_ACCOUNT" --partition="$P4_PARTITION" --qos="$P4_QOS" \
   "${RES[@]}" --job-name="p33-$JOB" \
   --output="$LOG/%x-%A_%a.out" --error="$LOG/%x-%A_%a.err" \
-  --export=ALL,RUN_ID="$RUN_ID",P33_SOL="$HERE" \
+  --export=ALL,RUN_ID="$RUN_ID",P4_SOL="$HERE" \
   "$@" "$HERE/jobs/$JOBFILE.slurm"

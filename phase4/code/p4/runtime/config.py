@@ -3,17 +3,17 @@
 NOTHING HERE HARD-CODES A USERNAME. Every location resolves from environment
 variables at runtime, with the documented Sol layout as the default:
 
-    code      $P33_CODE_ROOT     default $HOME/phase3-3_experiment_sol/repo
-    results   $P33_RESULTS_ROOT  default $HOME/phase3-3_experiment_sol/results
-    models    $P33_HF_ROOT       default $SCRATCH/hf   (or /scratch/<login>/hf)
+    code      $P4_CODE_ROOT     default $HOME/phase4_experiment_sol/repo
+    results   $P4_RESULTS_ROOT  default $HOME/phase4_experiment_sol/results
+    models    $P4_HF_ROOT       default $SCRATCH/hf   (or /scratch/<login>/hf)
 
 Sol scheduler defaults (verified by the user on 2026-10-05; overridable):
 
-    account     $P33_ACCOUNT     grp_tlingego
-    partition   $P33_PARTITION   public        (`general` is rejected)
-    qos         $P33_QOS         public
-    gres        $P33_GRES        gpu:a100:1
-    constraint  $P33_CONSTRAINT  a100_80
+    account     $P4_ACCOUNT     grp_tlingego
+    partition   $P4_PARTITION   public        (`general` is rejected)
+    qos         $P4_QOS         public
+    gres        $P4_GRES        gpu:a100:1
+    constraint  $P4_CONSTRAINT  a100_80
 
 HUGGING FACE CACHE. `HF_HOME` is the root and `HF_HUB_CACHE` is set to
 `$HF_HOME/hub`, the standard layout, so the cache can be inspected with the
@@ -44,16 +44,16 @@ def _home() -> str:
 
 
 def experiment_root() -> str:
-    return os.environ.get("P33_EXPERIMENT_ROOT",
-                          os.path.join(_home(), "phase3-3_experiment_sol"))
+    return os.environ.get("P4_EXPERIMENT_ROOT",
+                          os.path.join(_home(), "phase4_experiment_sol"))      # never Phase 3.3's folder
 
 
 def code_root() -> str:
-    return os.environ.get("P33_CODE_ROOT", os.path.join(experiment_root(), "repo"))
+    return os.environ.get("P4_CODE_ROOT", os.path.join(experiment_root(), "repo"))
 
 
 def results_root() -> str:
-    return os.environ.get("P33_RESULTS_ROOT",
+    return os.environ.get("P4_RESULTS_ROOT",
                           os.path.join(experiment_root(), "results"))
 
 
@@ -62,7 +62,7 @@ def scratch_root() -> str:
 
 
 def hf_root() -> str:
-    return os.environ.get("P33_HF_ROOT", os.path.join(scratch_root(), "hf"))
+    return os.environ.get("P4_HF_ROOT", os.path.join(scratch_root(), "hf"))
 
 
 def hf_env(*, offline: bool = True) -> dict[str, str]:
@@ -79,11 +79,11 @@ def hf_env(*, offline: bool = True) -> dict[str, str]:
 
 @dataclass(frozen=True)
 class SolDefaults:
-    account: str = field(default_factory=lambda: os.environ.get("P33_ACCOUNT", "grp_tlingego"))
-    partition: str = field(default_factory=lambda: os.environ.get("P33_PARTITION", "public"))
-    qos: str = field(default_factory=lambda: os.environ.get("P33_QOS", "public"))
-    gres: str = field(default_factory=lambda: os.environ.get("P33_GRES", "gpu:a100:1"))
-    constraint: str = field(default_factory=lambda: os.environ.get("P33_CONSTRAINT", "a100_80"))
+    account: str = field(default_factory=lambda: os.environ.get("P4_ACCOUNT", "grp_tlingego"))
+    partition: str = field(default_factory=lambda: os.environ.get("P4_PARTITION", "public"))
+    qos: str = field(default_factory=lambda: os.environ.get("P4_QOS", "public"))
+    gres: str = field(default_factory=lambda: os.environ.get("P4_GRES", "gpu:a100:1"))
+    constraint: str = field(default_factory=lambda: os.environ.get("P4_CONSTRAINT", "a100_80"))
 
 
 RUN_SUBDIRS = ("raw/shards", "checkpoints", "merged", "csv", "plots",
@@ -240,9 +240,9 @@ def source_hashes() -> dict[str, str]:
     differ from what was frozen, because then the frozen analysis is not the
     one being executed.
     """
-    roots = [_paths.PACKAGE]   # phase4/code/p4. Phase 3.3 hashed three trees here (p33,
-    #                            phase3_2/src/phase3_2, phase3/src/phase3); in this copy they
-    #                            are one package, so the frozen source set is all of p4/
+    roots = [_paths.PACKAGE,   # phase4/code/p4: every stage of the pipeline, and
+             _paths.DSL]       # phase4/code/dsl: the language code (Phase 3.3 froze only its
+    #                            data, through the materials hash), so a freeze covers both
     out: dict[str, str] = {}
     for root in roots:
         for dirpath, _dirs, files in os.walk(root):

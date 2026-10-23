@@ -36,8 +36,8 @@ sys.path.insert(0, HERE)
 # run (`dev-status-readonly/`) was created there and one test briefly replaced
 # the real model_pins.json, restoring it in a `finally` (reproduced against a
 # stand-in root on 2026-10-07). Tests never touch real data.
-os.environ["P33_RESULTS_ROOT"] = tempfile.mkdtemp(prefix="p33_test_results_")
-os.environ.pop("P33_ARRAY", None)
+os.environ["P4_RESULTS_ROOT"] = tempfile.mkdtemp(prefix="p4_test_results_")
+os.environ.pop("P4_ARRAY", None)
 
 
 class Blocked(Exception):
@@ -53,6 +53,11 @@ class Blocked(Exception):
 # that import would create a SECOND module with a DIFFERENT Blocked class, and
 # a blocked test would be miscounted as a failure. Register under both names.
 sys.modules.setdefault("run_tests", sys.modules[__name__])
+
+# The copied tests check the machinery against Phase 3.3's registered design (its split and
+# preregistration), which is known and fixed; test_phase4_design.py checks Phase 4's own.
+import phase3_3_design  # noqa: E402
+phase3_3_design.install()
 
 
 def needs(*mods: str) -> None:

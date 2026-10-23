@@ -20,6 +20,7 @@ This repository holds two things.
 | | [`run/experiments/`](run/experiments/README.md) | the Phase 2 experiments |
 | | `phase3/outputs/`, `phase3_2/outputs/` | the laptop runs of Phases 3 and 3.2, cited as evidence in the audit |
 | **Records** | [`phase3_2/PREREGISTRATION.md`](phase3_2/PREREGISTRATION.md) | the preregistration and its dated deviations D1–D13 |
+| | [`phase4/PREREGISTRATION.md`](phase4/PREREGISTRATION.md) | Phase 4's preregistration: a **draft**. The Phase 4 pipeline reads it and will not freeze until it is registered |
 | | [`phase3_2/sol/AUDIT.md`](phase3_2/sol/AUDIT.md), [`phase3_2/sol/PROMPT_REVIEW.md`](phase3_2/sol/PROMPT_REVIEW.md) | how the Sol pipeline was audited, and what the briefs got wrong |
 | | [`phase3/SOURCE_MANIFEST.md`](phase3/SOURCE_MANIFEST.md) | where every vendored file came from |
 | **Archive** | [`archive/`](archive/README.md) | superseded or repeated material. Nothing was deleted; nothing in it is needed to continue |
@@ -37,7 +38,7 @@ This repository holds two things.
 | 3 | Find the collision sites, score them, predict risk, repair | `phase3/` | [phase3](explanations/phase3/phase3_explained/00_complete_phase3_guide.md) | `phase3/outputs/` | done; its scorer is reused, frozen, by 3.3 |
 | 3.2 | New materials, a second grammar, a better margin; the preregistration | `phase3_2/` | [phase3_2](explanations/phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | `phase3_2/outputs/` | done; preregistered 2026-10-02 |
 | 3.3 | The preregistered study on ASU Sol: 21 models, held-out mappings | `phase3_2/sol/` | [design](explanations/phase3_3/sol_experiment_explained/00_complete_guide.md), [results](explanations/phase3_3/heldout_results_explained/00_complete_results.md) | `phase3_3/sol_results/` | complete, 2026-10-09 |
-| 4 | Fix what 3.3 left open, then plan new studies | `phase4/code/` (the pipeline), `phase4/scripts/` (step 0) | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21 |
+| 4 | Fix what 3.3 left open, then plan new studies | `phase4/code/` (the pipeline), `phase4/scripts/` (step 0) | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21; own settings 2026-10-22; preregistration in draft |
 
 **If you only read one thing about the current experiment:**
 [`explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md),

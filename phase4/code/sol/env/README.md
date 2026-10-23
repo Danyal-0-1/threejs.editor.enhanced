@@ -1,6 +1,6 @@
 # Environment
 
-`make_env.sh` builds the project environment at `$P33_ENV_DIR`; `activate.sh`
+`make_env.sh` builds the project environment at `$P4_ENV_DIR`; `activate.sh`
 activates it safely under `set -euo pipefail`. Neither modifies Sol's shared
 environment. The dependencies are declared in `requirements.in`.
 

@@ -206,8 +206,8 @@ def test_status_is_read_only_so_validate_still_passes():
     rid = "dev-status-readonly"
     cfg_path = os.path.join(H.tmpdir(), "cfg.json")
     json.dump(H.small_cfg(run_id=rid).to_dict(), open(cfg_path, "w"))
-    saved = os.environ.get("P33_FAKE")
-    os.environ["P33_FAKE"] = "1"
+    saved = os.environ.get("P4_FAKE")
+    os.environ["P4_FAKE"] = "1"
     try:
         assert cli.main(["dev", "init", "--config", cfg_path, "--run", rid]) == 0
         assert cli.main(["dev", "run", "--run", rid, "--experiment", "arm_a"]) == 0
@@ -216,9 +216,9 @@ def test_status_is_read_only_so_validate_still_passes():
         assert cli.main(["validate", "--run", rid]) == 0
     finally:
         if saved is None:
-            os.environ.pop("P33_FAKE", None)
+            os.environ.pop("P4_FAKE", None)
         else:
-            os.environ["P33_FAKE"] = saved
+            os.environ["P4_FAKE"] = saved
 
 
 def test_array_task_i_scores_model_i_even_when_resubmitted_alone():
@@ -298,4 +298,4 @@ def test_every_row_carries_its_split_revision_and_prompt():
     _, res = _run_all(H.tmpdir(), cfg, lambda m: FakeScorer(m))
     for r in res.rows:
         assert r["split"] == "DEVELOPMENT" and r["model_revision"] == "fakerev0001"
-        assert r["prompt_sha"] and r["tokenizer_id"] and r["schema_version"] == "p33/1"
+        assert r["prompt_sha"] and r["tokenizer_id"] and r["schema_version"] == "p4/1"

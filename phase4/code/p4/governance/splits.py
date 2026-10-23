@@ -1,40 +1,26 @@
 """splits.py — the registered split, enforced in code, plus the freeze lock.
 
-`PREREGISTRATION.md` §2 froze the split on 2026-10-02. Until now it was
-enforced by discipline; this module enforces it mechanically. Every runner
-calls `check_access` for every (family, lexicon, model) cell BEFORE it
-enumerates, loads or scores anything, and a held-out cell is refused unless an
-intact `DEV_FREEZE.json` AND a matching `HELDOUT_UNLOCK.json` exist.
+Every runner calls `check_access` for every (family, lexicon, model) cell BEFORE it enumerates,
+loads or scores anything. A held-out cell is refused unless an intact `DEV_FREEZE.json` AND a
+matching `HELDOUT_UNLOCK.json` exist.
 
 ----------------------------------------------------------------------------
-WHAT THE PREREGISTRATION SAYS, AND WHAT HAS SINCE BEEN LEARNED
+PHASE 4'S SPLIT (2026-10-22): NOTHING IS HELD OUT YET
 ----------------------------------------------------------------------------
-development       dom x {d25s1, d25s2, d50s1, d50s2}, Qwen2.5-Coder 0.5B/1.5B
-held-out mapping  d25s3, d50s3, all of d75
-held-out grammar  all of blk                       <-- NO LONGER CLEAN
-held-out models   everything except Qwen2.5-Coder 0.5B/1.5B
+Phase 3.3 scored both grammar families, all nine lexicons and 21 models, its held-out ones
+included, and its held-out results have been read. None of that material can be held out
+again. Until phase4/PREREGISTRATION.md registers new held-out lexicons, families or models,
+and they are written below:
 
-`blk` was SCORED before the freeze (the Phase 3.2 balanced run and the Phase
-3.3 primary run both used blk x d50s1), so it is not an unseen grammar family.
-Calling a blk result "held-out grammar confirmation" would be false. This
-module therefore:
+  * every Phase 3.3 family, lexicon and model is DEVELOPMENT;
+  * no cell is held out, so a held-out run is refused;
+  * a model not in DEV_MODELS is classified held-out by the rule in `classify`, so a NEW model
+    (for example one served by the ASU RC API, once it is in the registry) cannot be scored in a
+    development run by accident before the preregistration decides its role.
 
-  * classifies blk x d50s1 (and any blk x dev lexicon) as
-    EXPLORATORY_CONTAMINATED -- refused unless explicitly allowed, and then
-    labelled exploratory;
-  * classifies blk x a never-scored held-out mapping as HELDOUT_WEAK_FAMILY --
-    the weaker alternative recorded as deviation D1, always labelled weak;
-  * keeps family-level confirmation NOT TESTABLE until a NEW grammar family is
-    explicitly approved (`APPROVED_NEW_FAMILIES`, empty). No family is invented.
-
-Qwen2.5-Coder-3B (base and instruct) was observed under a superseded protocol
-before the freeze (dom only, no rule table). It remains a held-out model but is
-labelled HELDOUT_MODEL_WEAKENED (deviation D2).
-
-Model size (deviation D10, 2026-10-07): the registered "do not scale beyond
-3B until the grammar evidence exists" gate could never be met (D1), so it is
-replaced by a 72B ceiling. Every model above the development sizes is a
-held-out MODEL; nothing above 72B may be scored in any stage.
+Phase 3.3's own split (with deviations D1, D2 and D10) is kept as a record in
+tests/phase3_3_design.py, which the tests use to check this machinery against known facts.
+The size ceiling MAX_SIZE_B is Phase 3.3's (D10) until Phase 4 registers its own.
 """
 
 from __future__ import annotations
@@ -48,26 +34,39 @@ from datetime import datetime, timezone
 from p4.runtime import config as CFG
 from p4.governance import registry as R
 
-DEV_FAMILIES = frozenset({"dom"})
-DEV_LEXICONS = frozenset({"d25s1", "d25s2", "d50s1", "d50s2"})
-HELDOUT_LEXICONS = frozenset({"d25s3", "d50s3", "d75s1a", "d75s2a", "d75s3a"})
-DEV_MODELS = frozenset({
-    "Qwen/Qwen2.5-Coder-0.5B", "Qwen/Qwen2.5-Coder-0.5B-Instruct",
-    "Qwen/Qwen2.5-Coder-1.5B", "Qwen/Qwen2.5-Coder-1.5B-Instruct"})
+DEV_FAMILIES = frozenset({"dom", "blk"})
+DEV_LEXICONS = frozenset({"d25s1", "d25s2", "d50s1", "d50s2",                # Phase 3.3 development
+                          "d25s3", "d50s3", "d75s1a", "d75s2a", "d75s3a"})  # Phase 3.3 held-out, now seen
+HELDOUT_LEXICONS: frozenset[str] = frozenset()        # none until phase4/PREREGISTRATION.md registers them
+DEV_MODELS = frozenset({                              # the 21 models Phase 3.3 scored
+    "Qwen/Qwen2.5-72B",
+    "Qwen/Qwen2.5-72B-Instruct",
+    "Qwen/Qwen2.5-Coder-0.5B",
+    "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    "Qwen/Qwen2.5-Coder-1.5B",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "Qwen/Qwen2.5-Coder-14B",
+    "Qwen/Qwen2.5-Coder-14B-Instruct",
+    "Qwen/Qwen2.5-Coder-32B",
+    "Qwen/Qwen2.5-Coder-32B-Instruct",
+    "Qwen/Qwen2.5-Coder-3B",
+    "Qwen/Qwen2.5-Coder-3B-Instruct",
+    "Qwen/Qwen2.5-Coder-7B",
+    "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "bigcode/starcoder2-3b",
+    "deepseek-ai/deepseek-coder-1.3b-base",
+    "deepseek-ai/deepseek-coder-1.3b-instruct",
+    "deepseek-ai/deepseek-coder-33b-base",
+    "deepseek-ai/deepseek-coder-33b-instruct",
+    "meta-llama/Llama-3.2-1B",
+    "meta-llama/Llama-3.2-1B-Instruct",
+})
 
-CONTAMINATED_FAMILIES = {
-    "blk": "scored before the freeze (Phase 3.2 balanced Arm A and Phase 3.3 "
-           "primary run, blk x d50s1); not an unseen grammar family"}
-PREVIOUSLY_OBSERVED_MODELS = {
-    "Qwen/Qwen2.5-Coder-3B": "observed under a superseded protocol before the "
-                             "freeze (arm_a_sizes.json: dom only, no rule table)",
-    "Qwen/Qwen2.5-Coder-3B-Instruct": "as above"}
+CONTAMINATED_FAMILIES: dict[str, str] = {}             # nothing is claimed held-out, so nothing is contaminated
+PREVIOUSLY_OBSERVED_MODELS: dict[str, str] = {}        # every observed model is development now
 APPROVED_NEW_FAMILIES: frozenset[str] = frozenset()   # none approved; none invented
 KNOWN_FAMILIES = frozenset({"dom", "blk"})
-# Deviation D10 (2026-10-07): the registered "no model above 3B" gate could
-# never be met (it waited on blk evidence, which D1 made impossible) and kept
-# the study at a scale reviewers would dismiss. Replaced, before any freeze or
-# held-out access, by a 72B ceiling: every model above 3B is a HELD-OUT model.
+# Phase 3.3's ceiling (deviation D10): nothing above 72B may be scored, until Phase 4 registers its own.
 MAX_SIZE_B = 72.0
 
 

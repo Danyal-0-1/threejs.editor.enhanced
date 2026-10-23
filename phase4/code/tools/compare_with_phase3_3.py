@@ -15,9 +15,11 @@ read each other's files. Then every CSV the two produced is compared byte for by
                     on Sol) twice and rebuilds its 19 CSVs from the saved measurements, once with
                     each pipeline. No model is loaded.
 
-Before any Phase 4 change, every CSV must be identical except job_provenance.csv, which records
-each job's process id, clock times and GPU state. After a Phase 4 change, the differences this
-prints are exactly what the change did to the outputs.
+The copy runs with Phase 3.3's registered design installed (tests/phase3_3_design.py: its split,
+its preregistration and its schema label), so both pipelines run the same design, and any
+difference comes from the code. Every CSV must then be identical except job_provenance.csv,
+which records each job's process id, clock times and GPU state. After a change to the
+measurement code, the differences this prints are exactly what that change did to the outputs.
 """
 
 from __future__ import annotations
@@ -48,7 +50,10 @@ def load(tree: str):
         from p33.fakes import FakeScorer
     else:
         sys.path.insert(0, CODE)
+        sys.path.insert(0, os.path.join(CODE, "tests"))
         import p4  # noqa: F401
+        import phase3_3_design
+        phase3_3_design.install(schema=True)    # the same design as the Phase 3.3 pipeline
         from p4.experiments import armb, h5, pipeline as PL  # noqa: F401
         from p4.governance import freeze, splits
         from p4.reporting import export
@@ -57,8 +62,12 @@ def load(tree: str):
     return CFG, export, freeze, h5, PL, splits, FakeScorer
 
 
+def results_env(tree: str) -> str:
+    return "P33_RESULTS_ROOT" if tree == "old" else "P4_RESULTS_ROOT"
+
+
 def drive_fake(tree: str, root: str) -> None:
-    os.environ["P33_RESULTS_ROOT"] = root
+    os.environ[results_env(tree)] = root
     # The held-out config names its freeze, and that path enters the config hash and with it
     # every cell key. Named relative to the results root, it is the same string for both
     # pipelines, so their configurations are byte-identical.
@@ -73,6 +82,7 @@ def drive_fake(tree: str, root: str) -> None:
         cfg.primary.update({"site_limit": primary_sites, "ladder": [0, 1, 2, 4, 8]})
         cfg.analysis["B"] = 200
         cfg.armb["template_limit"] = 4
+        cfg.schema_version = "p33/1"           # the label is part of the config hash
         return cfg
 
     def run_all(cfg, rd):
@@ -96,7 +106,7 @@ def drive_fake(tree: str, root: str) -> None:
 
 
 def drive_export(tree: str, root: str, run_id: str) -> None:
-    os.environ["P33_RESULTS_ROOT"] = root
+    os.environ[results_env(tree)] = root
     CFG, export, *_ = load(tree)
     rd = CFG.run_dir(run_id)
     cfg = CFG.RunConfig.from_dict(json.load(open(os.path.join(rd, "manifests", "run_config.json")))["config"])
@@ -146,7 +156,8 @@ def main(argv=None) -> int:
         return 0
     base = a.keep or tempfile.mkdtemp(prefix="p4_compare_")
     os.makedirs(base, exist_ok=True)
-    env = {k: v for k, v in os.environ.items() if k not in ("P33_FAKE", "P33_ARRAY", "PHASE1_DIR")}
+    env = {k: v for k, v in os.environ.items()
+           if k not in ("P33_FAKE", "P33_ARRAY", "P4_FAKE", "P4_ARRAY", "PHASE1_DIR")}
     ok = True
 
     roots = {t: os.path.join(base, f"fake_{t}") for t in ("old", "new")}

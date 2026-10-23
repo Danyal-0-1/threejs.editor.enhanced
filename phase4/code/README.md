@@ -12,14 +12,16 @@ It is organized by stage, so the code can be read from top to bottom.
 
 **What it is.** A copy of the Phase 3.3 pipeline, made on 2026-10-22 from commit `3da4511d`.
 Phase 3.3's own code stays where it is, untouched and frozen (see
-[`../../START_HERE.md`](../../START_HERE.md) for why). This copy is where Phase 4 will make its
+[`../../START_HERE.md`](../../START_HERE.md) for why). This copy is where Phase 4 makes its
 changes.
 
 - **Only the import lines changed**, plus a few listed path lines.
 - **Every line kept its line number.** A line reference in the explanations, such as "`h5.py`
   125–173" in a retype plan, points to the same lines here.
 - **It is proven equivalent** to the original (section "How the copy was checked").
-- **Nothing has been changed for Phase 4 yet,** and nothing has run on Sol from this copy.
+- **Phase 4's own settings are in place** (2026-10-22): its own experiment folder and `P4_*`
+  environment names, its own preregistration, its own split and its `p4/1` label (section
+  "Phase 4's own settings"). Nothing has run on Sol from this copy yet.
 
 ---
 
@@ -29,7 +31,7 @@ changes.
 phase4/code/
 ├── README.md              this map
 ├── run.py                 the one command-line entry point (Phase 3.3's scripts/p33.py)
-├── configs/               what a run scores: dev.json, heldout.json, smoke.json, local_smoke.json
+├── configs/               what a run scores: smoke.json (Phase 4's), phase3_3/ (Phase 3.3's, a record)
 ├── p4/                    the pipeline: one folder per stage, in the order the data flows
 │   ├── paths.py           where everything is (replaces Phase 3.3's three path modules)
 │   ├── language/          the two grammar families, the 80 programs, the lexicon family
@@ -43,7 +45,9 @@ phase4/code/
 │   └── runtime/           configuration and locations, crash-safe shards, preflight, downloads
 ├── dsl/                   the language: grammar, lexicons, test programs, transpiler (dsl/README.md)
 ├── tests/                 the tests of all of the above
-├── tools/                 build_materials, analysis_revision, verify_copy, compare_with_phase3_3
+├── tools/                 build_materials, analysis_revision, verify_copy, compare_with_phase3_3,
+│                          voyager_models (the ASU RC API's models)
+├── VOYAGER.md             using the ASU RC LLM API ("Voyager") in Phase 4
 ├── sol/                   running on ASU Sol: jobs/, env/, sol.env, submit.sh, submit_chain.sh
 ├── SOURCE_MANIFEST.md     every file: where it came from, and what changed (readable)
 └── source_manifest.json   the same, with both checksums (read by tools/verify_copy.py)
@@ -72,7 +76,7 @@ For one site traced through every step of the code, read
 
 | file | what it does | came from |
 |---|---|---|
-| [`configs/dev.json`](configs/dev.json), [`configs/heldout.json`](configs/heldout.json) | the models, lexicons, grammar families, site limits and seeds of a run | `phase3_2/sol/configs/` |
+| [`configs/`](configs/README.md) | the models, lexicons, grammar families, site limits and seeds of a run. Phase 3.3's are in `configs/phase3_3/`; Phase 4's are written with its preregistration | `phase3_2/sol/configs/` |
 | [`p4/runtime/config.py`](p4/runtime/config.py) | `RunConfig`, the fields of those files; where things are (environment variables); hashing | `p33/config.py` |
 | [`p4/governance/registry.py`](p4/governance/registry.py) | every model the programme may touch, with its base/instruct pair and GPU class | `p33/registry.py` |
 
@@ -174,7 +178,7 @@ Read: [`heldout_results_explained/02`](../../explanations/phase3_3/heldout_resul
 Every command of a run, in order:
 
 ```
-run.py dev init    --config configs/dev.json --run dev-…    runtime/config.py; governance/splits.py
+run.py dev init    --config configs/<file>.json --run dev-…  runtime/config.py; governance/splits.py
 run.py dev run     --run dev-… --experiment arm_a           experiments/pipeline.py: sites/ + prompts/ → scoring/margins.py → runtime/shards.py
 run.py dev run     --run dev-… --experiment primary         the extinction ladder (prompts/demos.py)
 run.py dev run     --run dev-… --experiment armb | h5       experiments/armb.py, experiments/h5.py
@@ -194,11 +198,15 @@ run/.venv/bin/python phase4/code/tools/verify_copy.py               # every file
 run/.venv/bin/python phase4/code/tools/compare_with_phase3_3.py     # both pipelines side by side (+ --real-dev)
 ```
 
-- **A run on the laptop, with the fake scorer:** set `P33_RESULTS_ROOT` to a scratch folder and
-  `P33_FAKE=1`, then use `run.py` as in the table above.
+- **A run on the laptop, with the fake scorer:** set `P4_RESULTS_ROOT` to a scratch folder and
+  `P4_FAKE=1`, then use `run.py` as in the table above.
 - **On Sol:** follow Phase 3.3's runbook, [`phase3_2/sol/README.md`](../../phase3_2/sol/README.md),
-  with two substitutions: `phase4/code/sol/` for `phase3_2/sol/`, and `../run.py` for
-  `scripts/p33.py`. Make the changes of the next section first.
+  with these substitutions:
+  - `~/phase4_experiment_sol` for `~/phase3-3_experiment_sol`;
+  - `phase4/code/sol/` for `phase3_2/sol/`;
+  - `../run.py` for `scripts/p33.py`;
+  - `P4_` for `P33_`.
+- **The ASU RC API models:** [`VOYAGER.md`](VOYAGER.md).
 
 ---
 
@@ -222,27 +230,51 @@ The tool therefore names the freeze by a relative path. Keep this in mind when c
 
 ---
 
-## Before the first Phase 4 run: what must change
+## Phase 4's own settings (2026-10-22)
 
-None of these is changed yet, on purpose: the copy first had to be proven identical. Make each
-change with a record, then run the tests and `tools/compare_with_phase3_3.py`, which shows
-exactly which outputs the change moved.
+The copy was first proven identical to Phase 3.3 (above). Then it got its own settings, so that a
+Phase 4 run can never touch Phase 3.3's folders, design or labels:
 
-1. **Its own experiment folder.** `p4/runtime/config.py` and `sol/sol.env` still default to
-   `$HOME/phase3-3_experiment_sol`, and the environment variables are still named `P33_*`. Left
-   as they are, a Phase 4 run on Sol would write into Phase 3.3's results folder.
-2. **Its own preregistration.** `p4/paths.py` (`PHASE3_2_ROOT`) points `governance/freeze.py`
-   and `reporting/reports.py` at `phase3_2/PREREGISTRATION.md`.
-3. **Its own split and models:**
-   - `p4/governance/splits.py` (`DEV_LEXICONS`, `HELDOUT_LEXICONS`, the size ceiling);
-   - `p4/governance/registry.py`;
-   - `configs/`.
-4. **Its own version label:** `SCHEMA_VERSION = "p33/1"` in `p4/__init__.py`.
-5. **Freeze the language code too.** `runtime/config.py` `source_hashes()` hashes `p4/` and
-   `run.py`. The language files in `dsl/` are covered only through the materials hash (lexicons,
-   terminals, templates), as in Phase 3.3, so the `dsl/*.py` files are not.
-6. **The study itself.** For example, a preregistered repaired-site metric for H5, or a second
-   language in `p4/language/backends.py` and `dsl/`.
+| setting | what it is now | where |
+|---|---|---|
+| **experiment folder** | `$HOME/phase4_experiment_sol` by default, with `repo/`, `results/` and `env/` inside, never Phase 3.3's | `p4/runtime/config.py`, `sol/sol.env` |
+| **environment names** | `P4_*` (`P4_RESULTS_ROOT`, `P4_FAKE`, `P4_SOL`, ...). A shell that still holds Phase 3.3's `P33_*` variables cannot redirect a Phase 4 run | every file of `p4/`, `sol/`, `tests/`, `tools/` |
+| **preregistration** | [`phase4/PREREGISTRATION.md`](../PREREGISTRATION.md), a draft. **The freeze refuses while its status line says DRAFT** | `p4/paths.py` (`PREREGISTRATION`), `p4/governance/freeze.py` |
+| **split** | everything Phase 3.3 scored (both families, nine lexicons, 21 models) is **development**; **nothing is held out** until the preregistration registers it; a model not scored in Phase 3.3 is classified held-out, so it cannot be scored in a development run by accident | `p4/governance/splits.py` |
+| **configs** | Phase 3.3's configs moved to `configs/phase3_3/` as a record; `configs/smoke.json` stays as Phase 4's smoke test | `configs/README.md` |
+| **label** | `SCHEMA_VERSION = "p4/1"` on every row and run (Phase 3.3 wrote `p33/1`) | `p4/__init__.py` |
+| **what a freeze covers** | `p4/`, `run.py` **and the language code in `dsl/`**. Phase 3.3 froze only the language's data, through the materials hash | `p4/runtime/config.py` (`source_hashes`) |
+
+**Checked after the settings changed** (2026-10-22):
+
+| check | result |
+|---|---|
+| **the tests** | **225 passed**, 0 failed, 0 blocked: the 212 copied tests, 9 on Phase 4's own settings (`tests/test_phase4_design.py`) and 4 on the API tool (`tests/test_voyager_models.py`) |
+| **both pipelines side by side**, with Phase 3.3's design installed in the copy | the fake experiment: 36 of 36 CSVs identical; the real development run: 19 of 19 identical. **The settings changed no measurement** |
+| **every file against its origin** | 0 problems. The 27 files changed since the copy are exactly the ones these settings touch |
+| **Phase 3.3** | the frozen code's drift check is still empty |
+
+**How the tests deal with this.** The copied tests check the machinery (classification, freeze,
+unlock, drift) against Phase 3.3's registered design, which is known and fixed.
+
+- `tests/phase3_3_design.py` holds that design, and the runner installs it.
+- `tests/test_phase4_design.py` takes it off and checks every setting above.
+- One of its tests proves the stored design equals the frozen Phase 3.3 code.
+
+`tools/compare_with_phase3_3.py` installs the same design too, so a comparison still isolates
+code differences.
+
+**Still to do, for the study itself:**
+
+1. **The preregistration:**
+   - the hypotheses and criteria;
+   - the held-out set, written into `splits.py` in the same commit;
+   - then its status changed to REGISTERED.
+2. **The configs** for Phase 4's development and held-out runs.
+3. **The ASU RC API models**, if the study uses them:
+   - list them and probe them ([`VOYAGER.md`](VOYAGER.md));
+   - add registry entries;
+   - add an API scorer for Arm B, and for Arm A where prompt log-probabilities exist.
 
 ---
 

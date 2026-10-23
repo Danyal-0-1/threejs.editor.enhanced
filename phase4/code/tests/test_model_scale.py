@@ -24,7 +24,7 @@ NEW = ["Qwen/Qwen2.5-Coder-7B", "Qwen/Qwen2.5-Coder-7B-Instruct",
 
 
 def _heldout_cfg():
-    return CFG.RunConfig.from_dict(json.load(open(os.path.join(_paths.CONFIGS, "heldout.json"))))
+    return CFG.RunConfig.from_dict(json.load(open(os.path.join(_paths.CONFIGS, "phase3_3", "heldout.json"))))
 
 
 def test_heldout_config_appends_the_scale_models_and_keeps_indices():
@@ -49,7 +49,7 @@ def test_only_the_72b_pair_needs_two_gpus():
 
 
 def test_development_config_is_unchanged_by_the_scale_deviation():
-    dev = CFG.RunConfig.from_dict(json.load(open(os.path.join(_paths.CONFIGS, "dev.json"))))
+    dev = CFG.RunConfig.from_dict(json.load(open(os.path.join(_paths.CONFIGS, "phase3_3", "dev.json"))))
     assert dev.models == ["Qwen/Qwen2.5-Coder-0.5B", "Qwen/Qwen2.5-Coder-0.5B-Instruct",
                           "Qwen/Qwen2.5-Coder-1.5B", "Qwen/Qwen2.5-Coder-1.5B-Instruct"]
 
@@ -75,7 +75,7 @@ def _cli():
 
 
 def _write_run(root: str, rid: str, cfg_file: str, stage: str) -> None:
-    c = json.load(open(os.path.join(_paths.CONFIGS, cfg_file)))
+    c = json.load(open(os.path.join(_paths.CONFIGS, "phase3_3", cfg_file)))
     c = c.get("config", c)
     c["stage"], c["run_id"] = stage, rid
     os.makedirs(os.path.join(root, rid, "manifests"), exist_ok=True)
@@ -87,8 +87,8 @@ def test_array_indices_split_the_run_by_gpu_class():
     import io
     root = H.tmpdir()
     _write_run(root, "heldout-arr", "heldout.json", "heldout")
-    saved = os.environ.get("P33_RESULTS_ROOT")
-    os.environ["P33_RESULTS_ROOT"] = root
+    saved = os.environ.get("P4_RESULTS_ROOT")
+    os.environ["P4_RESULTS_ROOT"] = root
     try:
         cli = _cli()
         outs = {}
@@ -98,7 +98,7 @@ def test_array_indices_split_the_run_by_gpu_class():
                 assert cli.main(["array-indices", "--run", "heldout-arr", "--gpus", str(g)]) == 0
             outs[g] = buf.getvalue().strip()
     finally:
-        os.environ["P33_RESULTS_ROOT"] = saved
+        os.environ["P4_RESULTS_ROOT"] = saved
     assert outs[1] == ",".join(str(i) for i in range(19)) and outs[2] == "19,20"
 
 
@@ -108,9 +108,9 @@ def test_submit_wrapper_sends_the_72b_pair_to_the_two_gpu_profile():
     sb = os.path.join(fake, "sbatch")
     open(sb, "w").write('#!/bin/bash\nfor a in "$@"; do echo "ARG $a"; done\n')
     os.chmod(sb, os.stat(sb).st_mode | stat.S_IEXEC)
-    env = dict(os.environ, PATH=fake + os.pathsep + os.environ["PATH"], P33_RESULTS_ROOT=root,
-               P33_PY=sys.executable)
-    env.pop("P33_ARRAY", None)
+    env = dict(os.environ, PATH=fake + os.pathsep + os.environ["PATH"], P4_RESULTS_ROOT=root,
+               P4_PY=sys.executable)
+    env.pop("P4_ARRAY", None)
 
     def args(job):
         r = subprocess.run(["bash", os.path.join(_paths.SOL_ROOT, "submit.sh"), job, "heldout-sub"],
@@ -121,4 +121,4 @@ def test_submit_wrapper_sends_the_72b_pair_to_the_two_gpu_profile():
     assert a[-1].endswith("jobs/heldout_eval.slurm")
     rc, a = args("heldout_eval")
     assert rc == 0 and "--gres=gpu:a100:1" in a and "--array=" + ",".join(map(str, range(19))) in a
-    assert "P33_FAKE" not in " ".join(a)
+    assert "P4_FAKE" not in " ".join(a)

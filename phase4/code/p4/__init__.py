@@ -17,4 +17,4 @@ Importing p4 runs paths.py first, which puts the language library (../dsl) on sy
 
 from p4 import paths  # noqa: F401  (side-effecting: sys.path)
 
-SCHEMA_VERSION = "p33/1"     # unchanged from Phase 3.3, so the outputs stay comparable
+SCHEMA_VERSION = "p4/1"      # Phase 3.3 wrote "p33/1"

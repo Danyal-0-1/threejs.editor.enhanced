@@ -405,7 +405,7 @@ def power_report(r: R) -> str:
 
 def deviations(r: R) -> str:
     from p4 import paths as _paths
-    pre = os.path.join(_paths.PHASE3_2_ROOT, "PREREGISTRATION.md")
+    pre = _paths.PREREGISTRATION
     text = open(pre, encoding="utf-8").read()
     dev = text[text.index("## Deviations"):] if "## Deviations" in text else "_no deviations section found_"
     s = f"# Deviations — `{r.cfg.run_id}`\n\n" + r.banner()
@@ -425,7 +425,7 @@ def reproduction(r: R) -> str:
     s = f"# Reproduction — `{r.cfg.run_id}`\n\n" + r.banner()
     s += f"Config hash `{r.cfg.config_hash()}` — a resume under any other config is refused.\n\n"
     grp = r.cfg.stage if r.cfg.stage != "smoke" else "dev"
-    s += "```bash\n# from $P33_CODE_ROOT/phase3_2/sol, after `source sol.env && source env/activate.sh`\n"
+    s += "```bash\n# from $P4_CODE_ROOT/phase3_2/sol, after `source sol.env && source env/activate.sh`\n"
     s += "# scoring (GPU; on Sol through submit.sh, one array task per model)\n"
     s += f"python scripts/p33.py {grp} run --run {r.cfg.run_id} --experiment arm_a\n"
     s += f"python scripts/p33.py {grp} run --run {r.cfg.run_id} --experiment primary\n"

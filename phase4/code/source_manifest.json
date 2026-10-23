@@ -1196,34 +1196,43 @@
    "sha256": "0e3aa96ee551b6d17068326002fb6327bc2fcf8fb6126d7155593fc04676ed36"
   },
   {
-   "path": "configs/dev.json",
+   "path": "configs/phase3_3/dev.json",
    "origin": "phase3_2/sol/configs/dev.json",
    "origin_sha256": "c74166c5619c7067d8dd6edf162f80512f3d49c17c0dc049af8150ac207ee47e",
    "kind": "data",
    "import_lines": [],
    "edits": [],
    "change": "identical",
-   "sha256": "c74166c5619c7067d8dd6edf162f80512f3d49c17c0dc049af8150ac207ee47e"
+   "sha256": "c74166c5619c7067d8dd6edf162f80512f3d49c17c0dc049af8150ac207ee47e",
+   "notes": [
+    "moved from configs/ on 2026-10-22: Phase 3.3's configs, kept as a record"
+   ]
   },
   {
-   "path": "configs/heldout.json",
+   "path": "configs/phase3_3/heldout.json",
    "origin": "phase3_2/sol/configs/heldout.json",
    "origin_sha256": "2c8b1b4d3cf701554ac97a8be9f6157a7368c8610f83227b5224a4a9ff6e6fb9",
    "kind": "data",
    "import_lines": [],
    "edits": [],
    "change": "identical",
-   "sha256": "2c8b1b4d3cf701554ac97a8be9f6157a7368c8610f83227b5224a4a9ff6e6fb9"
+   "sha256": "2c8b1b4d3cf701554ac97a8be9f6157a7368c8610f83227b5224a4a9ff6e6fb9",
+   "notes": [
+    "moved from configs/ on 2026-10-22: Phase 3.3's configs, kept as a record"
+   ]
   },
   {
-   "path": "configs/local_smoke.json",
+   "path": "configs/phase3_3/local_smoke.json",
    "origin": "phase3_2/sol/configs/local_smoke.json",
    "origin_sha256": "ec67165e0ef3b62d5ceb2d8a0f04df56ac79d8acab3b7c446f7c951b7f7d92eb",
    "kind": "data",
    "import_lines": [],
    "edits": [],
    "change": "identical",
-   "sha256": "ec67165e0ef3b62d5ceb2d8a0f04df56ac79d8acab3b7c446f7c951b7f7d92eb"
+   "sha256": "ec67165e0ef3b62d5ceb2d8a0f04df56ac79d8acab3b7c446f7c951b7f7d92eb",
+   "notes": [
+    "moved from configs/ on 2026-10-22: Phase 3.3's configs, kept as a record"
+   ]
   },
   {
    "path": "configs/smoke.json",
@@ -1233,7 +1242,10 @@
    "import_lines": [],
    "edits": [],
    "change": "identical",
-   "sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c"
+   "sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c",
+   "notes": [
+    "kept at configs/ as Phase 4's smoke config (a development cell)"
+   ]
   },
   {
    "path": "sol/env/README.md",
@@ -1556,6 +1568,19 @@
    ],
    "change": "paths",
    "sha256": "dd793ed5511db53c12b3ee377cd7d4aa6a3ccba1a68faf8b8f36f2c76c160875"
+  },
+  {
+   "path": "configs/phase3_3/smoke.json",
+   "origin": "phase3_2/sol/configs/smoke.json",
+   "origin_sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c",
+   "kind": "data",
+   "import_lines": [],
+   "edits": [],
+   "change": "identical",
+   "sha256": "b82144216ac480395c6d744158e00a8da6fb334207f0135155ae34ab55ff168c",
+   "notes": [
+    "Phase 3.3's smoke config, kept with its other configs as a record"
+   ]
   }
  ]
 }

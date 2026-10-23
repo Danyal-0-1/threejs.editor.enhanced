@@ -32,7 +32,7 @@ can never share an output root.
   # smoke (one model, one dev lexicon, one family)
   run.py smoke --config CONFIG.json --run smoke-... [--allow-non-a100]
 
-Environment: P33_RESULTS_ROOT, P33_HF_ROOT, P33_FAKE=1 (CPU fake scorer for tests).
+Environment: P4_RESULTS_ROOT, P4_HF_ROOT, P4_FAKE=1 (CPU fake scorer for tests).
 Exit codes: 0 complete · 2 preflight/split refusal · 3 partial/incomplete ·
 4 interrupted (resume with the same command) · 1 error.
 """
@@ -77,18 +77,18 @@ def pins_path(a) -> str:
 
 
 def load_pins(cfg, a) -> dict:
-    if os.environ.get("P33_FAKE") == "1":
+    if os.environ.get("P4_FAKE") == "1":
         return {m: {"revision": "fakerev0001"} for m in cfg.models}
     from p4.scoring.scorers import load_pins as lp
     return lp(pins_path(a))
 
 
 def scorer_factory(cfg, pins):
-    if os.environ.get("P33_FAKE") == "1":
+    if os.environ.get("P4_FAKE") == "1":
         from p4.scoring.fakes import FakeScorer
         return lambda m: FakeScorer(m)
     from p4.scoring.scorers import load_scorer
-    dev = os.environ.get("P33_DEVICE", "cuda")
+    dev = os.environ.get("P4_DEVICE", "cuda")
     return lambda m: load_scorer(m, dtype=cfg.dtype, device=dev,
                                  lm_head_fp32=cfg.lm_head_fp32, pins=pins)
 
@@ -191,7 +191,7 @@ def cmd_fertility(a, stage):
     cfg = load_cfg(a.run, stage=stage)
     splits.enforce_config(cfg, run_dir=run_dir_of(a.run) if cfg.stage == "heldout" else None)
     pins = load_pins(cfg, a)
-    if os.environ.get("P33_FAKE") == "1":
+    if os.environ.get("P4_FAKE") == "1":
         from p4.scoring.fakes import FakeScorer
         loader = lambda m: ("fake-tok-v1", lambda t: len(FakeScorer(m).ids(t)))  # noqa: E731
     else:
@@ -325,7 +325,7 @@ def cmd_smoke(a):
     cfg = load_cfg(a.run)
     pins = load_pins(cfg, a)
     rd = run_dir_of(a.run)
-    if os.environ.get("P33_FAKE") != "1":
+    if os.environ.get("P4_FAKE") != "1":
         from p4.runtime import preflight
         rep = preflight.run(cfg, rd, pins=pins, require_gpu=True)
         for c in rep["checks"]:

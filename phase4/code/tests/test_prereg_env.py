@@ -34,7 +34,7 @@ def test_deviations_are_appended_and_dated():
 
 
 def test_shipped_configs_only_touch_cells_their_stage_allows():
-    root = _paths.CONFIGS
+    root = os.path.join(_paths.CONFIGS, "phase3_3")   # Phase 3.3's configs, under its design
     for name, stage in (("dev.json", "dev"), ("smoke.json", "smoke"), ("local_smoke.json", "smoke")):
         c = CFG.RunConfig.from_dict(json.load(open(os.path.join(root, name))))
         c.stage, c.run_id = stage, f"{stage}-x"
@@ -59,10 +59,10 @@ def test_paths_resolve_from_environment_not_a_username():
     try:
         os.environ["HOME"] = "/home/someone"
         os.environ["SCRATCH"] = "/scratch/someone"
-        for k in ("P33_RESULTS_ROOT", "P33_HF_ROOT", "P33_EXPERIMENT_ROOT", "P33_CODE_ROOT"):
+        for k in ("P4_RESULTS_ROOT", "P4_HF_ROOT", "P4_EXPERIMENT_ROOT", "P4_CODE_ROOT"):
             os.environ.pop(k, None)
-        assert CFG.results_root() == "/home/someone/phase3-3_experiment_sol/results"
-        assert CFG.code_root() == "/home/someone/phase3-3_experiment_sol/repo"
+        assert CFG.results_root() == "/home/someone/phase4_experiment_sol/results"
+        assert CFG.code_root() == "/home/someone/phase4_experiment_sol/repo"
         assert CFG.hf_root() == "/scratch/someone/hf"
         e = CFG.hf_env()
         assert e["HF_HUB_CACHE"] == "/scratch/someone/hf/hub" and e["HF_HUB_OFFLINE"] == "1"
@@ -74,11 +74,11 @@ def test_paths_resolve_from_environment_not_a_username():
 def test_sol_defaults_are_the_verified_values_and_overridable():
     d = CFG.SolDefaults()
     assert (d.partition, d.qos, d.constraint) == ("public", "public", "a100_80")
-    os.environ["P33_PARTITION"] = "other"
+    os.environ["P4_PARTITION"] = "other"
     try:
         assert CFG.SolDefaults().partition == "other"
     finally:
-        del os.environ["P33_PARTITION"]
+        del os.environ["P4_PARTITION"]
 
 
 def test_no_job_file_uses_the_rejected_general_partition():
@@ -210,24 +210,24 @@ def test_materials_writer_is_idempotent_and_atomic():
 
 
 def test_test_mode_cannot_leak_into_a_real_job():
-    """submit.sh passes --export=ALL, so a P33_FAKE=1 left in the caller's shell
+    """submit.sh passes --export=ALL, so a P4_FAKE=1 left in the caller's shell
     would make a GPU job score with the FAKE scorer under a real label."""
     import glob
     env = open(os.path.join(_paths.SOL_ROOT, "sol.env")).read()
-    assert "unset P33_FAKE" in env
+    assert "unset P4_FAKE" in env
     for f in glob.glob(os.path.join(_paths.SOL_ROOT, "jobs", "*.slurm")):
         body = open(f).read()
         assert "sol.env" in body, f
         if os.path.basename(f) == "cpu_tests.slurm":
-            assert body.index("export P33_FAKE=1") > body.index("sol.env")
+            assert body.index("export P4_FAKE=1") > body.index("sol.env")
         else:
-            assert "P33_FAKE" not in body, f
+            assert "P4_FAKE" not in body, f
 
 
 def test_tests_never_use_the_real_results_root():
-    """sol.env exports the real P33_RESULTS_ROOT for jobs; the runner must override it."""
+    """sol.env exports the real P4_RESULTS_ROOT for jobs; the runner must override it."""
     import tempfile
     root = CFG.results_root()
-    assert os.path.basename(root).startswith("p33_test_results_"), root
+    assert os.path.basename(root).startswith("p4_test_results_"), root
     assert os.path.commonpath([os.path.realpath(root), os.path.realpath(tempfile.gettempdir())]) \
         == os.path.realpath(tempfile.gettempdir())

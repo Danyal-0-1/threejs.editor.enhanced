@@ -9,37 +9,37 @@
 #                   Slower, independent of the shared env changing under you.
 #
 # Either way the RESOLVED versions are frozen into
-# $P33_ENV_DIR/requirements.lock.sol.txt and verified with an import check.
+# $P4_ENV_DIR/requirements.lock.sol.txt and verified with an import check.
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$HERE/../sol.env"
 MODE="${MODE:-overlay}"
 
-if [ -e "$P33_ENV_DIR" ]; then
-  echo "refusing: $P33_ENV_DIR exists. Remove it deliberately to rebuild." >&2
+if [ -e "$P4_ENV_DIR" ]; then
+  echo "refusing: $P4_ENV_DIR exists. Remove it deliberately to rebuild." >&2
   exit 2
 fi
 
 if [ "$MODE" = overlay ]; then
-  BASE_PY="$P33_SHARED_ENV/bin/python"
+  BASE_PY="$P4_SHARED_ENV/bin/python"
   [ -x "$BASE_PY" ] || { echo "no shared python at $BASE_PY" >&2; exit 2; }
-  "$BASE_PY" -m venv --system-site-packages "$P33_ENV_DIR"
-  touch "$P33_ENV_DIR/.p33_overlay"
+  "$BASE_PY" -m venv --system-site-packages "$P4_ENV_DIR"
+  touch "$P4_ENV_DIR/.p33_overlay"
 else
   module load mamba/latest 2>/dev/null || true
-  python3 -m venv "$P33_ENV_DIR"
-  "$P33_ENV_DIR/bin/python" -m pip install --upgrade pip
-  "$P33_ENV_DIR/bin/python" -m pip install torch --index-url https://download.pytorch.org/whl/cu121
+  python3 -m venv "$P4_ENV_DIR"
+  "$P4_ENV_DIR/bin/python" -m pip install --upgrade pip
+  "$P4_ENV_DIR/bin/python" -m pip install torch --index-url https://download.pytorch.org/whl/cu121
 fi
 
-"$P33_ENV_DIR/bin/python" -m pip install -r "$HERE/requirements.in"
-"$P33_ENV_DIR/bin/python" -m pip freeze --all > "$P33_ENV_DIR/requirements.lock.sol.txt"
-cp "$P33_ENV_DIR/requirements.lock.sol.txt" "$HERE/requirements.lock.sol.txt" 2>/dev/null || true
+"$P4_ENV_DIR/bin/python" -m pip install -r "$HERE/requirements.in"
+"$P4_ENV_DIR/bin/python" -m pip freeze --all > "$P4_ENV_DIR/requirements.lock.sol.txt"
+cp "$P4_ENV_DIR/requirements.lock.sol.txt" "$HERE/requirements.lock.sol.txt" 2>/dev/null || true
 
 # shellcheck disable=SC1091
 source "$HERE/activate.sh"
-"$P33_PY" - <<'PY'
+"$P4_PY" - <<'PY'
 import importlib
 for m in ("lark", "numpy", "matplotlib", "transformers", "huggingface_hub", "torch"):
     mod = importlib.import_module(m)
@@ -47,4 +47,4 @@ for m in ("lark", "numpy", "matplotlib", "transformers", "huggingface_hub", "tor
 import torch
 print("  torch.cuda.is_available() =", torch.cuda.is_available(), "(False is expected on a login node)")
 PY
-echo "environment ready: $P33_ENV_DIR (lock: requirements.lock.sol.txt)"
+echo "environment ready: $P4_ENV_DIR (lock: requirements.lock.sol.txt)"

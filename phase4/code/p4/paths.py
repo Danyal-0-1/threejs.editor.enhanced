@@ -19,9 +19,10 @@ The language library is not a package: its modules import each other by bare nam
 (`import phi`), and `phi.py` finds its data from its own location (the folder names under dsl/
 are load-bearing). So, as in Phase 3.3, its three source folders go on sys.path, here, once.
 
-PHASE3_2_ROOT stays for one reason: the preregistration this copy implements is
-`phase3_2/PREREGISTRATION.md` (read by governance/freeze.py and reporting/reports.py). Phase 4
-will point the pipeline at its own preregistration.
+PREREGISTRATION is Phase 4's own: `phase4/PREREGISTRATION.md`, read by governance/freeze.py
+and reporting/reports.py. The freeze refuses while it is still a draft. PHASE3_2_ROOT is where
+Phase 3.2's preregistration lives, the design Phase 3.3 ran: the tests use it to check the
+machinery against Phase 3.3's registered facts (tests/phase3_3_design.py).
 """
 
 from __future__ import annotations
@@ -35,7 +36,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(CODE_ROOT))        # the repository
 CLI = os.path.join(CODE_ROOT, "run.py")
 CONFIGS = os.path.join(CODE_ROOT, "configs")
 SOL_ROOT = os.path.join(CODE_ROOT, "sol")
-PHASE3_2_ROOT = os.path.join(REPO_ROOT, "phase3_2")            # holds PREREGISTRATION.md
+PREREGISTRATION = os.path.join(REPO_ROOT, "phase4", "PREREGISTRATION.md")   # Phase 4's own
+PHASE3_2_ROOT = os.path.join(REPO_ROOT, "phase3_2")            # Phase 3.2's, for the tests
 
 DSL = os.path.join(CODE_ROOT, "dsl")
 VENDOR = DSL                                                   # the name Phase 3 and 3.2 used
