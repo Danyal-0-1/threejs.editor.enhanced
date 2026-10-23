@@ -27,6 +27,10 @@ after access is granted -- would silently re-pin every model the Hub updated,
 and after a freeze every held-out command would refuse on pin drift. A gated model (Llama) needs
 `HF_TOKEN` in the environment; the token is never written anywhere.
 Base/instruct pairing is validated against the registry.
+
+A model served by the ASU RC LLM API (`registry.is_api`) has nothing to
+download: its pin is the deployment that answers now, "<served model>@<system
+fingerprint>" (p4/scoring/api.py), and it is kept like any other pin.
 """
 
 from __future__ import annotations
@@ -128,6 +132,30 @@ def verify_only(models: list[str], kept: dict | None = None) -> tuple[dict, dict
     return pins, failed
 
 
+def pin_served(models: list[str], kept: dict) -> tuple[dict, dict]:
+    """Served models: pin the deployment that answers now. Nothing is downloaded. An already
+    pinned model keeps its pin; preflight and the scorer refuse when another one answers."""
+    from datetime import datetime, timezone
+    from p4.runtime import asu_api
+    from p4.scoring.api import APIScorer
+    pins, failed = {}, {}
+    for m in models:
+        if m in kept:
+            continue
+        try:
+            sc = APIScorer.for_model(m)
+            sc.release()
+            s = registry.spec(m)
+            pins[m] = {"revision": sc.revision, "serving": "api", "api_model": s.api_model,
+                       "quantization": s.quantization, "tokenizer_id": sc.tokenizer_id,
+                       "base_url": asu_api.BASE,
+                       "pinned_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                       "source": "the ASU RC LLM API deployment that answered"}
+        except Exception as exc:
+            failed[m] = f"{type(exc).__name__}: {str(exc)[:200]}"
+    return pins, failed
+
+
 def run(models: list[str], *, dry_run: bool, verify_only_mode: bool,
         checksums: bool, out_path: str, repin: bool = False, api=None) -> dict:
     problems = registry.validate_pairs(models)
@@ -136,12 +164,14 @@ def run(models: list[str], *, dry_run: bool, verify_only_mode: bool,
         with open(out_path, encoding="utf-8") as fh:
             old = json.load(fh).get("pins", {})
     kept = {} if repin else {m: old[m] for m in models if old.get(m, {}).get("revision")}
+    served = [m for m in models if registry.is_api(m)]
+    models = [m for m in models if m not in served]
     if verify_only_mode:
         pins, failed = verify_only(models, kept)
         result = {"mode": "verify-only", "pins": pins, "failed": failed,
                   "pairing_problems": problems}
     else:
-        if api is None:
+        if api is None and models:
             from huggingface_hub import HfApi
             api = HfApi()
         plans, failed = [], {}
@@ -173,6 +203,11 @@ def run(models: list[str], *, dry_run: bool, verify_only_mode: bool,
                                                    "verified_checksums")}
                 except Exception as exc:
                     failed[p["model"]] = str(exc)[:300]
+    if served:
+        got, bad = pin_served(served, kept)
+        result["pins"].update(got)
+        result["failed"].update(bad)
+        result["served"] = sorted(served)
     result["kept_existing_pins"] = sorted(kept)
     if not dry_run:
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)

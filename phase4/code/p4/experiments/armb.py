@@ -264,7 +264,7 @@ def score_armb_cell(cfg, cell, scorer, plan, _cache=None) -> list[dict]:
         ev = evaluate(prog, be, L, C.content_hash(t.ir))
         obs = [observe(prog, s) for s in sites_by_t[tid]]
         rows.append({
-            "schema_version": "p33/1", "row_key": f"{cell.key}|{tid}",
+            "schema_version": PL.SCHEMA_VERSION, "row_key": f"{cell.key}|{tid}",
             "run_id": cfg.run_id, "stage": cfg.stage, "split": cc.label,
             "cell_key": cell.key, "model": cell.model,
             "model_revision": scorer.revision, "tokenizer_id": scorer.tokenizer_id,

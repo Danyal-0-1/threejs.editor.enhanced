@@ -2,6 +2,8 @@
 
 Every GPU job calls `run()` BEFORE loading any model. Each check returns
 PASS / WARN / FAIL with evidence; any FAIL stops the job with exit code 2.
+A task whose models are all served by the ASU RC LLM API needs no GPU: its
+model check asks the API which deployment answers, against the pin.
 
     scheduler      actual partition / QOS / account match the configured ones
     gpu            nvidia-smi answers; torch sees CUDA; the device is an A100
@@ -112,12 +114,23 @@ def space_checks(run_dir: str) -> list[dict]:
 
 
 def model_checks(models, pins) -> list[dict]:
+    from p4.governance import registry
     from p4.scoring.scorers import resolve_snapshot
     out = []
     for m in models:
         pin = pins.get(m)
         if not pin:
             out.append(_check(f"model:{m}", False, "not pinned -- run `p33 prefetch`"))
+            continue
+        if registry.is_api(m):              # served: the deployment answering now must be the pinned one
+            try:
+                from p4.scoring.api import APIScorer
+                sc = APIScorer.for_model(m)
+                sc.release()
+                out.append(_check(f"model:{m}", sc.revision == pin.get("revision"),
+                                  f"served {sc.revision} pinned {pin.get('revision')}"))
+            except Exception as exc:
+                out.append(_check(f"model:{m}", False, f"{type(exc).__name__}: {str(exc)[:160]}"))
             continue
         try:
             path, sha = resolve_snapshot(m, revision=pin.get("revision"),
@@ -169,10 +182,14 @@ def run(cfg, run_dir: str, *, pins: dict, require_gpu: bool = True,
     Only those are checked, so a model whose download is still pending (e.g.
     a gated checkpoint awaiting approval) fails its own task, not every task.
     """
+    from p4.governance import registry
     d = CFG.SolDefaults()
     models = list(task_models) if task_models else list(cfg.models)
     checks = scheduler_checks(d)
-    if require_gpu:
+    if require_gpu and models and all(registry.is_api(m) for m in models):
+        checks.append(_check("gpu", True, "no GPU needed: every model of this task is served "
+                                          "by the ASU RC LLM API", warn=True))
+    elif require_gpu:
         checks += gpu_checks(cfg, models)
     checks += space_checks(run_dir) + output_checks(run_dir)
     checks += model_checks(models, pins) + materials_checks(run_dir, cfg)

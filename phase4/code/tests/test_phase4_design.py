@@ -92,10 +92,11 @@ def test_every_model_phase3_3_scored_is_development_and_an_unseen_model_is_not()
         assert splits.DEV_MODELS == frozenset(c.get("config", c)["models"])
         unseen = sorted(set(registry.REGISTRY) - splits.DEV_MODELS)
         assert unseen, "the registry should still hold models Phase 3.3 never scored"
-        for m in unseen:
-            assert splits.classify("dom", "d50s1", m).kind == "heldout_model", m
-            _raises(lambda m=m: splits.check_access("dev", "dom", "d50s1", m),
-                    splits.SplitViolation, "may touch development cells only")
+        for m in unseen:          # held-out, or above the size ceiling: either way not development
+            big = registry.spec(m).size_b > splits.MAX_SIZE_B
+            assert splits.classify("dom", "d50s1", m).kind == ("forbidden" if big else "heldout_model"), m
+            _raises(lambda m=m: splits.check_access("dev", "dom", "d50s1", m), splits.SplitViolation,
+                    "size ceiling" if big else "may touch development cells only")
 
 
 def test_phase4s_label_and_frozen_source_set():
@@ -143,3 +144,12 @@ def test_phase4s_jobs_and_their_logs_are_named_p4():
     submit = open(os.path.join(paths.SOL_ROOT, "submit.sh"), encoding="utf-8").read()
     assert '--job-name="p4-$JOB"' in submit
     assert "p33-" not in submit
+
+
+def test_every_experiments_rows_carry_phase4s_label():
+    """Arm B and H5 once wrote Phase 3.3's label ("p33/1") into their rows, whatever the run."""
+    import test_e2e
+    _cfg, rd, _pins, _st = test_e2e._dev_run()
+    for exp in ("arm_a", "primary", "armb", "h5"):
+        rows = [json.loads(x) for x in open(os.path.join(rd, "merged", f"{exp}.jsonl")) if x.strip()]
+        assert rows and {r["schema_version"] for r in rows} == {p4.SCHEMA_VERSION}, exp

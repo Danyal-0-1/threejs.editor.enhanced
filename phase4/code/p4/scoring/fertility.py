@@ -16,7 +16,8 @@ PER (tokenizer, family, lexicon)
 Candidate-level tokenisation -- merged flag, first divergent token, tokens
 per candidate -- is recorded per site in the Arm A rows, where it belongs.
 
-Tokenizers only: no model weights are loaded here, so this runs on CPU.
+Tokenizers only: no model weights are loaded here, so this runs on CPU. A served
+model's tokens are counted by the API (one request per text).
 """
 
 from __future__ import annotations
@@ -28,7 +29,13 @@ from p4.language.backends import BACKENDS
 
 
 def load_tokenizer(model_id: str, pins: dict):
-    """(tokenizer_id, count_fn) from the PINNED local snapshot, offline."""
+    """(tokenizer_id, count_fn) from the PINNED local snapshot, offline; for a model served by
+    the ASU RC LLM API, the served tokenizer of the pinned deployment."""
+    from p4.governance import registry
+    if registry.is_api(model_id):
+        from p4.scoring.api import APIScorer
+        sc = APIScorer.for_model(model_id, pin=pins.get(model_id))
+        return sc.tokenizer_id, (lambda t: len(sc.ids(t)))
     from transformers import AutoTokenizer
     from p4.scoring.scorers import resolve_snapshot, tokenizer_fingerprint
     pin = pins.get(model_id, {})

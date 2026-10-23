@@ -16,12 +16,15 @@ Phase 3.3's own code stays where it is, untouched and frozen (see
 changes.
 
 - **Only the import lines changed**, plus a few listed path lines.
-- **Every line kept its line number.** A line reference in the explanations, such as "`h5.py`
-  125–173" in a retype plan, points to the same lines here.
+- **Every line kept its line number** in the copy. A line reference in the explanations, such as
+  "`h5.py` 125–173" in a retype plan, points to the same lines here, except in the files Phase 4
+  has changed since, which `tools/verify_copy.py` lists.
 - **It is proven equivalent** to the original (section "How the copy was checked").
 - **Phase 4's own settings are in place** (2026-10-22): its own experiment folder and `P4_*`
   environment names, its own preregistration, its own split and its `p4/1` label (section
   "Phase 4's own settings"). Nothing has run on Sol from this copy yet.
+- **The models served by the ASU RC API are added** (2026-10-22): 36 of them, scored the way
+  Phase 3.3 scored its own (section "Models served by the ASU RC API").
 
 ---
 
@@ -119,6 +122,7 @@ Read: [`phase3_explained/03`](../../explanations/phase3/phase3_explained/03_code
 | [`scorers.py`](p4/scoring/scorers.py) | loads one model, offline, from its pinned snapshot | `p33/scorers.py` |
 | [`fakes.py`](p4/scoring/fakes.py) | a deterministic, GPU-free scorer for the tests | `p33/fakes.py` |
 | [`fertility.py`](p4/scoring/fertility.py) | tokens per character, for every distinct tokenizer | `p33/fertility.py` |
+| [`api.py`](p4/scoring/api.py) | **the same scorer for a model served by the ASU RC API:** the same margin, from the served model's own tokens and log-probabilities; no weights, no GPU | new in Phase 4 |
 | [`scoring.py`](p4/scoring/scoring.py), [`models.py`](p4/scoring/models.py) | Phase 3's scorer and model interface. The pipeline uses only `interaction_did` (for H2) | `phase3/` |
 
 ### 5. The experiments: `p4/experiments/`
@@ -171,7 +175,8 @@ Read: [`heldout_results_explained/02`](../../explanations/phase3_3/heldout_resul
 | [`config.py`](p4/runtime/config.py) | (see 0) | `p33/config.py` |
 | [`shards.py`](p4/runtime/shards.py) | crash-safe storage: atomic shards, resume, deterministic merge | `p33/shards.py` |
 | [`preflight.py`](p4/runtime/preflight.py) | refuses a GPU job that would waste its allocation | `p33/preflight.py` |
-| [`prefetch.py`](p4/runtime/prefetch.py) | download-only model staging, with pinned revisions | `p33/prefetch.py` |
+| [`prefetch.py`](p4/runtime/prefetch.py) | download-only model staging, with pinned revisions; for a served model, pins the deployment that answers | `p33/prefetch.py` |
+| [`asu_api.py`](p4/runtime/asu_api.py) | the ASU RC API: its address, the key (read from a private file, never written), one request with the gateway's retry rules | new in Phase 4 |
 
 ### The entry point: [`run.py`](run.py)
 
@@ -290,7 +295,7 @@ Phase 4 run can never touch Phase 3.3's folders, design or labels:
 | **preregistration** | [`phase4/PREREGISTRATION.md`](../PREREGISTRATION.md), a draft. **The freeze refuses while its status line says DRAFT** | `p4/paths.py` (`PREREGISTRATION`), `p4/governance/freeze.py` |
 | **split** | everything Phase 3.3 scored (both families, nine lexicons, 21 models) is **development**; **nothing is held out** until the preregistration registers it; a model not scored in Phase 3.3 is classified held-out, so it cannot be scored in a development run by accident | `p4/governance/splits.py` |
 | **configs** | Phase 3.3's configs moved to `configs/phase3_3/` as a record; `configs/smoke.json` stays as Phase 4's smoke test | `configs/README.md` |
-| **label** | `SCHEMA_VERSION = "p4/1"` on every row and run (Phase 3.3 wrote `p33/1`) | `p4/__init__.py` |
+| **label** | `SCHEMA_VERSION = "p4/1"` on every row and run (Phase 3.3 wrote `p33/1`). Arm B and H5 wrote `"p33/1"` as a literal; since 2026-10-22 they take the label from the pipeline too | `p4/__init__.py`, `p4/experiments/armb.py`, `h5.py` |
 | **job names** | `p4-<job>` (Phase 3.3's were `p33-<job>`), so `squeue`, `scancel --name` and the log file names never mix the two phases | `sol/submit.sh` |
 | **what a freeze covers** | `p4/`, `run.py` **and the language code in `dsl/`**. Phase 3.3 froze only the language's data, through the materials hash | `p4/runtime/config.py` (`source_hashes`) |
 
@@ -320,10 +325,44 @@ code differences.
    - the held-out set, written into `splits.py` in the same commit;
    - then its status changed to REGISTERED.
 2. **The configs** for Phase 4's development and held-out runs.
-3. **The ASU RC API models**, if the study uses them:
-   - list them and probe them ([`VOYAGER.md`](VOYAGER.md));
-   - add registry entries;
-   - add an API scorer for Arm B, and for Arm A where prompt log-probabilities exist.
+3. **The ASU RC API models:** listed, probed, registered and scorable (next section). What is
+   left is the decision: which of them, in which role (§2 and §9 of the preregistration).
+
+---
+
+## Models served by the ASU RC API (2026-10-22)
+
+The API, its 52 models and the probe are explained in [`VOYAGER.md`](VOYAGER.md); the tables are
+in [`configs/voyager/`](configs/voyager/). In short: **36 text models serve both Arm A and
+Arm B, measured exactly as Phase 3.3 measured** (raw text, no special tokens, the margin from the
+first divergent token). They are post-trained only, so they cannot enter H4 or H5.
+
+| what was added | where |
+|---|---|
+| the API's address, the key and one request with the gateway's retry rules | `p4/runtime/asu_api.py` |
+| `APIScorer`: `TokenScorer`'s interface and refusals, from the served tokens and log-probabilities; pinned to the deployment that answered, which it checks on every answer | `p4/scoring/api.py` |
+| the 36 models as `asu-rc/<name>`: `serving="api"`, `gpus=0`, their size, active parameters and served precision | `p4/governance/registry.py` |
+| `run.py` builds an `APIScorer` for them; fertility counts their tokens through the API | `run.py`, `p4/scoring/fertility.py` |
+| `prefetch` pins the deployment that answers; `preflight` skips the GPU checks and compares the answering deployment with the pin | `p4/runtime/prefetch.py`, `preflight.py` |
+| the same Sol jobs on a CPU node: `dev_arm_a_api`, `dev_primary_api`, `heldout_eval_api`, `arm_b_api` | `sol/submit.sh` |
+| H5 leaves out an instruct model with no base twin (all served models). Before, its "targeted" arm would have been the first roles in alphabetical order | `p4/experiments/h5.py` (`_is_instruct`) |
+| the probe, rewritten to test the Arm A protocol itself | `tools/voyager_models.py` |
+
+**What the split does with them.** None was scored in Phase 3.3, so each is held-out (the 18 of
+72B or less) or forbidden by Phase 3.3's 72B ceiling (the other 18), until the preregistration
+gives it a role. A development run naming one is refused.
+
+**Checked** (2026-10-22):
+
+| check | result |
+|---|---|
+| the tests | **238 passed**, 0 failed: among them 9 for the scorer and its plumbing against a stand-in vLLM server (`tests/test_api_scorer.py`), 5 for the probe, and one that every experiment's rows carry `p4/1` |
+| the scorer, live, on neutral text | qwen3-coder-30b-a3b-instruct: margins, the merged flag at a `('#` / `('.` contrast, program NLL and greedy generation all as expected; about 0.9 s per pair at 200 tokens |
+| `run.py prefetch`, live | pinned `olmo3-7b-instruct@vllm-0.26.0-9c8d2749` and `beam-1-0@vllm-0.28.1rc1…`; the key is not in the pins file |
+| `run.py dev init` with a served model | `REFUSED: … is HELDOUT_MODEL and stage 'dev' may touch development cells only` |
+| the copy against its origins | 0 problems |
+
+No served model has seen the experiment's materials: the probe used neutral prompts only.
 
 ---
 

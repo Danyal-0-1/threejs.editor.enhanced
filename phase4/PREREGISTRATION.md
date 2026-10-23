@@ -49,8 +49,9 @@ material included, and its results have been read:
 
 - new lexicons, with new seeds or densities, made with `phase4/code/tools/build_materials.py`;
 - a new grammar family;
-- models Phase 3.3 never scored: the 9 unscored models in `phase4/code/p4/governance/registry.py`,
-  and models served by the ASU RC API.
+- models Phase 3.3 never scored: the 9 unscored local models in
+  `phase4/code/p4/governance/registry.py`, and the 36 served by the ASU RC API (`asu-rc/...`,
+  18 of them above the 72B ceiling; §9).
 
 Until this section is written into `splits.py`, the pipeline holds nothing out, and a model
 outside `DEV_MODELS` is classified held-out, so it cannot be scored in a development run.
@@ -93,13 +94,31 @@ _To be written._ Phase 3.3's development power analysis is in
 
 ## 9. Models served by the ASU RC API
 
-_To be written, if used._ What each model can measure comes from the probe in
-`phase4/code/configs/voyager/` (see `phase4/code/VOYAGER.md`).
+_To be decided._ The facts, from the probe of 2026-10-22
+(`phase4/code/configs/voyager/probe_2026-10-22.md`; `phase4/code/VOYAGER.md`, §2):
 
-A model behind the API can change without notice. So record two things:
+- 36 text models serve Arm A and Arm B by Phase 3.3's protocol. All are in the registry as
+  `asu-rc/<name>`.
+- None is a base model, so none can enter H4 or H5.
+- 33 of the 36 round their logits: their margins come in steps of 1/8 to 1/32 nats. beam-1-0,
+  deepseek-v4-1-flash and muse-spark-open do not round.
+- Many are served quantized (fp8 or mxfp4).
+- 18 are above the 72B ceiling, and most of those are mixtures of experts.
+- There is no revision. The pin is the deployment that answered, so a redeployment ends a run.
 
-- the `/v1/models` snapshot used;
-- the date range of the requests.
+**Decisions to write here:**
+
+1. **Which models, in which role:** development or held-out.
+2. **The size ceiling:** whether to raise `MAX_SIZE_B`, and whether a mixture of experts counts
+   its total or its active parameters.
+3. **Rounding:** how a tie, or a margin within one rounding step of zero, is counted; or whether
+   only the models that do not round are used for Arm A.
+4. **A bridge:** one open-weights model scored both on Sol (fp32 head) and through the API, on
+   development cells. That measures how often the API's rounding flips a sign. OLMo 3 and Qwen3
+   are served, and their weights are public.
+5. **Contamination:** this repository is public, and it holds the materials. A model trained on
+   data collected after they were pushed could have seen them. Record each model's published
+   training cutoff where there is one.
 
 ## Deviations
 

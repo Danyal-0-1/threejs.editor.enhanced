@@ -88,9 +88,16 @@ def scorer_factory(cfg, pins):
         from p4.scoring.fakes import FakeScorer
         return lambda m: FakeScorer(m)
     from p4.scoring.scorers import load_scorer
+    from p4.governance import registry
     dev = os.environ.get("P4_DEVICE", "cuda")
-    return lambda m: load_scorer(m, dtype=cfg.dtype, device=dev,
-                                 lm_head_fp32=cfg.lm_head_fp32, pins=pins)
+
+    def make(m):
+        if registry.is_api(m):          # served by the ASU RC LLM API: no weights, no GPU
+            from p4.scoring.api import APIScorer
+            return APIScorer.for_model(m, pin=pins.get(m))
+        return load_scorer(m, dtype=cfg.dtype, device=dev,
+                           lm_head_fp32=cfg.lm_head_fp32, pins=pins)
+    return make
 
 
 def task_args(a):

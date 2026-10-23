@@ -174,8 +174,8 @@ def prepare(cfg, run_dir: str) -> dict:
 
 
 def _is_instruct(model: str) -> bool:
-    s = registry.REGISTRY.get(model)
-    return s is None or s.kind == "instruct"
+    s = registry.REGISTRY.get(model)    # no base twin (every API model): no base risk to target, so no H5
+    return s is None or (s.kind == "instruct" and s.pair is not None)
 
 
 def h5_cells(cfg, plan, model, revision):
@@ -215,7 +215,7 @@ def score_h5_cell(cfg, cell, scorer, plan, _cache=None) -> list[dict]:
                                         S.classify(text, L2, be, template_id=s.template_id,
                                                    identity=ident)}
         s2 = rep_cache[s.template_id].get((s.terminal_id, s.occurrence))
-        row = {"schema_version": "p33/1", "run_id": cfg.run_id, "stage": cfg.stage,
+        row = {"schema_version": PL.SCHEMA_VERSION, "run_id": cfg.run_id, "stage": cfg.stage,
                "split": cc.label, "cell_key": cell.key,
                "row_key": f"{cell.key}|{s.site_id}",
                "model": cell.model, "model_revision": scorer.revision,

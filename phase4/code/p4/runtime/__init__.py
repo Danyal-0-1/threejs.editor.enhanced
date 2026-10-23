@@ -6,4 +6,5 @@
                                                                           from phase3_2/sol/src/p33
     preflight.py  refuse a GPU job that would waste its allocation       from phase3_2/sol/src/p33
     prefetch.py   download-only model staging, with pinned revisions      from phase3_2/sol/src/p33
+    asu_api.py    the ASU RC LLM API: its address, the key, one request    new in Phase 4
 """

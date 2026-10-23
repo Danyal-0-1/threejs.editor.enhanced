@@ -38,7 +38,7 @@ This repository holds two things.
 | 3 | Find the collision sites, score them, predict risk, repair | `phase3/` | [phase3](explanations/phase3/phase3_explained/00_complete_phase3_guide.md) | `phase3/outputs/` | done; its scorer is reused, frozen, by 3.3 |
 | 3.2 | New materials, a second grammar, a better margin; the preregistration | `phase3_2/` | [phase3_2](explanations/phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | `phase3_2/outputs/` | done; preregistered 2026-10-02 |
 | 3.3 | The preregistered study on ASU Sol: 21 models, held-out mappings | `phase3_2/sol/` | [design](explanations/phase3_3/sol_experiment_explained/00_complete_guide.md), [results](explanations/phase3_3/heldout_results_explained/00_complete_results.md) | `phase3_3/sol_results/` | complete, 2026-10-09 |
-| 4 | Fix what 3.3 left open, then plan new studies | `phase4/code/` (the pipeline), `phase4/scripts/` (step 0) | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21; own settings 2026-10-22; preregistration in draft |
+| 4 | Fix what 3.3 left open, then plan new studies | `phase4/code/` (the pipeline), `phase4/scripts/` (step 0) | [fixes](explanations/phase4/fixes_before_phase4/README.md) | `…/heldout-20261007a/analysis_addenda/phase4_fixes/` | step 0 done, 2026-10-21; own settings 2026-10-22; 36 ASU RC API models added 2026-10-22 ([`VOYAGER.md`](phase4/code/VOYAGER.md)); preregistration in draft |
 
 **If you only read one thing about the current experiment:**
 [`explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md),

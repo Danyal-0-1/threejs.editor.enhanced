@@ -12,7 +12,7 @@ Only then does it take on new questions.
 | **0. Fix what Phase 3.3 left open** | **done, 2026-10-21** | five post-hoc corrections of the held-out analysis and one open analysis item, with every doc fixed and every change explained ([`explanations/phase4/fixes_before_phase4/`](../explanations/phase4/fixes_before_phase4/README.md)) |
 | **0b. Give the Phase 4 pipeline its own settings** | **done, 2026-10-22** | `code/` uses its own experiment folder and `P4_*` names, its own preregistration and split, and the `p4/1` label (see [`code/README.md`](code/README.md)) |
 | 1. Plan and preregister Phase 4 | **in progress** | [`PREREGISTRATION.md`](PREREGISTRATION.md) is a draft. The freeze refuses until it is registered |
-| 2. Add the ASU RC API models | **ready to start** | list them and probe what each can measure: [`code/VOYAGER.md`](code/VOYAGER.md) |
+| 2. Add the ASU RC API models | **done, 2026-10-22** | 52 listed, 42 probed; 36 serve Arm A and Arm B by Phase 3.3's protocol and are in the registry, with a scorer. Their role is decided in the preregistration: [`code/VOYAGER.md`](code/VOYAGER.md) |
 
 ---
 
@@ -71,7 +71,7 @@ Each needs new model runs on Sol, so each needs its own preregistration first, a
 |---|---|---|---|
 | 1 | **H5 again, with a repaired-site metric and frequency-aware targeting** | Does targeting the riskiest roles beat random where the repair acts? F4 suggests yes; only a preregistered test can say | F4; 06 §10 |
 | 2 | **A second DSL, or natural respellings** | Do the findings hold beyond one permuted 3D-scene language? This is the biggest gap a reviewer will name | 09 §5 #4 |
-| 3 | **Models served by the ASU RC API ("Voyager")** | Do many more models revert at reached sites (Arm B, every chat model)? Do their margins agree (Arm A, where prompt log-probabilities are returned)? H4 needs base/instruct pairs, rarely served | 09 §5 #3; [`code/VOYAGER.md`](code/VOYAGER.md) |
+| 3 | **Models served by the ASU RC API ("Voyager")** | Do many more models revert at reached sites (Arm B), and do their margins agree (Arm A)? 36 models can do both, up to 1T parameters. None is a base model, so no H4 or H5; 33 of 36 round their logits | 09 §5 #3; [`code/VOYAGER.md`](code/VOYAGER.md) |
 | 4 | **The spelling-risk linter** | Turn H4 into a tool: score a DSL's planned spellings with an open base model, and flag the risky ones before release | H4; the standing "platform first" recommendation |
 | 5 | **A small human comparison** | Do programmers slip at the same collision sites? It makes a CogSci paper possible | 09 §5 #5; [10](../explanations/phase3_3/heldout_results_explained/10_humans_and_the_brain.md) |
 | 6 | **Mechanism** | Does attention to the token table predict the margin shift? | 09 §5 #6 |

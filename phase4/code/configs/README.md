@@ -7,7 +7,7 @@ A run config names its models, lexicons and grammar families, its site limits an
 |---|---|
 | [`smoke.json`](smoke.json) | **Phase 4's smoke test:** one model on one development cell (`dom` × `d50s1`). `sol/jobs/smoke.slurm` uses it |
 | [`phase3_3/`](phase3_3/) | **Phase 3.3's four configs** (`dev`, `heldout`, `smoke`, `local_smoke`), kept as a record. The tests use them under Phase 3.3's design (`tests/phase3_3_design.py`). Under Phase 4's split, `heldout.json` is refused, because nothing is held out yet |
-| `voyager/` | made by `tools/voyager_models.py`: the ASU RC API's model list and probe tables (see `../VOYAGER.md`) |
+| [`voyager/`](voyager/) | made by `tools/voyager_models.py`: the ASU RC API's model list and what each model can measure. On 2026-10-22: 52 models, of which 36 serve both arms (see [`../VOYAGER.md`](../VOYAGER.md)) |
 
 Phase 4's own development and held-out configs are written together with its preregistration
 (`phase4/PREREGISTRATION.md`, §2). Every cell they name must be allowed by

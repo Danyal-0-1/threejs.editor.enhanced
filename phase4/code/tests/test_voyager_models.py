@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
+import json
 import os
+import re
 import stat
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SECRET = "sk-test-NEVER-WRITE-THIS-1234567890"
+TOKEN = re.compile(r"\s?\w+|\s|[^\w\s]+")
 
 
 def _vm():
@@ -20,12 +24,21 @@ def _vm():
 
 
 LISTING = {"object": "list", "data": [
-    {"id": "scorer-32b-instruct", "model_type": "chat", "context_window": 32768,
-     "supports_function_calling": True, "supports_vision": False},
-    {"id": "chatonly-27b", "model_type": "chat", "context_window": 131072,
-     "supports_function_calling": False, "supports_vision": True},
+    {"id": "scorer-32b-instruct", "model_type": "chat", "context_window": 32768, "quantization": "bf16",
+     "supports_function_calling": True, "supports_vision": False, "description": "A 32B model."},
+    {"id": "chatonly-27b", "model_type": "chat", "context_window": 131072, "quantization": "fp8",
+     "supports_function_calling": False, "supports_vision": True, "description": "Chat only."},
+    {"id": "fam-7b", "model_type": "chat", "description": "Set reasoning effort to choose.",
+     "family": {"default_level": "none",
+                "members": {"none": "fam-7b-instruct", "low": "fam-7b-think", "high": "fam-7b-think"}}},
+    {"id": "draft-model", "model_type": "chat", "description": "A draft model, not meant for direct use."},
     {"id": "text-embedding-x", "model_type": "embedding", "context_window": 8192},
 ]}
+
+
+def _lp(ctx, tid):
+    h = int(hashlib.sha1(json.dumps([ctx[-6:], tid]).encode()).hexdigest()[:6], 16)
+    return -round((h % 4000) / 400.0 * 16) / 16 - 0.0625          # bf16-like: multiples of 1/16
 
 
 def _fake_api(calls):
@@ -40,14 +53,19 @@ def _fake_api(calls):
             if body.get("logprobs"):
                 ch["logprobs"] = {"content": [{"token": "ready", "logprob": -0.1,
                                                "top_logprobs": [{"token": "ready", "logprob": -0.1}] * 5}]}
-            return 200, {"choices": [ch]}
+            return 200, {"model": model, "choices": [ch]}
         if path == "/completions":
             if model == "chatonly-27b":
                 return 404, "completions not served for this model"
-            if body.get("echo"):
-                return 200, {"choices": [{"text": " Paris", "logprobs": {
-                    "token_logprobs": [None, -3.2, -1.1, -0.4, -0.2, -0.05]}}]}
-            return 200, {"choices": [{"text": " Paris"}]}
+            toks = TOKEN.findall(body["prompt"])
+            ids = [100 + int(hashlib.sha1(t.encode()).hexdigest()[:6], 16) % 9000 for t in toks]
+            ch = {"text": "    return a + b"}
+            if body.get("return_token_ids"):
+                ch["prompt_token_ids"] = ids
+            if body.get("prompt_logprobs") is not None:
+                ch["prompt_logprobs"] = [None] + [{str(ids[j]): {"logprob": _lp(ids[:j], ids[j])}}
+                                                  for j in range(1, len(ids))]
+            return 200, {"model": model, "system_fingerprint": "vllm-test-1", "choices": [ch]}
         return 404, "unknown path"
     return request
 
@@ -74,7 +92,7 @@ def test_a_key_file_others_can_read_is_refused():
             os.environ["ASU_RC_API_KEY"] = saved
 
 
-def test_the_key_never_reaches_an_output_file():
+def test_the_key_never_reaches_an_output_file_and_the_prompts_are_neutral():
     vm = _vm()
     calls = []
     vm.request = _fake_api(calls)
@@ -94,7 +112,7 @@ def test_the_key_never_reaches_an_output_file():
     for f in files:
         assert SECRET not in open(os.path.join(out, f), encoding="utf-8").read(), f
     probed = {c[3].get("model") for c in calls if c[2] != "/models"}
-    assert "text-embedding-x" not in probed, "a non-text model was probed"
+    assert probed == {"scorer-32b-instruct", "chatonly-27b", "fam-7b-instruct", "fam-7b-think"}, probed
     for c in calls:                                      # neutral prompts only
         text = str(c[3])
         assert "$S" not in text and "phi" not in text.lower()
@@ -104,16 +122,28 @@ def test_the_probe_reads_what_each_model_can_serve():
     vm = _vm()
     vm.request = _fake_api([])
     full = vm.probe_model(SECRET, "scorer-32b-instruct")
-    assert full["serves"] == {"arm_b": True, "arm_a": True, "first_token_logprobs": True}
-    assert full["prompt_logprobs"]["via"] == "echo" and full["prompt_logprobs"]["scored_tokens"] == 5
+    assert full["serves"] == {"arm_a": True, "arm_b": True, "chat": True, "first_token_logprobs": True}
+    mg = full["margins"]
+    assert mg["repeatable"] and mg["resolution_log2"] is not None and mg["resolution_log2"] <= 4
+    assert full["prompt_logprobs"]["served"] == "scorer-32b-instruct"
+    assert full["raw_generation"]["deterministic"]
     chat = vm.probe_model(SECRET, "chatonly-27b")
-    assert chat["serves"]["arm_b"] and not chat["serves"]["arm_a"]
-    assert chat["completions"]["status"] == 404
+    assert chat["serves"]["chat"] and not chat["serves"]["arm_a"] and not chat["serves"]["arm_b"]
+    assert chat["prompt_logprobs"]["status"] == 404
+
+
+def test_margin_resolution_tells_rounded_logits_from_full_precision():
+    vm = _vm()
+    assert vm.resolution([-1.125, 0.5, 3.0625]) == 4
+    assert vm.resolution([0.123456789, -2.718281828, 1.414213562]) is None
+    assert vm.resolution([0.0, 0.0]) is None
 
 
 def test_the_model_table_reads_the_documented_fields():
     vm = _vm()
     rows = vm.models_table(LISTING)
-    assert [r["id"] for r in rows] == ["chatonly-27b", "scorer-32b-instruct", "text-embedding-x"]
-    r = rows[1]
-    assert (r["type"], r["context"], r["tools"], r["vision"]) == ("chat", "32768", "yes", "no")
+    assert [r["id"] for r in rows] == ["chatonly-27b", "draft-model", "fam-7b", "scorer-32b-instruct",
+                                       "text-embedding-x"]
+    r = rows[3]
+    assert (r["type"], r["context"], r["tools"], r["vision"], r["served as"]) == ("chat", "32768", "yes", "no", "bf16")
+    assert rows[2]["members"] == "fam-7b-instruct, fam-7b-think"

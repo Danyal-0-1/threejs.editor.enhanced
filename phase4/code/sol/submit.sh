@@ -12,6 +12,9 @@
 #       heldout_eval arm_b h5 final_export
 #       heldout_eval_2gpu arm_b_2gpu h5_2gpu   (the same jobs on TWO A100-80GB,
 #       for the checkpoints the registry marks gpus=2: the Qwen2.5-72B pair)
+#       dev_arm_a_api dev_primary_api heldout_eval_api arm_b_api   (the same jobs on a
+#       CPU node, for the models the registry marks gpus=0: those served by the ASU
+#       RC LLM API. The key is read from ~/.config/asu-rc/llm_api_key, never from here)
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
@@ -50,6 +53,7 @@ JOBFILE="$JOB"
 case "$JOB" in
   dev_arm_a|dev_primary|heldout_eval|arm_b|h5) ARRAY="$(need_array 1)" ;;
   heldout_eval_2gpu|arm_b_2gpu|h5_2gpu)        ARRAY="$(need_array 2)"; JOBFILE="${JOB%_2gpu}" ;;
+  dev_arm_a_api|dev_primary_api|heldout_eval_api|arm_b_api) ARRAY="$(need_array 0)"; JOBFILE="${JOB%_api}" ;;
 esac
 
 case "$JOB" in
@@ -66,6 +70,8 @@ case "$JOB" in
   heldout_eval_2gpu) RES=("${GPU2[@]}" --cpus-per-task=16 --mem=160G --time=24:00:00 --array="$ARRAY") ;;
   arm_b_2gpu)   RES=("${GPU2[@]}" --cpus-per-task=16 --mem=160G --time=24:00:00 --array="$ARRAY") ;;
   h5_2gpu)      RES=("${GPU2[@]}" --cpus-per-task=16 --mem=160G --time=24:00:00 --array="$ARRAY") ;;
+  dev_arm_a_api|dev_primary_api|heldout_eval_api|arm_b_api)
+                RES=(--cpus-per-task=2 --mem=8G --time=24:00:00 --array="$ARRAY") ;;
   final_export) RES=(--cpus-per-task=8 --mem=32G --time=02:00:00) ;;
   *) echo "unknown job '$JOB'" >&2; exit 2 ;;
 esac

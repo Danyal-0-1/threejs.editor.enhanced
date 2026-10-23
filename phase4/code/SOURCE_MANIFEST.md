@@ -202,7 +202,7 @@ files they changed ("changed since the copy").
 | `sol/submit.sh` | `phase3_2/sol/submit.sh` | paths |
 | `sol/submit_chain.sh` | `phase3_2/sol/submit_chain.sh` | paths |
 
-## The 24 new files (written for this folder, not copied)
+## The 31 new files (written for this folder, not copied)
 
 | file | what it is |
 |---|---|
@@ -229,4 +229,9 @@ files they changed ("changed since the copy").
 | `tests/phase3_3_design.py` | Phase 3.3's registered design, which the copied tests run under |
 | `tests/test_phase4_design.py` | the tests of Phase 4's own settings |
 | `tests/test_voyager_models.py` | the tests of tools/voyager_models.py, against a stand-in API |
+| `p4/runtime/asu_api.py` | the ASU RC API: its address, the key, one request (2026-10-22) |
+| `p4/scoring/api.py` | the scorer for a model served by the ASU RC API (2026-10-22) |
+| `tests/test_api_scorer.py` | the tests of the API scorer and its plumbing, against a stand-in vLLM server |
+| `configs/voyager/models_2026-10-22.md`, `.json` | the API's model list on 2026-10-22, made by tools/voyager_models.py |
+| `configs/voyager/probe_2026-10-22.md`, `.json` | what each served model can measure, made by tools/voyager_models.py |
 | `.gitignore` | caches, environments and weights stay out of git |

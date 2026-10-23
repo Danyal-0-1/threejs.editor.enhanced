@@ -17,6 +17,17 @@ family) extends the curve and is the only model that needs two GPUs. All of
 them run in bf16 with the fp32 output head -- never quantized, because the
 outcome is the SIGN of a margin. `gpus` is the number of A100-80GB GPUs one
 checkpoint needs for scoring.
+
+SERVED MODELS (Phase 4, 2026-10-22). `serving="api"` marks a model served by the
+ASU RC LLM API (p4/scoring/api.py), named "asu-rc/<served name>". It needs no
+GPU (`gpus=0`) and no download; its pin is the deployment that answered
+(`run.py prefetch`). Every one is post-trained (`kind="instruct"`) and has no
+base twin, so it can enter Arm A, Arm B and fertility but never H4 or H5. Sizes
+are the totals in the API's own descriptions (`active_b`: a mixture of experts'
+active parameters); `quantization` is the precision of the served weights.
+Being registered decides nothing: a model Phase 3.3 never scored is classified
+held-out, and one above MAX_SIZE_B forbidden, until phase4/PREREGISTRATION.md
+gives it a role (p4/governance/splits.py).
 """
 
 from __future__ import annotations
@@ -34,6 +45,10 @@ class ModelSpec:
     tier: str                 # small | mid | large | xlarge
     gated: bool = False       # needs an HF token (never stored by this code)
     gpus: int = 1             # A100-80GB GPUs needed to score it in bf16 + fp32 head
+    serving: str = "local"    # local: pinned weights on Sol | api: the ASU RC LLM API
+    api_model: str = ""       # the served name (api only)
+    quantization: str = ""    # precision of the served weights (api only)
+    active_b: float | None = None   # active parameters of a mixture of experts
 
 
 def _pair(fam, size, base, inst, tier, gated=False, gpus=1):
@@ -63,7 +78,59 @@ _SPECS: list[ModelSpec] = [
     ModelSpec("bigcode/starcoder2-7b", "starcoder2", 7.0, "base", None, "mid"),
 ]
 
-REGISTRY: dict[str, ModelSpec] = {m.id: m for m in _SPECS}
+
+
+def _api(served, fam, size, tier, quant, active=None):
+    return ModelSpec(f"asu-rc/{served}", fam, size, "instruct", None, tier, gpus=0,
+                     serving="api", api_model=served, quantization=quant, active_b=active)
+
+
+# The ASU RC LLM API, as listed and probed on 2026-10-22 (phase4/code/configs/voyager/): the
+# 36 text models that served both Arm A and Arm B. Family members (olmo3-7b -> -instruct /
+# -think, ...) are named directly. Left out: glm-5-3-spec (glm-5-3 behind a draft model: the
+# same deployment answered); laguna-s-2-1 (no prompt log-probabilities, so Arm B only); and
+# glm-5-2, kimi-k2-7-code and qwen3-vl-32b-instruct / -thinking, which did not answer that day.
+# Re-probe before adding any of them.
+_API_SPECS: list[ModelSpec] = [
+    _api("olmo3-7b-instruct", "olmo-3", 7.0, "mid", ""),
+    _api("olmo3-7b-think", "olmo-3", 7.0, "mid", ""),
+    _api("olmo3-32b-instruct", "olmo-3", 32.0, "large", ""),
+    _api("olmo3-32b-think", "olmo-3", 32.0, "large", ""),
+    _api("qwen3-30b-a3b-instruct-2507", "qwen3", 30.0, "large", "", 3.0),
+    _api("qwen3-30b-a3b-thinking-2507", "qwen3", 30.0, "large", "", 3.0),
+    _api("qwen3-235b-a22b-instruct-2507", "qwen3", 235.0, "xlarge", "", 22.0),
+    _api("qwen3-235b-a22b-thinking-2507", "qwen3", 235.0, "xlarge", "", 22.0),
+    _api("qwen3-coder-30b-a3b-instruct", "qwen3-coder", 30.0, "large", "bf16", 3.0),
+    _api("qwen3-coder-next", "qwen3-coder", 80.0, "xlarge", "bf16", 3.0),
+    _api("qwen35-27b", "qwen3.5", 27.0, "large", "fp8"),
+    _api("qwen35-122b-a10b", "qwen3.5", 122.0, "xlarge", "fp8", 10.0),
+    _api("qwen35-397b-a17b", "qwen3.5", 397.0, "xlarge", "fp8", 17.0),
+    _api("qwen36-27b", "qwen3.6", 27.0, "large", "fp8"),
+    _api("qwen36-35b-a3b", "qwen3.6", 35.0, "large", "fp8", 3.0),
+    _api("qwen38-27b", "qwen3.8", 27.0, "large", "bf16"),
+    _api("hemmingway-1", "qwen3.8-finetune", 27.0, "large", "bf16"),
+    _api("qwen-agentworld-35b-a3b", "qwen-agentworld", 35.0, "large", "bf16", 3.0),
+    _api("gemma4-31b-it", "gemma-4", 31.0, "large", "bf16"),
+    _api("granite41-30b", "granite-4.1", 30.0, "large", "bf16"),
+    _api("llama4-scout-17b", "llama-4", 109.0, "xlarge", "bf16", 17.0),
+    _api("llama4-maverick-17b", "llama-4", 400.0, "xlarge", "fp8", 17.0),
+    _api("gpt-oss-120b", "gpt-oss", 117.0, "xlarge", "mxfp4", 5.1),
+    _api("devstral2-123b", "devstral-2", 123.0, "xlarge", "fp8"),
+    _api("north-mini-code", "north", 30.0, "large", "bf16", 3.0),
+    _api("ornith-1-5-35b-a3b", "ornith", 35.0, "large", "fp8", 3.0),
+    _api("muse-glimmer-30b", "muse", 30.0, "large", "bf16"),
+    _api("muse-spark-open", "muse", 816.0, "xlarge", "mxfp4", 42.0),
+    _api("inkling-small", "inkling", 276.0, "xlarge", "bf16", 12.0),
+    _api("mimo-v2-6-flash", "mimo-v2", 309.0, "xlarge", "mxfp4", 15.0),
+    _api("minimax-m2-7", "minimax", 229.0, "xlarge", "fp8"),
+    _api("minimax-m3", "minimax", 427.0, "xlarge", "mxfp4", 23.0),
+    _api("glm-5-3", "glm-5", 740.0, "xlarge", "mxfp4"),
+    _api("glm-5-3-flash", "glm-5", 320.0, "xlarge", "fp8", 18.0),
+    _api("beam-1-0", "beam", 501.0, "xlarge", "fp8", 23.0),
+    _api("deepseek-v4-1-flash", "deepseek-v4", 550.0, "xlarge", "mxfp4"),
+]
+
+REGISTRY: dict[str, ModelSpec] = {m.id: m for m in _SPECS + _API_SPECS}
 TIERS = ("small", "mid", "large", "xlarge")
 
 
@@ -78,9 +145,14 @@ def spec(model_id: str) -> ModelSpec:
     return REGISTRY[model_id]
 
 
+def is_api(model_id: str) -> bool:
+    return model_id in REGISTRY and REGISTRY[model_id].serving == "api"
+
+
 def tier_models(tier: str) -> list[str]:
+    """The models `prefetch --tier` downloads: local ones only (served models have no weights here)."""
     if tier == "all":
-        return sorted(REGISTRY)
+        return sorted(m.id for m in _SPECS)
     return sorted(m.id for m in _SPECS if m.tier == tier)
 
 

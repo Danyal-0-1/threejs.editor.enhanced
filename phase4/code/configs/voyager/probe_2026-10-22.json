@@ -1,0 +1,2028 @@
+{
+ "probed_on": "2026-10-22",
+ "base_url": "https://openai.rc.asu.edu/v1",
+ "sentence": "The river ran slowly past the old mill, and the children watched the water carry leaves toward the bridge. When the bell rang, everyone walked home along the",
+ "pairs": [
+  [
+   " road",
+   " river"
+  ],
+  [
+   " path",
+   " bridge"
+  ],
+  [
+   " street",
+   " water"
+  ]
+ ],
+ "code_prompt": "def add(a, b):\n",
+ "skipped": [
+  "chatterbox: not a text model (audio_speech)",
+  "chatterbox-turbo: not a text model (audio_speech)",
+  "embeddinggemma-2: not a text model (embedding)",
+  "flux-2: not a text model (image)",
+  "north-mini-code-glm: A version of north-mini-code distilled toward GLM-5.3. It is the draft model behind glm-5\u2026",
+  "orpheus-3b: not a text model (audio_speech)",
+  "qwen-image-21: not a text model (image)",
+  "qwen3-asr-1p7b: not a text model (audio_transcription)",
+  "qwen3-embedding-4b: not a text model (embedding)",
+  "qwen3-embedding-8b: not a text model (embedding)",
+  "qwen3-tts-customvoice-1p7b: not a text model (audio_speech)",
+  "qwen3-vl-embedding-8b: not a text model (embedding)",
+  "router-classifier-v2: Intent classifier used by the auto router (Qwen3.5-0.8B, distilled from glm-5-3-flash and\u2026",
+  "wan-2-2: not a text model (video)",
+  "whisper-large-v3: not a text model (audio_transcription)"
+ ],
+ "notes": {
+  "beam-1-0": "",
+  "deepseek-v4-1-flash": "",
+  "devstral2-123b": "",
+  "gemma4-31b-it": "",
+  "glm-5-2": "",
+  "glm-5-3": "",
+  "glm-5-3-flash": "",
+  "glm-5-3-spec": "",
+  "gpt-oss-120b": "",
+  "granite41-30b": "",
+  "hemmingway-1": "",
+  "inkling-small": "",
+  "kimi-k2-7-code": "",
+  "laguna-s-2-1": "",
+  "llama4-maverick-17b": "",
+  "llama4-scout-17b": "",
+  "mimo-v2-6-flash": "",
+  "minimax-m2-7": "",
+  "minimax-m3": "",
+  "muse-glimmer-30b": "",
+  "muse-spark-open": "",
+  "north-mini-code": "",
+  "olmo3-32b-instruct": "member of olmo3-32b",
+  "olmo3-32b-think": "member of olmo3-32b",
+  "olmo3-7b-instruct": "member of olmo3-7b",
+  "olmo3-7b-think": "member of olmo3-7b",
+  "ornith-1-5-35b-a3b": "",
+  "qwen-agentworld-35b-a3b": "",
+  "qwen3-235b-a22b-instruct-2507": "member of qwen3-235b-a22b",
+  "qwen3-235b-a22b-thinking-2507": "member of qwen3-235b-a22b",
+  "qwen3-30b-a3b-instruct-2507": "member of qwen3-30b-a3b",
+  "qwen3-30b-a3b-thinking-2507": "member of qwen3-30b-a3b",
+  "qwen3-coder-30b-a3b-instruct": "",
+  "qwen3-coder-next": "",
+  "qwen3-vl-32b-instruct": "member of qwen3-vl-32b",
+  "qwen3-vl-32b-thinking": "member of qwen3-vl-32b",
+  "qwen35-122b-a10b": "",
+  "qwen35-27b": "",
+  "qwen35-397b-a17b": "",
+  "qwen36-27b": "",
+  "qwen36-35b-a3b": "",
+  "qwen38-27b": ""
+ },
+ "results": {
+  "beam-1-0": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "beam-1-0",
+    "fingerprint": "vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-8aa24f7f",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     2.2415828704833984,
+     7.965019583702087,
+     5.121596336364746
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": null,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "deepseek-v4-1-flash": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "deepseek-v4-1-flash",
+    "fingerprint": "vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-d26393b7",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.7183570861816406,
+     10.542192459106445,
+     6.534001350402832
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": null,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "devstral2-123b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "devstral2-123b",
+    "fingerprint": "vllm-0.26.0-tp4-03aca09a",
+    "special_tokens_added_by_default": 1
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.8125,
+     2.9375,
+     0.6875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "gemma4-31b-it": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "gemma4-31b-it",
+    "fingerprint": "vllm-0.26.0-tp4-0e321782",
+    "special_tokens_added_by_default": 1
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.125,
+     -10.125,
+     -9.6875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n```\n\n**Wait, I see the problem.** The user provided a code snip"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "glm-5-2": {
+   "prompt_logprobs": {
+    "status": 0,
+    "ok": false,
+    "error": "connection failed: TimeoutError: The read operation timed out"
+   },
+   "margins": {
+    "status": 0,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "raw_generation": {
+    "status": 0,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat": {
+    "status": 0,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat_logprobs": {
+    "status": 0,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "no_answer": "connection failed: TimeoutError: The read operation timed out",
+   "serves": {
+    "arm_a": false,
+    "arm_b": false,
+    "chat": false,
+    "first_token_logprobs": false
+   }
+  },
+  "glm-5-3": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "glm-5-3-mxfp4",
+    "fingerprint": "vllm-0.24.0-tp8-ep-2ff40673",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.5,
+     7.9375,
+     1.875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "glm-5-3-flash": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "glm-5-3-flash",
+    "fingerprint": "vllm-0.26.0-tp8-ep-5a4e2092",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     2.5,
+     9.125,
+     1.75
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "glm-5-3-spec": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "glm-5-3-mxfp4",
+    "fingerprint": "vllm-0.24.0-tp8-ep-2ff40673",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.5,
+     7.9375,
+     1.875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "gpt-oss-120b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "gpt-oss-120b",
+    "fingerprint": "vllm-0.26.0-tp4-ep-085ef82a",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.9375,
+     5.4375,
+     5.0
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "granite41-30b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "granite41-30b",
+    "fingerprint": null,
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.5,
+     6.25,
+     7.125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "hemmingway-1": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "hemmingway-1",
+    "fingerprint": "vllm-0.26.0-b6984362",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.0625,
+     6.25,
+     2.25
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef sub(a, b):\n    return a - b\n\ndef mul(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "inkling-small": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "inkling-small",
+    "fingerprint": "vllm-0.28.1rc1.dev944+gced6857af-tp8-620895d4",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.5625,
+     7.5,
+     -0.4375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef sub(a, b):\n    return a - b\n\ndef mul(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "kimi-k2-7-code": {
+   "prompt_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "Internal server error"
+   },
+   "margins": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "raw_generation": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "no_answer": "Internal server error",
+   "serves": {
+    "arm_a": false,
+    "arm_b": false,
+    "chat": false,
+    "first_token_logprobs": false
+   }
+  },
+  "laguna-s-2-1": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": false,
+    "error": "position 2 has no log-probability for its own token"
+   },
+   "margins": {
+    "ok": false,
+    "error": "no prompt log-probabilities"
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": false,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "llama4-maverick-17b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "llama4-maverick-17b",
+    "fingerprint": "vllm-0.26.0-tp8-17295aeb",
+    "special_tokens_added_by_default": 1
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -1.125,
+     3.0,
+     1.375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    print(f\"ADDING {a} + {b}\")\n    return a + b\n\ndef subtract(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "llama4-scout-17b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "llama4-scout-17b",
+    "fingerprint": "vllm-0.26.0-tp4-8564d540",
+    "special_tokens_added_by_default": 1
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -1.0,
+     3.75,
+     3.375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "mimo-v2-6-flash": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "mimo-v2-6-flash",
+    "fingerprint": "vllm-0.26.0-tp8-1210baf8",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     3.125,
+     6.8125,
+     2.1875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "minimax-m2-7": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "minimax-m2-7-fast",
+    "fingerprint": null,
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.875,
+     6.9375,
+     -1.0
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "minimax-m3": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "minimax-m3-mxfp4",
+    "fingerprint": "vllm-0.26.0-tp8-ep-fc20d2a4",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.875,
+     10.875,
+     4.375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "muse-glimmer-30b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "muse-glimmer-30b",
+    "fingerprint": "vllm-0.26.0-tp2-946062f5",
+    "special_tokens_added_by_default": 1
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     2.0,
+     9.15625,
+     2.8125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 5,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "muse-spark-open": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "muse-spark-open",
+    "fingerprint": "vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-e79ecb3e",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.1955499649047852,
+     5.234280586242676,
+     2.026258945465088
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": null,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "north-mini-code": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "north-mini-code",
+    "fingerprint": "vllm-0.21.0-cafd5654",
+    "special_tokens_added_by_default": null
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.3125,
+     -2.75,
+     0.96875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 5,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "olmo3-32b-instruct": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "olmo3-32b-instruct",
+    "fingerprint": "vllm-0.26.0-e58ad632",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.3125,
+     5.3125,
+     0.5
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "olmo3-32b-think": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "olmo3-32b-think",
+    "fingerprint": "vllm-0.26.0-c1dad0c2",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.1875,
+     6.25,
+     3.375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "olmo3-7b-instruct": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "olmo3-7b-instruct",
+    "fingerprint": "vllm-0.26.0-9c8d2749",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     3.84375,
+     11.65625,
+     0.34375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 5,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    \"\"\"Return the sum of two numbers.\"\"\"\n    return a + b\n\ndef subtract(a, b):\n "
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "olmo3-7b-think": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "olmo3-7b-think",
+    "fingerprint": "vllm-0.26.0-7a854c3c",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.0625,
+     8.125,
+     1.8125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "ornith-1-5-35b-a3b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "ornith-1-5-35b-a3b",
+    "fingerprint": "vllm-0.26.0-5da62f38",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.5,
+     7.375,
+     2.3125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\n\ndef sub(a, b):\n    return a - b\n\n\ndef mul(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen-agentworld-35b-a3b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen-agentworld-35b-a3b",
+    "fingerprint": null,
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.3125,
+     7.375,
+     3.9375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-235b-a22b-instruct-2507": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-235b-a22b-instruct-2507",
+    "fingerprint": "vllm-0.26.0-tp4-c6bead50",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     3.25,
+     15.125,
+     1.4375
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-235b-a22b-thinking-2507": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-235b-a22b-thinking-2507",
+    "fingerprint": "vllm-0.26.0-tp4-f917f154",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.25,
+     7.1875,
+     0.1875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-30b-a3b-instruct-2507": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-30b-a3b-instruct-2507",
+    "fingerprint": "vllm-0.26.0-f562c4cb",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -1.625,
+     5.75,
+     2.5
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-30b-a3b-thinking-2507": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-30b-a3b-thinking-2507",
+    "fingerprint": "vllm-0.26.0-a6798255",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.125,
+     2.75,
+     2.25
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-coder-30b-a3b-instruct": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-coder-30b-a3b-instruct",
+    "fingerprint": "vllm-0.26.0-9d422224",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -2.625,
+     4.4375,
+     -1.5
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-coder-next": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen3-coder-next",
+    "fingerprint": "vllm-0.26.0-tp4-d6ec68b1",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -1.125,
+     6.5,
+     1.625
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 3,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen3-vl-32b-instruct": {
+   "prompt_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "Internal server error"
+   },
+   "margins": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "raw_generation": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "no_answer": "Internal server error",
+   "serves": {
+    "arm_a": false,
+    "arm_b": false,
+    "chat": false,
+    "first_token_logprobs": false
+   }
+  },
+  "qwen3-vl-32b-thinking": {
+   "prompt_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "Internal server error"
+   },
+   "margins": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "raw_generation": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "chat_logprobs": {
+    "status": 500,
+    "ok": false,
+    "error": "not tried: the model did not answer"
+   },
+   "no_answer": "Internal server error",
+   "serves": {
+    "arm_a": false,
+    "arm_b": false,
+    "chat": false,
+    "first_token_logprobs": false
+   }
+  },
+  "qwen35-122b-a10b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen35-122b-a10b-fp8",
+    "fingerprint": "vllm-0.26.0-tp4-ep-39012ab1",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.875,
+     5.9375,
+     2.0625
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen35-27b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen35-27b-fp8",
+    "fingerprint": "vllm-0.26.0-5c5b7be4",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.625,
+     5.0,
+     2.8125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef sub(a, b):\n    return a - b\n\ndef mul(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen35-397b-a17b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen35-397b-a17b-fp8",
+    "fingerprint": "vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-448245c1",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.25,
+     2.625,
+     2.6875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen36-27b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen36-27b-fp8",
+    "fingerprint": "vllm-0.26.0-283c157f",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     -0.5625,
+     5.4375,
+     3.1875
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen36-35b-a3b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen36-35b-a3b-fp8",
+    "fingerprint": "vllm-0.26.0-914e9f0a",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     1.1875,
+     7.125,
+     2.8125
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": false
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  },
+  "qwen38-27b": {
+   "prompt_logprobs": {
+    "status": 200,
+    "ok": true,
+    "n_tokens": 31,
+    "served": "qwen38-27b",
+    "fingerprint": "vllm-0.26.0-172ad278",
+    "special_tokens_added_by_default": 0
+   },
+   "margins": {
+    "ok": true,
+    "margins": [
+     0.25,
+     7.0625,
+     2.5
+    ],
+    "single_token": [
+     true,
+     true,
+     true
+    ],
+    "repeatable": true,
+    "resolution_log2": 4,
+    "ties": 0
+   },
+   "raw_generation": {
+    "status": 200,
+    "ok": true,
+    "deterministic": true,
+    "sample": "    return a + b\n\ndef sub(a, b):\n    return a - b\n\ndef mul(a, b"
+   },
+   "chat": {
+    "status": 200,
+    "ok": true,
+    "answered": true
+   },
+   "chat_logprobs": {
+    "status": 200,
+    "ok": true,
+    "top_k": 5
+   },
+   "serves": {
+    "arm_a": true,
+    "arm_b": true,
+    "chat": true,
+    "first_token_logprobs": true
+   }
+  }
+ }
+}

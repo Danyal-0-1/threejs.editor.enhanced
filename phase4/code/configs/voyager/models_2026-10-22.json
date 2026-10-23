@@ -1,0 +1,1641 @@
+{
+ "listed_on": "2026-10-22",
+ "base_url": "https://openai.rc.asu.edu/v1",
+ "response": {
+  "data": [
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Reflection Beam-1.0 (501B MoE, 23B active), a reasoning model for coding, math and tool use. Always thinks before answering; reasoning effort sets how much. Tool calling and structured output; text only; 256K context.",
+    "id": "beam-1-0",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "reasoning",
+     "coding",
+     "math",
+     "general",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Chatterbox (Resemble AI) text-to-speech, English, one built-in voice. Optional exaggeration (0-2), cfg_weight and temperature fields shape delivery. Returns the whole clip at once rather than streaming it.",
+    "id": "chatterbox",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "audio_speech",
+    "model_type": "audio_speech",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "none",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Chatterbox-Turbo (Resemble AI) streaming text-to-speech, English, one built-in voice. Sends audio while it is still being made. Tags in the text such as [laugh], [sigh] or [chuckle] add expression.",
+    "id": "chatterbox-turbo",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "audio_speech",
+    "model_type": "audio_speech",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "none",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {
+     "image_generation": {
+      "active": true,
+      "helper_model": "flux-2"
+     },
+     "vision": {
+      "active": true,
+      "helper_model": "gemma4-31b-it",
+      "native": false
+     }
+    },
+    "boons": [
+     "vision",
+     "image_generation"
+    ],
+    "context_window": 131072,
+    "description": "DeepSeek's V4.1-Flash (about 550B-parameter MoE with Engram memory). Reasons before answering by default, for coding, math and complex tasks; tool calling. 128K context.",
+    "id": "deepseek-v4-1-flash",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "general",
+     "reasoning",
+     "math"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Mistral's Devstral 2 (123B), a coding model built for agentic software engineering. Supports tool calling; 128K context.",
+    "id": "devstral2-123b",
+    "input_cost_per_token": 4e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Google EmbeddingGemma 2 multimodal embedding model. Embeds text, images, audio and video into one 768-dim vector space for search and RAG; adjustable size (128-768 dims). 8K input.",
+    "id": "embeddinggemma-2",
+    "input_cost_per_token": 1e-08,
+    "max_input_tokens": 8192,
+    "mode": "embedding",
+    "model_type": "embedding",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Black Forest Labs' FLUX.2 [dev] (32B) image model. Generates images from text and edits images, including multi-reference edits and masked inpainting.",
+    "id": "flux-2",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "image_generation",
+    "model_type": "image",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Google's Gemma 4 31B instruction-tuned model. Accepts image input and supports tool calling; for general chat, image understanding and writing. 128K context.",
+    "id": "gemma4-31b-it",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 3.4e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "general",
+     "vision",
+     "creative"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Z.ai's GLM-5.2, a large (~740B) MoE reasoning model. For coding, math and hard reasoning, with a thinking mode and tool calling. 128K context.",
+    "id": "glm-5-2",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "coding",
+     "math",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {
+     "image_generation": {
+      "active": true,
+      "helper_model": "flux-2"
+     },
+     "vision": {
+      "active": true,
+      "helper_model": "gemma4-31b-it",
+      "native": false
+     },
+     "web_search": {
+      "active": true,
+      "helper_model": "searxng-search"
+     }
+    },
+    "boons": [
+     "vision",
+     "image_generation",
+     "web_search"
+    ],
+    "context_window": 131072,
+    "description": "Z.ai's GLM-5.3, a post-trained update of GLM-5.2 (~740B MoE). Always reasons before answering; for coding, math and complex tasks. Tool calling; 128K context.",
+    "id": "glm-5-3",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "low"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "general",
+     "reasoning",
+     "math",
+     "creative",
+     "writing"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Z.ai's GLM-5.3-Flash (320B MoE, 18B active), a faster GLM-5.3 option for coding, reasoning and long documents. Thinking mode and tool calling; 256K context.",
+    "id": "glm-5-3-flash",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "low"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "general",
+     "coding",
+     "reasoning",
+     "fast",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {
+     "image_generation": {
+      "active": true,
+      "helper_model": "flux-2"
+     },
+     "speculation": {
+      "active": true,
+      "helper_model": "north-mini-code-glm"
+     },
+     "vision": {
+      "active": true,
+      "helper_model": "gemma4-31b-it",
+      "native": false
+     },
+     "web_search": {
+      "active": true,
+      "helper_model": "searxng-search"
+     }
+    },
+    "boons": [
+     "vision",
+     "image_generation",
+     "web_search",
+     "speculation"
+    ],
+    "context_window": 131072,
+    "description": "glm-5-3 verifies drafts from north-mini-code-glm; faster on simple prompts",
+    "id": "glm-5-3-spec",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "low"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "general",
+     "reasoning",
+     "math",
+     "creative",
+     "writing"
+    ],
+    "variant_of": "glm-5-3"
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "OpenAI's open-weight gpt-oss-120b (117B MoE, 5.1B active). Fast reasoning model for general, math and analytical tasks; tool calling. 128K context.",
+    "id": "gpt-oss-120b",
+    "input_cost_per_token": 3.7e-08,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1.7e-07,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "low"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "reasoning",
+     "math",
+     "fast"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "IBM's Granite 4.1 30B, a general-purpose chat model with tool calling for everyday assistant tasks like drafting, summarizing and Q&A. 128K context.",
+    "id": "granite41-30b",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 5e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Altworld's Hemmingway-1, a 27B finetune of Qwen3.8 for everyday writing: messages, emails and correspondence that read like a person wrote them. Text-only, tool calling; 256K context. CC BY-NC 4.0, non-commercial use only.",
+    "id": "hemmingway-1",
+    "input_cost_per_token": 3e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2e-06,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "writing",
+     "creative",
+     "long-context",
+     "general"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Thinking Machines' Inkling-Small (276B MoE, 12B active), text-only here. Reasoning model for general tasks and coding, with tool calling. 128K context.",
+    "id": "inkling-small",
+    "input_cost_per_token": 3e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1.2e-06,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "reasoning",
+     "coding"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {
+     "vision": {
+      "active": true,
+      "helper_model": "gemma4-31b-it",
+      "native": false
+     }
+    },
+    "boons": [
+     "vision"
+    ],
+    "context_window": 131072,
+    "description": "Moonshot AI's Kimi K2.7 Code (1T-parameter MoE), built for coding and coding agents. Accepts image input; reasoning and tool calling. 128K context.",
+    "id": "kimi-k2-7-code",
+    "input_cost_per_token": 7.3e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 3.5e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "general",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Poolside's Laguna S 2.1 (118B MoE, ~8B active), a fast coding model for agentic coding tools. Thinking mode and tool calling; 128K context.",
+    "id": "laguna-s-2-1",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "reasoning",
+     "fast"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Meta's Llama 4 Maverick (~400B MoE, 17B active, 128 experts), text-only here. General chat and creative writing, with tool calling. 128K context.",
+    "id": "llama4-maverick-17b",
+    "input_cost_per_token": 2e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 8e-07,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "creative"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Meta's Llama 4 Scout (109B MoE, 17B active). General-purpose chat with image input (up to 4 per prompt) and tool calling. 128K context.",
+    "id": "llama4-scout-17b",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 3e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "general",
+     "vision"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 524288,
+    "description": "Xiaomi MiMo-V2.6-Flash (309B MoE, 15B active), an agent-trained reasoning model for coding and tool use. Thinking mode and tool calling; text only; 128K context.",
+    "id": "mimo-v2-6-flash",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 524288,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "reasoning",
+     "general",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "MiniMax-M2.7, a 229B MoE model for coding and reasoning, with a thinking mode and tool calling. 128K context.",
+    "id": "minimax-m2-7",
+    "input_cost_per_token": 2.5e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "MiniMax-M3, a 427B MoE model (23B active) for coding, reasoning and agents, with a thinking mode and tool calling. Text only. 128K context.",
+    "id": "minimax-m3",
+    "input_cost_per_token": 3e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1.2e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Muse-Glimmer-30B, a dense vision-language model. Accepts image input, with a reasoning mode and tool calling; good for visual reasoning. 128K context.",
+    "id": "muse-glimmer-30b",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 3.4e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "low"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": true,
+    "tags": [
+     "vision",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Muse Spark Open (Meta), a large mixture-of-experts model (816B parameters, 42B active). Reasons before it answers; for coding, math, hard reasoning and long documents, with tool calling and structured output. Text only; 256K context. Reasoning effort: low, medium (default) or high; the model always thinks a little, so none acts as the lowest setting. For research use. Built with Muse Spark Open.",
+    "id": "muse-spark-open",
+    "input_cost_per_token": 7.574e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.3804e-06,
+    "owned_by": "obleth",
+    "quantization": "mxfp4",
+    "reasoning": {
+     "default_level": "medium",
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "reasoning",
+     "coding",
+     "math",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Cohere Labs' North-Mini-Code (30B MoE, 3B active), tuned for agentic coding. Fast, with interleaved thinking and tool calling. 256K context.",
+    "id": "north-mini-code",
+    "input_cost_per_token": 7e-08,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.7e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "fast",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "A version of north-mini-code distilled toward GLM-5.3. It is the draft model behind glm-5-3's speculative decoding, not meant for direct use.",
+    "id": "north-mini-code-glm",
+    "input_cost_per_token": 7e-08,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.7e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": false,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "math",
+     "long-context",
+     "fast"
+    ]
+   },
+   {
+    "boon_details": {},
+    "boons": [],
+    "context_window": 65536,
+    "description": "OLMo 3 32B. Set reasoning effort to choose: none is the instruct model, low and up the thinking model.",
+    "family": {
+     "default_level": "none",
+     "members": {
+      "high": "olmo3-32b-think",
+      "low": "olmo3-32b-think",
+      "medium": "olmo3-32b-think",
+      "none": "olmo3-32b-instruct"
+     }
+    },
+    "id": "olmo3-32b",
+    "input_cost_per_token": 1.5e-07,
+    "max_input_tokens": 65536,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 5e-07,
+    "owned_by": "obleth",
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false
+   },
+   {
+    "boon_details": {},
+    "boons": [],
+    "context_window": 65536,
+    "description": "OLMo 3 7B. Set reasoning effort to choose: none is the instruct model, low and up the thinking model.",
+    "family": {
+     "default_level": "none",
+     "members": {
+      "high": "olmo3-7b-think",
+      "low": "olmo3-7b-think",
+      "medium": "olmo3-7b-think",
+      "none": "olmo3-7b-instruct"
+     }
+    },
+    "id": "olmo3-7b",
+    "input_cost_per_token": 5e-08,
+    "max_input_tokens": 65536,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1e-07,
+    "owned_by": "obleth",
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Ornith 1.5 (35B MoE, 3B active), successor to Ornith 1.0 for agentic coding. Reasoning, tool calling, image input and structured output. 256K context.",
+    "id": "ornith-1-5-35b-a3b",
+    "input_cost_per_token": 8e-08,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 4e-07,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "coding",
+     "general"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 4096,
+    "description": "Orpheus 3B streaming text-to-speech (English). Sends audio while it is still being made. Voices: tara, leah, jess, leo, dan, mia, zac, zoe. Tags in the text such as <laugh>, <chuckle>, <sigh> or <gasp> add expression.",
+    "id": "orpheus-3b",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 4096,
+    "mode": "audio_speech",
+    "model_type": "audio_speech",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "none",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen's AgentWorld 35B MoE (3B active), text-only. A fast general model with tool calling that handles long inputs. 256K context.",
+    "id": "qwen-agentworld-35b-a3b",
+    "input_cost_per_token": 1.5e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1e-06,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "fast",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Qwen-Image 2.1 image model for text-to-image generation and image editing. Licensed for non-commercial research use only.",
+    "id": "qwen-image-21",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "image_generation",
+    "model_type": "image",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": false,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Qwen3 235B-A22B. Set reasoning effort to choose: none is the instruct model, low and up the thinking model.",
+    "family": {
+     "default_level": "none",
+     "members": {
+      "high": "qwen3-235b-a22b-thinking-2507",
+      "low": "qwen3-235b-a22b-thinking-2507",
+      "medium": "qwen3-235b-a22b-thinking-2507",
+      "none": "qwen3-235b-a22b-instruct-2507"
+     }
+    },
+    "id": "qwen3-235b-a22b",
+    "input_cost_per_token": 9e-08,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 5.5e-07,
+    "owned_by": "obleth",
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false
+   },
+   {
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Qwen3 30B-A3B. Set reasoning effort to choose: none is the instruct model, low and up the thinking model.",
+    "family": {
+     "default_level": "none",
+     "members": {
+      "high": "qwen3-30b-a3b-thinking-2507",
+      "low": "qwen3-30b-a3b-thinking-2507",
+      "medium": "qwen3-30b-a3b-thinking-2507",
+      "none": "qwen3-30b-a3b-instruct-2507"
+     }
+    },
+    "id": "qwen3-30b-a3b",
+    "input_cost_per_token": 4.815e-08,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1.9305e-07,
+    "owned_by": "obleth",
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Qwen3-ASR 1.7B speech-to-text model. Transcribes audio into text.",
+    "id": "qwen3-asr-1p7b",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "audio_transcription",
+    "model_type": "audio_transcription",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Qwen3-Coder 30B MoE (3B active), a fast coding model for code generation, editing and coding agents. Tool calling; 128K context.",
+    "id": "qwen3-coder-30b-a3b-instruct",
+    "input_cost_per_token": 7e-08,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.7e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "fast"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3-Coder-Next (80B MoE, 3B active), a fast coding model for coding agents and large codebases. Tool calling; 256K context.",
+    "id": "qwen3-coder-next",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 8e-07,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "mode": "unsupported"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "coding",
+     "fast",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 32768,
+    "description": "Qwen3-Embedding 4B text embedding model (2560-dim vectors) for search, retrieval and RAG. 32K input. Vectors aren't compatible with the 8B model.",
+    "id": "qwen3-embedding-4b",
+    "input_cost_per_token": 1e-08,
+    "max_input_tokens": 32768,
+    "mode": "embedding",
+    "model_type": "embedding",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 32768,
+    "description": "Qwen3-Embedding 8B text embedding model (4096-dim vectors) for search, retrieval and RAG. 32K input. Vectors aren't compatible with the 4B model.",
+    "id": "qwen3-embedding-8b",
+    "input_cost_per_token": 2e-08,
+    "max_input_tokens": 32768,
+    "mode": "embedding",
+    "model_type": "embedding",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Qwen3-TTS 1.7B (CustomVoice) streaming text-to-speech in 10 languages. Nine built-in voices: aiden, dylan, eric, ono_anna, ryan, serena, sohee, uncle_fu, vivian (ryan and aiden are native English). Optional plain-language instructions set the speaking style.",
+    "id": "qwen3-tts-customvoice-1p7b",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "audio_speech",
+    "model_type": "audio_speech",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "boon_details": {},
+    "boons": [],
+    "context_window": 131072,
+    "description": "Qwen3-VL 32B vision. Set reasoning effort to choose: none is the instruct model, low and up the thinking model.",
+    "family": {
+     "default_level": "none",
+     "members": {
+      "high": "qwen3-vl-32b-thinking",
+      "low": "qwen3-vl-32b-thinking",
+      "medium": "qwen3-vl-32b-thinking",
+      "none": "qwen3-vl-32b-instruct"
+     }
+    },
+    "id": "qwen3-vl-32b",
+    "input_cost_per_token": 1.04e-07,
+    "max_input_tokens": 131072,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 4.16e-07,
+    "owned_by": "obleth",
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 32768,
+    "description": "Qwen3-VL-Embedding 8B multimodal embedding model. Embeds text and images into one vector space for search and RAG; adjustable size (64-4096 dims).",
+    "id": "qwen3-vl-embedding-8b",
+    "input_cost_per_token": 2e-08,
+    "max_input_tokens": 32768,
+    "mode": "embedding",
+    "model_type": "embedding",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.5 122B MoE (10B active), text-only here. A large general-purpose model for chat, coding and long documents, with tool calling. 256K context.",
+    "id": "qwen35-122b-a10b",
+    "input_cost_per_token": 2.6e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2.08e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "coding",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.5 27B general-purpose model. Accepts image input (up to 16 per prompt) and supports tool calling; good for long documents. 256K context.",
+    "id": "qwen35-27b",
+    "input_cost_per_token": 1.95e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1.56e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "vision",
+     "long-context",
+     "general"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.5 397B MoE (17B active), text-only here. The largest general-purpose model in the fleet, for chat, coding, reasoning and long documents, with tool calling. 256K context.",
+    "id": "qwen35-397b-a17b",
+    "input_cost_per_token": 4.5e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 3.6e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": false,
+    "tags": [
+     "general",
+     "coding",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.6 27B reasoning model. Accepts image input (up to 16 per prompt) and supports tool calling; suited to long documents. 256K context.",
+    "id": "qwen36-27b",
+    "input_cost_per_token": 3e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2e-06,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "vision",
+     "long-context",
+     "reasoning"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.6 35B MoE (3B active). A fast general and coding model with image input, a thinking mode and tool calling. 256K context.",
+    "id": "qwen36-35b-a3b",
+    "input_cost_per_token": 1e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 9e-07,
+    "owned_by": "obleth",
+    "quantization": "fp8",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": true,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "general",
+     "coding",
+     "vision",
+     "fast",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 262144,
+    "description": "Qwen3.8 27B dense model for general use, coding and reasoning. Image input, a thinking mode and tool calling; handles long documents. 256K context.",
+    "id": "qwen38-27b",
+    "input_cost_per_token": 3e-07,
+    "max_input_tokens": 262144,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 2e-06,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "reasoning": {
+     "levels": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium",
+      "none": "none"
+     },
+     "mode": "mapped"
+    },
+    "supports_function_calling": true,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": true,
+    "supports_vision": true,
+    "tags": [
+     "general",
+     "coding",
+     "reasoning",
+     "vision",
+     "long-context"
+    ]
+   },
+   {
+    "aliases": [
+     "router-classifier-v1"
+    ],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 4096,
+    "description": "Intent classifier used by the auto router (Qwen3.5-0.8B, distilled from glm-5-3-flash and granite41-30b). Answers routing questions with a single token; not a chat model and never chosen by auto.",
+    "id": "router-classifier-v2",
+    "input_cost_per_token": 1e-08,
+    "max_input_tokens": 4096,
+    "mode": "chat",
+    "model_type": "chat",
+    "object": "model",
+    "output_cost_per_token": 1e-08,
+    "owned_by": "obleth",
+    "quantization": "bf16",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "Wan2.2 TI2V-5B (Alibaba) video model. Makes 5-second 1280x704 videos at 24 fps from a text prompt, or from a prompt plus a starting image. Uses the /v1/videos job API: create a job, check its status, then download the MP4.",
+    "id": "wan-2-2",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "video_generation",
+    "model_type": "video",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": false,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   },
+   {
+    "aliases": [],
+    "boon_details": {},
+    "boons": [],
+    "context_window": 8192,
+    "description": "OpenAI Whisper large-v3 speech-to-text. Transcribes or translates audio into text, with the full Whisper API including verbose_json timestamps.",
+    "id": "whisper-large-v3",
+    "input_cost_per_token": 0.0,
+    "max_input_tokens": 8192,
+    "mode": "audio_transcription",
+    "model_type": "audio_transcription",
+    "object": "model",
+    "output_cost_per_token": 0.0,
+    "owned_by": "obleth",
+    "quantization": "unknown",
+    "supports_function_calling": false,
+    "supports_response_schema": false,
+    "supports_system_messages": true,
+    "supports_tool_choice": false,
+    "supports_vision": false,
+    "tags": []
+   }
+  ],
+  "object": "list"
+ }
+}
