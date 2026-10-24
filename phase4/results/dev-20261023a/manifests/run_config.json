@@ -1,0 +1,97 @@
+{
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": false,
+  "analysis": {
+   "B": 2000,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 64,
+  "dtype": "bfloat16",
+  "families": [
+   "dom",
+   "blk"
+  ],
+  "freeze_path": null,
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d25s3",
+   "d50s3",
+   "d75s1a",
+   "d75s2a",
+   "d75s3a"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "asu-rc/olmo3-7b-instruct",
+   "asu-rc/olmo3-32b-instruct",
+   "asu-rc/olmo3-32b-think",
+   "asu-rc/qwen3-coder-30b-a3b-instruct",
+   "asu-rc/gemma4-31b-it",
+   "asu-rc/deepseek-v4-1-flash",
+   "asu-rc/qwen35-27b",
+   "asu-rc/qwen35-122b-a10b",
+   "asu-rc/qwen35-397b-a17b"
+  ],
+  "note": "Phase 4's first development run (exploratory; the preregistration is a draft): nine models served by the ASU RC API, on exactly the cells of Phase 3.3's held-out run (both grammar families x its five held-out lexicons, every site), with the same settings and seeds, so they compare cell for cell with Phase 3.3's 21 models. H4 and H5 need base twins, which served models do not have.",
+  "primary": {
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 400
+  },
+  "run_id": "dev-20261023a",
+  "schema_version": "p4/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 0,
+  "stage": "dev"
+ },
+ "config_hash": "c786cd79962fc455eb8c08eec2714954c10be0d6f33eaa081597493f88edae77"
+}

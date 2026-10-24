@@ -1,0 +1,20 @@
+phase,model,id,family,parameters_B,active_B,served_precision,revision_or_deployment,tokenizer_id,pinned_utc
+3.3,Qwen2.5-Coder 0.5B Instruct,Qwen/Qwen2.5-Coder-0.5B-Instruct,Qwen2.5-Coder,0.5,,bf16 + fp32 head,ea3f2471cf1b1f0db85067f1ef93848e38e88c25,cc349caf59f0697a,
+3.3,Qwen2.5-Coder 1.5B Instruct,Qwen/Qwen2.5-Coder-1.5B-Instruct,Qwen2.5-Coder,1.5,,bf16 + fp32 head,2e1fd397ee46e1388853d2af2c993145b0f1098a,cc349caf59f0697a,
+3.3,Qwen2.5-Coder 3B Instruct,Qwen/Qwen2.5-Coder-3B-Instruct,Qwen2.5-Coder,3,,bf16 + fp32 head,488639f1ff808d1d3d0ba301aef8c11461451ec5,cc349caf59f0697a,
+3.3,Qwen2.5-Coder 7B Instruct,Qwen/Qwen2.5-Coder-7B-Instruct,Qwen2.5-Coder,7,,bf16 + fp32 head,c03e6d358207e414f1eca0bb1891e29f1db0e242,cc349caf59f0697a,
+3.3,Qwen2.5-Coder 14B Instruct,Qwen/Qwen2.5-Coder-14B-Instruct,Qwen2.5-Coder,14,,bf16 + fp32 head,aedcc2d42b622764e023cf882b6652e646b95671,cc349caf59f0697a,
+3.3,Qwen2.5-Coder 32B Instruct,Qwen/Qwen2.5-Coder-32B-Instruct,Qwen2.5-Coder,32,,bf16 + fp32 head,381fc969f78efac66bc87ff7ddeadb7e73c218a7,cc349caf59f0697a,
+3.3,Qwen2.5 72B Instruct,Qwen/Qwen2.5-72B-Instruct,Qwen2.5,72,,bf16 + fp32 head,495f39366efef23836d0cfae4fbe635880d2be31,cc349caf59f0697a,
+3.3,DeepSeek-Coder 1.3B Instruct,deepseek-ai/deepseek-coder-1.3b-instruct,DeepSeek-Coder,1.3,,bf16 + fp32 head,e063262dac8366fc1f28a4da0ff3c50ea66259ca,14807840df2fdd25,
+3.3,DeepSeek-Coder 33B Instruct,deepseek-ai/deepseek-coder-33b-instruct,DeepSeek-Coder,33,,bf16 + fp32 head,61dc97b922b13995e7f83b7c8397701dbf9cfd4c,14807840df2fdd25,
+3.3,Llama-3.2 1B Instruct,meta-llama/Llama-3.2-1B-Instruct,Llama-3.2,1,,bf16 + fp32 head,9213176726f574b556790deb65791e0c5aa438b6,67fafbd7a0a1cb59,
+4,OLMo 3 7B Instruct,asu-rc/olmo3-7b-instruct,OLMo 3,7,,,olmo3-7b-instruct@vllm-0.26.0-9c8d2749,api-4d65007203f3c81b,2026-10-23T19:04:45+00:00
+4,OLMo 3 32B Instruct,asu-rc/olmo3-32b-instruct,OLMo 3,32,,,olmo3-32b-instruct@vllm-0.26.0-e58ad632,api-4d65007203f3c81b,2026-10-23T19:11:48+00:00
+4,OLMo 3 32B Think,asu-rc/olmo3-32b-think,OLMo 3,32,,,olmo3-32b-think@vllm-0.26.0-c1dad0c2,api-4d65007203f3c81b,2026-10-23T19:11:49+00:00
+4,Qwen3-Coder 30B-A3B Instruct,asu-rc/qwen3-coder-30b-a3b-instruct,Qwen3-Coder,30,3,bf16,qwen3-coder-30b-a3b-instruct@vllm-0.26.0-9d422224,api-40c4f55acb581b43,2026-10-23T19:11:50+00:00
+4,Qwen3.5 27B,asu-rc/qwen35-27b,Qwen3.5,27,,fp8,qwen35-27b-fp8@vllm-0.26.0-5c5b7be4,api-2bef010c1e74ec28,2026-10-23T19:11:50+00:00
+4,Qwen3.5 122B-A10B,asu-rc/qwen35-122b-a10b,Qwen3.5,122,10,fp8,qwen35-122b-a10b-fp8@vllm-0.26.0-tp4-ep-39012ab1,api-2bef010c1e74ec28,2026-10-23T19:11:50+00:00
+4,Qwen3.5 397B-A17B,asu-rc/qwen35-397b-a17b,Qwen3.5,397,17,fp8,qwen35-397b-a17b-fp8@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-448245c1,api-2bef010c1e74ec28,2026-10-23T19:11:51+00:00
+4,Gemma 4 31B,asu-rc/gemma4-31b-it,Gemma 4,31,,bf16,gemma4-31b-it@vllm-0.26.0-tp4-0e321782,api-8d6e58ef2e8bdb6c,2026-10-23T19:11:48+00:00
+4,DeepSeek-V4.1-Flash,asu-rc/deepseek-v4-1-flash,DeepSeek-V4.1,550,,mxfp4,deepseek-v4-1-flash@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-d26393b7,api-1f62b89657270241,2026-10-23T19:11:47+00:00

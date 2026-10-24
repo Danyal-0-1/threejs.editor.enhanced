@@ -1,0 +1,5 @@
+record_type,status,corrupt,done,duplicates_dropped,experiment,failed,merged_sha256,missing,n_expected_cells
+experiment,COMPLETE,0,1458,0,arm_a,0,e0f8bda70e89db9486f59e87ba3080958a911948bc984e8293dd45af23072b94,0,1458
+experiment,COMPLETE,0,360,0,primary,0,b24691ea8a03f9668aeb3704f7f36e4884688131ea994afc5848dd43166a8e2b,0,360
+experiment,COMPLETE,0,180,0,armb,0,87e7a9db5091ac1d9af6dad62141cc93a22112b83880e0288ec04094da5a7a5e,0,180
+experiment,NOT RUN,,,,h5,,,,

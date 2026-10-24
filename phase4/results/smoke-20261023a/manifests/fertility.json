@@ -1,0 +1,28 @@
+[
+ {
+  "tokenizer_id": "api-4d65007203f3c81b",
+  "models": "asu-rc/olmo3-7b-instruct",
+  "family": "dom",
+  "lexicon": "identity",
+  "tokens": 2858,
+  "chars": 7980,
+  "tok_per_char": 0.3581453634085213,
+  "rel_fertility_vs_identity": 1.0,
+  "rel_token_count": 1.0,
+  "fragmentation": 1.3571428571428572,
+  "n_templates": 80
+ },
+ {
+  "tokenizer_id": "api-4d65007203f3c81b",
+  "models": "asu-rc/olmo3-7b-instruct",
+  "family": "dom",
+  "lexicon": "d50s1",
+  "tokens": 3088,
+  "chars": 7995,
+  "tok_per_char": 0.3862414008755472,
+  "rel_fertility_vs_identity": 1.0784486980359924,
+  "rel_token_count": 1.0804758572428272,
+  "fragmentation": 1.3571428571428572,
+  "n_templates": 80
+ }
+]

@@ -1,0 +1,4 @@
+[2026-10-23T14:27:03-07:00] task 8: waiting for pid 41209, then: armb:4
+[2026-10-23T14:57:03-07:00] task 8: armb with 4 cells side by side
+armb: COMPLETE
+[2026-10-23T15:39:10-07:00] task 8: armb exit=0

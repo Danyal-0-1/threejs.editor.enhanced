@@ -1,0 +1,13 @@
+record_type,stage,family,lexicon,stratum,prefix_len,site_id,template,terminal
+site,smoke,dom,d50s1,sigil,17,dom:d50s1:t000:T_CLASS_SIGIL:0,t000,T_CLASS_SIGIL
+site,smoke,dom,d50s1,verb,25,dom:d50s1:t002:T_VERB_MOVE:0,t002,T_VERB_MOVE
+site,smoke,dom,d50s1,keyword,18,dom:d50s1:t004:T_PSEUDO_SELECTED:0,t004,T_PSEUDO_SELECTED
+site,smoke,dom,d50s1,sigil,21,dom:d50s1:t005:T_CLASS_SIGIL:0,t005,T_CLASS_SIGIL
+site,smoke,dom,d50s1,sigil,22,dom:d50s1:t006:T_CLASS_SIGIL:0,t006,T_CLASS_SIGIL
+site,smoke,dom,d50s1,verb,30,dom:d50s1:t006:T_VERB_DUPLICATE:0,t006,T_VERB_DUPLICATE
+site,smoke,dom,d50s1,sigil,22,dom:d50s1:t007:T_CLASS_SIGIL:1,t007,T_CLASS_SIGIL
+site,smoke,dom,d50s1,verb,35,dom:d50s1:t010:T_VERB_WIREFRAME:0,t010,T_VERB_WIREFRAME
+site,smoke,dom,d50s1,keyword,31,dom:d50s1:t011:T_TYPE_MESH:0,t011,T_TYPE_MESH
+site,smoke,dom,d50s1,verb,25,dom:d50s1:t013:T_VERB_CASTSHADOW:0,t013,T_VERB_CASTSHADOW
+site,smoke,dom,d50s1,keyword,23,dom:d50s1:t019:T_TYPE_GROUP:0,t019,T_TYPE_GROUP
+site,smoke,dom,d50s1,keyword,51,dom:d50s1:t021:T_TYPE_MESH:0,t021,T_TYPE_MESH

@@ -1,0 +1,19 @@
+[2026-10-23T12:25:41-07:00] task 1: asu-rc/olmo3-32b-instruct
+[asu_api 12:28:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:29:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:32:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:14] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:36:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:40:02] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:43:28] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:45:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:48:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:54] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:52:35] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:55:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+arm_a: COMPLETE
+[2026-10-23T12:58:52-07:00] task 1: arm_a exit=0
+primary: COMPLETE
+[2026-10-23T13:22:08-07:00] task 1: primary exit=0
+armb: COMPLETE
+[2026-10-23T13:48:38-07:00] task 1: armb exit=0

@@ -1,0 +1,266 @@
+{
+ "artifacts": {},
+ "command": [
+  "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/code/run.py",
+  "dev",
+  "run",
+  "--run",
+  "dev-20261023a",
+  "--experiment",
+  "armb",
+  "--task",
+  "7"
+ ],
+ "config": {
+  "allow_exploratory": false,
+  "allow_non_a100": false,
+  "analysis": {
+   "B": 2000,
+   "alpha": 0.05,
+   "ece_bins": 10,
+   "min_clusters": 8,
+   "precision_at_k": [
+    10,
+    50
+   ],
+   "unit": "template"
+  },
+  "arm_a": {
+   "conditions": [
+    "rule",
+    "norule",
+    "norule_lenmatched"
+   ],
+   "program_nll": true
+  },
+  "armb": {
+   "do_sample": false,
+   "max_new_tokens": 192,
+   "n_demos": 4,
+   "num_beams": 1,
+   "template_limit": 0
+  },
+  "chunk_size": 64,
+  "dtype": "bfloat16",
+  "families": [
+   "dom",
+   "blk"
+  ],
+  "freeze_path": null,
+  "h5": {
+   "budget": 3,
+   "low_risk_tolerance": 0.02
+  },
+  "lexicons": [
+   "d25s3",
+   "d50s3",
+   "d75s1a",
+   "d75s2a",
+   "d75s3a"
+  ],
+  "lm_head_fp32": true,
+  "models": [
+   "asu-rc/olmo3-7b-instruct",
+   "asu-rc/olmo3-32b-instruct",
+   "asu-rc/olmo3-32b-think",
+   "asu-rc/qwen3-coder-30b-a3b-instruct",
+   "asu-rc/gemma4-31b-it",
+   "asu-rc/deepseek-v4-1-flash",
+   "asu-rc/qwen35-27b",
+   "asu-rc/qwen35-122b-a10b",
+   "asu-rc/qwen35-397b-a17b"
+  ],
+  "note": "Phase 4's first development run (exploratory; the preregistration is a draft): nine models served by the ASU RC API, on exactly the cells of Phase 3.3's held-out run (both grammar families x its five held-out lexicons, every site), with the same settings and seeds, so they compare cell for cell with Phase 3.3's 21 models. H4 and H5 need base twins, which served models do not have.",
+  "primary": {
+   "ladder": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "paraphrases": [
+    "p0",
+    "p1",
+    "p2"
+   ],
+   "site_limit": 400
+  },
+  "run_id": "dev-20261023a",
+  "schema_version": "p4/1",
+  "seeds": {
+   "bootstrap": 20261002,
+   "demo_order": 20261005,
+   "h5_random": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "power": 20261006
+  },
+  "site_limit": 0,
+  "stage": "dev"
+ },
+ "config_hash": "c786cd79962fc455eb8c08eec2714954c10be0d6f33eaa081597493f88edae77",
+ "cwd": "/home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced",
+ "disk_free_gb": {
+  "hf_root": null,
+  "results": 609.8
+ },
+ "dtype": "bfloat16",
+ "end_utc": "2026-10-23T21:58:29+00:00",
+ "experiment": "armb",
+ "git_commit": "c173cf4a12f00fd1c9e920bb6b73144d94b32860",
+ "git_dirty": true,
+ "gpu": {
+  "bf16_supported": true,
+  "cuda_available": true,
+  "cuda_runtime": "13.0",
+  "device_mem_gb": 15.6,
+  "device_name": "NVIDIA GeForce RTX 3080 Ti Laptop GPU",
+  "nvidia_smi": "NVIDIA GeForce RTX 3080 Ti Laptop GPU, 595.91.07, 16384 MiB, 14878 MiB",
+  "torch": "2.14.0+cu130"
+ },
+ "hf_env": {
+  "HF_HOME": null,
+  "HF_HUB_CACHE": null,
+  "HF_HUB_OFFLINE": null,
+  "TRANSFORMERS_CACHE": null,
+  "TRANSFORMERS_OFFLINE": null
+ },
+ "job": {
+  "array_task_id": null,
+  "job_id": null,
+  "node": "mesquite-Alienware-m15-R7",
+  "pid": 44414
+ },
+ "lm_head_fp32": true,
+ "materials_hashes": {
+  "blk_grammar": "3070a10af2f960c018b72dfbdf4525d42cb2d35e3ce0693c3d17c0535baea4f3",
+  "phi_d25s3.json": "e62d20283c725b6682b80bae60b5ca4f4c85e7fc7a669a33c62aef4d5bf149b7",
+  "phi_d50s3.json": "68baa8b14c9c474b90f5d57050d7f58c5ecb4e189a87510afff5a204fbd6975d",
+  "phi_d75s1a.json": "0c791fb9aab85bfc9a7b8b319a7b5a7560269bc9fd8c560e390424d69b7d3e45",
+  "phi_d75s2a.json": "f798b2eea25b01b76e803e37304a7049f0b1e250893028c71ea4450a173cea18",
+  "phi_d75s3a.json": "f7b2e82e4bd9bf375aca1b34762e1393e4cde5678bd7019800a2828b7a186ff4",
+  "templates": "482a72a7b0e27b2b29e8a6af3001ccaedb2ef8457c2e24b23172cabc84dc8e78",
+  "terminals.json": "89a25a4ff6d28295e2002728696b88070908075eb592e7017ea0012499d50db5"
+ },
+ "models": {
+  "asu-rc/qwen35-122b-a10b": {
+   "n_cells": 20,
+   "n_todo": 16,
+   "revision": "qwen35-122b-a10b-fp8@vllm-0.26.0-tp4-ep-39012ab1",
+   "snapshot_path": null,
+   "tokenizer_id": "api-2bef010c1e74ec28"
+  }
+ },
+ "packages": {
+  "accelerate": "MISSING",
+  "huggingface_hub": "1.29.0",
+  "lark": "1.3.1",
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.2",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "safetensors": "0.8.0",
+  "tokenizers": "0.23.1",
+  "transformers": "5.16.1"
+ },
+ "prompt_hashes": {
+  "d25s3/generate": "90aad7919711c80e1adc3b4643099d05377d879ed3c1bfdd2b7dc1a1d06e27e9",
+  "d50s3/generate": "74134ea4d3c5f3efb03af640134e4f139dde0b84d23907f89b96eed7b9370f6f",
+  "d75s1a/generate": "169a7fd6efac6919e7dcc29b15b382d262a1f09662340396630ed2aa542f7a0f",
+  "d75s2a/generate": "86809008166d273572e8bd55c1e6a454ee1397d94eef8e5f9e4cd7540d2381ba",
+  "d75s3a/generate": "946c6fcbdc488ea7522b8612d89851cb1617f9400de8d7c09ebb95d386ae5939"
+ },
+ "run_id": "dev-20261023a",
+ "schema_version": "p4/1",
+ "seeds": {
+  "bootstrap": 20261002,
+  "demo_order": 20261005,
+  "h5_random": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "power": 20261006
+ },
+ "slurm": {
+  "account": null,
+  "array_job_id": null,
+  "array_task_id": null,
+  "cpus": null,
+  "job_id": null,
+  "node": null,
+  "partition": null,
+  "qos": null
+ },
+ "source_hashes": {
+  "phase4/code/dsl/alien_syntax/grammar/render_grammar.py": "3544a82a39feafcd5aecb301e65cecd68f3007eb54439d35817bad718bb2620b",
+  "phase4/code/dsl/alien_syntax/src/canonicalize.py": "bd5d60071f04aea38cc67fe37a5e38edc30eeb904672834ed272498c91254ce3",
+  "phase4/code/dsl/alien_syntax/src/generate_corpus.py": "1d2ceca17b600b5675087863413408094578227aea24f2d39453b2468d841047",
+  "phase4/code/dsl/alien_syntax/src/heuristics_ir.py": "a91bc9a6274f0537eb3e87aeae6b4b67ea2a3ec82af485e252e79a036f70617b",
+  "phase4/code/dsl/alien_syntax/src/phi.py": "1a7c117b20be9c9081debeedc4ecfe48f694fbe754679923b1553c1948404d72",
+  "phase4/code/dsl/alien_syntax/src/transpiler.py": "2010e641424d7e3e9a66c9c874d8f0b7f59a96b2ab53b8cf0cd555253aff0927",
+  "phase4/code/dsl/grammar_and_3DOM_client/conformance/refgrammar.py": "de4f577cca1eb01c615e6581648e2a0a0a4ed20842c72c89b61d0890672164c5",
+  "phase4/code/dsl/grammar_and_3DOM_client/fixture_scene.py": "fc98305b7ff2126a92fbc5a67afede8412f8c3319b535f29e90a710d5df53c90",
+  "phase4/code/dsl/grammar_and_3DOM_client/tasks.py": "2cef9d73c267163bb4243331e221c94773df749a3936aad0ca889ed1657c6c49",
+  "phase4/code/p4/__init__.py": "41573ad39b238b8f8b73188c8da5b5adae5f2a96e140120107f9d81b0468bd02",
+  "phase4/code/p4/analysis/__init__.py": "45991ea660198d4f8bec6e399f540dd203456288eea2b9e40f7d629220d49180",
+  "phase4/code/p4/analysis/analysis.py": "af5f67e026654633909ae06047e67dd76a7cbfdc8ee14bd3e71a6088a1f56246",
+  "phase4/code/p4/analysis/h2.py": "29dca5512d2710442be3b088d8f41c8f2d5805ffe89e4873b406f63ae10bddd5",
+  "phase4/code/p4/analysis/h4.py": "cabe96004fca7140223e8cbe8693ef28aa78c1b9a0d5d98ebda19e4e34eec23c",
+  "phase4/code/p4/analysis/kstar.py": "85b33c301d94f15983081c2a36e6682f8d0d5fac5f81ae4e920daa507570227c",
+  "phase4/code/p4/analysis/power.py": "3449f29e05b62847c27d93d97bb51a6fc2843f2f037f7fdb9f02f2f95863a146",
+  "phase4/code/p4/experiments/__init__.py": "ea930795d2153a38c9b680c1598fd3a50646b9221d6aba3ce3371c3a9f5d11f1",
+  "phase4/code/p4/experiments/armb.py": "06c9f1f8f295985a234f3e07bfc4aeb854ddfb8e9b49d3b2a282f300a5c603a3",
+  "phase4/code/p4/experiments/h5.py": "7209f5e4f5b812e1dd66b06de9fa517afdd48751a5517ecf267fa62e651bb18d",
+  "phase4/code/p4/experiments/pipeline.py": "28a5d6820ade90b251f2fd191be99917dd15803ebba51d8134c78abad398f40d",
+  "phase4/code/p4/governance/__init__.py": "657a6aa8d9b0c4c84e4be8f6e6c02ff0894d421993a4df5078065bd8b64e1bef",
+  "phase4/code/p4/governance/freeze.py": "161f1293c9df1b456d85c602f178fa52ba58d025aad675184257cf369a2826d0",
+  "phase4/code/p4/governance/provenance.py": "2bd62a16d7cae667aaae7bfb52cb57af3ad2f649ed139dc569f01ca46e892ac9",
+  "phase4/code/p4/governance/registry.py": "9a925e79103cbf8616e81cce3257e32c8560956fb91e367fac8bb9a34f17f6d6",
+  "phase4/code/p4/governance/splits.py": "0de52d3505195038b59c4eacd89bf6632d40f18e1991bfed6465b409988ed980",
+  "phase4/code/p4/language/__init__.py": "205dfa60fc8f79306e6c3170f09a4f3008794dbe5bc4f7a7be7beb196948e28d",
+  "phase4/code/p4/language/backends.py": "c3e72678fabac55c368042bb09757ca82e0d199c1d21601e255264ce5e6b94c0",
+  "phase4/code/p4/language/deltafam.py": "d32a59a7d187f12d5d1c438f65383d0633aa87c930e0e75199d2cc8c2ac42299",
+  "phase4/code/p4/language/templates.py": "e838312e6e6d582c3360687cee7f6baba5d7a697244a88d6f65f2c27ee704801",
+  "phase4/code/p4/paths.py": "26238385d2fe003f9a124a1ccdf5f8ce5da86cdfe7461bebd13677d7b9083f60",
+  "phase4/code/p4/prompts/__init__.py": "ecd7f64dcf54e4094e61e348f56294ad85f7f8bf741e6071fe5001cf1ce0e278",
+  "phase4/code/p4/prompts/demos.py": "4b4819f6e9a4c921053ec8d57511a46f148a1dbf0dcf57e9c3dc6840f65c021c",
+  "phase4/code/p4/prompts/prompts.py": "a537de131a777ffe32fce7165edeb9f3eb1a4f8851346992a9364364c1628389",
+  "phase4/code/p4/reporting/__init__.py": "151570521b3d3f309a4981fe6ad9fd027a52a7a9a1c8d1dbf16f5c3107c64246",
+  "phase4/code/p4/reporting/artifacts.py": "cc56ae2972d3289d1624da0229aba593582da9cdeafefdbf0cb53da4134de320",
+  "phase4/code/p4/reporting/export.py": "8ac0b19dde6790f3541d9df5c055e2bd6951293a7dabe0ad26d130006f5c5cdf",
+  "phase4/code/p4/reporting/plots.py": "cf0a4028b470812c2b79ee9d9071341cd8edd4410ba85c33d2045430cd3cc48d",
+  "phase4/code/p4/reporting/reports.py": "1bd1a35b0d79b3714dc2a77942ddb48d47781d0990e4a025acf6934ab689d72b",
+  "phase4/code/p4/runtime/__init__.py": "5212f1af380385e0852fd4d7258f207890ed3bbe007b99badef0ced593b95433",
+  "phase4/code/p4/runtime/asu_api.py": "57d92189318ce788b3ec4f9d1d4aff12e255dec78de8e6e840bcc509e84ee3a3",
+  "phase4/code/p4/runtime/config.py": "8c996c76045b36348240fda19c91bc7bb67430a95eadfb4d5060a3e03731f7c9",
+  "phase4/code/p4/runtime/prefetch.py": "a3cbc745146079021ee08d9400755436e6fd5d8bd8f8887c108a391f2a0c92b0",
+  "phase4/code/p4/runtime/preflight.py": "7ff1d32f752173895a03b6cf087e3621e448c2df832810a3b0a1a2708484429d",
+  "phase4/code/p4/runtime/shards.py": "f5006cda07144ff1a57df8f0c4e714099f8df72ea4da946a8e195b050b52fa3a",
+  "phase4/code/p4/scoring/__init__.py": "9d414034860210fc35e886430a37bbef51fa5603adc8824fdda0d778af312b2b",
+  "phase4/code/p4/scoring/api.py": "c4da8368211be4cce70d1913917993a437f3e3dfd1cd06d6e15c9f2c34ac171e",
+  "phase4/code/p4/scoring/fakes.py": "e1186c472a8187150489ff03e98bee0c6d2cac2044244332df0ee79ef4ec4403",
+  "phase4/code/p4/scoring/fertility.py": "18cd3f925afaae2f611edecb4bd50c216f707cf6ac5db20420bc75ad78912e43",
+  "phase4/code/p4/scoring/margins.py": "d0745572c1298b966626b7492a212722173b29425543eec09b7f42579bea81d1",
+  "phase4/code/p4/scoring/models.py": "407c0fff35719739eb9bdfb8d694ac3aa6ad730237c5611ee72ead8fe95dfb62",
+  "phase4/code/p4/scoring/scorers.py": "9c1f34129a68ac25d85bf70e33926362855ce8a0c96f7479a7b6cb9b490ce677",
+  "phase4/code/p4/scoring/scoring.py": "7731767258bccf746f457af2ff3312d7e8e4f6b2f64204d509a4b387e6c23dda",
+  "phase4/code/p4/sites/__init__.py": "cbef305fbfbc690a837a385bfd1586461d06295724a47f7322a674e4638f5b9d",
+  "phase4/code/p4/sites/sampling.py": "6b3cd559281f4b4bfe3348a955b9f165eac635996f3d3528f8aea0f52bd2734f",
+  "phase4/code/p4/sites/sites.py": "0b260480f91e2e25d050a4e555e814f8ac8b62e93d5e5abdc72a1326b4f982f7",
+  "phase4/code/p4/sites/sites2.py": "6c28ba58b40899183e468d8b143c4684fe5964b35da1a5e21db79b9f79ab8acd",
+  "phase4/code/run.py": "211faafe3e647dbcf0b9289b0c5f6d7227b999a2d51799a8ee788f9f5aaa4176"
+ },
+ "stage": "dev",
+ "start_utc": "2026-10-23T21:27:40+00:00",
+ "status": "COMPLETE"
+}

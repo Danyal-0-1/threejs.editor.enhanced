@@ -1,0 +1,20 @@
+  [WARN] scheduler              not inside Slurm (local run)
+  [WARN] gpu                    no GPU needed: every model of this task is served by the ASU RC LLM API
+  [PASS] results_space          610.0 GiB free at /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/results/dev-20261023a (need 2.0)
+  [PASS] hf_cache_space         610.0 GiB free at / (need 5.0)
+  [PASS] output_writable        /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/results/dev-20261023a
+  [PASS] model:asu-rc/olmo3-7b-instruct served olmo3-7b-instruct@vllm-0.26.0-9c8d2749 pinned olmo3-7b-instruct@vllm-0.26.0-9c8d2749
+  [PASS] model:asu-rc/olmo3-32b-instruct served olmo3-32b-instruct@vllm-0.26.0-e58ad632 pinned olmo3-32b-instruct@vllm-0.26.0-e58ad632
+  [PASS] model:asu-rc/olmo3-32b-think served olmo3-32b-think@vllm-0.26.0-c1dad0c2 pinned olmo3-32b-think@vllm-0.26.0-c1dad0c2
+  [PASS] model:asu-rc/qwen3-coder-30b-a3b-instruct served qwen3-coder-30b-a3b-instruct@vllm-0.26.0-9d422224 pinned qwen3-coder-30b-a3b-instruct@vllm-0.26.0-9d422224
+  [PASS] model:asu-rc/gemma4-31b-it served gemma4-31b-it@vllm-0.26.0-tp4-0e321782 pinned gemma4-31b-it@vllm-0.26.0-tp4-0e321782
+  [PASS] model:asu-rc/deepseek-v4-1-flash served deepseek-v4-1-flash@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-d26393b7 pinned deepseek-v4-1-flash@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-d26393b7
+  [PASS] model:asu-rc/qwen35-27b served qwen35-27b-fp8@vllm-0.26.0-5c5b7be4 pinned qwen35-27b-fp8@vllm-0.26.0-5c5b7be4
+  [PASS] model:asu-rc/qwen35-122b-a10b served qwen35-122b-a10b-fp8@vllm-0.26.0-tp4-ep-39012ab1 pinned qwen35-122b-a10b-fp8@vllm-0.26.0-tp4-ep-39012ab1
+  [PASS] model:asu-rc/qwen35-397b-a17b served qwen35-397b-a17b-fp8@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-448245c1 pinned qwen35-397b-a17b-fp8@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-448245c1
+  [PASS] materials              materials identical to the run's first job
+  [PASS] split_permission       90 cells allowed for stage dev: ['DEVELOPMENT']
+preflight OK -> /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/results/dev-20261023a/manifests/preflight_2026-10-23T192538+0000.json
+[2026-10-23T12:25:41-07:00] started 10 processes (models: 0,1,2,3,4,5,6,7,8; and fertility); logs: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/results/dev-20261023a/logs/local_*.log
+[2026-10-23T14:48:20-07:00] all processes finished; check the logs, then: /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/run/.venv/bin/python /home/mesquite/Desktop/projects/Lab/threejs.editor/threejs.editor.enhanced/phase4/code/tools/../run.py dev analyze --run dev-20261023a
+driver exit=1

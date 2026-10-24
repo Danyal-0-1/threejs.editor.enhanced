@@ -1,0 +1,17 @@
+[2026-10-23T12:25:41-07:00] task 7: asu-rc/qwen35-122b-a10b
+[asu_api 12:28:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:29:55] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:22] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:43:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:49:17] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:51:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:58:14] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:02:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:07] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:14:57] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:21:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+arm_a: COMPLETE
+[2026-10-23T13:28:29-07:00] task 7: arm_a exit=0
+primary: COMPLETE
+[2026-10-23T14:02:41-07:00] task 7: primary exit=0
+armb: INTERRUPTED

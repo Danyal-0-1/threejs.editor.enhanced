@@ -1,0 +1,4 @@
+# sha256 of the files over GitHub's 100 MB limit, stored here gzipped (gzip -9 -n).
+# Restore and verify: bash ../restore_large_files.sh dev-20261023a
+e0f8bda70e89db9486f59e87ba3080958a911948bc984e8293dd45af23072b94  merged/arm_a.jsonl
+38a2f078cefe6ee12f84f78b39cb9181e50d3f029c660d43f80e062e057872e5  merged/arm_a.jsonl.gz

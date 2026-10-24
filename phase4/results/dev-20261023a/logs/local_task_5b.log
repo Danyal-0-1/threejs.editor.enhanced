@@ -1,0 +1,418 @@
+[2026-10-23T12:33:06-07:00] task 5 (DeepSeek), two cells at a time
+[asu_api 12:34:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:31] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:51] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:34:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:14] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:29] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:35:55] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:36:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:36:35] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:37:06] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:37:25] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:37:48] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:38:07] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:38:24] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:00] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:06] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:39:07] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:39:07] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:39:11] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:39:12] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:39:21] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:39:22] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:39:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:39:55] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:40:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:42:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:46:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:46:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:47:14] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:47:57] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:48:23] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:48:39] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:49:00] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:49:17] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:49:51] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:50:10] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:50:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:50:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:50:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:50:57] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:51:02] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:51:05] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:51:12] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:51:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:20] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:51:30] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:51:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:39] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:51:39] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:52:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:52:33] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:52:34] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:52:38] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:52:39] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 12:52:44] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:52:48] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:52:54] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:53:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:53:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:53:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:53:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:55:58] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:55:58] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:55:58] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 12:56:03] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:56:03] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 12:56:13] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:56:13] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 12:56:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:56:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:56:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 12:56:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:01:49] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:02:55] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:03:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:24] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:27] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:04:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:05:24] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:05:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:05:49] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:06:32] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:06:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:06:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:07:01] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:07:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:07:22] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:07:51] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:07:54] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:18] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:31] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:37] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:49] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:08:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:09:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:09:21] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:09:22] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:09:29] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:09:30] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:09:36] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:09:39] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:10:02] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:10:02] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:10:08] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:10:08] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:10:08] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:10:08] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:10:13] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:10:13] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:10:13] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:10:18] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:10:23] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:10:23] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:10:23] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:10:38] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:10:38] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:14:01] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:14:02] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:07] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:07] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:10] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:13] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:16] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:20] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:14:22] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:19:40] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:19:40] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:19:40] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:19:41] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:20:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:21:38] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:23:29] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:23:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:24:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:24:08] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:24:27] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:24:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:25:15] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:25:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:25:35] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:25:35] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:25:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:26:02] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:26:27] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:26:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:26:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:06] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:28] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:27:28] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:27:33] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:27:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:40] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:27:40] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:27:43] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:27:45] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:27:55] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:28:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:28:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:28:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:28:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:28:23] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:28:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:29:31] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:29:31] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:36] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:37] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:37] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:41] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:29:43] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:43] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 13:29:48] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:29:51] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:29:58] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:30:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:30:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:30:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:30:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:39:41] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:40:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:41:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:41:51] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:42:31] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:42:39] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:42:50] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:42:57] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:43:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:43:37] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:43:37] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:43:42] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:43:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:43:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:43:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:43:52] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:43:53] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:44:03] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:44:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:13] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:24] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:44:53] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:14] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:45:14] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:45:19] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:45:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:25] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:45:29] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:45:35] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:45:50] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:50] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:50] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:45:59] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:46:07] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:46:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:46:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:46:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:03] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:28] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:35] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:47:53] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:53:22] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:53:22] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 13:53:27] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:53:27] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 13:53:37] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:53:37] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 13:53:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:53:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:53:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:53:59] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:58:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:58:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:59:29] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 13:59:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:00:32] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:02:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:02:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:02:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:02:59] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:03:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:03:42] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:03:44] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:44] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:48] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:48] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:50] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:54] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:54] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:03:56] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:04:00] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:04:04] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:04:10] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:04:22] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:04:28] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:04:28] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:04:28] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:04:31] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:04:34] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:04:37] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:04:41] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:04:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:10:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:10:44] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:10:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:11:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:11:54] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:12:09] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:12:25] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:12:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:13:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:13:05] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:13:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:14:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:14:05] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:14:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:14:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:14:54] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:15:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:15:25] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:10] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:19:10] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:19:15] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:19:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:21] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:19:21] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:19:25] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:19:31] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:19:31] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:19:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:19:46] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:23:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:23:45] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:25:45] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:26:10] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:26:23] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:26:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:26:41] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:26:59] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:27:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:27:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:27:54] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:28:00] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:28:22] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:28:25] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:28:41] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:28:53] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:29:17] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:31:43] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:31:44] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:31:44] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:31:49] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:31:49] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:31:49] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:31:54] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:31:59] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:32:04] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:32:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:32:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:32:20] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:32:25] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:39:01] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:40:04] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:40:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:40:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:41:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:41:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:42:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:42:21] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:42:42] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:42:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:43:24] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:43:33] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:43:41] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:43:53] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:44:08] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:44:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:44:29] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:44:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:44:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:45:05] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:45:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:45:39] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:45:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:45:57] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:46:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:46:18] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:46:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:10] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:48:10] /completions: HTTP 500; retry 2/8 in 5 s
+[asu_api 14:48:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:16] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:16] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:48:21] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:48:23] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:48:23] /completions: HTTP 503; retry 2/8 in 5 s
+[asu_api 14:48:28] /completions: HTTP 503; retry 3/8 in 10 s
+[asu_api 14:48:31] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:48:38] /completions: no answer (RemoteDisconnected); retry 4/8 in 20 s
+[asu_api 14:48:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:52] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:48:58] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:57:17] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:58:01] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:58:40] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:59:26] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 14:59:43] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:00:02] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:00:12] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:00:22] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:00:29] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:01:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:01:19] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:01:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:01:50] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:01:55] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:02:11] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:02:34] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:02:47] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:03:06] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:03:06] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:03:30] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:03:35] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+[asu_api 15:03:56] /completions: no answer (RemoteDisconnected); retry 2/8 in 5 s
+arm_a: COMPLETE

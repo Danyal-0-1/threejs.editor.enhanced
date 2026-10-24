@@ -1,0 +1,97 @@
+{
+ "failed": {},
+ "hf_root": "/scratch/mesquite/hf",
+ "pairing_problems": [],
+ "pins": {
+  "asu-rc/deepseek-v4-1-flash": {
+   "api_model": "deepseek-v4-1-flash",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:47+00:00",
+   "quantization": "mxfp4",
+   "revision": "deepseek-v4-1-flash@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-d26393b7",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-1f62b89657270241"
+  },
+  "asu-rc/gemma4-31b-it": {
+   "api_model": "gemma4-31b-it",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:48+00:00",
+   "quantization": "bf16",
+   "revision": "gemma4-31b-it@vllm-0.26.0-tp4-0e321782",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-8d6e58ef2e8bdb6c"
+  },
+  "asu-rc/olmo3-32b-instruct": {
+   "api_model": "olmo3-32b-instruct",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:48+00:00",
+   "quantization": "",
+   "revision": "olmo3-32b-instruct@vllm-0.26.0-e58ad632",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-4d65007203f3c81b"
+  },
+  "asu-rc/olmo3-32b-think": {
+   "api_model": "olmo3-32b-think",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:49+00:00",
+   "quantization": "",
+   "revision": "olmo3-32b-think@vllm-0.26.0-c1dad0c2",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-4d65007203f3c81b"
+  },
+  "asu-rc/olmo3-7b-instruct": {
+   "api_model": "olmo3-7b-instruct",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:04:45+00:00",
+   "quantization": "",
+   "revision": "olmo3-7b-instruct@vllm-0.26.0-9c8d2749",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-4d65007203f3c81b"
+  },
+  "asu-rc/qwen3-coder-30b-a3b-instruct": {
+   "api_model": "qwen3-coder-30b-a3b-instruct",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:50+00:00",
+   "quantization": "bf16",
+   "revision": "qwen3-coder-30b-a3b-instruct@vllm-0.26.0-9d422224",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-40c4f55acb581b43"
+  },
+  "asu-rc/qwen35-122b-a10b": {
+   "api_model": "qwen35-122b-a10b",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:50+00:00",
+   "quantization": "fp8",
+   "revision": "qwen35-122b-a10b-fp8@vllm-0.26.0-tp4-ep-39012ab1",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-2bef010c1e74ec28"
+  },
+  "asu-rc/qwen35-27b": {
+   "api_model": "qwen35-27b",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:50+00:00",
+   "quantization": "fp8",
+   "revision": "qwen35-27b-fp8@vllm-0.26.0-5c5b7be4",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-2bef010c1e74ec28"
+  },
+  "asu-rc/qwen35-397b-a17b": {
+   "api_model": "qwen35-397b-a17b",
+   "base_url": "https://openai.rc.asu.edu/v1",
+   "pinned_utc": "2026-10-23T19:11:51+00:00",
+   "quantization": "fp8",
+   "revision": "qwen35-397b-a17b-fp8@vllm-0.28.1rc1.dev944+gced6857af-tp8-ep-448245c1",
+   "serving": "api",
+   "source": "the ASU RC LLM API deployment that answered",
+   "tokenizer_id": "api-2bef010c1e74ec28"
+  }
+ }
+}
