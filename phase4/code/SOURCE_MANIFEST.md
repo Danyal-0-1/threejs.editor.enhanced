@@ -202,7 +202,7 @@ files they changed ("changed since the copy").
 | `sol/submit.sh` | `phase3_2/sol/submit.sh` | paths |
 | `sol/submit_chain.sh` | `phase3_2/sol/submit_chain.sh` | paths |
 
-## The 31 new files (written for this folder, not copied)
+## The 36 new files (written for this folder, not copied)
 
 | file | what it is |
 |---|---|
@@ -234,4 +234,9 @@ files they changed ("changed since the copy").
 | `tests/test_api_scorer.py` | the tests of the API scorer and its plumbing, against a stand-in vLLM server |
 | `configs/voyager/models_2026-10-22.md`, `.json` | the API's model list on 2026-10-22, made by tools/voyager_models.py |
 | `configs/voyager/probe_2026-10-22.md`, `.json` | what each served model can measure, made by tools/voyager_models.py |
+| `configs/dev_api.json` | Phase 4's first development run: nine served models on Phase 3.3's held-out cells (2026-10-23) |
+| `configs/smoke_api.json` | the smoke test of the API path |
+| `tools/run_api_local.sh` | runs a run's served models on this machine, one process per model |
+| `tools/retest_api.py` | re-scores a fixed sample of a run's sites through the API |
+| `tools/paper_figures_api.py` | the figures and tables of a served-model run, beside Phase 3.3 |
 | `.gitignore` | caches, environments and weights stay out of git |

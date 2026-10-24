@@ -403,6 +403,11 @@ def run(cfg: "CFG.RunConfig", run_dir: str, experiment: str, *, scorer_factory,
                                   "snapshot_path": getattr(scorer, "snapshot_path", None),
                                   "n_cells": len(cells), "n_todo": len(todo)})
             nll_cache: dict = {}
+            if int(getattr(scorer, "cell_workers", 1) or 1) > 1:    # a served model (scoring/api.py)
+                status = _score_cells_side_by_side(cfg, todo, scorer, plan, nll_cache, score_fn,
+                                                   store, man, status)
+                scorer.release()
+                continue
             for c in todo:
                 check_stop()
                 try:
@@ -432,6 +437,42 @@ def run(cfg: "CFG.RunConfig", run_dir: str, experiment: str, *, scorer_factory,
         man.finish("FAILED", note=f"{type(exc).__name__}: {exc}")
         raise
     man.finish(status)
+    return status
+
+
+def _score_cells_side_by_side(cfg, todo, scorer, plan, nll_cache, score_fn, store, man,
+                              status: str) -> str:
+    """Score `scorer.cell_workers` cells at once: a served model's cells wait on the network,
+    not on a GPU. Each finished cell is written from this thread, exactly as the serial loop
+    writes it; a failed cell is recorded and makes the run PARTIAL; a stop signal cancels the
+    cells not yet started, and the running ones stop at their next site."""
+    import concurrent.futures as cf
+
+    def one(c):
+        check_stop()
+        return score_fn(cfg, c, scorer, plan, nll_cache)
+
+    with cf.ThreadPoolExecutor(max_workers=int(scorer.cell_workers)) as ex:
+        futs = {ex.submit(one, c): c for c in todo}
+        try:
+            for f in cf.as_completed(futs):
+                c = futs[f]
+                try:
+                    rows = f.result()
+                    for r in rows:
+                        if r.get("prompt_sha"):
+                            man.add_prompt(f"{r['lexicon']}/{r.get('condition', c.condition)}",
+                                           r["prompt_sha"])
+                    store.write(c.key, c.fields, rows, job=provenance.job_identity())
+                except Interrupted:
+                    raise
+                except Exception as exc:
+                    store.record_failure(c.key, c.fields, exc, job=provenance.job_identity())
+                    status = "PARTIAL"
+        except Interrupted:
+            for f in futs:
+                f.cancel()
+            raise
     return status
 
 

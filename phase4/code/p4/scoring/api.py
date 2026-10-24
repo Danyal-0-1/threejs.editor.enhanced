@@ -11,7 +11,10 @@ served model's own tokenisation:
     M = sum_{j>=k} lp_a[j]  -  sum_{j>=k} lp_b[j]
 
 with the same refusals (IdenticalCandidates, ZeroLengthSpan, NoContext) and the same `merged`
-flag (a third request tokenises the prefix alone). The three requests of a pair are sent at once.
+flag (a third request tokenises the prefix alone). The three requests of a pair are sent at once,
+and the pipeline scores `cell_workers` cells side by side ($P4_API_CELL_WORKERS, default 1, so 3
+requests in flight per model). A request that gets no answer within $P4_API_TIMEOUT seconds
+(default 150) is retried on a fresh connection (p4/runtime/asu_api.py).
 Arm B's greedy generation is temperature 0 from the raw prompt, with the tokenizer's default
 special tokens, as `TokenScorer.generate` does.
 
@@ -39,6 +42,7 @@ from __future__ import annotations
 import concurrent.futures as cf
 import hashlib
 import json
+import os
 import threading
 from collections import OrderedDict
 
@@ -64,8 +68,12 @@ class APIScorer:
 
     def __init__(self, model_id: str, *, served_name: str, quantization: str = "",
                  pin: dict | None = None, key: str | None = None, transport=None,
-                 workers: int = 3, tries: int = 8, ids_cache: int = 4096):
+                 workers: int = 3, tries: int = 8, ids_cache: int = 4096,
+                 cell_workers: int | None = None, timeout: float | None = None):
         self.name = model_id
+        self.cell_workers = max(1, int(cell_workers if cell_workers is not None
+                                       else os.environ.get("P4_API_CELL_WORKERS", "1")))
+        self._timeout = float(timeout if timeout is not None else os.environ.get("P4_API_TIMEOUT", "150"))
         self.served_name = served_name
         self.dtype = quantization or "served"
         self.lm_head_fp32 = False
@@ -73,7 +81,7 @@ class APIScorer:
         self._key = key if key is not None else API.load_key()
         self._send = transport or API.request
         self._tries = tries
-        self._pool = cf.ThreadPoolExecutor(max_workers=max(1, workers))
+        self._pool = cf.ThreadPoolExecutor(max_workers=max(1, workers) * self.cell_workers)
         self._lock = threading.Lock()
         self._ids: OrderedDict[str, list[int]] = OrderedDict()
         self._ids_max = ids_cache
@@ -97,7 +105,8 @@ class APIScorer:
 
     # -- one request -------------------------------------------------------
     def _post(self, body: dict) -> dict:
-        status, r = self._send(self._key, "POST", "/completions", body, tries=self._tries)
+        status, r = self._send(self._key, "POST", "/completions", body, tries=self._tries,
+                               timeout=self._timeout)
         if status != 200 or not isinstance(r, dict) or not r.get("choices"):
             raise APIError(f"{self.name}: HTTP {status}: {str(r)[:200]}")
         got = f"{r.get('model')}@{r.get('system_fingerprint')}"

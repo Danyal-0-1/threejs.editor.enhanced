@@ -362,7 +362,36 @@ gives it a role. A development run naming one is refused.
 | `run.py dev init` with a served model | `REFUSED: … is HELDOUT_MODEL and stage 'dev' may touch development cells only` |
 | the copy against its origins | 0 problems |
 
-No served model has seen the experiment's materials: the probe used neutral prompts only.
+No served model had seen the experiment's materials when the probe ran: it used neutral prompts
+only.
+
+### The first run with served models (2026-10-23)
+
+`dev-20261023a` scored nine served models on exactly Phase 3.3's held-out cells (results:
+[`../results/`](../results/README.md); explained in
+[`explanations/phase4/api_models_results_explained/`](../../explanations/phase4/api_models_results_explained/00_complete_results.md)).
+What it added to the code:
+
+| what | where |
+|---|---|
+| the nine models as development models; `MAX_SIZE_B` 600 (total parameters) | `p4/governance/splits.py` |
+| the run's config, and a smoke config for the API path | `configs/dev_api.json`, `configs/smoke_api.json` |
+| one kept-alive connection per thread; a 150 s limit per request, then a retry on a fresh connection; 500 retried; every retry noted on stderr | `p4/runtime/asu_api.py` |
+| cells side by side for a served model (`P4_API_CELL_WORKERS`, default 1); the same rows as one at a time | `p4/experiments/pipeline.py` (`_score_cells_side_by_side`), `p4/scoring/api.py` |
+| one process per served model on this machine | `tools/run_api_local.sh` |
+| re-scoring a fixed sample, to measure how far served margins move | `tools/retest_api.py` |
+| the figures and tables, beside Phase 3.3's instruct models on the same cells | `tools/paper_figures_api.py` |
+| the plain-language report's sentence on the rule effect now follows the counts (it stated one conclusion whatever they were) | `p4/reporting/reports.py` |
+| a test that the client retries a server error and a stalled connection on a fresh connection, against a stand-in server | `tests/test_api_scorer.py` (now 11 tests) |
+| a test that the report's sentence gives the counts | `tests/test_phase4_design.py` (now 12 tests) |
+
+**After these changes:** 240 tests passed, 0 failed, 0 blocked; `tools/verify_copy.py`: 0
+problems; `tools/compare_with_phase3_3.py --real-dev`: 36 of 36 and 19 of 19 CSVs identical.
+
+**Found, not fixed:** a rounding fault in the Kaplan–Meier median (`p4/analysis/kstar.py`,
+inherited from Phase 3.3's frozen code) moves some medians to the next event when the survival
+curve is exactly 1/2. Fixing it changes registered Phase 3.3 numbers, so it needs a dated
+deviation first: [`explanations/phase4/api_models_results_explained/08`](../../explanations/phase4/api_models_results_explained/08_issues_and_superseded_numbers.md#6-found-not-fixed-a-rounding-fault-in-the-kaplan-meier-median), §6.
 
 ---
 

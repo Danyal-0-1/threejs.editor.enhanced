@@ -18,9 +18,18 @@ and they are written below:
     (for example one served by the ASU RC API, once it is in the registry) cannot be scored in a
     development run by accident before the preregistration decides its role.
 
+----------------------------------------------------------------------------
+PHASE 4'S FIRST DEVELOPMENT MODELS (2026-10-23)
+----------------------------------------------------------------------------
+Nine models served by the ASU RC API join DEV_MODELS for Phase 4's first development run,
+dev-20261023a (exploratory: phase4/PREREGISTRATION.md is still a draft). Being development
+models, they can never be Phase 4's held-out models; a confirmatory test with them needs
+held-out material instead (new lexicons or a new grammar family). MAX_SIZE_B is raised from
+Phase 3.3's 72B (D10) to 600B, total parameters, so that the largest of them (deepseek-v4-1-flash,
+about 550B) is allowed; D10's ceiling was a GPU limit, and served models need no GPU.
+
 Phase 3.3's own split (with deviations D1, D2 and D10) is kept as a record in
 tests/phase3_3_design.py, which the tests use to check this machinery against known facts.
-The size ceiling MAX_SIZE_B is Phase 3.3's (D10) until Phase 4 registers its own.
 """
 
 from __future__ import annotations
@@ -60,14 +69,24 @@ DEV_MODELS = frozenset({                              # the 21 models Phase 3.3 
     "deepseek-ai/deepseek-coder-33b-instruct",
     "meta-llama/Llama-3.2-1B",
     "meta-llama/Llama-3.2-1B-Instruct",
+}) | frozenset({                                      # Phase 4's first development models (2026-10-23)
+    "asu-rc/olmo3-7b-instruct",
+    "asu-rc/olmo3-32b-instruct",
+    "asu-rc/olmo3-32b-think",
+    "asu-rc/qwen3-coder-30b-a3b-instruct",
+    "asu-rc/gemma4-31b-it",
+    "asu-rc/deepseek-v4-1-flash",
+    "asu-rc/qwen35-27b",
+    "asu-rc/qwen35-122b-a10b",
+    "asu-rc/qwen35-397b-a17b",
 })
 
 CONTAMINATED_FAMILIES: dict[str, str] = {}             # nothing is claimed held-out, so nothing is contaminated
 PREVIOUSLY_OBSERVED_MODELS: dict[str, str] = {}        # every observed model is development now
 APPROVED_NEW_FAMILIES: frozenset[str] = frozenset()   # none approved; none invented
 KNOWN_FAMILIES = frozenset({"dom", "blk"})
-# Phase 3.3's ceiling (deviation D10): nothing above 72B may be scored, until Phase 4 registers its own.
-MAX_SIZE_B = 72.0
+# Phase 4's ceiling (2026-10-23): 600B total parameters. Phase 3.3's was 72B (deviation D10).
+MAX_SIZE_B = 600.0
 
 
 class SplitViolation(PermissionError):

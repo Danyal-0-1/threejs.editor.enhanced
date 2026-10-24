@@ -86,10 +86,19 @@ def test_phase4s_split_holds_nothing_out_yet():
                 splits.SplitViolation, "held-out stage scores held-out cells only")
 
 
+PHASE4_DEV_API = {"asu-rc/olmo3-7b-instruct", "asu-rc/olmo3-32b-instruct", "asu-rc/olmo3-32b-think",
+                  "asu-rc/qwen3-coder-30b-a3b-instruct", "asu-rc/gemma4-31b-it",
+                  "asu-rc/deepseek-v4-1-flash", "asu-rc/qwen35-27b", "asu-rc/qwen35-122b-a10b",
+                  "asu-rc/qwen35-397b-a17b"}
+
+
 def test_every_model_phase3_3_scored_is_development_and_an_unseen_model_is_not():
     with D.phase4_design():
         c = json.load(open(os.path.join(paths.CONFIGS, "phase3_3", "heldout.json")))
-        assert splits.DEV_MODELS == frozenset(c.get("config", c)["models"])
+        # Phase 3.3's 21 models, plus the nine served models of Phase 4's first development run
+        assert splits.DEV_MODELS == frozenset(c.get("config", c)["models"]) | PHASE4_DEV_API
+        assert all(registry.is_api(m) and registry.spec(m).size_b <= splits.MAX_SIZE_B
+                   for m in PHASE4_DEV_API)
         unseen = sorted(set(registry.REGISTRY) - splits.DEV_MODELS)
         assert unseen, "the registry should still hold models Phase 3.3 never scored"
         for m in unseen:          # held-out, or above the size ceiling: either way not development
@@ -153,3 +162,22 @@ def test_every_experiments_rows_carry_phase4s_label():
     for exp in ("arm_a", "primary", "armb", "h5"):
         rows = [json.loads(x) for x in open(os.path.join(rd, "merged", f"{exp}.jsonl")) if x.strip()]
         assert rows and {r["schema_version"] for r in rows} == {p4.SCHEMA_VERSION}, exp
+
+
+def test_the_plain_language_report_counts_what_the_table_did():
+    """It used to say "handing over the glossary barely changes what gets written" whatever the
+    intervals were; the sentence now gives the counts from rule_effect.csv."""
+    import csv
+    from run_tests import needs
+    needs("matplotlib")
+    import test_e2e
+    from p4.reporting import export, reports
+    cfg, rd, _pins, _st = test_e2e._dev_run()
+    export.export_all(rd, cfg)
+    rp = reports.make_all(rd, cfg)
+    text = open(rp["PLAIN_LANGUAGE_RESULTS"], encoding="utf-8").read()
+    eff = [r for r in csv.DictReader(open(os.path.join(rd, "csv", "rule_effect.csv")))
+           if r["record_type"] == "rule_effect" and r["stratum"] == "ALL" and r["control"] == "norule"]
+    pos = sum(1 for r in eff if r["ci_lo"] and float(r["ci_lo"]) > 0)
+    assert "barely changes" not in text
+    assert f"helps) in **{pos} of {len(eff)}**" in text, text

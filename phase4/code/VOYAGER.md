@@ -14,7 +14,8 @@ This page covers:
 2. what it measured on 2026-10-22: **36 models serve both arms of the experiment**;
 3. the steps to get the model list and the capability tables, before any model is used in the
    experiment;
-4. how a served model runs in the pipeline.
+4. how a served model runs in the pipeline;
+5. what the first run with served models taught.
 
 ---
 
@@ -109,14 +110,16 @@ The tables are [`configs/voyager/models_2026-10-22.md`](configs/voyager/models_2
 
 **Also measured:**
 
-- each model gave the same margins twice, bit for bit;
+- each model gave the same margins twice, bit for bit, on a quiet server and one request at a
+  time (under load they need not: §5);
 - five models add a beginning-of-text token by default (devstral2-123b, gemma4-31b-it, the two
   llama4 models and muse-glimmer-30b). Scoring turns it off, as Phase 3.3 did.
 
 **Throughput.** A pair takes three requests, sent at once: about 0.9 s per pair at 200 tokens
 (qwen3-coder-30b-a3b-instruct). At Phase 3.3's sizes (about 9,100 Arm A pairs, 4,000 ladder pairs
 and 370 generations per model), that is roughly 4 hours per model. Models run in parallel, as
-array tasks.
+array tasks. Measured in the first run (§5): nine models side by side took 5 h 56 min, one model
+45 minutes (OLMo 3 7B Instruct) to 5 h 43 min (DeepSeek-V4.1-Flash).
 
 ---
 
@@ -219,6 +222,37 @@ bash submit.sh arm_b_api dev-<date>
   Sol's compute nodes have reached the internet before: Phase 3.3's prefetch jobs downloaded from
   Hugging Face.
 - **The `_api` jobs** request 2 CPUs and 8 GB for 24 hours, and no GPU.
+
+---
+
+## 5. The first run with served models (2026-10-23)
+
+`dev-20261023a` scored nine served models on exactly the cells of Phase 3.3's held-out run, from
+the laptop. Its results and figures are in [`../results/`](../results/README.md), explained in
+[`explanations/phase4/api_models_results_explained/`](../../explanations/phase4/api_models_results_explained/00_complete_results.md).
+
+What the run taught about using the API:
+
+- **Reuse connections.** The first launch opened a new TLS connection per request, 54 at a time,
+  and the laptop's path to the API stalled in TCP retransmission. One kept-alive connection per
+  thread, a 150 s limit per request and a retry on a fresh connection fixed it
+  (`p4/runtime/asu_api.py`).
+- **Concurrency.** Three requests per pair, one cell at a time per model, was steady for nine
+  models at once. Slow models (DeepSeek-V4.1-Flash) ran two or three cells at a time, and Arm B
+  four (`P4_API_CELL_WORKERS`), within the gateway's advice of 4–8 requests per model.
+- **Repeats are not exact under load.** The probe's identical repeats were on a quiet server. Re-
+  scoring 300 sites per model after the run (`tools/retest_api.py`): 2,061 of 2,700 margins came
+  back identical to the bit, and Qwen3-Coder and Qwen3.5 397B repeated all 300; but Gemma 4
+  (changes up to 10.7 nats) and Qwen3.5 122B (27 of 300 identical) are not repeatable site by
+  site, on the same pinned deployment. Re-score a sample in every run.
+- **Errors to expect.** 1,294 retries over the run: mostly reused connections the server had
+  closed (1,100), then busy-server 503s (147) and 500s (46); 1,167 were DeepSeek's. No request
+  needed more than 4 of its 8 attempts.
+- **Raw-text generation can end at once.** Under Phase 3.3's raw-text Arm B prompt, OLMo 3
+  Instruct's most likely first token is its end-of-turn token `<|im_end|>`, so 290 and 334 of 780
+  generations were empty; Qwen3.5 397B did the same 48 times. Arm A is unaffected.
+- **Running it:** `tools/run_api_local.sh <RUN_ID>` starts one process per served model on this
+  machine; on Sol, `sol/submit.sh`'s `*_api` jobs do the same on CPU nodes.
 
 ---
 

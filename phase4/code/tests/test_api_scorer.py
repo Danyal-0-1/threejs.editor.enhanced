@@ -188,7 +188,9 @@ def test_served_models_are_registered_and_decide_nothing():
     with D.phase4_design():
         for s in served:
             kind = splits.classify("dom", "d50s1", s.id).kind
-            assert kind == ("heldout_model" if s.size_b <= splits.MAX_SIZE_B else "forbidden"), s.id
+            want = ("dev" if s.id in splits.DEV_MODELS else
+                    "heldout_model" if s.size_b <= splits.MAX_SIZE_B else "forbidden")
+            assert kind == want, (s.id, kind)
 
 
 # ------------------------------------------------------------------ the pipeline
@@ -202,7 +204,8 @@ def test_a_served_model_runs_through_arm_a_and_arm_b():
         rd = H.tmpdir()
         fake = FakeVLLM()
         pins = {MODEL: {"revision": f"{SERVED}@vllm-test-0001"}}
-        make = lambda m: A.APIScorer.for_model(m, pin=pins[m], key=KEY, transport=fake)  # noqa: E731
+        make = lambda m: A.APIScorer.for_model(m, pin=pins[m], key=KEY, transport=fake,  # noqa: E731
+                                               cell_workers=2)
         assert PL.models_for(cfg, "h5") == []                 # no base twin: no H5
         for exp in ("arm_a", "armb"):
             assert PL.run(cfg, rd, exp, scorer_factory=make, pins=pins) == "COMPLETE", exp
@@ -214,6 +217,13 @@ def test_a_served_model_runs_through_arm_a_and_arm_b():
         rows = PL.merge(cfg, rd, "arm_a", pins=pins).rows
         ok = [r for r in rows if r["status"] == "ok"]
         assert ok and all(r["fp32_head"] is False and r["model_kind"] == "instruct" for r in ok)
+        # two cells side by side (above) give exactly the rows of one at a time (the default)
+        rd1 = H.tmpdir()
+        one = lambda m: A.APIScorer.for_model(m, pin=pins[m], key=KEY, transport=FakeVLLM())  # noqa: E731
+        assert make(MODEL).cell_workers == 2 and one(MODEL).cell_workers == 1
+        assert PL.run(cfg, rd1, "arm_a", scorer_factory=one, pins=pins) == "COMPLETE"
+        key = lambda r: r["row_key"]  # noqa: E731
+        assert sorted(PL.merge(cfg, rd1, "arm_a", pins=pins).rows, key=key) == sorted(rows, key=key)
         for dp, _ds, fs in os.walk(rd):
             for f in fs:
                 assert KEY not in open(os.path.join(dp, f), encoding="utf-8", errors="replace").read(), f
@@ -241,4 +251,42 @@ def test_the_real_client_scrubs_the_key_from_an_error():
                                base=f"http://127.0.0.1:{srv.server_port}")
         assert st == 401 and KEY not in text and "<key>" in text
     finally:
+        srv.shutdown()
+
+
+def test_the_real_client_retries_a_server_error_and_a_stall_on_a_fresh_connection():
+    seen = []
+
+    class Flaky(http.server.BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def do_POST(self):
+            n = len(seen)
+            seen.append(self.path)
+            self.rfile.read(int(self.headers.get("Content-Length", 0)))
+            if n == 0:                       # a server error
+                body, code = b'{"error":{"message":"Internal server error"}}', 500
+            elif n == 1:                     # a stall longer than the client's timeout
+                threading.Event().wait(1.5)  # not time.sleep, which the test silences
+                body, code = b'{"late": true}', 200
+            else:
+                body, code = b'{"ok": true}', 200
+            self.send_response(code)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *a):
+            pass
+
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Flaky)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    saved = API.time.sleep
+    API.time.sleep = lambda s: None                  # no real backoff in a test
+    try:
+        st, r = API.request(KEY, "POST", "/completions", {"x": 1}, tries=4, timeout=0.5,
+                            base=f"http://127.0.0.1:{srv.server_port}")
+        assert (st, r) == (200, {"ok": True}) and len(seen) == 3, (st, r, seen)
+    finally:
+        API.time.sleep = saved
         srv.shutdown()

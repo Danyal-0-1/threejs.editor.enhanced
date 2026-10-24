@@ -257,9 +257,14 @@ def plain(r: R) -> str:
         s += f"**How often the habit wins.** With the full translation table in the prompt, the familiar-but-wrong spelling was preferred at **{min(rates):.0%}–{max(rates):.0%}** of decision sites across the {len(rev)} model×lexicon cells measured.\n\n"
     else:
         s += "**How often the habit wins.** NOT RUN in this run.\n\n"
-    if eff:
-        inc = sum(1 for x in eff if x.get("ci_excludes_zero") in ("False", "false"))
-        s += f"**Does handing over the table help?** Across {len(eff)} cells the average effect of the table was {', '.join(_fmt(x['mean_rule_effect'], 2) for x in eff)} nats; in **{inc} of {len(eff)}** the interval includes zero — handing over the glossary barely changes what gets written.\n\n"
+    if eff:                      # Phase 4: the sentence follows the counts (it used to state one conclusion)
+        vals = [v for v in (_f(x["mean_rule_effect"]) for x in eff) if v is not None] or [float("nan")]
+        pos = sum(1 for x in eff if (_f(x.get("ci_lo")) or 0.0) > 0)
+        neg = sum(1 for x in eff if (_f(x.get("ci_hi")) or 0.0) < 0)
+        s += (f"**Does handing over the table help?** Across {len(eff)} model×lexicon cells the mean effect of the table on the margin "
+              f"ranged {min(vals):.2f} to {max(vals):.2f} nats. Its interval lies above zero (the table helps) in **{pos} of {len(eff)}**, "
+              f"below zero in {neg}, and includes zero in {len(eff) - pos - neg}. Helping is not the same as being enough: compare the "
+              f"reversion rates above.\n\n")
     if ks:
         s += "**How many examples break the habit?** For sites that start wrong, the Kaplan–Meier median number of clean worked examples is: " + "; ".join(f"{x['model'].split('/')[-1]}/{x['family']}: {x['km_median']} (censored {_fmt(x['censoring_rate'], 2)})" for x in ks) + ". 'Censored' means the habit never broke within the ladder — those sites are kept, not dropped.\n\n"
     else:
