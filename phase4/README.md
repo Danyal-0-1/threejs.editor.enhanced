@@ -13,6 +13,7 @@ Only then does it take on new questions.
 | **0b. Give the Phase 4 pipeline its own settings** | **done, 2026-10-22** | `code/` uses its own experiment folder and `P4_*` names, its own preregistration and split, and the `p4/1` label (see [`code/README.md`](code/README.md)) |
 | 1. Plan and preregister Phase 4 | **in progress** | [`PREREGISTRATION.md`](PREREGISTRATION.md) is a draft. The freeze refuses until it is registered |
 | 2. Add the ASU RC API models | **done, 2026-10-22** | 52 listed, 42 probed; 36 serve Arm A and Arm B by Phase 3.3's protocol and are in the registry, with a scorer. Their role is decided in the preregistration: [`code/VOYAGER.md`](code/VOYAGER.md) |
+| 3. First development run with nine of them | **done, 2026-10-23** (exploratory) | `dev-20261023a`: on exactly Phase 3.3's held-out cells; results and figures in [`results/`](results/README.md), explained in [`explanations/phase4/api_models_results_explained/`](../explanations/phase4/api_models_results_explained/00_complete_results.md) |
 
 ---
 

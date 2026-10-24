@@ -43,7 +43,9 @@ material included, and its results have been read:
 - both grammar families (`dom`, `blk`);
 - the nine lexicons `d25s1`, `d25s2`, `d50s1`, `d50s2`, `d25s3`, `d50s3`, `d75s1a`, `d75s2a`,
   `d75s3a`;
-- the 21 models listed in `phase4/code/p4/governance/splits.py` (`DEV_MODELS`).
+- the 21 models listed in `phase4/code/p4/governance/splits.py` (`DEV_MODELS`);
+- since 2026-10-23, nine served models, scored on Phase 3.3's held-out cells in the development run
+  `dev-20261023a` (§9). They are development models too.
 
 **Held out: to be registered.** Options include:
 
@@ -94,7 +96,14 @@ _To be written._ Phase 3.3's development power analysis is in
 
 ## 9. Models served by the ASU RC API
 
-_To be decided._ The facts, from the probe of 2026-10-22
+**Already used (2026-10-23), so not held-out candidates:** OLMo 3 7B Instruct, OLMo 3 32B Instruct
+and Think, Qwen3-Coder 30B-A3B Instruct, Gemma 4 31B, DeepSeek-V4.1-Flash, and Qwen3.5 27B, 122B
+and 397B, in the development run `dev-20261023a` (exploratory; results in
+`explanations/phase4/api_models_results_explained/`). For that run `MAX_SIZE_B` was set to 600
+(total parameters), so that DeepSeek (about 550B) was allowed. A confirmatory test with these nine
+needs held-out material: new lexicons or a new grammar family.
+
+_The rest is to be decided._ The facts, from the probe of 2026-10-22
 (`phase4/code/configs/voyager/probe_2026-10-22.md`; `phase4/code/VOYAGER.md`, §2):
 
 - 36 text models serve Arm A and Arm B by Phase 3.3's protocol. All are in the registry as
