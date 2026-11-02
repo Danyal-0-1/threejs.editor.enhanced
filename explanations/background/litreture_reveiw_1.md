@@ -3,7 +3,104 @@
 **Project:** 3DOM / alien concrete syntaxes  
 **Literature-search cutoff:** 23 September 2026  
 **Status:** adversarial review; not a publication guarantee  
-**Requested output filename:** `litreture_reveiw_1.md` (spelling preserved)
+**Requested output filename:** `litreture_reveiw_1.md` (spelling preserved)  
+**Added 28 October 2026:** the [baseline section](#baselines-for-this-paper) below, and the 11 sources it needed (marked *added 2026-10-28* in §3, §4 and §15)
+
+## Baselines for this paper
+
+*Added 28 October 2026. Read this first. The audit below is unchanged apart from the sources this section needed.*
+
+**The paper these baselines are for.** The registered 3DOM study
+([`phase3_2/PREREGISTRATION.md`](../../phase3_2/PREREGISTRATION.md); results in
+[`phase3_3/heldout_results_explained/`](../phase3_3/heldout_results_explained/00_complete_results.md)) and its
+exploratory extension to nine served models
+([`phase4/api_models_results_explained/`](../phase4/api_models_results_explained/00_complete_results.md)). At exact
+decision sites it measures the margin between the prompt-defined spelling and the familiar CSS one: with the token
+table, without it, and with a length-matched control (Arm A); how many worked examples it takes to switch a site (the
+ladder, `k*`); and what models write freely (Arm B). Its confirmatory claims are **H4**: a base checkpoint's site
+score predicts which sites an instruct model gets wrong, on held-out mappings and a held-out grammar, with the
+registered baselines `identity_baseline` and `length_baseline`; and **H5**: rewriting only the high-risk sites
+reduces reversion more per changed symbol than random or global rewriting.
+
+**How to read it.** A link to a section of this file means the paper was already reviewed there. **Added** marks a
+paper that was missing from the audit; it is now in the [master table](#3-master-literature-table), the
+[bibliography](#153-complete-bibliography-used-in-this-audit) and the
+[BibTeX](#155-bibtex-for-the-most-directly-relevant-papers).
+
+### The short list
+
+1. **Is the margin something new?** Rerun the identifier-swap task (Miceli Barone et al.) on the same models (Phase
+   3.3's 21 and Phase 4's nine) and correlate it with their 3DOM reversion rates.
+2. **H4:** report the site score against prior strength alone (the margin without the table) and against token
+   fragmentation, besides the two registered baselines.
+3. **H5:** compare the targeted rewrite with PA-Tool-style global renaming, and with grammar-constrained decoding
+   that leaves both spellings legal.
+4. **Free to compute:** context-aware decoding (CAD). For single-token candidates its margin is
+   (1 + α)·M(table) − α·M(no table), so Arm A's saved margins give it without any new scoring.
+
+### A. The phenomenon: tasks to rerun on the same models
+
+A reviewer will ask whether the 3DOM margin measures something new or the known "the prior beats the prompt"
+effect. These are the tasks to answer with.
+
+| paper | in this file | baseline for | why it is relevant |
+|---|---|---|---|
+| *The Larger They Are, the Harder They Fail* (identifier swaps; Miceli Barone et al., Findings of ACL 2023) | [§5.4](#54-identifier-swaps-in-python) | the closest runnable task | The same contrast as the 3DOM margin, in code: the familiar-but-wrong Python body against the swapped-correct one, scored by likelihood (and by choice for chat models). It also reports inverse scaling. **The best single external baseline.** |
+| PLSemanticsBench (Thimmaiah et al., ICML 2026) | [§5.1](#51-plsemanticsbench) | the reading-side counterpart | KeywordSwap (familiar operators reassigned) against KeywordObf (novel symbols) mirrors familiar against novel spellings, but the model *executes* code under supplied rules instead of *writing* it. Together they show whether writing reverts more than reading. |
+| *Persistent Priors, Preserved Targets* (Wang, 2026 preprint) | [§5.2](#52-persistent-priors-preserved-targets) | the metric and the controls | The same signed margin, log P(target) − log P(distractor), against a matched neutral definition, as the no-table and length-matched controls do here. The word-level (non-code) version of the measurement. |
+| *Conflict and Congruency Effects* (Hu et al., 2026 preprint) | [§5.3](#53-conflict-and-congruency-effects) | the congruent/incongruent design | A rule that agrees or conflicts with a strong default: the template for comparing the identity lexicon (congruent) with the remapped ones. |
+| **Added:** *Reasoning or Reciting?* counterfactual tasks (Wu et al., NAACL 2024) | [§3](#3-master-literature-table) | the general default-versus-counterfactual baseline | Eleven familiar tasks, each with one default assumption changed, including code in "ThonPy" (Python with 1-based indexing); performance drops in every one. The standard citation for this design, with a ready code task. |
+| **Added:** *Inverse Scaling: When Bigger Isn't Better* (McKenzie et al., TMLR 2023) | [§3](#3-master-literature-table) | claims about size | Its first cause of inverse scaling is a strong prior: models repeat memorized sequences instead of following in-context instructions (e.g. *Redefine*, where a common symbol such as π is redefined). The baseline for any statement about size (deviation D11 and the Phase 4 served models). |
+| **Added:** *Larger Language Models Do In-Context Learning Differently* (Wei et al., 2023 preprint) | [§3](#3-master-literature-table) | the worked-example ladder | Flipped-label in-context learning measures whether examples override semantic priors: large models can, small ones cannot. A model-level counterpart of `k*`: if flipped-label accuracy predicts the ladder, the ladder measures a general ability; if not, something specific to the DSL. |
+| *When Models Ignore Definitions* (Thota et al., 2026 preprint) | [§3](#3-master-literature-table) | a second formal domain | Locally redefined logic operators and gates are ignored. Cite it; with 30 prompts and one response each, it is too small to rerun as a baseline. |
+
+### B. H4: predicting the risky sites
+
+The registered baselines are `identity_baseline` and `length_baseline` (preregistration §3). The literature adds
+these, each computable from data already scored. The full list is in [§10.2](#102-required-baselines).
+
+| paper | in this file | baseline score | why |
+|---|---|---|---|
+| *Persistent Priors* (Wang, 2026) and *The Override Gap* (Cheng et al., 2026 preprint) | [§5.2](#52-persistent-priors-preserved-targets), [§3](#3-master-literature-table) | prior strength alone: the margin without the table | Both show that the model's ordinary preference predicts override failure. H4's score must beat it to add anything. |
+| *From Input Perception to Predictive Insight* (Mi et al., EMNLP 2025) | [§3](#3-master-literature-table) | surprisal and entropy features | A supervised error predictor built from likelihood features: the generic "the model is uncertain here" baseline. |
+| PA-Tool (Lee et al., ACL 2026) | [§5.5](#55-pa-tool) | a name's "peakedness" | A familiarity score for a name; used as a site score, the strongest published alternative. |
+| TokDrift (Li et al., ACL 2026) | [§5.9](#59-tokdrift) | tokenization features | Separates "the model prefers the habit" from "the correct spelling tokenizes badly"; a finer version of `length_baseline`. |
+
+### C. H5 and the interventions
+
+The registered H5 control is a random rewrite of the same budget; [§10.4](#104-repair-baselines-and-metrics) lists
+the others.
+
+| paper | in this file | baseline | why |
+|---|---|---|---|
+| PA-Tool (Lee et al., ACL 2026) | [§5.5](#55-pa-tool) | global renaming toward what the model expects | The published renaming fix. H5 must buy more error reduction per changed symbol than renaming everything this way. |
+| **Added:** PICARD (Scholak et al., EMNLP 2021) and grammar-constrained decoding (Geng et al., EMNLP 2023) | [§3](#3-master-literature-table) ([§15.4](#154-papers-excluded-from-the-core-novelty-comparison) named PICARD without a citation) | decoding under the grammar, both spellings legal (Arm C, [§8.4](#84-evaluation-arms)) | The standard constrained decoders. With both spellings legal they cannot stop a reversion, which is what makes them the right control: they show that grammar validity is not the problem. Read with *Hidden Cost of Structure* ([§3](#3-master-literature-table)) and Raspanti et al. ([§4](#4-claim-by-claim-novelty-matrix); §15.3 no. 18) on when constraints help or hurt. |
+| **Added:** Synchromesh (Poesia et al., ICLR 2022) | [§3](#3-master-literature-table) | a semantic constraint (Arm D, the upper bound) | Constrained *semantic* decoding for DSLs (SQL, Vega-Lite, SMCalFlow): the closest published version of "reject the wrong IR". |
+| **Added:** context-aware decoding, CAD (Shi et al., NAACL 2024) | [§3](#3-master-literature-table) | decoding that discounts the prior | Amplifies the difference between the output distributions with and without the context, and helps most when the context contradicts the model's knowledge. Arm A already scores every site with and without the table, so CAD's margin, (1 + α)·M(table) − α·M(no table), is exact for single-token candidates and needs no new scoring. |
+| **Added:** context-faithful prompting (Zhou et al., Findings of EMNLP 2023) | [§3](#3-master-literature-table) | a reminder in the prompt | Opinion-based prompts and counterfactual demonstrations make models follow the context over memory, without training: the prompt-side alternative to rewriting ([§9, Stage 6](#stage-6--intervention)). |
+| Grammar Prompting (Wang et al., NeurIPS 2023) | [§3](#3-master-literature-table) | a grammar in the prompt | A specialized BNF in context; a condition to compare with the token table. |
+| *Context-Aware Distillation and Ablation for Text2DSL* (Kozachok et al., 2026 preprint) | [§3](#3-master-literature-table) | a closed vocabulary in the prompt | Its factorial ablation of grammar, API and a closed identifier vocabulary is the nearest published analogue of the token table as one part of the context. |
+| **Added:** DocPrompting (Zhou et al., ICLR 2023) | [§3](#3-master-literature-table) | documentation in the prompt | Retrieves documentation for unseen functions: the standard "give the model the docs" method, of which the token table is a hand-made case. |
+| **Added:** SPEAC (Mora et al., NeurIPS 2024) | [§3](#3-master-literature-table) | the opposite design | The model writes an intermediate language it already knows, which is compiled (and repaired) into a very-low-resource target language. For H5's applied claim this is the strongest alternative: accept the habit and translate deterministically, instead of renaming the risky sites. |
+
+### D. Mechanisms (only if the mechanistic stage runs)
+
+| paper | in this file | why |
+|---|---|---|
+| *Characterizing Mechanisms for Factual Recall* (Yu et al., EMNLP 2023) | [§5.7](#57-characterizing-mechanisms-for-factual-recall) | head-level steering between memorized and in-context answers: the method to reproduce at a DSL site |
+| *Cutting Off the Head Ends the Conflict* (Jin et al., Findings of ACL 2024) | [§5.8](#58-cutting-off-the-head-ends-the-conflict) | path patching and head pruning: interventions to compare with the surface rewrite |
+| *Competition of Mechanisms* (Ortu et al., ACL 2024) | [§3](#3-master-literature-table) | prior-versus-context competition traced with logit and attention analyses; read it with its two replications (§15.3 nos. 34–35) |
+| *A Mechanistic Lens on Semantic Conflicts* (Abdelsalam et al., 2026 preprint) | [§5.6](#56-a-mechanistic-lens-on-semantic-conflicts) | the code-domain activation-patching baseline |
+| *Towards Best Practices of Activation Patching* (Zhang and Nanda, 2023) | §15.3 no. 30 | which metrics and corruptions to use |
+
+### E. Considered, and not baselines
+
+| paper | why not |
+|---|---|
+| **Added:** *LL3M: Large Language 3D Modelers* (Lu et al., 2025 preprint) | A multi-agent system that writes Blender Python to build 3D assets, judged by the shapes it makes. It works only in a familiar API, so it never meets a prompt-defined spelling that conflicts with a habit, and it has no measure comparable to the margin or the reversion rate. It is related work for a 3D-authoring systems paper (such as the Strata editing-system study), not a baseline for this one. |
+| Anka (Al Mazrouei, 2025 preprint; [§5.10](#510-anka)) | A counterexample to "novel syntax is worse", but language design, grammar and prompt change together, so it cannot be rerun as a controlled baseline. |
+
+---
 
 ## Scope and an important evidence boundary
 
@@ -202,8 +299,21 @@ for every valid program, and test whether targeted rewriting produces a larger e
 | **How Training Data Shapes… / MA** | Minsung Kim; Dong-Kyum Kim; Jea Kwon; Nakyeong Yang; Kyomin Jung; Meeyoung Cha | v3 2026-04-20; preprint | Controlled synthetic training plus real checkpoints | manipulate repetition, inconsistency, and skew in parametric/context knowledge | Training distribution changes arbitration between sources | Causal origin evidence for prior/context behavior | No concrete syntax or local-site factor | Training-level mechanism, not inference circuit | Does not test DSL generation | **Low-medium** | [arXiv](https://arxiv.org/abs/2510.02370) |
 | **Code over Words / SP** | Manjie Xu; Isabella Yin; Xinyi Tu; Chi Zhang; Yixin Zhu | Findings of ACL 2026 | Counterfactual mutable-physics rules | natural-language versus executable-code representation and training | Code grounding mitigates author-termed “semantic inertia” | Shows representation affects override | Does not isolate surface familiarity | No matched DSL circuit | Planner, representation, execution, and training change together | **Medium** | [ACL Anthology](https://aclanthology.org/2026.findings-acl.819/) |
 | **Patterns of Priming in Production / MA** | Giulia Pucci; Ruizhe Li; Arabella Sinclair | 2026-09-03; preprint; arXiv states EMNLP 2026 Findings, proceedings not independently verified at cutoff | Dative sentence completion across seven base models | lexical repetition, semantic coherence, syntactic prime | Immediate context changes structural continuation tendencies | General local structural activation | Strong conceptual adjacency, but no conflict/remapping/code | Behavioral only | No exact token prior, prompt rule, or causal component | **Medium** | [arXiv](https://arxiv.org/abs/2609.04484) |
+| **Counterfactual tasks / SP** *(added 2026-10-28)* — *Reasoning or Reciting? Exploring the Capabilities and Limitations of Language Models Through Counterfactual Tasks* | Zhaofeng Wu; Linlu Qiu; Alexis Ross; Ekin Akyürek; Boyuan Chen; Bailin Wang; Najoung Kim; Jacob Andreas; Yoon Kim | NAACL 2024 Long (arXiv 2023) | 11 tasks, each in a default and a counterfactual variant (arithmetic in bases 8/9/11/16; code execution and generation in "ThonPy", Python with 1-based indexing; word order; logic; spatial; drawing; music; chess; SET); GPT-4, GPT-3.5, Claude, PaLM-2 | change one default assumption of a familiar task | Performance "substantially and consistently degrades" under the counterfactual variants, in every task | Directly shows reliance on familiar defaults, including in code | No prompt-local token table, matched decision site or local-context factor | None (behavioral) | Task-level accuracy of closed models; no site-level margin, held-out site prediction or repair | **High** for the broad claim | [ACL Anthology](https://aclanthology.org/2024.naacl-long.102/) |
+| **Inverse Scaling / SP** *(added 2026-10-28)* — *Inverse Scaling: When Bigger Isn't Better* | Ian R. McKenzie; Alexander Lyzhov; Michael Pieler; Alicia Parrish; Aaron Mueller; Ameya Prabhu; Euan McLean; Aaron Kirtland; Alexis Ross; Alisa Liu; Andrew Gritsevskiy; Daniel Wurgaft; Derik Kauffman; Gabriel Recchia; Jiacheng Liu; Joe Cavanagh; Max Weiss; Sicong Huang; The Floating Droid; Tom Tseng; Tomasz Korbak; Xudong Shen; Yuhui Zhang; Zhengping Zhou; Najoung Kim; Samuel R. Bowman; Ethan Perez | TMLR 2023 | Inverse Scaling Prize: 11 prize-winning datasets (from 99 submissions), evaluated across model families and sizes | a public contest for tasks on which larger models do worse | Four causes of inverse scaling; the first is a strong prior, preferring memorized sequences to in-context instructions (e.g. *Redefine*, *Memo Trap*) | Directly covers "the prior beats the instruction", as a function of size | No code DSL or local-syntax factor | None | Task-level; size co-varies with training | **Medium-high** for prior and size claims | [OpenReview](https://openreview.net/forum?id=DwgRm72GQF) |
+| **Flipped-label ICL / SP** *(added 2026-10-28)* — *Larger Language Models Do In-Context Learning Differently* | Jerry Wei; Jason Wei; Yi Tay; Dustin Tran; Albert Webson; Yifeng Lu; Xinyun Chen; Hanxiao Liu; Da Huang; Denny Zhou; Tengyu Ma | 2023; arXiv preprint (no peer-reviewed venue verified) | In-context classification with flipped or semantically unrelated labels; GPT-3, InstructGPT, Codex, PaLM, Flan-PaLM (350M–540B) | flip the labels of the in-context examples, or replace them with unrelated ones | With flipped labels, large models override semantic priors and small ones cannot, "an emergent ability of model scale"; instruction tuning strengthens reliance on priors more than the capacity to learn new mappings | Examples overriding priors, as on the 3DOM ladder | Model-level, not site-level; no syntax | None | Classification labels, not code; size co-varies with training | **Medium** | [arXiv](https://arxiv.org/abs/2303.03846) |
+| **Context-aware decoding / MA** *(added 2026-10-28)* — *Trusting Your Evidence: Hallucinate Less with Context-aware Decoding* | Weijia Shi; Xiaochuang Han; Mike Lewis; Yulia Tsvetkov; Luke Zettlemoyer; Wen-tau Yih | NAACL 2024 Short | Summarization and knowledge-conflict tasks; OPT, GPT, LLaMA, FLAN-T5 | contrast the output distributions with and without the context | Improves faithfulness (a 14.3% gain in factuality metrics for LLaMA on summarization), and helps most when the context contradicts prior knowledge | A decoding-time remedy for prior-over-context conflict | A global per-token adjustment, not targeted at sites | None | Not code; needs a second forward pass and a tuned weight | **Low** for novelty; a repair baseline | [ACL Anthology](https://aclanthology.org/2024.naacl-short.69/) |
+| **Context-faithful prompting / MA** *(added 2026-10-28)* — *Context-faithful Prompting for Large Language Models* | Wenxuan Zhou; Sheng Zhang; Hoifung Poon; Muhao Chen | Findings of EMNLP 2023 | Machine reading comprehension under knowledge conflict, and relation extraction with abstention; three datasets | opinion-based prompts; counterfactual demonstrations | Both significantly improve faithfulness to the context, without training | A prompt-only remedy for context–memory conflict | Not targeted at sites; no syntax | None | Not code; prompt wording is itself a variable | **Low**; a prompting baseline | [ACL Anthology](https://aclanthology.org/2023.findings-emnlp.968/) |
+| **PICARD / AR** *(added 2026-10-28)* — *PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models* | Torsten Scholak; Nathan Schucher; Dzmitry Bahdanau | EMNLP 2021 | Text-to-SQL on Spider and CoSQL; fine-tuned T5 | incremental parsing rejects inadmissible tokens at each decoding step | Turned fine-tuned T5 models into state-of-the-art systems on both benchmarks (at publication) | Guarantees validity in a formal language | With both candidates legal, it cannot prevent a reversion | None | Syntax, not prompt-defined meaning | **Low**; implementation control (Arm C) | [ACL Anthology](https://aclanthology.org/2021.emnlp-main.779/) |
+| **Grammar-constrained decoding / AR** *(added 2026-10-28)* — *Grammar-Constrained Decoding for Structured NLP Tasks without Finetuning* | Saibo Geng; Martin Josifoski; Maxime Peyrard; Robert West | EMNLP 2023 | Information extraction, entity disambiguation, constituency parsing | formal grammars, including input-dependent grammars, constrain decoding without finetuning | Constrained LMs substantially outperform unconstrained ones and can beat task-specific finetuned models | As PICARD, for prompted rather than finetuned models | As PICARD | None | No prompt-defined remapping | **Low**; implementation control (Arm C) | [ACL Anthology](https://aclanthology.org/2023.emnlp-main.674/) |
+| **Synchromesh / AR** *(added 2026-10-28)* — *Synchromesh: Reliable Code Generation from Pre-trained Language Models* | Gabriel Poesia; Oleksandr Polozov; Vu Le; Ashish Tiwari; Gustavo Soares; Christopher Meek; Sumit Gulwani | ICLR 2022 | Natural language to SQL, Vega-Lite and SMCalFlow with pre-trained LMs | Target Similarity Tuning to select examples; Constrained Semantic Decoding | Gains in accuracy and fewer runtime errors in the three languages | Semantic, not only syntactic, constraints on DSL output | Can reject a wrong IR: an upper bound for repair (Arm D) | None | Needs a semantic checker; no prior manipulation | **Low**; upper-bound baseline | [arXiv](https://arxiv.org/abs/2201.11227) |
+| **DocPrompting / AR** *(added 2026-10-28)* — *DocPrompting: Generating Code by Retrieving the Docs* | Shuyan Zhou; Uri Alon; Frank F. Xu; Zhiruo Wang; Zhengbao Jiang; Graham Neubig | ICLR 2023 | Natural language to code with unseen functions and libraries: Python (CoNaLa) and a new Bash set (tldr); CodeT5, GPT-Neo | retrieve documentation for the intent, then generate | CodeT5: +2.85 pass@1 on CoNaLa (52% relative); up to +6.9 exact match on tldr | Documentation in context helps with unfamiliar functions | No conflict with a familiar meaning | None | Unseen APIs, not reassigned familiar spellings | **Low**; a context baseline | [arXiv](https://arxiv.org/abs/2207.05987) |
+| **SPEAC / AR** *(added 2026-10-28)* — *Synthetic Programming Elicitation for Text-to-Code in Very Low-Resource Programming and Formal Languages* | Federico Mora; Justin Wong; Haley Lepe; Sahil Bhatia; Karim Elmaaroufi; George Varghese; Joseph E. Gonzalez; Elizabeth Polgreen; Sanjit A. Seshia | NeurIPS 2024 | Natural language to UCLID5, a formal-verification language | the model writes an intermediate language it already knows, compiled to the target; output outside it is repaired with compiler techniques | More syntactically correct programs than retrieval and fine-tuning baselines, without loss of semantic correctness | Works with the familiar prior instead of against it | No prior or local-context measurement; the opposite repair strategy | None | One target language | **Medium** as an alternative to H5's rewrite | [arXiv](https://arxiv.org/abs/2406.03636) |
+| **LL3M / BG** *(added 2026-10-28)* — *LL3M: Large Language 3D Modelers* | Sining Lu; Guan Chen; Nam Anh Dinh; Itai Lang; Ari Holtzman; Rana Hanocka | 2025-08-11; arXiv preprint (no venue verified) | Text to 3D assets: multi-agent LLMs plan, retrieve, write, debug and refine Blender Python, with retrieval from the Blender API documentation (BlenderRAG) | agents with self-critique on code and renders; user instructions refine the asset | Generates and edits 3D assets as interpretable Blender code | None: the familiar Blender API is the target and is never redefined | None | None | Not a prior-reliance study; related work for 3D authoring systems (the Strata study) | **Low** for this paper | [arXiv](https://arxiv.org/abs/2508.08228) |
 
 ### How to read the table
+
+Rows marked *(added 2026-10-28)* were added for the [baseline section](#baselines-for-this-paper). Most are baselines rather than novelty threats; the counterfactual-task and inverse-scaling papers, however, belong beside PLSemanticsBench whenever the broad claim is discussed.
 
 The first three rows set the novelty boundary. PLSemanticsBench makes “models struggle with reassigned formal semantics” non-novel. Persistent Priors makes “familiar meanings survive explicit definitions” non-novel. Conflict and Congruency is a close task-specific precedent for an immediate/default cue competing with a distant explicit rule; it does not by itself establish a generic cross-task architecture. The proposed paper must therefore establish the **DSL-specific factorial interaction, exact-site generalization, and selective repair**, not merely reproduce an analogous effect with different punctuation.
 
@@ -215,10 +325,10 @@ The mechanism literature also needs a replication caveat. Later studies report t
 
 | Proposed claim | Verdict | Strongest evidence | Why this verdict / what remains |
 |---|---|---|---|
-| Familiar formal syntax often outperforms unfamiliar or reassigned syntax | **Substantially established** | [PLSemanticsBench](https://arxiv.org/abs/2510.03415); [Identifier Swaps](https://aclanthology.org/2023.findings-acl.19/); [TokDrift](https://aclanthology.org/2026.acl-long.2199/) | Already demonstrated in operator semantics, Python identifiers, and code surface perturbations. Not a universal result: task, language design, and model matter. |
+| Familiar formal syntax often outperforms unfamiliar or reassigned syntax | **Substantially established** | [PLSemanticsBench](https://arxiv.org/abs/2510.03415); [Identifier Swaps](https://aclanthology.org/2023.findings-acl.19/); [TokDrift](https://aclanthology.org/2026.acl-long.2199/); [Counterfactual tasks, ThonPy](https://aclanthology.org/2024.naacl-long.102/) (added 2026-10-28) | Already demonstrated in operator semantics, Python identifiers, and code surface perturbations. Not a universal result: task, language design, and model matter. |
 | Reassigning familiar symbols can interfere more than using novel symbols | **Substantially established** | PLSemanticsBench KeywordSwap versus KeywordObf | Its broad version is covered. The remaining question is whether the difference is specifically gated by a controlled immediate grammar context during source emission. |
-| Explicit definitions cannot fully override pretrained meanings | **Already established as an existence claim** | [Persistent Priors](https://arxiv.org/abs/2606.07555); [When Models Ignore Definitions](https://arxiv.org/abs/2602.17520); Identifier Swaps | “Cannot” must not mean “never can.” The defensible claim is that residual interference occurs under specified tasks and models. |
-| Larger models necessarily rely more on learned priors | **Contradicted as a universal claim / unresolved conditionally** | Identifier Swaps reports some inverse scaling; PLSemanticsBench and the current 3DOM cells are heterogeneous | Parameter count co-varies with training data, optimization, architecture, and instruction tuning. Model size is not an isolated treatment. |
+| Explicit definitions cannot fully override pretrained meanings | **Already established as an existence claim** | [Persistent Priors](https://arxiv.org/abs/2606.07555); [When Models Ignore Definitions](https://arxiv.org/abs/2602.17520); Identifier Swaps; [Inverse Scaling, *Redefine*](https://openreview.net/forum?id=DwgRm72GQF) (added 2026-10-28) | “Cannot” must not mean “never can.” The defensible claim is that residual interference occurs under specified tasks and models. |
+| Larger models necessarily rely more on learned priors | **Contradicted as a universal claim / unresolved conditionally** | Identifier Swaps reports some inverse scaling; PLSemanticsBench and the current 3DOM cells are heterogeneous; [Inverse Scaling](https://openreview.net/forum?id=DwgRm72GQF) finds prior-driven inverse scaling on some tasks, while [Wei et al.](https://arxiv.org/abs/2303.03846) find that larger models override flipped labels better (both added 2026-10-28) | Parameter count co-varies with training data, optimization, architecture, and instruction tuning. Model size is not an isolated treatment. |
 | Token fertility predicts semantic accuracy | **Partially studied; causal version unsupported** | [TokDrift](https://aclanthology.org/2026.acl-long.2199/); [Haslett 2025](https://aclanthology.org/2025.cl-3.3/) | Tokenization changes can affect behavior, but lower fertility is not always semantically better. The 3DOM study has only three alien fertility values and confounds language identity. |
 | Grammar specifications, API context, vocabularies, and examples improve novel DSL generation | **Already established, conditionally** | [Grammar Prompting](https://proceedings.neurips.cc/paper_files/paper/2023/hash/cd40d0d65bfebb894ccc9ea822b47fa8-Abstract-Conference.html); [Context-Aware Text2DSL](https://arxiv.org/abs/2606.22578); [Text2DSL](https://arxiv.org/abs/2606.22586); [Plan with Code](https://arxiv.org/abs/2408.08335); [From Text to DSL](https://doi.org/10.3233/FAIA250513) | Improvement depends on context component, retrieval, prompt design, model, and task. It is not guaranteed, and it does not establish arbitrary unseen-grammar generalization. |
 | Constrained decoding improves syntax more than semantics | **Partially established; absolute form false** | [Hidden Cost of Structure](https://aclanthology.org/2025.ranlp-1.124/); [Raspanti et al.](https://aclanthology.org/2025.acl-industry.34/) | Constraints guarantee only membership in the allowed language, but this can indirectly improve or harm semantic accuracy. Measure both separately. |
@@ -1126,6 +1236,8 @@ Exact titles, arXiv identifiers, author names, and distinctive method names (`PL
 
 **Reading depth:** full text and relevant appendices/repository evidence were inspected for the ten deep-comparison papers and the strongest constraints/tokenization counterweights. Abstract/metadata plus relevant methods/results sections were used for more distant background papers. Numerical claims in this report are limited to values that could be verified in the primary paper or official record.
 
+**Addendum, 28 October 2026.** Eleven sources were added for the [baseline section](#baselines-for-this-paper), from targeted searches for usable baselines: counterfactual-task evaluation, inverse scaling, flipped-label in-context learning, context-aware decoding, context-faithful prompting, grammar-constrained and semantic decoding, documentation retrieval, very-low-resource DSL generation, and LLM-driven 3D modeling. Titles, authors and venues were checked against the official records (ACL Anthology, OpenReview, arXiv, and the ICLR and NeurIPS conference pages). The summaries rest on the abstracts and, for Wu et al. and Wei et al., on the papers' task and model descriptions; these sources were not read in full like the ten deep-comparison papers.
+
 ### 15.2 Publication-status and metadata corrections
 
 - **PLSemanticsBench:** the current title is *LLMs Lean on Priors, Not Programming Language Semantics*; arXiv v3 reports acceptance at ICML 2026. Older title variants should not be used as the authoritative citation.
@@ -1136,6 +1248,7 @@ Exact titles, arXiv identifiers, author names, and distinctive method names (`PL
 - **Patterns of Priming:** arXiv comments state EMNLP 2026 Findings, but a matching ACL Anthology record was not verified at the cutoff; treat the venue as unverified.
 - **Mechanistic Understanding of Language Models in Syntactic Code Completion:** workshop paper, not an AAAI main-track paper.
 - **Persistent Priors, Conflict and Congruency, A Mechanistic Lens, Override Gap, and When Models Ignore Definitions:** preprints at the cutoff.
+- **Added 2026-10-28:** Wei et al. (2023) and LL3M (2025) are arXiv preprints; no peer-reviewed venue was verified. Synchromesh's arXiv record states no venue; the ICLR 2022 conference page confirms it. SPEAC's NeurIPS 2024 acceptance is confirmed by the conference page; its arXiv title changed between versions (v3 was *Synthetic Programming Elicitation and Repair for Text-to-Code in Very Low-Resource Programming Languages*).
 
 ### 15.3 Complete bibliography used in this audit
 
@@ -1183,6 +1296,20 @@ Exact titles, arXiv identifiers, author names, and distinctive method names (`PL
 34. Asen Dotsinski, Udit Thakur, Marko Ivanov, Mohammad Hafeez Khan, and Maria Heuss. “On the Generalizability of ‘Competition of Mechanisms: Tracing How Language Models Handle Facts and Counterfactuals.’” TMLR 2025. [OpenReview](https://openreview.net/forum?id=15keyzQj9h).
 35. Dante Campregher, Yanxu Chen, Sander Hoffman, and Maria Heuss. “Tracing Facts or Just Copies? A Critical Investigation of the Competitions of Mechanisms in Large Language Models.” TMLR 2025. [OpenReview](https://openreview.net/forum?id=1QrB5WSWOR).
 36. Gaotang Li, Yuzhong Chen, and Hanghang Tong. “Taming Knowledge Conflicts in Language Models.” ICML 2025. [PMLR](https://proceedings.mlr.press/v267/li25c.html).
+
+#### Added 28 October 2026 for the baseline section
+
+37. Zhaofeng Wu, Linlu Qiu, Alexis Ross, Ekin Akyürek, Boyuan Chen, Bailin Wang, Najoung Kim, Jacob Andreas, and Yoon Kim. “Reasoning or Reciting? Exploring the Capabilities and Limitations of Language Models Through Counterfactual Tasks.” NAACL 2024. DOI: 10.18653/v1/2024.naacl-long.102. [ACL Anthology](https://aclanthology.org/2024.naacl-long.102/).
+38. Ian R. McKenzie, Alexander Lyzhov, Michael Pieler, Alicia Parrish, Aaron Mueller, Ameya Prabhu, Euan McLean, Aaron Kirtland, Alexis Ross, Alisa Liu, Andrew Gritsevskiy, Daniel Wurgaft, Derik Kauffman, Gabriel Recchia, Jiacheng Liu, Joe Cavanagh, Max Weiss, Sicong Huang, The Floating Droid, Tom Tseng, Tomasz Korbak, Xudong Shen, Yuhui Zhang, Zhengping Zhou, Najoung Kim, Samuel R. Bowman, and Ethan Perez. “Inverse Scaling: When Bigger Isn't Better.” *Transactions on Machine Learning Research*, 2023. [OpenReview](https://openreview.net/forum?id=DwgRm72GQF); [arXiv](https://arxiv.org/abs/2306.09479).
+39. Jerry Wei, Jason Wei, Yi Tay, Dustin Tran, Albert Webson, Yifeng Lu, Xinyun Chen, Hanxiao Liu, Da Huang, Denny Zhou, and Tengyu Ma. “Larger Language Models Do In-Context Learning Differently.” arXiv preprint, 2023. [Official record](https://arxiv.org/abs/2303.03846).
+40. Weijia Shi, Xiaochuang Han, Mike Lewis, Yulia Tsvetkov, Luke Zettlemoyer, and Wen-tau Yih. “Trusting Your Evidence: Hallucinate Less with Context-aware Decoding.” NAACL 2024 (Short Papers). DOI: 10.18653/v1/2024.naacl-short.69. [ACL Anthology](https://aclanthology.org/2024.naacl-short.69/).
+41. Wenxuan Zhou, Sheng Zhang, Hoifung Poon, and Muhao Chen. “Context-faithful Prompting for Large Language Models.” Findings of EMNLP 2023. [ACL Anthology](https://aclanthology.org/2023.findings-emnlp.968/).
+42. Torsten Scholak, Nathan Schucher, and Dzmitry Bahdanau. “PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models.” EMNLP 2021. [ACL Anthology](https://aclanthology.org/2021.emnlp-main.779/).
+43. Saibo Geng, Martin Josifoski, Maxime Peyrard, and Robert West. “Grammar-Constrained Decoding for Structured NLP Tasks without Finetuning.” EMNLP 2023. [ACL Anthology](https://aclanthology.org/2023.emnlp-main.674/).
+44. Gabriel Poesia, Oleksandr Polozov, Vu Le, Ashish Tiwari, Gustavo Soares, Christopher Meek, and Sumit Gulwani. “Synchromesh: Reliable Code Generation from Pre-trained Language Models.” ICLR 2022. [arXiv](https://arxiv.org/abs/2201.11227); [conference page](https://iclr.cc/virtual/2022/poster/6709).
+45. Shuyan Zhou, Uri Alon, Frank F. Xu, Zhiruo Wang, Zhengbao Jiang, and Graham Neubig. “DocPrompting: Generating Code by Retrieving the Docs.” ICLR 2023. [arXiv](https://arxiv.org/abs/2207.05987); [conference page](https://iclr.cc/virtual/2023/poster/11358).
+46. Federico Mora, Justin Wong, Haley Lepe, Sahil Bhatia, Karim Elmaaroufi, George Varghese, Joseph E. Gonzalez, Elizabeth Polgreen, and Sanjit A. Seshia. “Synthetic Programming Elicitation for Text-to-Code in Very Low-Resource Programming and Formal Languages.” NeurIPS 2024. [arXiv](https://arxiv.org/abs/2406.03636); [conference page](https://neurips.cc/virtual/2024/poster/93893).
+47. Sining Lu, Guan Chen, Nam Anh Dinh, Itai Lang, Ari Holtzman, and Rana Hanocka. “LL3M: Large Language 3D Modelers.” arXiv preprint, 2025. [Official record](https://arxiv.org/abs/2508.08228); [project page](https://threedle.github.io/ll3m).
 
 ### 15.4 Papers excluded from the core novelty comparison
 
@@ -1306,6 +1433,90 @@ The following entries use official conference metadata where available and curre
   year    = {2025},
   journal = {arXiv preprint arXiv:2512.23214},
   url     = {https://arxiv.org/abs/2512.23214}
+}
+
+@inproceedings{wu-etal-2024-reasoning,
+  title     = {Reasoning or Reciting? Exploring the Capabilities and Limitations of Language Models Through Counterfactual Tasks},
+  author    = {Wu, Zhaofeng and Qiu, Linlu and Ross, Alexis and Aky{\"u}rek, Ekin and Chen, Boyuan and Wang, Bailin and Kim, Najoung and Andreas, Jacob and Kim, Yoon},
+  booktitle = {Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)},
+  year      = {2024},
+  pages     = {1819--1862},
+  doi       = {10.18653/v1/2024.naacl-long.102},
+  url       = {https://aclanthology.org/2024.naacl-long.102/}
+}
+
+@article{mckenzie2023inverse,
+  title   = {Inverse Scaling: When Bigger Isn't Better},
+  author  = {McKenzie, Ian R. and Lyzhov, Alexander and Pieler, Michael and Parrish, Alicia and Mueller, Aaron and Prabhu, Ameya and McLean, Euan and Kirtland, Aaron and Ross, Alexis and Liu, Alisa and Gritsevskiy, Andrew and Wurgaft, Daniel and Kauffman, Derik and Recchia, Gabriel and Liu, Jiacheng and Cavanagh, Joe and Weiss, Max and Huang, Sicong and {The Floating Droid} and Tseng, Tom and Korbak, Tomasz and Shen, Xudong and Zhang, Yuhui and Zhou, Zhengping and Kim, Najoung and Bowman, Samuel R. and Perez, Ethan},
+  journal = {Transactions on Machine Learning Research},
+  year    = {2023},
+  url     = {https://openreview.net/forum?id=DwgRm72GQF}
+}
+
+@article{wei2023larger,
+  title   = {Larger Language Models Do In-Context Learning Differently},
+  author  = {Wei, Jerry and Wei, Jason and Tay, Yi and Tran, Dustin and Webson, Albert and Lu, Yifeng and Chen, Xinyun and Liu, Hanxiao and Huang, Da and Zhou, Denny and Ma, Tengyu},
+  year    = {2023},
+  journal = {arXiv preprint arXiv:2303.03846},
+  url     = {https://arxiv.org/abs/2303.03846}
+}
+
+@inproceedings{shi-etal-2024-trusting,
+  title     = {Trusting Your Evidence: Hallucinate Less with Context-aware Decoding},
+  author    = {Shi, Weijia and Han, Xiaochuang and Lewis, Mike and Tsvetkov, Yulia and Zettlemoyer, Luke and Yih, Wen-tau},
+  booktitle = {Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 2: Short Papers)},
+  year      = {2024},
+  doi       = {10.18653/v1/2024.naacl-short.69},
+  url       = {https://aclanthology.org/2024.naacl-short.69/}
+}
+
+@inproceedings{zhou-etal-2023-context,
+  title     = {Context-faithful Prompting for Large Language Models},
+  author    = {Zhou, Wenxuan and Zhang, Sheng and Poon, Hoifung and Chen, Muhao},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2023},
+  year      = {2023},
+  url       = {https://aclanthology.org/2023.findings-emnlp.968/}
+}
+
+@inproceedings{scholak-etal-2021-picard,
+  title     = {{PICARD}: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models},
+  author    = {Scholak, Torsten and Schucher, Nathan and Bahdanau, Dzmitry},
+  booktitle = {Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing},
+  year      = {2021},
+  url       = {https://aclanthology.org/2021.emnlp-main.779/}
+}
+
+@inproceedings{geng-etal-2023-grammar,
+  title     = {Grammar-Constrained Decoding for Structured {NLP} Tasks without Finetuning},
+  author    = {Geng, Saibo and Josifoski, Martin and Peyrard, Maxime and West, Robert},
+  booktitle = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing},
+  year      = {2023},
+  pages     = {10932--10952},
+  url       = {https://aclanthology.org/2023.emnlp-main.674/}
+}
+
+@inproceedings{poesia2022synchromesh,
+  title     = {Synchromesh: Reliable Code Generation from Pre-trained Language Models},
+  author    = {Poesia, Gabriel and Polozov, Oleksandr and Le, Vu and Tiwari, Ashish and Soares, Gustavo and Meek, Christopher and Gulwani, Sumit},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2201.11227}
+}
+
+@inproceedings{zhou2023docprompting,
+  title     = {{DocPrompting}: Generating Code by Retrieving the Docs},
+  author    = {Zhou, Shuyan and Alon, Uri and Xu, Frank F. and Wang, Zhiruo and Jiang, Zhengbao and Neubig, Graham},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2207.05987}
+}
+
+@inproceedings{mora2024synthetic,
+  title     = {Synthetic Programming Elicitation for Text-to-Code in Very Low-Resource Programming and Formal Languages},
+  author    = {Mora, Federico and Wong, Justin and Lepe, Haley and Bhatia, Sahil and Elmaaroufi, Karim and Varghese, George and Gonzalez, Joseph E. and Polgreen, Elizabeth and Seshia, Sanjit A.},
+  booktitle = {Advances in Neural Information Processing Systems 37},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2406.03636}
 }
 ```
 
