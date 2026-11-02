@@ -11,7 +11,7 @@ stays where it runs (the last table below).
 
 ---
 
-## Two ways to read
+## Three ways to read
 
 ### A. Only the current experiment (Phase 3.3 on Sol, and Phase 4)
 
@@ -46,26 +46,42 @@ stays where it runs (the last table below).
 | 3.3, results | [`phase3_3/heldout_results_explained/`](phase3_3/heldout_results_explained/00_complete_results.md) | the held-out results: 21 models, two grammars | [`phase3_2/sol/scripts/`](../phase3_2/sol/scripts/) (analysis) |
 | 4 | [`phase4/fixes_before_phase4/`](phase4/fixes_before_phase4/README.md) | every fix made before Phase 4's new work | [`phase4/code/`](../phase4/code/README.md) (the pipeline), [`phase4/scripts/`](../phase4/scripts/) |
 | 4, served models | [`phase4/api_models_results_explained/`](phase4/api_models_results_explained/00_complete_results.md) | nine models served by the ASU RC API on Phase 3.3's held-out cells: the development run `dev-20261023a` (exploratory) | [`phase4/code/p4/scoring/api.py`](../phase4/code/p4/scoring/api.py), [`phase4/code/tools/`](../phase4/code/tools/) |
+| all | [`research_in_depth/`](research_in_depth/README.md) | the whole research in depth, in both grammar families: theory, mathematics, code and pipeline (written 2026-10-28) | all of the above, through [`phase4/code/`](../phase4/code/README.md) |
 
 Each phase folder from 3 onward follows the same numbering, so you can read one topic across
-phases (next table).
+phases ([By topic](#by-topic), below).
+
+### C. The whole research in depth
+
+[`research_in_depth/`](research_in_depth/README.md) (2026-10-28) explains the research as one
+whole, at the depth of Phase 3.3's `experiment_math.md`, with one running example followed through
+every experiment in both grammar families. Read it to get the fundamental picture; the phase
+folders then become reference material.
+
+| file | what it teaches |
+|---|---|
+| [`README.md`](research_in_depth/README.md) | the research on one page, the pipeline in one picture, the running example, and two faults in the frozen analysis code |
+| [`experiment_theory.md`](research_in_depth/experiment_theory.md) | the question, 3DOM and its two grammars, lexicons, sites, Arm A, the ladder, Arm B, H4, H5, H2, the confirmatory design, threats, results, served models, the literature |
+| [`experiment_math.md`](research_in_depth/experiment_math.md) | every equation with held-out numbers in both families (revised from Phase 3.3's, which stays unchanged) |
+| [`experiment_code.md`](research_in_depth/experiment_code.md) | what every function computes, step by step, for each experiment |
+| [`experiment_pipeline.md`](research_in_depth/experiment_pipeline.md) | configurations, the split, freeze and unlock, storage, Sol, the API path, the export, the tests |
 
 ---
 
 ## By topic
 
-| topic | Phase 3 | Phase 3.2 | Phase 3.3, design | Phase 3.3, results | Phase 4, served models |
-|---|---|---|---|---|---|
-| **the whole phase in one place** | [00](phase3/phase3_explained/00_complete_phase3_guide.md) | [00](phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | [00](phase3_3/sol_experiment_explained/00_complete_guide.md), [in one file](phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md) | [00](phase3_3/heldout_results_explained/00_complete_results.md) | [00](phase4/api_models_results_explained/00_complete_results.md) |
-| **theory** | [01](phase3/phase3_explained/01_theory_and_research_design.md) | [01](phase3_2/phase3_2_explained/01_theory_and_research_design.md) | [01](phase3_3/sol_experiment_explained/01_theory_and_research_design.md) | [01](phase3_3/heldout_results_explained/01_theory.md) | [01](phase4/api_models_results_explained/01_theory.md) |
-| **mathematics and statistics** | [02](phase3/phase3_explained/02_mathematics_and_statistics.md), [equations (PDF)](phase3/phase3_explained/phase3_delta_full_equations.pdf) | [02](phase3_2/phase3_2_explained/02_mathematics_and_statistics.md) | [02](phase3_3/sol_experiment_explained/02_mathematics_and_statistics.md), [the full math](phase3_3/sol_experiment_explained/experiment_math.md) | [02](phase3_3/heldout_results_explained/02_mathematics_and_statistics.md) | [02](phase4/api_models_results_explained/02_mathematics_and_statistics.md) |
-| **code and pipeline** | [03](phase3/phase3_explained/03_code_and_pipeline.md) | [03](phase3_2/phase3_2_explained/03_code_and_pipeline.md) | [03](phase3_3/sol_experiment_explained/03_code_and_pipeline.md) | [03](phase3_3/heldout_results_explained/03_code_and_pipeline.md) | [03](phase4/api_models_results_explained/03_code_and_pipeline.md) |
-| **what to retype, and in what order** | [04](phase3/phase3_explained/04_retyping_and_reading_plan.md) | [04](phase3_2/phase3_2_explained/04_retyping_and_reading_plan.md) | [04](phase3_3/sol_experiment_explained/04_retyping_and_reading_plan.md) | [04](phase3_3/heldout_results_explained/04_retyping_plan.md) | [04](phase4/api_models_results_explained/04_retyping_plan.md) |
-| **glossary** | [05](phase3/phase3_explained/05_glossary.md) | [05](phase3_2/phase3_2_explained/05_glossary.md) | [05](phase3_3/sol_experiment_explained/05_glossary.md) | — | [01, end](phase4/api_models_results_explained/01_theory.md#glossary-of-the-new-terms) |
-| **knowledge check** | [06](phase3/phase3_explained/06_knowledge_check.md) | [06](phase3_2/phase3_2_explained/06_knowledge_check.md) | [06](phase3_3/sol_experiment_explained/06_knowledge_check.md) | [07](phase3_3/heldout_results_explained/07_knowledge_check.md) | [07](phase4/api_models_results_explained/07_knowledge_check.md) |
-| **the picture, in plain images** | — | — | [07](phase3_3/sol_experiment_explained/07_the_picture.md) | [05](phase3_3/heldout_results_explained/05_mental_image.md), [10: people and the brain](phase3_3/heldout_results_explained/10_humans_and_the_brain.md) | [05](phase4/api_models_results_explained/05_mental_image.md) |
-| **defects, changes, superseded numbers** | — | [07: next steps](phase3_2/phase3_2_explained/07_next_steps.md) | [08](phase3_3/sol_experiment_explained/08_changes_defects_and_superseded_numbers.md) | [08](phase3_3/heldout_results_explained/08_issues_and_superseded_numbers.md) | [08](phase4/api_models_results_explained/08_issues_and_superseded_numbers.md) |
-| **the paper: claims and venues** | [publications](phase3/phase3_explained/publications/README.md) | — | — | [06](phase3_3/heldout_results_explained/06_publishability_and_paper.md), [09](phase3_3/heldout_results_explained/09_conclusions_claim_strength_and_venues.md) | [06](phase4/api_models_results_explained/06_publishability_and_paper.md) |
+| topic | Phase 3 | Phase 3.2 | Phase 3.3, design | Phase 3.3, results | Phase 4, served models | research in depth |
+|---|---|---|---|---|---|---|
+| **the whole phase in one place** | [00](phase3/phase3_explained/00_complete_phase3_guide.md) | [00](phase3_2/phase3_2_explained/00_complete_phase3_2_guide.md) | [00](phase3_3/sol_experiment_explained/00_complete_guide.md), [in one file](phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md) | [00](phase3_3/heldout_results_explained/00_complete_results.md) | [00](phase4/api_models_results_explained/00_complete_results.md) | [README](research_in_depth/README.md) |
+| **theory** | [01](phase3/phase3_explained/01_theory_and_research_design.md) | [01](phase3_2/phase3_2_explained/01_theory_and_research_design.md) | [01](phase3_3/sol_experiment_explained/01_theory_and_research_design.md) | [01](phase3_3/heldout_results_explained/01_theory.md) | [01](phase4/api_models_results_explained/01_theory.md) | [theory](research_in_depth/experiment_theory.md) |
+| **mathematics and statistics** | [02](phase3/phase3_explained/02_mathematics_and_statistics.md), [equations (PDF)](phase3/phase3_explained/phase3_delta_full_equations.pdf) | [02](phase3_2/phase3_2_explained/02_mathematics_and_statistics.md) | [02](phase3_3/sol_experiment_explained/02_mathematics_and_statistics.md), [the full math](phase3_3/sol_experiment_explained/experiment_math.md) | [02](phase3_3/heldout_results_explained/02_mathematics_and_statistics.md) | [02](phase4/api_models_results_explained/02_mathematics_and_statistics.md) | [math](research_in_depth/experiment_math.md) |
+| **code and pipeline** | [03](phase3/phase3_explained/03_code_and_pipeline.md) | [03](phase3_2/phase3_2_explained/03_code_and_pipeline.md) | [03](phase3_3/sol_experiment_explained/03_code_and_pipeline.md) | [03](phase3_3/heldout_results_explained/03_code_and_pipeline.md) | [03](phase4/api_models_results_explained/03_code_and_pipeline.md) | [code](research_in_depth/experiment_code.md), [pipeline](research_in_depth/experiment_pipeline.md) |
+| **what to retype, and in what order** | [04](phase3/phase3_explained/04_retyping_and_reading_plan.md) | [04](phase3_2/phase3_2_explained/04_retyping_and_reading_plan.md) | [04](phase3_3/sol_experiment_explained/04_retyping_and_reading_plan.md) | [04](phase3_3/heldout_results_explained/04_retyping_plan.md) | [04](phase4/api_models_results_explained/04_retyping_plan.md) | — |
+| **glossary** | [05](phase3/phase3_explained/05_glossary.md) | [05](phase3_2/phase3_2_explained/05_glossary.md) | [05](phase3_3/sol_experiment_explained/05_glossary.md) | — | [01, end](phase4/api_models_results_explained/01_theory.md#glossary-of-the-new-terms) | [theory §18.2](research_in_depth/experiment_theory.md#182-compact-glossary), [math §19.2](research_in_depth/experiment_math.md#192-compact-glossary) |
+| **knowledge check** | [06](phase3/phase3_explained/06_knowledge_check.md) | [06](phase3_2/phase3_2_explained/06_knowledge_check.md) | [06](phase3_3/sol_experiment_explained/06_knowledge_check.md) | [07](phase3_3/heldout_results_explained/07_knowledge_check.md) | [07](phase4/api_models_results_explained/07_knowledge_check.md) | [theory §18](research_in_depth/experiment_theory.md#181-check-your-understanding), [math §19](research_in_depth/experiment_math.md#191-check-your-understanding), [code §18](research_in_depth/experiment_code.md#18-practice), [pipeline §15](research_in_depth/experiment_pipeline.md#15-practice) |
+| **the picture, in plain images** | — | — | [07](phase3_3/sol_experiment_explained/07_the_picture.md) | [05](phase3_3/heldout_results_explained/05_mental_image.md), [10: people and the brain](phase3_3/heldout_results_explained/10_humans_and_the_brain.md) | [05](phase4/api_models_results_explained/05_mental_image.md) | [theory §18.4](research_in_depth/experiment_theory.md#184-the-shortest-mental-model) |
+| **defects, changes, superseded numbers** | — | [07: next steps](phase3_2/phase3_2_explained/07_next_steps.md) | [08](phase3_3/sol_experiment_explained/08_changes_defects_and_superseded_numbers.md) | [08](phase3_3/heldout_results_explained/08_issues_and_superseded_numbers.md) | [08](phase4/api_models_results_explained/08_issues_and_superseded_numbers.md) | [code §17](research_in_depth/experiment_code.md#17-the-defect-history-what-each-guard-in-the-code-is-for), [two faults](research_in_depth/README.md#two-faults-in-the-frozen-analysis-code) |
+| **the paper: claims and venues** | [publications](phase3/phase3_explained/publications/README.md) | — | — | [06](phase3_3/heldout_results_explained/06_publishability_and_paper.md), [09](phase3_3/heldout_results_explained/09_conclusions_claim_strength_and_venues.md) | [06](phase4/api_models_results_explained/06_publishability_and_paper.md) | [theory §17](research_in_depth/experiment_theory.md#17-where-this-sits-in-the-literature) |
 
 **Phase 4:** [README](phase4/fixes_before_phase4/README.md) (the index of every fix),
 [01](phase4/fixes_before_phase4/01_phase4_step0_fixes.md) (the six fixes of 2026-10-21),

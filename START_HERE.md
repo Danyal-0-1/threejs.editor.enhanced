@@ -45,6 +45,11 @@ This repository holds two things.
 [`explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md`](explanations/phase3_3/sol_experiment_explained/EXPERIMENT_IN_ONE_FILE.md),
 then [`explanations/phase3_3/heldout_results_explained/00_complete_results.md`](explanations/phase3_3/heldout_results_explained/00_complete_results.md).
 
+**To learn the whole research in depth:**
+[`explanations/research_in_depth/README.md`](explanations/research_in_depth/README.md) (2026-10-28):
+the theory, the mathematics, the code and the pipeline, with one example followed through every
+experiment in both grammar families.
+
 ---
 
 ## Why some names look wrong, and must stay
